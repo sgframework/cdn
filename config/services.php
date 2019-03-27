@@ -17,7 +17,7 @@ return [
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
-        'endpoint' => env('MAILGUN_ENDPOINT', 'ipool.remotewebaccess.com'),
+        'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
     ],
 
     'postmark' => [
@@ -35,7 +35,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => cdn\User::class,
+        'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
         'webhook' => [
