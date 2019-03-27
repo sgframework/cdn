@@ -40,6 +40,14 @@
                 top: 18px;
             }
 
+
+
+            .top-left {
+                position: absolute;
+                left: 10px;
+                top: 18px;
+            }
+
             .content {
                 text-align: center;
             }
@@ -63,12 +71,32 @@
             }
         </style>
     </head>
+<!--<header class="header">
+<form class="navbar-form navbar-left" role="search" action="{{ route('search.results') }}">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Find People">
+            </div>
+            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+        </form>
+
+</header>-->
+
     <body>
+
+
+
+
+
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
+
+		<div class="top-left">
+			<a href="{{ url('/') }}">SunbulahGroup</a>
+		</div>
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
@@ -78,13 +106,13 @@
                     @endauth
                 </div>
             @endif
-
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="title m-b-sm">
+                    <span style="font-size:26px">SGFramework</span>
                 </div>
 
                 <div class="links">
+
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
