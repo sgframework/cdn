@@ -1,9 +1,9 @@
 <?php 
 
-namespace App\Http\Controllers;
+namespace cdn\Http\Controllers;
 
 use DB;
-use App\Models\User;
+use cdn\Models\User;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
