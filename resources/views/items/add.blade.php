@@ -1,74 +1,5 @@
-
 @extends('layouts.app')
-@section('content')
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>SunbulahGroup</title>
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-            .full-height {
-                height: 100vh;
-            }
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-            .position-ref {
-                position: relative;
-            }
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-            .top-left {
-                position: absolute;
-                left: 10px;
-                top: 18px;
-            }
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-<!--<header class="header">
-<form class="navbar-form navbar-left" role="search" action="{{ route('search.results') }}">
-            <div class="form-group">
-                <input type="text" name="query" class="form-control" placeholder="Find People">
-            </div>
-            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-        </form>
-</header>-->
+@section('content')    
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -79,14 +10,33 @@
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
-        <div class="card-header">Welcom to SunbulahGroup Development Framework.</div>
+        <div class="card-header">+Add New Product</div>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
             //
             //
             // endShow -->
-                    @else
+            <span>&larr; <a href="/">Dashboard</a></span><span style="float:right"><a href="/items">Products List</a> &rarr;</span><br /><hr />
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <form method="POST" action="responce.php">
+                        <span class="glyphicon glyphicon-home"><span>
+
+                            <br />
+                            <input class="form-control" type="text" class="input" name="materialnumber" placeholder="Material Number" /><br />
+                            <input class="form-control" type="text" class="input" name="productname" placeholder="Product Name" /><br />
+                            <input class="form-control" type="text" class="input" name="producttype" placeholder="Product Type..." /><br />
+                            <input class="form-control" type="text" class="input" name="price" placeholder="$ Price" /><br />
+                            <input class="form-control" type="text" class="input" name="sku" placeholder="SKU..." /><br />
+                            <input class="btn btn-primary" type="submit" value="Add Product" name="createproduct"/>
+                        </form>
+                    </div>
+                </div>
+        </section>
+                        @else
             <!-- If user loggedOut show below content until endShow part -->            
             <div class="card-header">{{ __('Login') }}</div>
                 <div class="card-body">                 
@@ -151,3 +101,5 @@
     </div>
 </div>
 @endsection
+
+

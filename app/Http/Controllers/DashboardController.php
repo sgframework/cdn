@@ -4,7 +4,7 @@ namespace cdn\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class ItemsController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,11 +23,6 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        return view('items.index');
-    }    
-    public function add()
-    {
-        return view('items.add');
+        return view('dashboard.index');
     }
-
 }

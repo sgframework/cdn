@@ -1,16 +1,16 @@
+
+@extends('layouts.app')
+@section('content')
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <title>Laravel</title>
-
+        <title>SunbulahGroup</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
         <!-- Styles -->
-        <style>
+        <!--<style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -19,27 +19,27 @@
                 height: 100vh;
                 margin: 0;
             }
-
             .full-height {
                 height: 100vh;
             }
-
             .flex-center {
                 align-items: center;
                 display: flex;
                 justify-content: center;
             }
-
             .position-ref {
                 position: relative;
             }
-
             .top-right {
                 position: absolute;
                 right: 10px;
                 top: 18px;
             }
-
+            .top-left {
+                position: absolute;
+                left: 10px;
+                top: 18px;
+            }
             .content {
                 text-align: center;
             }
@@ -47,7 +47,6 @@
             .title {
                 font-size: 84px;
             }
-
             .links > a {
                 color: #636b6f;
                 padding: 0 25px;
@@ -57,18 +56,29 @@
                 text-decoration: none;
                 text-transform: uppercase;
             }
-
             .m-b-md {
                 margin-bottom: 30px;
             }
-        </style>
+        </style>-->
     </head>
+<!--<header class="header">
+<form class="navbar-form navbar-left" role="search" action="{{ route('search.results') }}">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Find People">
+            </div>
+            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+        </form>
+</header>-->
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
+		<div class="top-left">
+			<a href="{{ url('/') }}">SunbulahGroup</a>
+		</div>
                 <div class="top-right links">
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">Dashboard</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
@@ -78,12 +88,10 @@
                     @endauth
                 </div>
             @endif
-
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="title m-b-sm">
+                    <span style="font-size:26px">SGFramework</span>
                 </div>
-
                 <div class="links">
                     <a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
@@ -97,3 +105,4 @@
         </div>
     </body>
 </html>
+@endsection
