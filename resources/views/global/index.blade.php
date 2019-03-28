@@ -75,7 +75,7 @@
     @if (Route::has('login'))
                     @auth
     <div class="col-md-12">
-    <span>&larr; <a href="/">Go back</a></span> - <span style="float:center"><a href="/add-item">+ Add Product</a></span> - <span style="float:center"><a class="btn btn-primary" href="/items">List Products</a></span> - <span style="float:right"><a href="/submit-rtv">Submit a RTV Request</a> &rarr;</span><br /><hr />
+    <span style="float:left"><a class="btn btn-primary" href="/add-item">+ Add Product</a></span> - <span style="float:center"><a class="btn btn-primary" href="/items">List Products</a></span> - <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request</a> &rarr;</span><br /><hr />
 
            <!--<form method="get" action="/add-item"><span><button type="submit" class="btn btn-primary">Submit a RTV Request</button></span> </form>   <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>-->
         </div>
