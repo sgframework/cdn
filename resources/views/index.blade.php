@@ -86,7 +86,7 @@
             //
             //
             // endShow -->
-            <form method="POST" action="{{ route('rtv.index') }}">
+            <form method="get" action="/submit-rtv">
             <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
             </form>
                     @else

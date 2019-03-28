@@ -25,9 +25,6 @@ class RTVController extends Controller
     {
         return view('rtv.index');
     }    
-    public function add()
-    {
-        return view('');
-    }
+
 
 }

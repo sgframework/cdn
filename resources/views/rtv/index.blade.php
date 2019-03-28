@@ -7,17 +7,11 @@
             <div class="card">
                 <div class="card-header">Submit RTV Order</div>
                 <div class="card-body">
-                    @if (session('status'))
-
-
-                        
 
 
 
 
-					{{ session('status') }}
                         </div>
-                    @endif
                 </div>
             </div>
         </div>
