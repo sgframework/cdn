@@ -21,7 +21,7 @@ class RTVController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function rtv()
+    public function index()
     {
         return view('rtv.index');
     }    
