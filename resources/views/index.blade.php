@@ -71,8 +71,19 @@
 </header>-->
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
+        <div class="col-md-6">
+            <form method="get" action="/add-item">
+                <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
+                </form>
+                <form method="get" action="/items">
+                <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
+                </form>
+                <form method="get" action="/submit-rtv">
+                <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
+            </form>
+        </div>
+    <div class="col-md-8">
+        <div class="card">
             @if (Route::has('login'))
                     @auth
             <!--<div class="top-left">
@@ -86,15 +97,7 @@
             //
             //
             // endShow -->
-            <form method="get" action="/add-item">
-            <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
-            </form>
-            <form method="get" action="/items">
-            <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
-            </form>
-            <form method="get" action="/submit-rtv">
-            <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
-            </form>
+
                     @else
             <!-- If user loggedOut show below content until endShow part -->            
             <div class="card-header">{{ __('Login') }}</div>
