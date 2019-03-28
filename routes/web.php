@@ -15,12 +15,7 @@ Route::get('/', function () {
    return view('index');
     });
 
-
-
-
 Auth::routes();
-
-
 
 /*
 * Authintication
@@ -59,11 +54,6 @@ Route::get('/signout', [
 
 
 */
-
-
-
-
-
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

@@ -86,6 +86,12 @@
             //
             //
             // endShow -->
+            <form method="get" action="/add-item">
+            <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
+            </form>
+            <form method="get" action="/items">
+            <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
+            </form>
             <form method="get" action="/submit-rtv">
             <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
             </form>
