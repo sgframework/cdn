@@ -85,7 +85,7 @@
 	</div>-->
     <div class="top-right links">
 </div>
-        <div class="card-header">Welcom to SunbulahGroup Development Framework.</div>
+        <div class="card-header">Welcome to SunbulahGroup Development Framework.</div>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
