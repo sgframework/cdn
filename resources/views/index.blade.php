@@ -86,6 +86,9 @@
             //
             //
             // endShow -->
+            <form method="POST" action="{{ route('rtv.index') }}">
+            <button type="submit" class="btn btn-primary">Submit a RTV Request</button>
+            </form>
                     @else
             <!-- If user loggedOut show below content until endShow part -->            
             <div class="card-header">{{ __('Login') }}</div>
