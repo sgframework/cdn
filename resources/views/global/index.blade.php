@@ -72,10 +72,14 @@
 <div class="container">
     <div class="row justify-content-center">
 
+    @if (Route::has('login'))
+                    @auth
+    <div class=" inline col-md-12">
+            <span><form method="get" action="/add-item"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>
+        </div>
     <div class="col-md-8">
         <div class="card">
-            @if (Route::has('login'))
-                    @auth
+
             <!--<div class="top-left">
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
