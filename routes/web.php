@@ -71,6 +71,7 @@ Route::get('/process', 'ProcessController@index')->name('process');
 Route::get('/items', 'ItemsController@index')->name('items');
 Route::get('/add-item', 'ItemsController@add')->name('add');
 Route::post('/post-item', 'ItemsController@post')->name('post');
+Route::post('/submit-rtv', 'RTVController@post')->name('rtv');
 
 
 /*
