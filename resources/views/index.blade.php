@@ -70,8 +70,11 @@
         </form>
 </header>-->
 <div class="container">
-    <div class="row justify-content-center">
 
+    <div class="row justify-content-center">
+        <div class=" inline col-md-6">
+            <span><form method="get" action="/add-item"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>
+        </div>
     <div class="col-md-8">
         <div class="card">
             @if (Route::has('login'))
@@ -80,7 +83,6 @@
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
-
         <div class="card-header">Welcom to SunbulahGroup Development Framework.</div>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
