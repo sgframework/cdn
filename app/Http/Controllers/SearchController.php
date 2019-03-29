@@ -3,23 +3,38 @@
 namespace cdn\Http\Controllers;
 
 use DB;
-use cdn\Models\User;
+use cdn\Models\Item;
+use cdn\Models\Branch;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function getResults(Request $request)
+    public function getItems(Request $request)
     {
     	$query = $request->input('query');
     	
     	if (!$query) {
-    		return redirect()->route('home');
+    		return redirect()->route('global.index');
     	}
     	
-    	$users = User::where(DB::raw("CONCAT(first_name, '', 'last_name')"), 'LIKE', "%{$query}%")
-    	->orWhere('username', 'LIKE', "%{$query}%")->get();
+    	$items = Item::where(DB::raw("CONCAT(itemname, '', 'itemnumber')"), 'LIKE', "%{$query}%")
+    	->orWhere('itemsku', 'LIKE', "%{$query}%")->get();
     	
     	
-        return view('search.results')->with('users', $users);
+        return view('search.items')->with('items', $items);
+	}
+	public function getBranches(Request $request)
+    {
+    	$query = $request->input('query');
+    	
+    	if (!$query) {
+    		return redirect()->route('global.index');
+    	}
+    	
+    	$branches = Branch::where(DB::raw("CONCAT(branchname, '', 'branchnumber')"), 'LIKE', "%{$query}%")
+    	->get();
+    	
+    	
+        return view('search.branches')->with('branches', $branches);
     }
 }

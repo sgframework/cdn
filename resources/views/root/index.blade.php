@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>SunbulahGroup</title>
+        <title>SunbulahGroup Administrators Area</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- Styles -->
@@ -61,29 +61,69 @@
             }
         </style>
     </head>
-<!--<header class="header">
-<form class="navbar-form navbar-left" role="search" action="{{ route('search.results') }}">
-            <div class="form-group">
-                <input type="text" name="query" class="form-control" placeholder="Find People">
-            </div>
-            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-        </form>
-</header>-->
-<div class="container">
 
+<div class="container">
     <div class="row justify-content-center">
-        <div class=" inline col-md-6">
-            <span><form method="get" action="/add-item"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>
-        </div>
-    <div class="col-md-8">
-        <div class="card">
-            @if (Route::has('login'))
+
+
+
+
+    @if (Route::has('login'))
                     @auth
+
+
+                    <ul class="navbar-nav mr-auto">
+
+                    <span class="nav-item">
+                    <a class="nav-link" href="{{ route('items.add') }}">Add Product</a>
+                    </span>
+                    <span class="nav-item">
+                    <a class="nav-link" href="{{ route('branches.index') }}">Browse All Branches.</a>
+                    </span>
+                    <span class="nav-item">
+                    <a class="nav-link" href="{{ route('branches.add') }}">Add Branch</a>
+                    </span>
+                    <span  style="padding-right:60px" class="nav-item">
+                    <a class="nav-link" href="">Important Links.</a>
+                    </span>
+                    
+                    </ul>
+
+
+
+
+    <header class="header">
+
+
+
+
+
+    <form class="form-inline input" role="search" action="{{ route('search.items') }}">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search Products"><span><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>Query</button></span>
+            </div>
+        </form>
+
+        <form class="form-inline input" role="search" action="{{ route('search.branches') }}">
+            <div class="form-group">
+                <input type="text" name="query" class="form-control" placeholder="Search Branches"><span><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>Query</button></span>
+            </div>
+        </form>
+    </header>
+    <!--<div class="col-md-12">
+    <span style="float:left"><a class="btn btn-primary" href="{{ route('items.add') }}">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="{{ route('items.index') }}">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
+
+           <form method="get" action="/add-item"><span><button type="submit" class="btn btn-primary">Submit a RTV Request</button></span> </form>   <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>
+        </div>-->
+    <div class="col-md-12">
+        <div class="card">
+
             <!--<div class="top-left">
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
-        <div class="card-header">Welcom to SunbulahGroup Development Framework.</div>
+</div>
+        <div class="card-header">SunbulahGroup CDN Administrators Dashboard.</div>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
@@ -91,8 +131,17 @@
             //
             // endShow -->
 
-                    @else
-            <!-- If user loggedOut show below content until endShow part -->            
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>                    @else
+            <!-- If user loggedOut show below content until endShow part -->          
+            <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
             <div class="card-header">{{ __('Login') }}</div>
                 <div class="card-body">                 
                     <form method="POST" action="{{ route('login') }}">
@@ -143,9 +192,9 @@
                             </div>
                         </div>
                     </form>
-                        @if (Route::has('register'))
+                        <!--@if (Route::has('register'))
                             <a style="float:right" href="{{ route('register') }}">Register</a>
-                        @endif
+                        @endif-->
                     @endauth
                 </div>
             @endif

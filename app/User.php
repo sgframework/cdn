@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'idnumber', 'password', 'phonenumber', 'photo',
     ];
 
     /**
@@ -36,4 +36,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+
+    public function getName()
+    {
+        if ($this->name && $this->email) {
+            return "{$this->name} {$this->email}";
+        }
+        
+        if ($this->name) {
+            return $this->name;
+        }
+        return null;
+    }
+
+    public function getNameOrUsername()
+    {
+        return $this->getUser() ?: $this->user;
+    }
+
+
 }

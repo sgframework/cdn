@@ -10,30 +10,25 @@
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
-        <div class="card-header">+Add New Product</div>
+        <div class="card-header">+Add New Branch</div>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
             //
             //
             // endShow -->
-            <span>&larr; <a href="/">Back</a></span><span style="float:right"><a href="{{ route('items.index') }}">Products List</a> &rarr;</span><br /><hr />
+            <span>&larr; <a href="/">Dashboard</a></span><span style="float:right"><a href="{{ route('branches.index') }}">Products List</a> &rarr;</span><br /><hr />
         <section>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                        <form method="POST" action="{{ route('items.insert') }}">
+                        <form method="POST" action="{{ route('branches.insert') }}">
                         @csrf                
                             <br />
-                            <input class="form-control" type="number" class="input" name="itemnumber" placeholder="Material Number" />
-                            <input class="form-control" type="text" class="input" name="itemname" placeholder="Product Name" />
-                            <input class="form-control" type="decimal" class="input" name="itemprice" placeholder="0.00" />
-                            <input class="form-control" type="number" class="input" name="itemsku" placeholder="SKU" />
-                            <input class="form-control" type="text" class="input" name="plant" placeholder="Prod. Plant" />
-                            <input class="form-control" type="number" class="input" name="instock" placeholder="In Stock" />
-                            <input class="form-control" type="url" class="input" name="link" placeholder="http://" />
-                            <input class="form-control" type="text" class="input" name="itempic" value="item.png" placeholder="Upload an Image" />
-                            <input class="btn btn-primary" type="submit" value="Add Product" />
+                            <input class="form-control" type="text" class="input" name="branchname" placeholder="Branch Name" />
+                            <input class="form-control" type="number" class="input" name="branchnumber" placeholder="Branch# " />
+
+                            <input class="btn btn-primary" type="submit" value="Add Branch" />
                         </form>
                     </div>
                 </div>

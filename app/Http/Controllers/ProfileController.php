@@ -8,16 +8,14 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function getProfile($username)
+    public function getProfile($user)
     {
-    	$user = User::where('username', $username)->first();
+    	$user = User::where('user', $user)->first();
     	
     	if (!$user) {
     		abort(404);
     	}
-    	
-    	$statuses = $user->statuses()->notReply()->get();
-    	
+    	   	
     	return view ('profile.index')->with('user', $user)->with('statuses', $statuses)->with('authUserIsFriend', Auth::user()->isFriendsWith($user));
     }
     public function getEdit()

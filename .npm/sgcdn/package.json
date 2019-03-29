@@ -1,0 +1,23 @@
+{
+  "name": "sgcdn",
+  "version": "1.0.2",
+  "description": "SunbulahGroupCDN",
+  "main": "index.js",
+  "scripts": {
+    "test": "get-profile"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sgframework/cdn.git"
+  },
+  "keywords": [
+    "SGF",
+    "SunbulahGroup"
+  ],
+  "author": "0x000001",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sgframework/cdn/issues"
+  },
+  "homepage": "https://github.com/sgframework/cdn#readme"
+}

@@ -4,7 +4,7 @@ namespace cdn\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class RTVController extends Controller
+class GlobalController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -23,8 +23,6 @@ class RTVController extends Controller
      */
     public function getIndex()
     {
-        return view('rtv.index');
-    }    
-
-
+        return view('global.index');
+    }
 }

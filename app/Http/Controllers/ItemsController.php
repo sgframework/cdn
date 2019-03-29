@@ -1,11 +1,22 @@
 <?php
 
 namespace cdn\Http\Controllers;
-
+use cdn\Models\Item;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+
+
 
 class ItemsController extends Controller
 {
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
     /**
      * Create a new controller instance.
      *
@@ -17,17 +28,56 @@ class ItemsController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Get a validator for an incoming registration request.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Validation\Validator
      */
-    public function index()
+    protected function validator(Request $request)
     {
-        return view('items.index');
-    }    
-    public function add()
-    {
-        return view('items.add');
+        return Validator::make($request, [
+            'itemnumber' => ['required', 'string', 'max:255'],
+            'itemname' => ['required', 'string', 'max:255'],
+            'itemprice' => ['required', 'decimal', 'max:255'],
+            'itemsku' => ['required', 'string', 'max:255'],
+            'plant' => ['required'],
+            'instock' => ['required', 'string', 'max:255'],
+            'link' => ['string', 'max:255'],
+            'itempic' => ['string']
+        ]);
     }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $request
+     * @return \cdn\Item
+     */
+    protected function InsertItems(Request $request)
+    {
+        Item::create([
+            'itemnumber' => $request['itemnumber'],
+            'itemname' => $request['itemname'],
+            'itemprice' => $request['itemprice'],
+            'itemsku' => $request['itemsku'],
+            'plant' => $request['plant'],
+            'instock' => $request['instock'],
+            'link' => $request['link'],
+            'itempic' => $request['itempic']
+        ]);
+        return redirect()->route('items.index')->with('info', 'Your item has been created');
+    }
+    	
+
+        public function getItems(Request $request)
+        {
+            $items = Item::select('itemname', 'itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'itempic')->get();
+            return view('items.index')->with('items', $items);
+        }
+
+        public function addItem()
+        {
+            return view ('items.add');
+        }
 
 }

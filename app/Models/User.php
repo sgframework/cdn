@@ -33,19 +33,19 @@ class User extends Model implements AuthenticatableContract
     
     public function getName()
     {
-    	if ($this->first_name && $this->last_name) {
-    		return "{$this->first_name} {$this->last_name}";
+    	if ($this->name && $this->email) {
+    		return "{$this->name} {$this->email}";
     	}
     	
-    	if ($this->first_name) {
-    		return $this->first_name;
+    	if ($this->name) {
+    		return $this->name;
     	}
     	return null;
     }
     
     public function getNameOrUsername()
     {
-    	return $this->getUser() ?: $this->username;
+    	return $this->getUser() ?: $this->user;
     }
     
     
@@ -56,7 +56,7 @@ class User extends Model implements AuthenticatableContract
     
     public function getUser()
     {
-    	return $this->username;
+    	return $this->user;
     }
            
             public function getUserOrUsername()
@@ -74,9 +74,9 @@ class User extends Model implements AuthenticatableContract
     	return $this->getEmail() ?: $this->email;
     }
     
-    public function getFirstNameOrUsername()
+    public function getNameOrEmail()
     {
-      	return $this->first_name ?: $this->username;
+      	return $this->name ?: $this->email;
     }
     
     public function getAvatarUrl()

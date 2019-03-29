@@ -62,7 +62,7 @@
         </style>
     </head>
 <!--<header class="header">
-<form class="navbar-form navbar-left" role="search" action="{{ route('search.results') }}">
+<form class="navbar-form navbar-left" role="search" action="{{ route('search.items') }}">
             <div class="form-group">
                 <input type="text" name="query" class="form-control" placeholder="Find People">
             </div>
@@ -74,11 +74,11 @@
 
     @if (Route::has('login'))
                     @auth
-    <div class="col-md-12">
-    <span style="float:left"><a class="btn btn-primary" href="/add-item">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="/items">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
+    <!--<div class="col-md-12">
+    <span style="float:left"><a class="btn btn-primary" href="{{ route('items.add') }}">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="{{ route('items.index') }}">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
 
-           <!--<form method="get" action="/add-item"><span><button type="submit" class="btn btn-primary">Submit a RTV Request</button></span> </form>   <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>-->
-        </div>
+           <form method="get" action="/add-item"><span><button type="submit" class="btn btn-primary">Submit a RTV Request</button></span> </form>   <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>
+        </div>-->
     <div class="col-md-12">
         <div class="card">
 
@@ -106,7 +106,7 @@
             <div class="card">
             <div class="card-header">{{ __('Login') }}</div>
                 <div class="card-body">                 
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" class="form-vertical" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
@@ -154,9 +154,9 @@
                             </div>
                         </div>
                     </form>
-                        @if (Route::has('register'))
+                        <!--@if (Route::has('register'))
                             <a style="float:right" href="{{ route('register') }}">Register</a>
-                        @endif
+                        @endif-->
                     @endauth
                 </div>
             @endif

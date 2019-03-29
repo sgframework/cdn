@@ -14,14 +14,15 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('itemid');
             $table->integer('itemnumber');
-            $table->string('itemname')->unique();
-            $table->integer('itemprice')->nullable();
+            $table->string('itemname');
+            $table->decimal('itemprice', 8, 2)->nullable();
             $table->integer('itemsku');
             $table->integer('plant')->nullable();
             $table->integer('instock')->nullable();
-            $table->integer('link')->nullable();
+            $table->string('link')->nullable();
+            $table->string('itempic')->default("item.png");
             $table->timestamps();
         });
     }
