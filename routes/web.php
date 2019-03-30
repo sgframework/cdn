@@ -112,6 +112,34 @@ Route::get('/branch/add', [
 ]);
 
 
+//{{ route('orders.index') }}
+
+
+Route::get('/orders', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@getOrders',
+'as' => 'orders.index',
+
+]);
+
+
+Route::post('/order/insert', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@InsertOrders',
+'as' => 'orders.insert',
+
+]);
+
+
+
+Route::get('/order/add', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@addOrder',
+'as' => 'orders.add',
+
+]);
+
+
+
+
+
 /*
 * Search
 */
@@ -178,6 +206,8 @@ Route::post('/profile/imgupdate', [
     	'middleware' => ['auth'],
     	'as' => 'update.post',
 ]);
+
+
 
 
 

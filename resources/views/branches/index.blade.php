@@ -157,7 +157,7 @@ th,td {
             <strong>Branches List</strong>
             <div class="input-group">
                 <form class="form-inline input" role="search"  action="{{ route('search.branches') }}">
-                        <input style="float:right" class="input-group-addon" name="query" type="text" placeholder="Search" />
+                    <input class="input-group-addon" name="query" type="text" placeholder="Search" />
                     <input type="submit" class="input-group-addon" />
                 </form>
             </div>

@@ -96,7 +96,7 @@
                     <a class="nav-link" href="{{ route('branches.index') }}">Browse Branches</a>
                     </span>
                     <span class="nav-item">
-                    <a class="nav-link" href="">Request Update Product</a>
+                    <a class="nav-link" href="{{ route('orders.index') }}">New Order</a>
                     </span>
                     <span class="nav-item">
                     <a class="nav-link" href="{{ route('rtv.index') }}">Submit RTV Form</a>

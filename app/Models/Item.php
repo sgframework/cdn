@@ -27,6 +27,16 @@ class Item extends Model
 		return $this->belongsTo('cdn\Models\Item', 'itemnumber');
     }
 
+    public function itemName()
+	{
+		return $this->belongsTo('cdn\Models\Item', 'itemname');
+    }
+
+    public function itemNumber()
+	{
+		return $this->belongsTo('cdn\Models\Item', 'itemnumber');
+    }
+
 	public function items(Item $itemname)
 	{
     		return $this->hasMany('cdn\Models\Item', 'itemnumber');

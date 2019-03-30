@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('ponumber');
             $table->integer('branchnumber');
             $table->string('branchname');
+            $table->integer('itemnumber');
             $table->string('orderitems');
             $table->integer('itemqty');
             $table->integer('freeitem');
