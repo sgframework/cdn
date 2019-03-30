@@ -136,6 +136,13 @@ Route::get('/order/add', [
 
 ]);
 
+Route::get('/order/add/urgent', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@addUrgentOrder',
+'as' => 'orders.urgent',
+
+]);
+
+
 
 
 

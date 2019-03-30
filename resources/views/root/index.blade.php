@@ -78,10 +78,14 @@
                     <a class="nav-link" href="{{ route('items.add') }}">Add Product</a>
                     </span>
                     <span class="nav-item">
-                    <a class="nav-link" href="{{ route('branches.index') }}">Browse All Branches.</a>
+                    <a class="nav-link" href="{{ route('branches.add') }}">Add Branch</a>
+                    </span>
                     </span>
                     <span class="nav-item">
-                    <a class="nav-link" href="{{ route('branches.add') }}">Add Branch</a>
+                    <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
+                    </span>
+                    <span class="nav-item">
+                    <a class="nav-link" href="{{ route('orders.index') }}">All Orders</a>
                     </span>
                     <span  style="padding-right:60px" class="nav-item">
                     <a class="nav-link" href="">Important Links.</a>

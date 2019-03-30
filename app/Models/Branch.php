@@ -15,9 +15,9 @@ class Branch extends Model
 	{
 		return $this->belongsTo('cdn\User', 'id');
 	}
-    public function brach()
+    public function branch()
 	{
-		return $this->belongsTo('cdn\Models\Brach', 'brachnumber');
+		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');
     }
 
 	public function branches(Branch $branchname)

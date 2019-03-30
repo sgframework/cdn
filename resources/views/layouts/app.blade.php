@@ -96,13 +96,13 @@
                     <a class="nav-link" href="{{ route('branches.index') }}">Browse Branches</a>
                     </span>
                     <span class="nav-item">
-                    <a class="nav-link" href="{{ route('orders.index') }}">New Order</a>
+                    <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
+                    </span>
+                    <span class="nav-item">
+                    <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
                     </span>
                     <span class="nav-item">
                     <a class="nav-link" href="{{ route('rtv.index') }}">Submit RTV Form</a>
-                    </span>
-                    <span  style="padding-right:60px" class="nav-item">
-                    <a class="nav-link" href="">Important Links.</a>
                     </span>
                     
                     </ul>
@@ -111,7 +111,7 @@
                     <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
                                 </a>
                                 <div class="dropdown dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-menu dropdown-menu-right" href="{{ route('logout') }}" 
@@ -119,7 +119,7 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }} <i class="fas fa-sign-out-alt"></i>
                                     </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: block;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="">
                                         @csrf
                                     </form>                                </div>
 

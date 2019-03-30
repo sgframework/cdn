@@ -81,6 +81,12 @@ class OrdersController extends Controller
         }
 
 
+        
+        public function addUrgentOrder()
+        {
+            return view ('orders.urgent');
+        }
+
         public function addOrder()
         {
             return view ('orders.add');

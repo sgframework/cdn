@@ -10,7 +10,7 @@
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
-        <div class="card-header">+Create New Order</div>
+        <div class="card-header">+Create New <span style="color:red"> Urgent</span> Order</div>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
@@ -22,10 +22,11 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                    Name: {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}
                         <form method="POST" action="{{ route('orders.insert') }}">
                         @csrf     
                         <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />
-                            <input  class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />
+                            <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />
                             <input class="form-control" type="number" class="input" name="ponumber" placeholder="PO#" />
                             <input class="form-control" type="number" class="input" name="branchnumber" placeholder="Branch#" />
                             <input hidden class="form-control" type="name" class="input" name="branchname" value="Al-Othaim Co. 23" placeholder="Al-Othaim Co. 23" />                  
@@ -58,7 +59,7 @@
                     </div>
                 </div>
         </section>
-                        @else
+            @else
             <!-- If user loggedOut show below content until endShow part -->            
             <div class="card-header">{{ __('Login') }}</div>
                 <div class="card-body">                 

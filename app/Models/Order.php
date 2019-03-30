@@ -33,26 +33,20 @@ class Order extends Model
     public function orderNumber()
 	{
 		return $this->belongsTo('cdn\Models\Order', 'ponumber');
-    }
-
-    public function poNumber()
-	{
-    	
-    	if ($this->orderNumber) {
-    		return $this->poNumber;
-    	}
-        return null;
-    }
-
-    public function orderByName()
+    }  
+        
+    public function getUrgentOrder(Order $ordernumber)
     {
-        return $this->belongsTo('cdn\User', 'name');
+        return $this->getOrder() ?: $this->ponumber;
     }
     
-    public function getOrderNumber(Request $request)
-    {
-        return $this->belongsTo('cdn\Models\Order', 'ponumber');
+    public function poNumber()
+	{
+    	return $this->getOrder() ?: $this->ponumber;
+
     }
+
+
 
 	public function orders(Order $ordernumber)
 	{
@@ -70,10 +64,6 @@ class Order extends Model
     }
 
 
-    public function itemNumber()
-	{
-		return $this->belongsTo('cdn\Models\Order', 'ponumber');
-    }
     public function getOrderByStaff()
     {
     	if ($this->ordernumber && $this->ponumber) {
@@ -101,7 +91,7 @@ class Order extends Model
 
     public function getBranchName()
     {
-    	return $this->getBranchNumber() ?: $this->branchname;
+    	return $this->getBranch) ?: $this->branchname;
     }
     public function getOrderByBranchNumber()
     {
@@ -164,10 +154,6 @@ class Order extends Model
     	return $this->getOrderItems() ?: $this->freeitem;
     }
 
-    public function getItemPrice()
-	{
-		return $this->belongsTo('cdn\Models\Item', 'itemprice');
-    }
     public function getPrice()
 	{
     	return $this->getItemPrice() ?: $this->itemprice;

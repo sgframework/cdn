@@ -1,18 +1,12 @@
 @extends('layouts.app')
 
 @section('content')    
-
 <style>
-
 /*!
 * My Custom Styles
 *
 * START
  */
-
-
-
-
 #page-container {
   position: relative;
   min-height: 100vh;
@@ -27,9 +21,7 @@
   height: 2.5rem;            /* Footer height */
 }
 
-
-
- #myInput {
+#myInput {
   background-image: url('./img/searchicon.png'); /* Add a search icon to input */
   background-position: 10px 12px; /* Position the search icon */
   background-repeat: no-repeat; /* Do not repeat the icon image */
@@ -61,22 +53,6 @@
   /* Add a grey background color to the table header and on hover */
   background-color: #f1f1f1;
 }
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  .input-merge .col-xs-2,
  .input-merge .col-xs-4,
  .input-merge .col-xs-6 {
@@ -100,10 +76,6 @@
  .focus {
    z-index: 2;
  }
-
-
-
-
  .input-group-addon {
   border-left-width: 0;
   border-right-width: 0;
@@ -114,17 +86,13 @@
 .input-group-addon:last-child {
   border-right-width: 1px;
 }
-
 table {
   border-collapse: collapse;
   border: 1px solid black;
 } 
-
 th,td {
   border: 1px solid black;
 }
-
-
  table.a {
   table-layout: auto;
   width: 80%;  
@@ -145,12 +113,8 @@ th,td {
 * END
  */
 </style>
-
 <div class="container">
-
 <div class="row justify-content-center">
-
-
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
@@ -164,7 +128,7 @@ th,td {
         </div>
             <div class="card-body">
                     @if (!$branches->count())
-                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
+                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
                     @else
                         @foreach ($branches as $branch)
                             @include('branches/partials/branchblock')
