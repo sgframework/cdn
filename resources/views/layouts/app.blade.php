@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -102,7 +103,7 @@
                     <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
                     </span>
                     <span class="nav-item">
-                    <a class="nav-link" href="{{ route('rtv.index') }}">Submit RTV Form</a>
+                    <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-dashboard"></i>Dashboard</a>
                     </span>
                     
                     </ul>
@@ -110,9 +111,9 @@
 
                     <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
-                                </a>
+                                </a></a>
                                 <div class="dropdown dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-menu dropdown-menu-right" href="{{ route('logout') }}" 
                                        onclick="event.preventDefault();

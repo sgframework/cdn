@@ -25,9 +25,8 @@ class CreateOrdersTable extends Migration
             $table->integer('itemqty');
             $table->integer('freeitem');
             $table->decimal('itemprice', 8, 2);
+            $table->tinyInteger('urgent')->default('0')->nullable();
             $table->timestamps();
-            
-
         });
     }
 

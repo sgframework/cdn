@@ -47,13 +47,14 @@ class BranchesController extends Controller
             'branchnumber' => $request['branchnumber'],
             'branchname' => $request['branchname'],
         ]);
-        return view('branches.index', ['branchname' => $request['branchname']]);
+        $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc')->paginate(10);       
+        return view('branches.index')->with('branches', $branches);
     }
     	
         public function getBranches(Request $request)
         {
-            $branches = Branch::select('branchname', 'branchnumber')->get();       
-            return view('branches.index')->with('branches', $branches);
+            $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc')->paginate(10);       
+            return view('branches.index')->with('branches', $branches)->with('msg', 'You`ve just added a new branch successfully.');
         }
         
         public function addBranch()

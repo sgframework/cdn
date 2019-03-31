@@ -1,43 +1,34 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content')    
+
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
-                <div class="card-header">Dashboard</div>
-
+                <div class="card-header"><i class="fas fa-tachometer-alt"></i> <strong><span style="font-size:18px">Dashboard</span></strong></div>
                 <div class="card-body">
-                    @if (session('status'))
+                    <center>
+                <span class="nav-item"><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-asterisk"></i> My Orders</a><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-asterisk"></i> My Orders</a><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-search"></i> Search Database</a></span>
+                <div class="row justify-content-left">
+</center>
+                <div class="col-md-4">
+                <h5>{{ Auth::user()->name }}</h5>
+                <b><p style="padding-left:45px">ID# {{ Auth::user()->idnumber }}</p></b>
 
 
-					<table id="dg" title="My Users" style="width:550px;height:250px"
-        toolbar="#toolbar" idField="id"
-        rownumbers="true" fitColumns="true" singleSelect="true">
-    <thead>
-        <tr>
-            <th field="firstname" width="50" editor="{type:'validatebox',options:{required:true}}">First Name</th>
-            <th field="lastname" width="50" editor="{type:'validatebox',options:{required:true}}">Last Name</th>
-            <th field="phone" width="50" editor="text">Phone</th>
-            <th field="email" width="50" editor="{type:'validatebox',options:{validType:'email'}}">Email</th>
-        </tr>
-    </thead>
-</table>
-<div id="toolbar">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="javascript:$('#dg').edatagrid('addRow')">New</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="javascript:$('#dg').edatagrid('destroyRow')">Destroy</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-save" plain="true" onclick="javascript:$('#dg').edatagrid('saveRow')">Save</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-undo" plain="true" onclick="javascript:$('#dg').edatagrid('cancelRow')">Cancel</a>
-</div>
-
-					{{ session('status') }}
+        <div class="col-md-2">
+                    <td><img class="media-object" alt="" src="{{ asset('images/uploads/avatars') }}/{{ Auth::user()->photo }}" style="width:120px; height:120px; float:left; border-radius:50%; margin-right:25px;"></td>
+                    <center><a class="btn btn-primary" href="{{ route('profile.edit') }}"><i class="far fa-edit"></i> Edit Profie</a></center>
+                                </div>
+                            </div>
                         </div>
-                    @endif
-
-                    You are logged in!
+                    </div>  
                 </div>
             </div>
-        </div>
+        </div><br /><hr />
     </div>
 </div>
 @endsection
+
+

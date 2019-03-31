@@ -45,7 +45,7 @@ class User extends Model implements AuthenticatableContract
     
     public function getNameOrUsername()
     {
-    	return $this->getUser() ?: $this->user;
+    	return $this->getUser() ?: $this->name;
     }
     
     

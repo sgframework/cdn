@@ -37,9 +37,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-
-
+    public function name()
+    {
+        if ($this->name && $this->email) {
+            return "{$this->name} {$this->email}";
+        }
+        
+        if ($this->name) {
+            return $this->name;
+        }
+        return null;
+    }
     public function getName()
     {
         if ($this->name && $this->email) {
@@ -54,8 +62,65 @@ class User extends Authenticatable
 
     public function getNameOrUsername()
     {
-        return $this->getUser() ?: $this->user;
+        return $this->getUser() ?: $this->name;
     }
+    public function fileToUpload()
+    {
+    	return $this->avatar();
+    }
+    
+    public function getUser()
+    {
+    	return $this->name;
+    }
+           
+    public function getUserOrUsername()
+    {
+    	return $this->getUser();
+    }
+    
+       public function getEmail()
+    {
+    	return $this->email;
+    }
+    
+        public function getEmailOrEmailAddress()
+    {
+    	return $this->getEmail() ?: $this->email;
+    }
+    
+    public function getNameOrEmail()
+    {
+      	return $this->name ?: $this->email;
+    }
+    
+    public function getAvatarUrl()
+    {
+    	return "{{ asset('image') }}/{{ Auth::user->photo }}";
+    }
+    
+        public function getAvatar()
+    {
+    	return $this->photo();
+    }
+    
+    
+    public function orders()  {
+    	return $this->hasMany('cdn\Models\Order', 'ordernumber');
+    
+    }
+    public function urgentOrders() {
+    	return $this->hasMany('cdn\Models\Order', 'urgentordernumber');
+    }
+    
+        public function uploads() {
+    	return $this->hasMany('cdn\Models\Upload', 'idnumber');
+    }
+    
+
+    
+
+    
 
 
 }

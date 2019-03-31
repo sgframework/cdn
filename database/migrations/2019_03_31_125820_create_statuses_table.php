@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -13,14 +14,12 @@ class CreateStatusesTable extends Migration
     public function up()
     {
         Schema::create('statuses', function(Blueprint $table) {
-		$table->increments('id');
-		$table->integer('user_id');
-		$table->integer('parent_id')->nullable();
+        $table->increments('id');
+        $table->integer('parent_id')->nullable();
+		$table->integer('idnumber');
+		$table->integer('ordernumber');
 		$table->text('body');
-		$table->timestamps();
-
-
-	
+		$table->timestamps();	
 	});
     }
 
@@ -31,6 +30,6 @@ class CreateStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('statuses');
+        Schema::dropIfExists('statuses');
     }
 }

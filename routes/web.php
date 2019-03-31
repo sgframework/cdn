@@ -42,6 +42,37 @@ Route::get('/root', [
 ]);
 
 
+
+/*
+* User Profile
+*/
+
+Route::get('/user/{name}', [
+    'uses' => '\cdn\Http\Controllers\ProfileController@getProfile',
+    'as' => 'dashboard.index'
+]);
+
+Route::get('/profile/edit', [
+	    'uses' => '\cdn\Http\Controllers\ProfileController@getEdit',
+    'as' => 'profile.get',
+]);
+
+Route::post('/profile/edit', [
+        'uses' => '\cdn\Http\Controllers\ProfileController@profileEdit',
+        'as' => 'profile.edit',
+
+]);
+
+
+
+Route::post('/profile/imgupdate', [
+	    'uses' => '\cdn\Http\Controllers\UploadController@photoEdit',
+    	'as' => 'photo.edit',
+]);
+
+
+
+
 /*
 * Authintication
 
@@ -80,15 +111,21 @@ Route::get('/signout', [
 
 */
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::get('/process', 'ProcessController@index')->name('process');
+//Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+//Route::get('/process', 'ProcessController@index')->name('process');
 //Route::get('/items', 'ItemsController@index')->name('items');
 //Route::get('/add-item', 'ItemsController@add')->name('add');
 //Route::post('/post-item', 'ItemsController@post')->name('post');
 //Route::get('/submit-rtv', 'RtvController@index')->name('rtv');
 
 
+//{{ route('dashboard.index') }}
+
+Route::get('/dashboard', [
+    'uses' => '\cdn\Http\Controllers\DashboardController@index',
+'as' => 'dashboard.index',
+]);
 
 
 //{{ route('branches.index') }}
@@ -143,7 +180,30 @@ Route::get('/order/add/urgent', [
 ]);
 
 
+Route::get('/order/add/step1', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@addOrderStep1',
+'as' => 'orders.partials.step1',
 
+]);
+
+Route::post('/order/post/step1', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@postOrderStep1',
+'as' => 'orders.step1.insert',
+
+]);
+
+
+Route::get('/order/add/step2', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@addOrderStep2',
+'as' => 'orders.partials.step1',
+
+]);
+
+Route::post('/order/post/step2', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@postOrderStep2',
+'as' => 'orders.step1.insert',
+
+]);
 
 
 
@@ -183,36 +243,6 @@ Route::get('/item/add', [
 
 ]);
 
-
-
-
-/*
-* User Profile
-*/
-
-Route::get('/user/{user}', [
-    'uses' => '\cdn\Http\Controllers\ProfileController@getProfile',
-    'as' => 'profile.index'
-]);
-
-Route::get('/profile/edit', [
-	    'uses' => '\cdn\Http\Controllers\ProfileController@getEdit',
-    'as' => 'profile.edit',
-    'middleware' => ['auth'],
-]);
-
-Route::post('/profile/edit', [
-	    'uses' => '\cdn\Http\Controllers\ProfileController@postEdit',
-    	'middleware' => ['auth'],
-]);
-
-
-
-Route::post('/profile/imgupdate', [
-	    'uses' => '\cdn\Http\Controllers\UploadController@postUpdate',
-    	'middleware' => ['auth'],
-    	'as' => 'update.post',
-]);
 
 
 

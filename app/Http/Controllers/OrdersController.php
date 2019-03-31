@@ -2,6 +2,8 @@
 
 namespace cdn\Http\Controllers;
 use cdn\Models\Order;
+use cdn\Models\Item;
+use cdn\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -70,18 +72,18 @@ class OrdersController extends Controller
             'freeitem' => $request['freeitem'],
             'itemprice' => $request['itemprice']
         ]);
-        return redirect()->route('orders.index')->with('info', 'Your order has been created');
+        $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice', 'urgent')->orderBy('created_at', 'desc')->paginate(10);
+
+        return redirect()->route('orders.index')->with('orders', $orders)->with('info', 'Your order has been created');
     }
     	
 
         public function getOrders(Request $request)
         {
-            $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice')->get();
+            $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice')->orderBy('created_at', 'desc')->paginate(10);
             return view('orders.index')->with('orders', $orders);
         }
 
-
-        
         public function addUrgentOrder()
         {
             return view ('orders.urgent');
@@ -90,6 +92,32 @@ class OrdersController extends Controller
         public function addOrder()
         {
             return view ('orders.add');
+        }
+        public function addOrderStep1()
+        {
+            return view ('orders.partials.step1');
+        }
+        public function postOrderStep1()
+        {
+            
+            Order::create([
+                'ordernumber' => $request['ordernumber'],
+                'staffname' => $request['staffname'],
+                'staffid' => $request['staffid'],
+                'ponumber' => $request['ponumber'],
+                'branchnumber' => $request['branchnumber'],
+                'branchname' => $request['branchname'],
+                ]);
+
+
+                $step1data = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname')->get();
+                Session::flash('message', 'Hold on tight. Your order is being processed');
+                return Redirect::to(route('orders.partials.step2'))->with('step1data', $step1data);
+
+        }
+        public function addOrderStep2()
+        {
+            return view ('orders.partials.step2')->with(postOrderStep1());
         }
         public function addOrderUrgent()
         {

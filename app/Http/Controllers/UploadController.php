@@ -55,9 +55,9 @@ class UploadController extends Controller
 		    }
 		}
 	}
-  	   public function postUpdate(Request $request)
+  	   public function photoEdit(Request $request)
     {
-    	$target_dir = "./public/images/uploads/avatars/";
+    	$target_dir = "../public/images/uploads/avatars/";
 	$target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 	$uploadOk = 1;
 	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -96,9 +96,9 @@ class UploadController extends Controller
 		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
 		        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
 		            	Auth::user()->update([
-    		'avatar' => basename( $_FILES["fileToUpload"]["name"]),
+    		'photo' => basename( $_FILES["fileToUpload"]["name"]),
     	]);	      
-    	return redirect()->route('home')->with('info', 'Your profile image has been updated');
+    	return redirect()->route('profile.edit')->with('info', 'Your profile image has been updated');
 		        
 		    } else {
 		        echo "Sorry, there was an error uploading your file.";
@@ -109,7 +109,7 @@ class UploadController extends Controller
 
   	public function vidUpload(Request $request)
     {   	
-    $target_dir = "public/uploads/videos/";
+    $target_dir = "../public/uploads/videos/";
     $file_name = md5(basename($_FILES["fileToUpload"]["name"])) . "_" . basename($_FILES["fileToUpload"]["name"]);
 	$target_file = $target_dir . $file_name;
 	$url = $_SERVER['HTTP_REFERER'] . $target_dir . $file_name;
@@ -148,7 +148,7 @@ class UploadController extends Controller
 	    	'fileToUpload' => 'required',   	
     	]);
         Upload::create([
-		'user_id' => Auth::user()->id,
+		'idnumber' => Auth::user()->idnumber,
 		'file_name' => $file_name,
     		'file_path' => $target_file,
     		'url' => $url,   		
