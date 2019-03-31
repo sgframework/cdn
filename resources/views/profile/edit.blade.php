@@ -16,12 +16,11 @@
 								<label for="imgupdate" class="control-label">Update your profile picture</label>
 
 								<div class="card-body">
-								</div>
 									<div class="row">
 										<div class="col-md-8" style="padding-left:30px">
 											<form action="{{ route('photo.edit') }}" method="post" enctype="multipart/form-data">
 												<div class="form-group">   									
-													<img class="media-object" alt="{{ Auth::user()->name() }}" src="{{ asset('images/uploads/avatars') }}/{{ Auth::user()->photo }}" style="width:120px; height:120px; float:center; border-radius:50%; margin-right:25px;">
+													<img class="media-object" alt="{{ Auth::user()->name }}" src="{{ asset('images/uploads/avatars') }}/{{ Auth::user()->photo }}" style="width:120px; height:120px; float:center; border-radius:50%; margin-right:25px;">
 												</div>
 													<br />
 													<input type="file" name="fileToUpload" id="fileToUpload"><br />
@@ -33,6 +32,7 @@
 								</div>
 							</div>
 						</div>
+					</div>
 					<div class="col-md-7">
 						<div class="card">
 							<div class="card-header">
