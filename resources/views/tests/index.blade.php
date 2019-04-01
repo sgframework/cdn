@@ -46,8 +46,8 @@
                     @if (!$items->count())
                         <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
                     @else
-                    <div class="card-header"><h4>Items List<h4></div>
-                <div class="card-body">
+        <div class="card-header"><h4>Items List<h4></div>
+            <div class="card-body">
                 <div class="table-responsive">
                         <table class="table table-bordered" id="crud_table">
                             <tr>
@@ -59,20 +59,17 @@
                                 <th width="10%">Plant</th>
                                 <th width="10%">InStock</th>
                                 <th width="30%">Type</th>
-                            </tr>
-                            
-                            <tr>
-
-                                <td contenteditable="false" class=""> </td>
+                            </tr>                            
+                        <tr>
+                            <td contenteditable="false" class=""> </td>
                                 <form action="{{ route('items.insert') }}" method="POST">
-
-                                <td contenteditable="false" name="itemname" class=""><input class="form-control" type="text" class="input" name="itemname" placeholder="Product Name" /></td>
-                                <td contenteditable="false" name="itemnumber" class=""><input class="form-control" type="number" class="input" name="itemnumber" placeholder="Material Number" /></td>
-                                <td contenteditable="false" name="itemprice" class=""><input class="form-control" type="decimal" class="input" name="itemprice" placeholder="0.00" /></td>
-                                <td contenteditable="false" name="itemsku" class=""><input class="form-control" type="number" class="input" name="itemsku" placeholder="SKU" /></td>
-                                <td contenteditable="false" name="plant" class=""><input class="form-control" type="text" class="input" name="plant" placeholder="Prod. Plant" /></td>
-                                <td contenteditable="false" name="instock" class=""><input class="form-control" type="number" class="input" name="instock" placeholder="In Stock" /></td>
-                                <td contenteditable="false" name="itempic" class="">
+                                        <td contenteditable="false" name="itemname" class=""><input class="form-control" type="text" class="input" name="itemname" placeholder="Product Name" /></td>
+                                        <td contenteditable="false" name="itemnumber" class=""><input class="form-control" type="number" class="input" name="itemnumber" placeholder="Material Number" /></td>
+                                        <td contenteditable="false" name="itemprice" class=""><input class="form-control" type="decimal" class="input" name="itemprice" placeholder="0.00" /></td>
+                                        <td contenteditable="false" name="itemsku" class=""><input class="form-control" type="number" class="input" name="itemsku" placeholder="SKU" /></td>
+                                        <td contenteditable="false" name="plant" class=""><input class="form-control" type="text" class="input" name="plant" placeholder="Prod. Plant" /></td>
+                                        <td contenteditable="false" name="instock" class=""><input class="form-control" type="number" class="input" name="instock" placeholder="In Stock" /></td>
+                                        <td contenteditable="false" name="itempic" class="">
                                     <select name="type" class="form-control">
                                         <option name="" value="">select one</option>
                                         <option style="color:black" value="Vegetables">Vegetables</option>
@@ -83,13 +80,11 @@
                                         <option></option>
                                     </select>
                                     <center><input class="btn btn-primary" type="submit" value="Insert" /></center><hr />
-                    </form>
-                                </td>
-                            </tr>
-
-                        </table>
-
-                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
                     <table id="myTable">
                         
@@ -139,12 +134,36 @@
 
         <section>
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+            <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                    <form class="form-inline" action="{{ route('orders.partials.step1') }}">
+                            <label for="staffname">Name:</label>
+                                <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />{{ Auth::user()->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                            <label for="staffid">ID#</label>
+                                <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />{{ Auth::user()->idnumber }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                                <input type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                      <select name="type" class="form-control">
+                                        <option name="" value="">Select Branch</option>
+                                        <option style="color:black" value="303669">Othaim Co. 23</option>
+                                        <option style="color:black" value="303670">Othaim Co. 24</option>
+                                        <option style="color:black" value="303671">Othaim Co. 25</option>
+                                        <option style="color:black" value="303672">Othaim Co. 26</option>
+                                        <option style="color:black" value="303673">Othaim Co. 27</option>
+                                        <option></option>
+                                    </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="urgent">
+                        <div style="float:right; padding-left:90px"><button type="submit">Next</button></div>
+                    </form>
                     </div>
                     </div>
                 </div>
         </section>
+        </div>
+
+        </div>
 
         
 
@@ -152,6 +171,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+
+
                     </div>
                     </div>
                 </div>

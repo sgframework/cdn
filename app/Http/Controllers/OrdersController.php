@@ -83,7 +83,8 @@ class OrdersController extends Controller
         public function getOrders(Request $request)
         {
             $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
-            return view('orders.index')->with('orders', $orders);
+            $branches = Branch::select(' ranchname', 'bfanchnumber')->get();
+            return view('orders.index')->with('orders', $orders)->with('branches', $branches);
         }
 
         public function addUrgentOrder()
