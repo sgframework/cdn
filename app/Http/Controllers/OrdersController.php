@@ -1,6 +1,7 @@
 <?php
 
 namespace cdn\Http\Controllers;
+use cdn\Models\Branch;
 use cdn\Models\Order;
 use cdn\Models\Item;
 use cdn\User;
@@ -48,7 +49,8 @@ class OrdersController extends Controller
             'orderitems' => ['string', 'max:255'],
             'itemqty' => ['integer', 'max:255'],
             'freeitem' => ['integer', 'max:255'],
-            'itemprice' => ['decimal', 'max:255']        ]);
+            'itemprice' => ['decimal', 'max:255']
+        ]);
     }
 
     /**
@@ -72,7 +74,7 @@ class OrdersController extends Controller
             'freeitem' => $request['freeitem'],
             'itemprice' => $request['itemprice']
         ]);
-        $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice', 'urgent')->orderBy('created_at', 'desc')->paginate(10);
+        $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice', 'urgent')->orderBy('updated_at', 'desc')->paginate(10);
 
         return redirect()->route('orders.index')->with('orders', $orders)->with('info', 'Your order has been created');
     }
@@ -80,7 +82,7 @@ class OrdersController extends Controller
 
         public function getOrders(Request $request)
         {
-            $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice')->orderBy('created_at', 'desc')->paginate(10);
+            $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
             return view('orders.index')->with('orders', $orders);
         }
 

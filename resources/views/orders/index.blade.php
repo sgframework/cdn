@@ -26,6 +26,7 @@
                         <th>Free Items</th>
                         <th>Item Price</th>
                         <th>Created</th>
+                        <th>Updated</th>
                     </tr>
                 </thead>
                         @foreach ($orders as $order)

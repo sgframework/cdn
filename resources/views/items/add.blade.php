@@ -17,7 +17,7 @@
             //
             //
             // endShow -->
-            <span>&larr; <a href="/">Back</a></span><span style="float:right"><a href="{{ route('items.index') }}">Products List</a> &rarr;</span><br /><hr />
+            <span>&larr; <a href="/root">Back</a></span><span style="float:right"><a href="{{ route('items.index') }}">Products List</a> &rarr;</span><br /><hr />
         <section>
             <div class="container">
                 <div class="row">

@@ -13,6 +13,7 @@
 		<td>{{ $item->itemsku }}</td>
 		<td>{{ $item->plant }}</td>
 		<td>{{ $item->instock }}</td>
+		<td>{{ $item->type }}</td>
 		<!--<td>{{ $item->itempic }}</td>-->
     </tr>
   </tbody>

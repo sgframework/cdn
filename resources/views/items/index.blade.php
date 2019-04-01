@@ -21,6 +21,7 @@
                               <th>SKU</th>
                               <th>Plant</th>
                               <th>InStock</th>
+                              <th>Type</th>
                           </tr>
                       </thead>
                         @foreach ($items as $item)

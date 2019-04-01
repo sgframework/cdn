@@ -17,7 +17,7 @@
             //
             //
             // endShow -->
-            <span>&larr; <a href="/">Dashboard</a></span><span style="float:right"><a href="{{ route('branches.index') }}">Products List</a> &rarr;</span><br /><hr />
+            <span>&larr; <a href="/root">Back</a></span><span style="float:right"><a href="{{ route('branches.index') }}">Branches List</a> &rarr;</span><br /><hr />
         <section>
             <div class="container">
                 <div class="row">
@@ -27,7 +27,6 @@
                             <br />
                             <input class="form-control" type="text" class="input" name="branchname" placeholder="Branch Name" />
                             <input class="form-control" type="number" class="input" name="branchnumber" placeholder="Branch# " />
-
                             <input class="btn btn-primary" type="submit" value="Add Branch" />
                         </form>
                     </div>

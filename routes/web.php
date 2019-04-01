@@ -41,7 +41,10 @@ Route::get('/root', [
 'as' => 'root.index',
 ]);
 
-
+Route::get('/tests', [
+    'uses' => '\cdn\Http\Controllers\RootController@getTest',
+'as' => 'tests.index',
+]);
 
 /*
 * User Profile

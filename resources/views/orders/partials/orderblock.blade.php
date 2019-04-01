@@ -17,7 +17,8 @@
 			<td>{{ $order->itemqty }}</td>
 			<td>{{ $order->freeitem }}</td>
 			<td>{{ $order->itemprice }} SR</td>
-			<td>{{ \Carbon\Carbon::parse($order->updated_at)->format('h:m - d/m/Y')}}</td>
+			<td>{{ $order->created_at }}</td>
+			<td>{{ $order->updated_at }}</td>
 </tr>	
 	</tbody>
         @endif

@@ -6,6 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <title>SunbulahGroup Administrators Area</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -61,53 +62,16 @@
             }
         </style>
     </head>
-
 <div class="container">
     <div class="row justify-content-center">
-
-
-
-
     @if (Route::has('login'))
                     @auth
-
-
-                    <ul class="navbar-nav mr-auto">
-
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('items.add') }}">Add Product</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('branches.add') }}">Add Branch</a>
-                    </span>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('orders.index') }}">All Orders</a>
-                    </span>
-                    <span  style="padding-right:60px" class="nav-item">
-                    <a class="nav-link" href="">Important Links.</a>
-                    </span>
-                    
-                    </ul>
-
-
-
-
     <header class="header">
-
-
-
-
-
     <form class="form-inline input" role="search" action="{{ route('search.items') }}">
             <div class="form-group">
                 <input type="text" name="query" class="form-control" placeholder="Search Products"><span><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>Query</button></span>
             </div>
         </form>
-
         <form class="form-inline input" role="search" action="{{ route('search.branches') }}">
             <div class="form-group">
                 <input type="text" name="query" class="form-control" placeholder="Search Branches"><span><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>Query</button></span>
@@ -116,31 +80,148 @@
     </header>
     <!--<div class="col-md-12">
     <span style="float:left"><a class="btn btn-primary" href="{{ route('items.add') }}">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="{{ route('items.index') }}">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
-
            <form method="get" action="/add-item"><span><button type="submit" class="btn btn-primary">Submit a RTV Request</button></span> </form>   <span><form method="get" action="/items"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>    <span><form method="get" action="/submit-rtv"><button type="submit" class="btn btn-primary">Submit a RTV Request</button></form></span>
         </div>-->
     <div class="col-md-12">
         <div class="card">
-
             <!--<div class="top-left">
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
 </div>
-        <div class="card-header">SunbulahGroup CDN Administrators Dashboard.</div>
-            <div class="card-body">
-            <!-- If user loggedIn show below content until endShow part 
-            //
-            //
-            //
-            // endShow -->
-
-
+        <div class="card-header">
+            <button onclick="fun('orders')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Orders</button>
+                <div id="orders" class="w3-container w3-hide">
+                    <div style="padding-top:15px; text-align:center">
+                        <a href="{{ route('orders.add') }}"><i class="fas fa-plus"></i> <span>New Order</span></a>
+                        <a href="{{ route('orders.urgent') }}"><i class="fas fa-plus"></i> <span>New Urgent Order</span></a>
+                        <a href="{{ route('orders.index') }}"><i class="fas fa-list"></i> <span>All Orders</span></a>
+                        <a href="{{ route('orders.index') }}"><i class="fas fa-link"></i> <span>Important Links</span></a>
+                    </div>
+                </div>
+        </div>
+            <script>
+                function fun(id) {
+                var x = document.getElementById(id);
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else { 
+                    x.className = x.className.replace(" w3-show", "");
+                }
+                }
+            </script>
             </div>
+        <div class="card">
+            <div class="card-body">     
+        <button onclick="fun('products')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Products</button>
+            <div id="products" class="w3-container w3-hide">
+                <div style="padding-top:15px; text-align:center">
+                    <a href="{{ route('items.add') }}"><i class="fas fa-plus"></i> <span>Add Product</span></a>
+                    <a href="{{ route('items.index') }}"><i class="fas fa-list"></i> <span>All Products</span></a>
+                </div>
+            </div>
+        </div>
+            <script>
+                function fun(id) {
+                var x = document.getElementById(id);
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else { 
+                    x.className = x.className.replace(" w3-show", "");
+                }
+                }
+            </script>
+        </div>
+            </div>
+                </div>
+                <!-- If user loggedIn show below content until endShow part 
+                //
+                //
+                //
+                // endShow -->
             </div>
         </div>
     </div>
-</div>                    @else
+</div>
+
+<div class="container">
+    <div class="row justify-content-center">
+
+    <div class="col-md-12">
+        <div class="card">
+            <!--<div class="top-left">
+	<a href="{{ url('/') }}">SunbulahGroup</a>
+	</div>-->
+    <div class="top-right links">
+</div>
+        <div class="card-header">
+            <button onclick="fun('branches')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Branches</button>
+                <div id="branches" class="w3-container w3-hide">
+                <div style="padding-top:15px; text-align:center">
+                    <a href="{{ route('branches.add') }}"><i class="fas fa-plus"></i> <span>Add Branch</span></a>
+                    <a href="{{ route('branches.index') }}"><i class="fas fa-list"></i> <span>All Branches</span></a>
+                </div>
+            </div>
+        </div>
+                <script>
+                function fun(id) {
+                var x = document.getElementById(id);
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else { 
+                    x.className = x.className.replace(" w3-show", "");
+                }
+                }
+                </script>
+            </div>
+        <div class="card">
+            <div class="card-body">
+                <button onclick="fun('management')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-cogs"></i> Management</button>
+                    <div id="management" class="w3-container w3-hide">
+                    <div style="padding-top:15px; text-align:center">
+
+                    <a href=""><i class="fas fa-database"></i> <span>Manage DB</span></a>&nbsp;&nbsp;
+                    <a href=""><i class="fas fa-user-cog"></i> <span>Manage Users</span></a>&nbsp;&nbsp;
+                    <a href=""><i class="fas fa-lock"></i> <span>Manage Access Level</span></a>&nbsp;&nbsp;
+                    <a href=""><i class="fas fa-envelope"></i> <span>Manage Mail</span></a>&nbsp;&nbsp;
+                    <a href=""><i class="fas fa-random"></i> <span>Manage Routes</span></a>&nbsp;&nbsp;
+                    <a href=""><i class="fas fa-exclamation-triangle"></i> <span>Manage Notifications</span></a>&nbsp;&nbsp;
+            </div>
+
+            </div>
+            </div>
+                <script>
+                function fun(id) {
+                var x = document.getElementById(id);
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else { 
+                    x.className = x.className.replace(" w3-show", "");
+                }
+                }
+                </script>
+            </div>
+                </div>
+                    </div>
+                    <!-- If user loggedIn show below content until endShow part 
+                    //
+                    //
+                    //
+                    // endShow -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+@else
             <!-- If user loggedOut show below content until endShow part -->          
             <div class="container">
     <div class="row justify-content-center">

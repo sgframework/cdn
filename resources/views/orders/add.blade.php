@@ -17,34 +17,33 @@
             //
             //
             // endShow -->
-            <span>&larr; <a href="/">Back</a></span><span style="float:right"><a href="{{ route('items.index') }}">Products List</a> &rarr;</span><br /><hr />
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+        <span>&larr; <a href="/">Back</a></span><span style="float:right"><a href="{{ route('items.index') }}">Products List</a> &rarr;</span><br /><hr />
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
                     <div class="table-responsive">
-    <table class="table table-bordered" id="crud_table">
-     <tr>
-      <th width="30%">Name</th>
-      <th width="10%">ID#</th>
-      <th width="20%">PO#</th>
-      <th width="40%">Branch#</th>
-     </tr>
-     <tr>
-      <td contenteditable="false" class="item_name">{{ Auth::user()->name }} </td>
-      <td contenteditable="false" class="item_code">{{ Auth::user()->idnumber }}</td>
-      <td contenteditable="true" class="item_desc"></td>
-            <td contenteditable="true" class="item_price">
-            <select class="form-control">
-                <option name="" value=""></option>
-                <option name="ordernumber" style="color:black" value="Vanilla Pound Cake 300 g" />Vanilla Pound Cake 300 g</option>
-                <option></option>
-            </select>
-            </td>
-         </tr>
-    </table>
-
-   </div>
+                        <table class="table table-bordered" id="crud_table">
+                            <tr>
+                                <th width="30%">Name</th>
+                                <th width="10%">ID#</th>
+                                <th width="20%">PO#</th>
+                                <th width="40%">Branch#</th>
+                            </tr>
+                            <tr>
+                                <td contenteditable="false" class="item_name">{{ Auth::user()->name }} </td>
+                                <td contenteditable="false" class="item_code">{{ Auth::user()->idnumber }}</td>
+                                <td contenteditable="true" class="item_desc"></td>
+                                <td contenteditable="true" class="item_price">
+                                    <select class="form-control">
+                                        <option name="" value=""></option>
+                                        <option name="ordernumber" style="color:black" value="Vanilla Pound Cake 300 g" />Vanilla Pound Cake 300 g</option>
+                                        <option></option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                        <form method="POST" action="{{ route('orders.insert') }}">
                         @csrf     
                         <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />

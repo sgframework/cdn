@@ -22,6 +22,7 @@ class CreateItemsTable extends Migration
             $table->integer('plant')->nullable();
             $table->integer('instock')->nullable();
             $table->string('link')->nullable();
+            $table->string('type')->nullable();
             $table->string('itempic')->default("item.png");
             $table->timestamps();
         });
