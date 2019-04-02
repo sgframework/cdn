@@ -43,7 +43,9 @@ class ItemsController extends Controller
             'plant' => ['required'],
             'instock' => ['required', 'string', 'max:255'],
             'link' => ['string', 'max:255'],
+            'type' => ['string'],
             'itempic' => ['string']
+  
         ]);
     }
 
@@ -63,6 +65,7 @@ class ItemsController extends Controller
             'plant' => $request['plant'],
             'instock' => $request['instock'],
             'link' => $request['link'],
+            'type' => $request['type'],
             'itempic' => $request['itempic']
         ]);
         $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'itempic', 'type')->orderBy('created_at', 'desc')->paginate(10);

@@ -10,7 +10,7 @@
  .form-inline {  
    display: flex;
    flex-flow: row wrap;
-   align-items: center;
+   align-items: left;
  }
  
  .form-inline label {
@@ -37,7 +37,7 @@
    background-color: royalblue;
  }
  
- @media (max-width: 800px) {
+ @media (max-width: 2px) {
    .form-inline input {
      margin: 10px 0;
    }

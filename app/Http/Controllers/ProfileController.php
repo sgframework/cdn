@@ -4,19 +4,21 @@ namespace cdn\Http\Controllers;
 
 use Auth;
 use cdn\User;
+use cdn\Models\Branch;
+use cdn\Models\Item;
+use cdn\Models\Order;
+use cdn\Models\OrderItems;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function getProfile($name)
+    public function getProfile()
     {
-    	$user = User::where('name', $name)->first();
-    	
-    	if (!$name) {
-    		abort(404);
-    	}
-    	   	
-    	return view ('dashboard.index')->with('name', $name);
+		$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
+        $branches = Branch::select('branchname', 'branchnumber')->orderBy('updated_at', 'desc')->paginate(10);
+        $orders = Order::select('ordernumber', 'orderid', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
+        return view('dashboard.index')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
+		
     }
     public function getEdit()
     {

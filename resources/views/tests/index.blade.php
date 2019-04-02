@@ -41,7 +41,8 @@
                     </div>
                 </div>
         </section>
-
+        {{ substr(md5('http://www.google.com'), 0, 6) }}
+        {{ $ordernumber = mt_rand(7000, 8000) }}
 
                     @if (!$items->count())
                         <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
@@ -132,13 +133,12 @@
         </section>
 
 
-        <section>
-            <div class="container">
-            <div class="row justify-content-center">
+<div class="container">
+    <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                    <form class="form-inline" action="{{ route('orders.partials.step1') }}">
-                            <label for="staffname">Name:</label>
+                <form class="form-inline" action="{{ route('orders.partials.step1') }}">
+                            <label style="padding-left:20px" for="staffname">Name:</label>
                                 <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />{{ Auth::user()->name }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             </label>
                             <label for="staffid">ID#</label>
@@ -147,37 +147,53 @@
                                 <input type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                       <select name="type" class="form-control">
                                         <option name="" value="">Select Branch</option>
-                                        <option style="color:black" value="303669">Othaim Co. 23</option>
-                                        <option style="color:black" value="303670">Othaim Co. 24</option>
-                                        <option style="color:black" value="303671">Othaim Co. 25</option>
-                                        <option style="color:black" value="303672">Othaim Co. 26</option>
-                                        <option style="color:black" value="303673">Othaim Co. 27</option>
-                                        <option></option>
+                                        @foreach($branches as $branch)
+                                        <option value="{{$branch->branchnumber}}">{{ $branch->branchnumber }}&nbsp;&nbsp;{{ $branch->branchname }}</option>
+                                        @endforeach
                                     </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="urgent">
-                        <div style="float:right; padding-left:90px"><button type="submit">Next</button></div>
-                    </form>
-                    </div>
-                    </div>
-                </div>
-        </section>
+                        <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="urgent">
+                    <div style="float:right; padding-left:90px"><button type="submit">Next</button></div>
+                </form>
+            </div>
         </div>
+    </div>
+</div>
 
+                            </div>       
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    @if (!$branches->count())
+                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
+                    @else
+                        @foreach ($branches as $branch)
+                                @include('branches/partials/branchblock')
+                        @endforeach
+                    @endif
+                </div>
+            </div>
         </div>
-
-        
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+    </section>
 
 
 
-                    </div>
-                    </div>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <select class="form-control" name="item_id">
+                        @foreach($branches as $branch)
+                            <option value="{{$item->item_id}}">{{ $branch->branchname }}</option>
+                        @endforeach
+                    </select>
                 </div>
-        </section>
+            </div>
+        </div>
+    </div>
+</section>
 
         
 
@@ -185,17 +201,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
-                    </div>
-                    </div>
-                </div>
-        </section>
 
-        
+                    @include('tests/markdown')
 
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
+
                     </div>
                     </div>
                 </div>

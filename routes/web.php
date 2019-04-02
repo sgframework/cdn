@@ -46,14 +46,40 @@ Route::get('/tests', [
 'as' => 'tests.index',
 ]);
 
+Route::get('/tests/review', [
+    'uses' => '\cdn\Http\Controllers\RootController@getReview',
+'as' => 'orders.review',
+]);
+
+
+
+/*
+* External Services.
+*/
+
+Route::get('/mail', [
+    'uses' => '\cdn\Http\Controllers\MailController@getMail',
+'as' => 'mail.index',
+]);
+
+
+Route::get('/md', [
+    'uses' => '\cdn\Http\Controllers\RootController@getMd',
+'as' => 'tests.markdown',
+]);
+
+
 /*
 * User Profile
 */
 
-Route::get('/user/{name}', [
+Route::get('/user/{id}', [
     'uses' => '\cdn\Http\Controllers\ProfileController@getProfile',
     'as' => 'dashboard.index'
 ]);
+
+
+
 
 Route::get('/profile/edit', [
 	    'uses' => '\cdn\Http\Controllers\ProfileController@getEdit',
@@ -126,7 +152,7 @@ Route::get('/signout', [
 //{{ route('dashboard.index') }}
 
 Route::get('/dashboard', [
-    'uses' => '\cdn\Http\Controllers\DashboardController@index',
+    'uses' => '\cdn\Http\Controllers\ProfileController@getProfile',
 'as' => 'dashboard.index',
 ]);
 
@@ -161,6 +187,13 @@ Route::get('/orders', [
 
 ]);
 
+Route::get('/{$user}/orders', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@getOrdersbyUser
+    user',
+'as' => 'orders.user',
+
+]);
+
 
 Route::post('/order/insert', [
     'uses' => '\cdn\Http\Controllers\OrdersController@InsertOrders',
@@ -189,22 +222,32 @@ Route::get('/order/add/step1', [
 
 ]);
 
-Route::post('/order/post/step1', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@postOrderStep1',
-'as' => 'orders.step1.insert',
+Route::post('/order/insert/step1', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@insertOrderStep1',
+'as' => 'orders.insert.step1',
 
 ]);
 
 
 Route::get('/order/add/step2', [
     'uses' => '\cdn\Http\Controllers\OrdersController@addOrderStep2',
-'as' => 'orders.partials.step1',
+'as' => 'orders.partials.step2',
 
 ]);
 
-Route::post('/order/post/step2', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@postOrderStep2',
-'as' => 'orders.step1.insert',
+Route::post('/order/insert/step2', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@insertOrderStep2',
+'as' => 'orders.insert.step2',
+
+]);
+
+
+
+//{{ route('dashboard.orders') }}
+
+Route::get('/myorders', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@getMyOrders',
+'as' => 'dashboard.orders',
 
 ]);
 

@@ -37,6 +37,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function user(User $idnumber)
+    {
+    	return $this->idnumber;
+    }
+
     public function name()
     {
         if ($this->name && $this->email) {

@@ -25,14 +25,15 @@
                         <form method="POST" action="{{ route('items.insert') }}">
                         @csrf                
                             <br />
-                            <input class="form-control" type="number" class="input" name="itemnumber" placeholder="Material Number" />
-                            <input class="form-control" type="text" class="input" name="itemname" placeholder="Product Name" />
-                            <input class="form-control" type="decimal" class="input" name="itemprice" placeholder="0.00" />
-                            <input class="form-control" type="number" class="input" name="itemsku" placeholder="SKU" />
-                            <input class="form-control" type="text" class="input" name="plant" placeholder="Prod. Plant" />
-                            <input class="form-control" type="number" class="input" name="instock" placeholder="In Stock" />
-                            <input class="form-control" type="url" class="input" name="link" placeholder="http://" />
-                            <input class="form-control" type="text" class="input" name="itempic" value="item.png" placeholder="Upload an Image" />
+                                <input class="form-control" type="number" class="input" name="itemnumber" placeholder="Material Number" />
+                                <input class="form-control" type="text" class="input" name="itemname" placeholder="Product Name" />
+                                <input class="form-control" type="decimal" class="input" name="itemprice" placeholder="0.00" />
+                                <input class="form-control" type="number" class="input" name="itemsku" placeholder="SKU" />
+                                <input class="form-control" type="text" class="input" name="plant" placeholder="Prod. Plant" />
+                                <input class="form-control" type="number" class="input" name="instock" placeholder="In Stock" />
+                                <input class="form-control" type="url" class="input" name="link" placeholder="http://" />
+                                <input class="form-control" type="text" class="input" name="itempic" value="item.png" placeholder="Upload an Image" />
+                                <input class="form-control" type="text" class="input" name="type" value="anyval" placeholder="FRICO DRAIY" />
                             <input class="btn btn-primary" type="submit" value="Add Product" />
                         </form>
                     </div>

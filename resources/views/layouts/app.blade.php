@@ -87,28 +87,24 @@
                                 </li>
                             @endif-->
                         @else
-
                     <ul class="navbar-nav mr-auto">
-
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('items.index') }}">Browse Products</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('branches.index') }}">Browse Branches</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-dashboard"></i>Dashboard</a>
-                    </span>
-                    
+                        <span class="nav-item">
+                            <a class="nav-link" href="{{ route('items.index') }}">Browse Products</a>
+                        </span>
+                        <span class="nav-item">
+                            <a class="nav-link" href="{{ route('branches.index') }}">Browse Branches</a>
+                        </span>
+                        <span class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
+                        </span>
+                        <span class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
+                        </span>
+                        <span class="nav-item">
+                            <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                        </span>  
                     </ul>
                     <!-- Right Side Of Navbar -->
-
                     <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -26,8 +26,8 @@ class SGCDN extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function getMail()
     {
-        return $this->view('view.name');
+        return $this->view('vendor.html.layout');
     }
 }

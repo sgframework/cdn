@@ -3,6 +3,7 @@ namespace cdn\Models;
 use cdn\User;
 use cdn\Models\Item;
 use cdn\Models\Branch;
+use cdn\Models\Status;
 use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
@@ -14,13 +15,41 @@ class Order extends Model
     	'ponumber',
     	'branchnumber',
     	'branchname',
-    	'itemnumber',
-        'orderitems',
-        'itemqty',
-        'freeitem',
-        'itemprice',
         'urgent',
+        'slug',
     ];   
+
+	public function name()
+	{
+		return $this->belongsTo('cdn\User', 'idnumber');
+	}
+
+    public function orderId(User $name)
+	{
+    	return $this->hasMany('cdn\Models\Order', 'orderid');
+   }
+       
+       public function getOrderById(User $name)
+    {
+        return $this->hasMany('cdn\Models\Order', 'orderid');
+    }
+
+    public function scopeNotUrgent($query)
+	{
+		return $query->whereNull('urgent');
+    }
+    
+    public function items()
+	{
+		return $this->hasMany('cdn\Models\Order', 'orderid');
+    }
+    public function orderItems()
+	{
+		return $this->hasMany('cdn\Models\OrderItems', 'orderid');
+    }
+    
+
+
 
 
     public function staffName()
@@ -46,15 +75,20 @@ class Order extends Model
     {
         return $this->belongsTo('cdn\User', 'name');
     }
+    public function getOrdersbyUser()
+    {
+        return $this->belongsTo('cdn\User', 'name');
+    }
+    
     
     public function getOrderNumber(Request $request)
     {
         return $this->belongsTo('cdn\Models\Order', 'ponumber');
     }
 
-	public function orders(Order $ordernumber)
+	public function orders($id)
 	{
-    		return $this->hasMany('cdn\Models\Order', 'ordernumber');
+    		return $this->hasMany('cdn\Models\Order', 'id');
    	}
 
     public function staffOrders(Order $orders)
@@ -179,4 +213,6 @@ class Order extends Model
     {
     	return $this->orderNumber() ?: $this->created_at;
     }
+
+
 }

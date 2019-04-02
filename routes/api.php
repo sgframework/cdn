@@ -16,3 +16,20 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+/*
+Route::middleware('auth:api')->get('/order', function (Request $request) {
+    return "ok"; 
+});
+
+*/
+
+
+Route::get('/test', function (Request $request) {
+    $arr = array([
+        'api' => 'test', 'api1' => 'test1', 'api2' => 'test2', 'api3' => 'test4' ]);
+
+    
+    return response($arr, 200)
+                  ->header('Content-Type', 'application/json');
+});

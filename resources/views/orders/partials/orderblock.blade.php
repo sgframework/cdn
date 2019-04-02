@@ -17,7 +17,7 @@
 			<td>{{ $order->itemqty }}</td>
 			<td>{{ $order->freeitem }}</td>
 			<td>{{ $order->itemprice }} SR</td>
-			<td>{{ $order->created_at }}</td>
+			<td>{{ $order->created_at->diffForHumans() }}</td>
 			<td>{{ $order->updated_at }}</td>
 </tr>	
 	</tbody>

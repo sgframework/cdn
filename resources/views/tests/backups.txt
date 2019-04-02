@@ -1,0 +1,492 @@
+
+                OredersController
+                $order = Session::flash('message', 'Hold on tight. Your order is being processed');
+
+                //Input::get('order');
+
+
+                
+        {{ substr(md5('http://www.google.com'), 0, 6) }}
+        {{ $ordernumber = mt_rand(7000, 8000) }}
+
+
+
+
+
+
+
+
+
+
+            public function staffName()
+	{
+		return $this->belongsTo('cdn\User', 'name');
+	}
+    public function staffId()
+	{
+		return $this->belongsTo('cdn\User', 'idnumber');
+    }
+    
+    public function orderNumber()
+	{
+		return $this->belongsTo('cdn\Models\Order', 'ponumber');
+    }
+
+    public function poNumber()
+	{
+		return $this->belongsTo('cdn\User', 'idnumber');
+    }
+
+    public function orderByName()
+    {
+        return $this->belongsTo('cdn\User', 'name');
+    }
+    
+    public function getOrderNumber(Request $request)
+    {
+        return $this->belongsTo('cdn\Models\Order', 'ponumber');
+    }
+
+	public function orders(Order $ordernumber)
+	{
+    		return $this->hasMany('cdn\Models\Order', 'ordernumber');
+   	}
+
+    public function staffOrders(Order $orders)
+    {
+        return $this->belongsTo('cdn\User', 'idnumber');
+    }
+
+    public function item()
+	{
+		return $this->belongsTo('cdn\Models\Item', 'itemnumber');
+    }
+
+
+    public function itemNumber()
+	{
+		return $this->belongsTo('cdn\Models\Order', 'ponumber');
+    }
+    public function getOrderByStaff()
+    {
+    	if ($this->ordernumber && $this->ponumber) {
+    		return "{$this->staffname} {$this->ponumber}";
+    	}
+    	
+    	if ($this->staffname) {
+    		return $this->ponumber;
+    	}
+    	return null;
+    }
+    public function getOrderByDate()
+    {
+    	return $this->created_at;
+    }
+
+    public function getOrderByPo()
+    {
+    	return $this->poNumber() ?: $this->ordernumber;
+    }
+    public function getBranchNumber()
+    {
+    	return $this->getBranchName() ?: $this->branchnumber;
+    }
+
+    public function getBranchName()
+    {
+    	return $this->getBranchNumber() ?: $this->branchname;
+    }
+    public function getOrderByBranchNumber()
+    {
+    	//if ($this->itemnumber && $this->itemname) {
+    	//	return "{$this->itemprice} {$this->itemprice}";
+    	//}
+    	
+    	if ($this->branchnumber) {
+    		return $this->ordernumber;
+    	}
+    	return null;
+    }
+    public function getOrderByBranchName()
+    {
+    	//if ($this->itemnumber && $this->itemname) {
+    	//	return "{$this->itemprice} {$this->itemprice}";
+    	//}
+    	
+    	if ($this->branchname) {
+    		return $this->ordernumber;
+    	}
+    	return null;
+    }
+    public function getItemsPerOrder()
+    {
+    	//if ($this->itemnumber && $this->itemname) {
+    	//	return "{$this->itemprice} {$this->itemprice}";
+    	//}
+    	
+    	if ($this->orderNumber) {
+    		return $this->item;
+    	}
+    	return null;
+    }
+    public function getOrderItems()
+    {
+    	return $this->poNumber() ?: $this->item;
+    }
+    public function getOrderList()
+    {    	
+    	if ($this->poNumber && $this->itemNumber) {
+    		return $this->getOrderItems;
+    	}
+    	return null;
+    }
+    public function getItemsQty()
+    {
+    	return $this->itemNumber() ?: $this->itemqty;
+    }
+    public function getOrderQty()
+    {    	
+    	if ($this->getOrderItems) {
+    		return $this->getItemsQty;
+    	}
+    	return null;
+    }
+
+    public function getFreeItems()
+    {
+    	return $this->getOrderItems() ?: $this->freeitem;
+    }
+
+    public function getItemPrice()
+	{
+		return $this->belongsTo('cdn\Models\Item', 'itemprice');
+    }
+    public function getPrice()
+	{
+    	return $this->getItemPrice() ?: $this->itemprice;
+    }
+    public function getTimeStamp()
+    {
+    	return $this->orderNumber() ?: $this->created_at;
+    }
+
+    public function getOrderStep1()
+    {
+    	return $this->orderNumber() ?: $this->created_at;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //$getOrderNumbre = Order::select('ordernumber')->get();
+                //$orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname')->get();
+
+
+
+
+
+
+
+
+
+
+
+
+
+Orders OredersController
+
+
+        public function insertOrderStep1(Request $request)
+        {
+            
+            Order::create([
+                'ordernumber' => mt_rand(200000, 800000),
+                'staffname' => $request['staffname'],
+                'staffid' => $request['staffid'],
+                'ponumber' => $request['ponumber'],
+                'branchnumber' => $request['branchnumber'],
+                'branchname' => 'branchname',
+                'urgent' => $request['urgent'],
+                'slug' => $request['slug'],
+                ]);
+
+
+                OrderItems::create([
+                    'ordernumber' => mt_rand(200000, 800000),
+                    'staffname' => $request['staffname'],
+                    'staffid' => $request['staffid'],
+                    'ponumber' => $request['ponumber'],
+                    'branchnumber' => $request['branchnumber'],
+                    'urgent' => $request['urgent'],
+                    ]);
+                        
+                    return view('orders.user');
+                        }
+
+        public function addOrderStep2(User $idnumber, Order $slug)
+        {
+            $idnumber = Auth::User->idnumber()->get();
+            $slug = Order::where('slug', '=', $slug)->firstOrFail();
+            $orders = Order::select('id', 'ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'slug')->get();
+            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
+            $branches = Branch::select('branchname', 'branchnumber')->get();
+            return view ('orders.user')->with('idnumber', $idnumber)->with('slug', $slug)->with('orders', $orders)->with('items', $items)->with('branches', $branches);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        Route::get('/order/{slug}', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@addOrderStep2',
+    'as' => 'orders.slug'
+]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OrdersController.php
+
+<?php
+
+namespace cdn\Http\Controllers;
+use cdn\Models\Branch;
+use cdn\Models\Order;
+use cdn\Models\OrderItems;
+use cdn\Models\Item;
+use cdn\Models\Status;
+use cdn\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+
+
+
+class OrdersController extends Controller
+{
+    /**
+     * Where to redirect users after registration.
+     *
+     * @var string
+     */
+    protected $redirectTo = '/';
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(Request $request)
+    {
+        return Validator::make($request, [
+            'ordernumber' => ['required', 'string', 'max:255'],
+            'staffname' => ['required', 'string', 'max:255'],
+            'staffid' => ['required', 'decimal', 'max:255'],
+            'ponumber' => ['required', 'string', 'max:255'],
+            'branchnumber' => ['required'],
+            'branchname' => ['required', 'string', 'max:255'],
+            'itemnumber' => ['integer', 'max:255'],
+            'orderitems' => ['string', 'max:255'],
+            'itemqty' => ['integer', 'max:255'],
+            'freeitem' => ['integer', 'max:255'],
+            'itemprice' => ['decimal', 'max:255'],
+            'urgent' => ['string', 'max:255'],
+            'orderstatus' => ['string', 'max:255'],
+            'slug' => ['string', 'max:255']
+        ]);
+    }
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $request
+     * @return \cdn\Order
+     */
+    protected function InsertOrders(Request $request)
+    {
+        Order::create([
+            'ordernumber' => $request['ordernumber'],
+            'staffname' => $request['staffname'],
+            'staffid' => $request['staffid'],
+            'ponumber' => $request['ponumber'],
+            'branchnumber' => $request['branchnumber'],
+            'branchname' => $request['branchname'],
+            'itemnumber' => $request['itemnumber'],
+            'orderitems' => $request['orderitems'],
+            'itemqty' => $request['itemqty'],
+            'freeitem' => $request['freeitem'],
+            'itemprice' => $request['itemprice'],
+            'urgent' => $request['urgent'],
+            'orderstatus' => $request['orderstatus'],
+            'slug' => $request['slug']
+        ]);
+        $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent')->orderBy('updated_at', 'desc')->paginate(10);
+
+        return redirect()->route('orders.index')->with('orders', $orders)->with('info', 'Your order has been created');
+    }    	
+
+        public function getOrders(Request $request)
+        {
+            $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
+            $branches = Branch::select('branchname', 'branchnumber')->get();
+            return view('orders.index')->with('orders', $orders)->with('branches', $branches);
+        }
+
+        public function addUrgentOrder()
+        {
+            return view ('orders.urgent');
+        }
+
+        public function addOrder()
+        {
+            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
+            $branches = Branch::select('branchname', 'branchnumber')->get();
+            return view ('orders.add')->with('items', $items)->with('branches', $branches);
+        }
+        public function addOrderStep1()
+        {
+            return view ('orders.partials.step1');
+        }
+        public function insertOrderStep1(Request $request)
+        {
+            Order::create([
+                'ordernumber' => mt_rand(7000, 8000),
+                'staffname' => $request['staffname'],
+                'staffid' => $request['staffid'],
+                'ponumber' => $request['ponumber'],
+                'branchnumber' => $request['branchnumber'],
+                'branchname' => $request['branchnumber'],
+                'urgent' => $request['urgent'],
+                'slug' => $request['slug'],
+                ]);
+            OrderItems::create([
+                'ordernumber' => mt_rand(7000, 8000),
+                'staffname' => $request['staffname'],
+                'staffid' => $request['staffid'],
+                'ponumber' => $request['ponumber'],
+                'branchnumber' => $request['branchnumber'],
+                'itemnumber' => $request['itemnumber'],
+                'orderitems' => $request['orderitems'],
+                'itemqty' => $request['itemqty'],
+                'freeitem' => $request['freeitem'],
+                'itemprice' => $request['itemprice'],
+                'orderstatus' => $request['orderstatus']
+            ]);
+            return view ('orders.partials.step2');
+        }
+        public function addOrderStep2()
+        {
+            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
+            $branches = Branch::select('branchname', 'branchnumber')->get();
+            return redirect()->route('orders.partials.step2')->with('items', $items)->with('branches', $branches);
+        }
+
+        public function insertOrderStep2(Request $request)
+        {
+            Auth::user()->orders()->create;
+            Order::all()->update();
+            OrderItems::all()->update();
+            return view('dashboard.orders');
+        }
+        
+
+
+        public function postReply(Request $request, $orderid)
+        {
+            $this->validate($request, [
+               "order-{$orderid}" => 'required|max:10000',
+           ], [
+               'required' => 'The reply body is required.'
+           
+           ]);
+           
+           $order = Order::notReply()->find($orderid);
+           
+           if (!$order) {
+               return redirect()->route('home');
+           }
+           
+                   if (!Auth::user()->isFriendsWith($status->user) && Auth::user()->id !== $status->user->idnumber) {
+               return redirect()->route('home');
+           }
+           
+               $item = Order::create([
+                   'body' => $request->input("order-{$orderid}"),
+               ])->user()->associate(Auth::user());
+               
+               $order->items()->save($item);
+               return redirect()->back();
+               
+           
+        }
+
+
+        public function setSlugStr($orderid)
+        {
+            $this->attributes['ordernumber'] = $orderid;
+            $this->attributes['slug'] = Str::slug($orderid);
+        }
+        
+        public function getShow($slug)
+        {
+            return view('orders.user')->with('ordernumber', $ordernumber);
+        }
+
+        public function addOrderUrgent()
+        {
+            return view ('urgent.add');
+        }
+        public function addRtvOrder()
+        {
+            return view ('rtvs.add');
+        }
+        public function orderReview()
+        {
+            return view ('get.order');
+        }
+        public function  submitOrder()
+        {
+            return view ('order.add');
+        }
+
+}

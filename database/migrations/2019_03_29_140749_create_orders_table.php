@@ -14,19 +14,19 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->increments('ordernumber');
+            $table->increments('id');
+            $table->integer('orderid')->nullable();
+            $table->integer('ordernumber');
             $table->string('staffname');
             $table->integer('staffid');
             $table->integer('ponumber');
             $table->integer('branchnumber');
             $table->string('branchname');
-            $table->integer('itemnumber');
-            $table->string('orderitems');
-            $table->integer('itemqty');
-            $table->integer('freeitem');
-            $table->decimal('itemprice', 8, 2);
-            $table->tinyInteger('urgent')->default('0')->nullable();
+            $table->string('urgent')->default('0')->nullable();
+            $table->string('slug');
+            $table->index('ordernumber');
             $table->timestamps();
+
         });
     }
 
