@@ -17,6 +17,7 @@ class CreateBranchesTable extends Migration
             $table->increments('id');
             $table->integer('branchnumber');
             $table->string('branchname');
+            $table->string('logo')->default('sgimg.png');
             $table->timestamps();
         });
     }

@@ -102,7 +102,7 @@ class User extends Authenticatable
     
     public function getAvatarUrl()
     {
-    	return "{{ asset('image') }}/{{ Auth::user->photo }}";
+    	return "{{ asset('images/uploads/avatars') }}/{{ Auth::user->photo }}";
     }
     
         public function getAvatar()
@@ -113,6 +113,11 @@ class User extends Authenticatable
     
     public function orders()  {
     	return $this->hasMany('cdn\Models\Order', 'ordernumber');
+    
+    }
+
+    public function ordersByUser()  {
+    	return $this->belongsTo('cdn\User\Order', 'ordernumber');
     
     }
     public function urgentOrders() {

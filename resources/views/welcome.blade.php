@@ -61,14 +61,7 @@
             }
         </style>-->
     </head>
-<!--<header class="header">
-<form class="navbar-form navbar-left" role="search" action="{{ route('search.results') }}">
-            <div class="form-group">
-                <input type="text" name="query" class="form-control" placeholder="Find People">
-            </div>
-            <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-        </form>
-</header>-->
+
     <body>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))

@@ -27,6 +27,7 @@
                             <br />
                             <input class="form-control" type="text" class="input" name="branchname" placeholder="Branch Name" />
                             <input class="form-control" type="number" class="input" name="branchnumber" placeholder="Branch# " />
+                            <input class="form-control" type="text" class="input" name="logo" placeholder="Branch# " />
                             <input class="btn btn-primary" type="submit" value="Add Branch" />
                         </form>
                     </div>

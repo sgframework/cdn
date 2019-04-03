@@ -3,6 +3,7 @@
                 $order = Session::flash('message', 'Hold on tight. Your order is being processed');
 
                 //Input::get('order');
+            //$bname = Branch::select('branchname')->where('branchnumber', $request['branchnumber'])->first();
 
 
                 

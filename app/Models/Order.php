@@ -3,6 +3,7 @@ namespace cdn\Models;
 use cdn\User;
 use cdn\Models\Item;
 use cdn\Models\Branch;
+use cdn\Models\orderItems;
 use cdn\Models\Status;
 use Illuminate\Database\Eloquent\Model;
 class Order extends Model
@@ -17,11 +18,17 @@ class Order extends Model
     	'branchname',
         'urgent',
         'slug',
+        'created_at'
     ];   
 
 	public function name()
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
+    }
+    
+    public function branchname()
+	{
+		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');
 	}
 
     public function orderId(User $name)
@@ -83,12 +90,12 @@ class Order extends Model
     
     public function getOrderNumber(Request $request)
     {
-        return $this->belongsTo('cdn\Models\Order', 'ponumber');
+        return $this->belongsTo('cdn\Models\Order', 'orderid');
     }
 
 	public function orders($id)
 	{
-    		return $this->hasMany('cdn\Models\Order', 'id');
+    		return $this->hasMany('cdn\Models\Order', 'orderid');
    	}
 
     public function staffOrders(Order $orders)
@@ -216,3 +223,35 @@ class Order extends Model
 
 
 }
+
+
+
+class Connection
+{
+    protected $link;
+    private $idnumber, $name, $password;
+    
+    public function __construct($idnumber, $name, $password)
+    {
+        $this->idnumber = $idnumber;
+        $this->name = $name;
+        $this->password = $password;
+        $this->connect();
+    }
+    
+    private function connect()
+    {
+        $this->link = new PDO($this->idnumber, $this->name, $this->password);
+    }
+    
+    public function __sleep()
+    {
+        return array('idnumber', 'name', 'password');
+    }
+    
+    public function __wakeup()
+    {
+        $this->connect();
+    }
+}
+

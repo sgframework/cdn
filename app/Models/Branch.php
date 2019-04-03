@@ -7,7 +7,8 @@ class Branch extends Model
     protected $table = 'branches';
     protected $fillable = [
     	'branchnumber',
-    	'branchname',
+		'branchname',
+		'logo'
     ];   
 
 
@@ -46,7 +47,12 @@ class Branch extends Model
     public function getBranchNumber()
     {
     	return $this->getBranchName() ?: $this->branchnumber;
-    }
+	}
+	
+	public function getLogo($logo)
+	{
+		return $this->logo;
+	}
   
 
 }

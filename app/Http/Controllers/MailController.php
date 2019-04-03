@@ -29,6 +29,6 @@ class MailController extends Controller
      */
     public function getMail()
     {
-        return $this->view('tests.index');
+        return $this->view('tests.mail');
     }
 }

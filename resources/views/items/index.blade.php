@@ -27,7 +27,7 @@
                         @foreach ($items as $item)
                             @include('items/partials/itemblock')
                         @endforeach
-</table>			
+                    </table>			
                     @endif
                     </div>  
                 </div>

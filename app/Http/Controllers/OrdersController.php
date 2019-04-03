@@ -86,11 +86,12 @@ class OrdersController extends Controller
         return redirect()->route('orders.index')->with('orders', $orders)->with('info', 'Your order has been created');
     }    	
 
-        public function getOrders(Request $request)
+        public function getOrders(Request $orderstatus)
         {
             $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
+            $orderitems = OrderItems::select('ordernumber', 'orderstatus', 'created_at', 'updated_at')->get();
             $branches = Branch::select('branchname', 'branchnumber')->get();
-            return view('orders.index')->with('orders', $orders)->with('branches', $branches);
+            return view('orders.index')->with('orderitems', $orderitems)->with('orders', $orders)->with('branches', $branches);
         }
 
 
@@ -128,17 +129,19 @@ class OrdersController extends Controller
         public function insertOrderStep1(Request $request)
         {
             Order::create([
-                'ordernumber' => mt_rand(7000, 8000),
+                'ordernumber' => $request['ordernumber'],
                 'staffname' => $request['staffname'],
                 'staffid' => $request['staffid'],
                 'ponumber' => $request['ponumber'],
                 'branchnumber' => $request['branchnumber'],
-                'branchname' => $request['branchnumber'],
+                'branchname' => $request['branchname'],
                 'urgent' => $request['urgent'],
                 'slug' => $request['slug'],
+                'created_at' => $request['created_at'],
+                
                 ]);
             OrderItems::create([
-                'ordernumber' => mt_rand(7000, 8000),
+                'ordernumber' => $request['ordernumber'],
                 'staffname' => $request['staffname'],
                 'staffid' => $request['staffid'],
                 'ponumber' => $request['ponumber'],
@@ -151,13 +154,19 @@ class OrdersController extends Controller
                 'orderstatus' => $request['orderstatus']
             ]);
 
-            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
-            $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc');
-            return view ('orders.partials.step2')->with('items', $items)->with('branches', $branches);
+            session_reset();
+            $request->session()->put('ordernumber', $request->ordernumber);
+            $request->session()->put('staffid', $request->staffid);
+            $request->session()->put('ponumber', $request->ponumber);
+            $request->session()->put('branchnumber', $request->branchnumber);
+            $request->session()->put('created_at', $request->created_at);
+
+            //$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type');
+            //$branches = Branch::select('logo');
+            return redirect()->route('orders.partials.step2');
         }
         public function addOrderStep2()
         {
-            \Session::flash('message', 'Successfully updated!');
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
             $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc');
             return view ('orders.partials.step2')->with('items', $items)->with('branches', $branches);

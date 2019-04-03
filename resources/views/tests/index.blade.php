@@ -41,8 +41,53 @@
                     </div>
                 </div>
         </section>
-        {{ substr(md5('http://www.google.com'), 0, 6) }}
+
+
+
+
+
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+        {{ substr(md5('0562204816'), 0, 6) }}
         {{ $ordernumber = mt_rand(7000, 8000) }}
+
+
+
+
+
+
+        
+<?php
+function struuid($entropy)
+{
+    $s=uniqid("",$entropy);
+    $num= hexdec(str_replace(".","",(string)$s));
+    $index = '1234567890123456789012345678901234567890';
+    $base= strlen($index);
+    $out = '';
+        for($t = floor(log10($num) / log10($base)); $t >= 0; $t--) {
+            $a = floor($num / pow($base,$t));
+            $out = $out.substr($index,$a,1);
+            $num = $num-($a*pow($base,$t));
+        }
+    return $out;
+}
+
+echo struuid(true); //Return sample: F4518NTQTQ
+echo struuid(true);  //Return sample: F451FAHSUCD90N6YNRBQHLZ9E1W
+
+?>
+
+
+</div>
+                    </div>
+                </div>
+        </section>
+
 
                     @if (!$items->count())
                         <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
@@ -195,6 +240,245 @@
     </div>
 </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <div class="pages navbar-through toolbar-through">
+                        <!-- Page, "data-page" contains page name -->
+                        <div data-page="index" class="page">
+                            <!-- Scrollable page content -->
+                            <div class="page-content">
+                                <div class="content-block">
+                                    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                                        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                                            <h1 class="h2">Dashboard</h1>
+                                            <div class="btn-toolbar mb-2 mb-md-0">
+                                                <div class="btn-group mr-2">
+                                                    <button class="btn btn-sm btn-outline-secondary">Share</button>
+                                                    <button class="btn btn-sm btn-outline-secondary">Export</button>
+                                                </div>
+                                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                                                    <span data-feather="calendar"></span>
+                                                    This week
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
+                                        <h2>Section title</h2>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Header</th>
+                                                        <th>Header</th>
+                                                        <th>Header</th>
+                                                        <th>Header</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1,001</td>
+                                                        <td>Lorem</td>
+                                                        <td>ipsum</td>
+                                                        <td>dolor</td>
+                                                        <td>sit</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,002</td>
+                                                        <td>amet</td>
+                                                        <td>consectetur</td>
+                                                        <td>adipiscing</td>
+                                                        <td>elit</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,003</td>
+                                                        <td>Integer</td>
+                                                        <td>nec</td>
+                                                        <td>odio</td>
+                                                        <td>Praesent</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,003</td>
+                                                        <td>libero</td>
+                                                        <td>Sed</td>
+                                                        <td>cursus</td>
+                                                        <td>ante</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,004</td>
+                                                        <td>dapibus</td>
+                                                        <td>diam</td>
+                                                        <td>Sed</td>
+                                                        <td>nisi</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,005</td>
+                                                        <td>Nulla</td>
+                                                        <td>quis</td>
+                                                        <td>sem</td>
+                                                        <td>at</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,006</td>
+                                                        <td>nibh</td>
+                                                        <td>elementum</td>
+                                                        <td>imperdiet</td>
+                                                        <td>Duis</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,007</td>
+                                                        <td>sagittis</td>
+                                                        <td>ipsum</td>
+                                                        <td>Praesent</td>
+                                                        <td>mauris</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,008</td>
+                                                        <td>Fusce</td>
+                                                        <td>nec</td>
+                                                        <td>tellus</td>
+                                                        <td>sed</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,009</td>
+                                                        <td>augue</td>
+                                                        <td>semper</td>
+                                                        <td>porta</td>
+                                                        <td>Mauris</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,010</td>
+                                                        <td>massa</td>
+                                                        <td>Vestibulum</td>
+                                                        <td>lacinia</td>
+                                                        <td>arcu</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,011</td>
+                                                        <td>eget</td>
+                                                        <td>nulla</td>
+                                                        <td>Class</td>
+                                                        <td>aptent</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,012</td>
+                                                        <td>taciti</td>
+                                                        <td>sociosqu</td>
+                                                        <td>ad</td>
+                                                        <td>litora</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,013</td>
+                                                        <td>torquent</td>
+                                                        <td>per</td>
+                                                        <td>conubia</td>
+                                                        <td>nostra</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,014</td>
+                                                        <td>per</td>
+                                                        <td>inceptos</td>
+                                                        <td>himenaeos</td>
+                                                        <td>Curabitur</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1,015</td>
+                                                        <td>sodales</td>
+                                                        <td>ligula</td>
+                                                        <td>in</td>
+                                                        <td>libero</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </main>
+                                </div>
+                            </div>
+                            <!-- Bootstrap core JavaScript
+                            ================================================== -->
+                            <!-- Placed at the end of the document so the pages load faster -->
+                            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                            <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+                            <script src="../../../../assets/js/vendor/popper.min.js"></script>
+                            <script src="../../../../dist/js/bootstrap.min.js"></script>
+                            <!-- Icons -->
+                            <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+                            <script>
+                                feather.replace()
+                            </script>
+                            <!-- Graphs -->
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+                            <script>
+                                var ctx = document.getElementById("myChart");
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                                        datasets: [{
+                                            data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+                                            lineTension: 0,
+                                            backgroundColor: 'transparent',
+                                            borderColor: '#007bff',
+                                            borderWidth: 4,
+                                            pointBackgroundColor: '#007bff'
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: false
+                                                }
+                                            }]
+                                        },
+                                        legend: {
+                                            display: false,
+                                        }
+                                    }
+                                });
+                            </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         
 
         <section>
@@ -204,6 +488,138 @@
 
                     @include('tests/markdown')
 
+                    {{ url()->current() }}
+
+
+                    {{ $user = cdn\User::find(1) }}
+      
+<br />
+<br />
+                    {{ $branch = cdn\Models\Branch::find(1) }}
+
+                    <br />
+<br />
+                     {{ url("/user/{$user->idnumber}") }}
+
+                     <br />
+
+                     <br />
+
+{{ $user = cdn\User::find(2) }}
+
+<br />
+<br />
+{{ $user->toJson() }}
+
+<br />
+<br />
+
+{{ $user->toJson(JSON_PRETTY_PRINT) }}
+
+<br />
+<br />
+
+@php 
+
+class TestClass
+{
+    public $foo;
+
+    public function __construct($foo)
+    {
+        $this->foo = $foo;
+    }
+
+    public function __toString()
+    {
+        return $this->foo;
+    }
+}
+
+$class = new TestClass('Hello');
+echo $class;
+
+
+
+
+
+
+
+
+
+
+class Connection
+{
+    protected $link;
+    private $dsn, $username, $password;
+    
+    public function __construct($dsn, $username, $password)
+    {
+        $this->dsn = $dsn;
+        $this->username = $username;
+        $this->password = $password;
+        $this->connect();
+    }
+    
+    private function connect()
+    {
+        $this->link = new PDO($this->dsn, $this->username, $this->password);
+    }
+    
+    public function __sleep()
+    {
+        return array('dsn', 'username', 'password');
+    }
+    
+    public function __wakeup()
+    {
+        $this->connect();
+    }
+}
+
+
+
+
+
+
+
+$users = cdn\User::all();
+
+$users->toArray();
+
+print_r($users);
+
+echo '<br />';
+echo '<br />';
+echo '<br />';
+
+$branches = cdn\Models\Branch::all();
+
+$branches->toArray();
+
+print_r($branches);
+
+echo '<br />';
+echo '<br />';
+echo '<br />';
+
+$items = cdn\Models\Item::all();
+
+$items->toArray();
+
+print_r($items);
+
+echo '<br />';
+echo '<br />';
+echo '<br />';
+
+$orders = cdn\Models\Order::all();
+
+$orders->toArray();
+
+print_r($orders);
+
+@endphp
 
                     </div>
                     </div>
@@ -216,6 +632,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+                    <button onclick="myFunction()">Try it</button>
+                    <p id="demo"></p>
+                    <script>
+                    function myFunction() {
+                    var x = document.getElementsByTagName("TITLE")[0].text;
+                    document.getElementById("demo").innerHTML = x;
+                    }
+                    </script>
+
+
                     </div>
                     </div>
                 </div>
@@ -227,6 +654,67 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+                    <style type="text/css">
+    table{
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+    }
+    table, th, td{
+        border: 1px solid #cdcdcd;
+    }
+    table th, table td{
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $(".add-row").click(function(){
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var markup = "<tr><td><input type='checkbox' name='record'></td><td>" + name + "</td><td>" + email + "</td></tr>";
+            $("table tbody").append(markup);
+        });
+        
+        // Find and remove selected table rows
+        $(".delete-row").click(function(){
+            $("table tbody").find('input[name="record"]').each(function(){
+                if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+                }
+            });
+        });
+    });    
+</script>
+</head>
+<body>
+    <form>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="email" placeholder="Email Address">
+        <input type="button" class="add-row" value="Add Row">
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Select</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="checkbox" name="record"></td>
+                <td>Peter Parker</td>
+                <td>peterparker@mail.com</td>
+            </tr>
+        </tbody>
+    </table>
+    <button type="button" class="delete-row">Delete Row</button>
+
+
                     </div>
                     </div>
                 </div>
@@ -238,6 +726,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+                    
+<?php
+// Given these variables ...
+$nameTypes    = array("first", "last", "company");
+$name_first   = "John";
+$name_last    = "Doe";
+$name_company = "PHP.net";
+
+// Then this loop is ...
+foreach($nameTypes as $type)
+  print ${"name_$type"} . "\n";
+
+// ... equivalent to this print statement.
+print "$name_first\n$name_last\n$name_company\n";
+?>
                     </div>
                     </div>
                 </div>

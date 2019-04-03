@@ -13,6 +13,7 @@ class Item extends Model
     	'plant',
     	'instock',
         'link',
+        'type',
         'itempic',
     ];   
 

@@ -226,3 +226,11 @@ Controllers\ProfileController@getProfile                      | web
 
 
 
+
+
+|----------|:--------------------------:|------:|------:|------:|
+                | Tables   |      Are                   |  Cool | Cool    Cool
+                |----------|:--------------------------:|------:|------:|------:|
+                |  Name:   |  {{ Auth::user()->name }}            | $1600 |
+                | col 2 is |    centered                |   $12 |   $12 |   $12 |
+                | col 3 is | right-aligned              |    $1 |    $1 |    $1 |

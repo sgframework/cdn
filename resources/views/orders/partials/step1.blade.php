@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                 <div class="table-responsive">
-    <form method="POST" action="{{ route('orders.step1.insert') }}">    
+    <form method="POST" action="{{ route('orders.insert.step1') }}">    
         <table class="table table-bordered" id="crud_table">
             <tr>
                 <th width="50%">Name</th>

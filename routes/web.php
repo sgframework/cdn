@@ -58,8 +58,8 @@ Route::get('/tests/review', [
 */
 
 Route::get('/mail', [
-    'uses' => '\cdn\Http\Controllers\MailController@getMail',
-'as' => 'mail.index',
+    'uses' => '\cdn\Http\Controllers\RootController@getMail',
+'as' => 'tests.email',
 ]);
 
 
@@ -237,7 +237,6 @@ Route::get('/order/add/step2', [
 
 Route::post('/order/insert/step2', [
     'uses' => '\cdn\Http\Controllers\OrdersController@insertOrderStep2',
-'as' => 'orders.insert.step2',
 
 ]);
 

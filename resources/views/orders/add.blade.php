@@ -41,24 +41,31 @@
 
 @endmarkdown
 
+
                 <form class="form-inline" method="POST" action="{{ route('orders.insert.step1') }}">
                 @csrf
                     <label hidden style="padding-left:20px" for="staffname">Name:</label>
                         <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />
                     </label>
+                    <input hidden class="form-control" type="text" class="input" name="branchname" value="Othaim Market" />
+
+                    <input hidden class="form-control" type="text" class="input" name="created_at" value="{{ $timestamp = now() }}" />&nbsp;&nbsp;&nbsp;
+                    <input hidden class="form-control" type="number" class="input" name="ordernumber" value="0000{{ mt_rand(7000000, 8888000) }}" />&nbsp;&nbsp;&nbsp;
                     <label hidden for="staffid">ID#</label>
                         <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
                     </label>
                         <input class="form-control" width="20px" type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
                                 <select name="branchnumber" class="form-control">
                                 <option value="empty">Select Branch</option>
-                                @foreach($branches as $branch)
-                                <option value="{{$branch->branchnumber}}">{{ $branch->branchnumber }}&nbsp;&nbsp;{{ $branch->branchname }}</option>
-                                @endforeach      
-                              <input class="form-control" type="text" class="form-control" name="slug" value="api" />
+                                    <optgroup label="Othaim Markets. أسواق العثيم">
+                                    @foreach($branches as $branch)
+                                    <option value="{{$branch->branchnumber}}">{{ $branch->branchnumber }}&nbsp;&nbsp;{{ $branch->branchname }}</option>
+                                    @endforeach      
+                                    </optgroup>
+                              <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
                             </select>&nbsp;&nbsp;&nbsp;
                         <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
-                    <div style="float:right; padding-left:90px"><button type="submit">Next</button></div>
+                    <div style="float:right; padding-left:4px"><button type="submit">Next</button></div>
                 </form><br /><hr />
 @markdown
 `You can see full documentation` [here][docs].

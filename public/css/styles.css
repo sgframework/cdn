@@ -62,23 +62,51 @@
   #myTable {
     border-collapse: collapse; /* Collapse borders */
     width: 100%; /* Full-width */
-    border: 1px solid #ddd; /* Add a grey border */
-    font-size: 18px; /* Increase font-size */
+    border: 1.5px solid rgb(141, 141, 141); /* Add a grey border */
+    font-size: 14px; /* Increase font-size */
   }
   
   #myTable th, #myTable td {
-    text-align: left; /* Left-align text */
-    padding: 12px; /* Add padding */
+    text-align: center; /* Left-align text */
+    padding-left: 0px; /* Add padding */
+    border: 1.5px solid rgb(189, 189, 189); /* Add a grey border */
+
   }
   
   #myTable tr {
     /* Add a bottom border to all table rows */
-    border-bottom: 1px solid #ddd; 
+    border-bottom: 1.5px solid rgb(95, 95, 95); 
   }
+
+  #myTable {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid rgb(104, 104, 104);
+    font-size: 12px;
+    color: rgb(22, 22, 22);
+}
+
+#myTable.dark {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid rgb(97, 97, 97);
+  font-size: 12px;
+  color: rgb(255, 255, 255);
+}
+
+#myTable.tr:hover tbody:hover  {
+    color: black;
+    border: 2px solid black;
+}
+
+#myTable tbody tr {
+
+  text-align: center;
+}
   
   #myTable tr.header, #myTable tr:hover {
     /* Add a grey background color to the table header and on hover */
-    background-color: #f1f1f1;
+    background-color: #cacaca;
   }
   
   input[type=checkbox], input[type=radio] {
@@ -146,7 +174,7 @@
     padding: 0 2px;
     display: none;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: #7c7c7c;
   
       overflow-x: hidden;
   }

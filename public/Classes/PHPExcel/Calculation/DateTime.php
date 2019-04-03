@@ -176,7 +176,7 @@ class PHPExcel_Calculation_DateTime
     public static function DATETIMENOW()
     {
         $saveTimeZone = date_default_timezone_get();
-        date_default_timezone_set('UTC');
+        date_default_timezone_set('UTC+3');
         $retValue = false;
         switch (PHPExcel_Calculation_Functions::getReturnDateType()) {
             case PHPExcel_Calculation_Functions::RETURNDATE_EXCEL:
@@ -217,7 +217,7 @@ class PHPExcel_Calculation_DateTime
     public static function DATENOW()
     {
         $saveTimeZone = date_default_timezone_get();
-        date_default_timezone_set('UTC');
+        date_default_timezone_set('UTC +3');
         $retValue = false;
         $excelDateTime = floor(PHPExcel_Shared_Date::PHPToExcel(time()));
         switch (PHPExcel_Calculation_Functions::getReturnDateType()) {

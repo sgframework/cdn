@@ -1,0 +1,1 @@
+![icon]({{ asset('err/404.gif') }})

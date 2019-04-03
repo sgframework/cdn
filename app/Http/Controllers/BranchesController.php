@@ -33,6 +33,7 @@ class BranchesController extends Controller
         return Validator::make($request, [
             'branchnumber' => ['required', 'string', 'max:255'],
             'branchname' => ['required', 'string', 'max:255'],
+            'logo' => ['string', 'max:255'],
         ]);
     }
     /**
@@ -46,14 +47,15 @@ class BranchesController extends Controller
         Branch::create([
             'branchnumber' => $request['branchnumber'],
             'branchname' => $request['branchname'],
+            'logo' => $request['logo'],
         ]);
-        $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc')->paginate(10);       
+        $branches = Branch::select('branchname', 'branchnumber', 'logo')->orderBy('created_at', 'desc')->paginate(10);       
         return view('branches.index')->with('branches', $branches);
     }
     	
         public function getBranches(Request $request)
         {
-            $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc')->paginate(10);       
+            $branches = Branch::select('branchname', 'branchnumber', 'logo')->orderBy('created_at', 'desc')->paginate(10);       
             return view('branches.index')->with('branches', $branches)->with('msg', 'You`ve just added a new branch successfully.');
         }
         
