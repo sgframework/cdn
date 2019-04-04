@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use cdn\Models\Order;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,32 @@ Route::get('/test', function (Request $request) {
     
     return response($arr, 200)
                   ->header('Content-Type', 'application/json');
+});
+
+
+
+Route::get('/order/{ordernumber}', function (Request $request) {
+    $arr = cdn\Models\Order::select('ponumber')->where('id')->$name;
+
+    $arr1 = array([
+        $arr
+    ]);
+
+
+    
+    return response($arr1, 200)
+                  ->header('Content-Type', 'application/json');
+});
+
+
+
+
+Route::get('test', function(){
+    return "<h1>" . Order::get("color") . "</h1>";
+});
+
+
+
+Route::get('test', function(){
+    return "<pre>" . print_r(Order::all(), true) . "</pre>";
 });

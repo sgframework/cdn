@@ -9,7 +9,7 @@ use cdn\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
+use Auth;
 
 
 class OrdersController extends Controller
@@ -98,10 +98,11 @@ class OrdersController extends Controller
 
         public function getOrdersbyUser()
         {
+
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
             $branches = Branch::select('branchname', 'branchnumber')->get();
             $orders = Order::select('ordernumber', 'orderid', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
-            return view('dashboard.index')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
+            return view('dashboard.orders')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
             
         }
         
@@ -163,7 +164,7 @@ class OrdersController extends Controller
 
             //$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type');
             //$branches = Branch::select('logo');
-            return redirect()->route('orders.partials.step2');
+            return redirect()->route('orders.partials.step2')->with('alert', 'Your order status changed to open with order# $request->ordernumber ');;
         }
         public function addOrderStep2()
         {

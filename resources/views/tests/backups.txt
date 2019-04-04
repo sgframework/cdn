@@ -247,6 +247,12 @@ Orders OredersController
 
 
 
+    public function orderId(User $name)
+	{
+    	return $this->hasMany('cdn\Models\Order', 'orderid');
+   }
+
+
 
 
 

@@ -43,6 +43,12 @@ class User extends Authenticatable
     	return $this->idnumber;
     }
 
+
+    public function orderId()
+    {
+        return $this->belongsToMany('cdn\Models\Order', 'orderidnumber', 'orderid', 'idnumber');
+    }
+
     public function name()
     {
         if ($this->name && $this->email) {

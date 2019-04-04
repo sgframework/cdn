@@ -13,7 +13,7 @@
 				<td>{{ $order->urgent }}</td>
 				<td>{{ $order->slug }}</td>
 				<td>Pending</td>
-				<td>{{ $order->created_at }}</td>
+				<td>{{ $order->created_at->diffForHumans() }}</td>
 				<td>{{ $order->updated_at->diffForHumans() }}</td>
 			</tr>	
 		</tbody>

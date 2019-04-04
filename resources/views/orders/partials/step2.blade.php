@@ -3,33 +3,30 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
+
             @if (Route::has('login'))
             <!--<div class="top-left">
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
-    <div class="top-right links">
-        <div class="card-header"><b>+Create New Order</b></div>
-            <div class="card-body">
+
             <!-- If user loggedIn show below content until endShow part 
             //
             //
             //
             // endShow -->
-@markdown
+            <script>
+                var msg = '{{Session::get('alert')}}';
+                var exist = '{{Session::has('alert')}}';
+                if(exist){
+                alert(msg);
+                }
+            </script>
 
-## Step 2 ##
-
-Insert Update or delete items to current attached PO Number.
-
- ------------------------
-@endmarkdown
-
-<style>
-    td {
-        padding-right:20px;
-    }
-</style>
+            <style>
+                td {
+                    padding-right:20px;
+                }
+            </style>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>
@@ -74,38 +71,31 @@ Insert Update or delete items to current attached PO Number.
                 </div>                            
                 <hr />
 
+@markdown
 
+#### Your order has been created successfully.
 
+##### You can proceed adding items to your order.
 
+```
 
+Order# {{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }} ===> PO# {{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}
 
+```
 
+----------------------------
 
+@endmarkdown
+                
+@php 
 
-
-
-                <form class="form-inline" method="" action="">
-                @csrf
-                    <label hidden style="padding-left:20px" for="staffname">Name:</label>
-                        <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />
-                    </label>
-                    <label hidden for="staffid">ID#</label>
-                        <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
-                    </label>
-                        <input class="form-control" width="20px" type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
-                                <select name="branchnumber" class="form-control">
-                                <option value="empty">Select an item</option>
-                                @foreach($items as $item)
-                                <option value="{{$item->itemnumber}}">{{ $item->itemnumber }}&nbsp;&nbsp;{{ $item->itemname }}&nbsp;{{ $item->itemprice }}SR</option>
-                                @endforeach
-                            </select>&nbsp;&nbsp;&nbsp;
-                        <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;<input id="zeroone" type="checkbox" name="urgent">
-                        <input hidden class="form-control" type="text" class="input" name="slug" value="" />
-                    <div style="float:right; padding-left:90px"><button type="submit">Next</button></div>
-                </form><br /><hr />
+@endphp
+                
                 @if (Session::has('message'))
                     <span style="color:green">{!! session('message') !!}</span>
                 @endif
+                
+                    <a style= "float:right" href="/order/{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}">Go to your order page &rarr;</a>           
                     @else
 
 
@@ -121,10 +111,8 @@ Insert Update or delete items to current attached PO Number.
             
                 <!-- endShow -->
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                </div>
+
 @endsection
 
 

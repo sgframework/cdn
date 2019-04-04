@@ -25,9 +25,18 @@
                         <form method="POST" action="{{ route('branches.insert') }}">
                         @csrf                
                             <br />
-                            <input class="form-control" type="text" class="input" name="branchname" placeholder="Branch Name" />
-                            <input class="form-control" type="number" class="input" name="branchnumber" placeholder="Branch# " />
-                            <input class="form-control" type="text" class="input" name="logo" placeholder="Branch# " />
+                            <input class="form-control" type="text" class="input" name="branchname" placeholder="Branch Name" /><br />
+                            <input class="form-control" type="number" class="input" name="branchnumber" placeholder="Branch# " /><br />
+                            <select name="logo" class="form-control">
+                                <option value="empty">Select Image</option>
+                                <option value="othaim.png">Othaim</option>
+                                <option value="panda.png">Panda</option>
+                                <option value="tamimi.jpg">Tamimi</option>
+                                <option value="sadhan.png">Sadhan</option>
+                                <option value="lulu.png">Lulu</option>
+                                <option value="carrefour.jpg">Carrefour</option>
+                                <option value="sgimg.png">Others</option>
+                            </select><br />
                             <input class="btn btn-primary" type="submit" value="Add Branch" />
                         </form>
                     </div>

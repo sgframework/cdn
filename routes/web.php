@@ -1,5 +1,7 @@
 <?php
 
+use cdn\Models\Order;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,6 +24,17 @@
 
 Auth::routes();
 
+
+
+Route::get('test', function(){
+    return "<code>" . print_r(Order::all(), true) . "</code>";
+});
+
+
+
+Route::get('test1', function(){
+    return "<p style='color:red'>" . Order::get("ordernumber")->where('ponumber', "990998") . "</p><br /><hr />";
+});
 
 
 
@@ -244,8 +257,8 @@ Route::post('/order/insert/step2', [
 
 //{{ route('dashboard.orders') }}
 
-Route::get('/myorders', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@getMyOrders',
+Route::get('/dashboard/orders', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@getOrdersbyUser',
 'as' => 'dashboard.orders',
 
 ]);

@@ -521,6 +521,15 @@ echo struuid(true);  //Return sample: F451FAHSUCD90N6YNRBQHLZ9E1W
 
 @php 
 
+
+
+
+
+
+
+
+
+
 class TestClass
 {
     public $foo;
@@ -655,7 +664,53 @@ print_r($orders);
                 <div class="row">
                     <div class="col-md-12">
 
-                    <style type="text/css">
+
+
+
+                    </div>
+                    </div>
+                </div>
+        </section>
+
+        
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+                    
+<?php
+// Given these variables ...
+$nameTypes    = array("first", "last", "company");
+$name_first   = "John";
+$name_last    = "Doe";
+$name_company = "PHP.net";
+
+// Then this loop is ...
+foreach($nameTypes as $type)
+  print ${"name_$type"} . "\n";
+
+// ... equivalent to this print statement.
+print "$name_first\n$name_last\n$name_company\n";
+?>
+                    </div>
+                    </div>
+                </div>
+        </section>
+
+        
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+
+
+                                    <span class="h5"><i class="fas fa-list"></i> Orders List</span>
+                                        <div class="table-responsive">
+                                        <style type="text/css">
     table{
         width: 100%;
         margin: 20px 0;
@@ -713,46 +768,33 @@ print_r($orders);
         </tbody>
     </table>
     <button type="button" class="delete-row">Delete Row</button>
+                                            <table class="table table-striped table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Header</th>
+                                                        <th>Header</th>
+                                                        <th>Header</th>
+                                                        <th>Header</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1,001</td>
+                                                        <td>Lorem</td>
+                                                        <td>ipsum</td>
+                                                        <td>dolor</td>
+                                                        <td>sit</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        <hr />
 
 
-                    </div>
-                    </div>
-                </div>
-        </section>
 
-        
 
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
 
-                    
-<?php
-// Given these variables ...
-$nameTypes    = array("first", "last", "company");
-$name_first   = "John";
-$name_last    = "Doe";
-$name_company = "PHP.net";
 
-// Then this loop is ...
-foreach($nameTypes as $type)
-  print ${"name_$type"} . "\n";
-
-// ... equivalent to this print statement.
-print "$name_first\n$name_last\n$name_company\n";
-?>
-                    </div>
-                    </div>
-                </div>
-        </section>
-
-        
-
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
                     </div>
                     </div>
                 </div>

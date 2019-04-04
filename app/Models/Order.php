@@ -31,9 +31,10 @@ class Order extends Model
 		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');
 	}
 
-    public function orderId(User $name)
-	{
-    	return $this->hasMany('cdn\Models\Order', 'orderid');
+   
+   public function orderId()
+   {
+       return $this->belongsToMany('cdn\User', 'orderidnumber', 'idnumber', 'orderid');
    }
        
        public function getOrderById(User $name)

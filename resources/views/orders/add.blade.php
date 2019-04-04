@@ -56,12 +56,17 @@
                     </label>
                         <input class="form-control" width="20px" type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
                                 <select name="branchnumber" class="form-control">
-                                <option value="empty">Select Branch</option>
-                                    <optgroup label="Othaim Markets. أسواق العثيم">
-                                    @foreach($branches as $branch)
-                                    <option value="{{$branch->branchnumber}}">{{ $branch->branchnumber }}&nbsp;&nbsp;{{ $branch->branchname }}</option>
-                                    @endforeach      
-                                    </optgroup>
+                                    <option value="empty">Select Branch</option>
+                                        <optgroup label="Othaim Markets. أسواق العثيم">
+                                            @foreach($branches as $branch)
+                                            <option value="{{$branch->branchnumber}}">{{ $branch->branchnumber}}&nbsp;&nbsp;{{ $branch->branchname }}</option>
+                                            @endforeach      
+                                        </optgroup>
+                                        <optgroup label="Panda Markets. بنده">
+
+                                            <option value="{{$branch->branchnumber}}">Panah Aziziah# 864585</option>
+       
+                                        </optgroup>
                               <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
                             </select>&nbsp;&nbsp;&nbsp;
                         <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
