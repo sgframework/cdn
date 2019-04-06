@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 @section('content')    
 <div class="container">
@@ -42,6 +43,8 @@
 @endmarkdown
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
                 <form class="form-inline" method="POST" action="{{ route('orders.insert.step1') }}">
                 @csrf
                     <label hidden style="padding-left:20px" for="staffname">Name:</label>
@@ -55,23 +58,110 @@
                         <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
                     </label>
                         <input class="form-control" width="20px" type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
-                                <select name="branchnumber" class="form-control">
+                                
+                                
+                                
+                                <select name="branchname" id="branchname" class="form-control dynamic" data-dependent="branchnumber">
                                     <option value="empty">Select Branch</option>
                                         <optgroup label="Othaim Markets. أسواق العثيم">
-                                            @foreach($branches as $branch)
-                                            <option value="{{$branch->branchnumber}}">{{ $branch->branchnumber}}&nbsp;&nbsp;{{ $branch->branchname }}</option>
+                                            @foreach($branches_list as $branch)
+                                            <option value="{{ $branch->branchname }}">&nbsp;&nbsp;{{ $branch->branchname }}</option>
                                             @endforeach      
                                         </optgroup>
-                                        <optgroup label="Panda Markets. بنده">
+                                </select>&nbsp;&nbsp;&nbsp;
 
-                                            <option value="{{$branch->branchnumber}}">Panah Aziziah# 864585</option>
-       
+                                <select name="branchnumber" id="branchnumber" class="form-control dynamic">
+                                    <option value="empty">Select Branch</option>
+                                        <optgroup label="">
+                                            @foreach($branches_list as $branch)
+                                            <option value="{{ $branch->branchnumber }}">&nbsp;&nbsp;{{ $branch->branchnumber }}</option>
+                                            @endforeach      
                                         </optgroup>
-                              <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
-                            </select>&nbsp;&nbsp;&nbsp;
+                                </select>&nbsp;&nbsp;&nbsp;
+                                <script>
+
+$(document).ready(function(){
+    load_json_data('branches_list')
+    function load_json_data(id, parent_id)
+    {
+        var php_code = '';
+        $.getJSON('requst.json', function(data){
+            $.each(data, function(key, value){
+                if(id == 'branchname')
+                {
+                    if(value.parent_id  == '0')
+                    {
+                        php_code += '<option value="'+value.id+'">'+value.name+'</option>';
+                    }
+                }
+                else
+                {
+                    if(value.parent_id == parent_id)
+                    {
+                        php_code += '<option value="'+value.id+'">'+value.name+'</option>';
+                    }
+
+                }
+            });
+            $('#'+id).php(php_code);
+        });
+    }
+
+    $(document).on(change, '#branchname', function(){
+        var branch_name = $(this).val();
+        if(branch_name != '')
+        {
+            load_json_data('branchnumber', branch_name);
+        }
+        else
+        {
+            $('#branchnumber').php('<option value="">-- Select an option --</option>');
+        }
+    });
+    
+});
+
+</script>
+
+                            <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
                         <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
                     <div style="float:right; padding-left:4px"><button type="submit">Next</button></div>
                 </form><br /><hr />
+
+<script>
+
+$(document).ready(function(){
+
+    $('.dynamic').change(function(){
+        if($(this).val() != '')
+        {
+            var select = $(this).attr("id");
+            var value = $(this).val();
+            var dependent = $(this).data('dependent');
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:{{ route('orders.insert.step1') }}
+                method:"POST";
+                data:{select:select, value:value, _token:_token, dependent:dependent},
+                success:function(result)
+                {
+                    $('#'+dependent).php(result);
+                }
+            })
+        }
+    });
+});
+
+</script>
+
+
+
+
+
+
+
+
+
 @markdown
 `You can see full documentation` [here][docs].
 
@@ -143,5 +233,11 @@
     </div>
 </div>
 @endsection
+
+
+
+
+
+
 
 

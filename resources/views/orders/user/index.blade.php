@@ -8,9 +8,7 @@
             <div class="card">
                 <div class="card-header">Orders List</div>
                 <div class="card-body">
-                    @if (!$orders->count())
-                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
-                    @else
+
             <table id="myTable">
                 <thead style="font-size:14px">
                     <tr>
@@ -28,17 +26,13 @@
                         <th>Created</th>
                         <th>Updated</th>
                     </tr>
-                </thead>
-                        @foreach ($orders as $order)
-                            @include('orders/partials/orderblock')
-                        @endforeach	
+
             </table>					
-                    @endif
                     </div>  
                 </div>
             </div>
             </div><br /><hr />
-    <center>{!! $orders->render() !!}</center>
+    <center></center>
     </div>
 </div>
 @endsection

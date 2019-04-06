@@ -21,18 +21,40 @@
         <section>
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 form-group inline-form">
                         <form method="POST" action="{{ route('items.insert') }}">
                         @csrf                
                             <br />
-                                <input class="form-control" type="number" name="itemnumber" placeholder="Material Number" />
-                                <input class="form-control" type="text" name="itemname" placeholder="Product Name" />
-                                <input class="form-control" type="decimal" name="itemprice" placeholder="0.00" />
-                                <input class="form-control" type="number" name="itemsku" placeholder="SKU" />
-                                <input class="form-control" type="text" name="plant" placeholder="Prod. Plant" />
-                                <input class="form-control" type="number" name="instock" placeholder="In Stock" />
-                                <input class="form-control" type="url" name="link" placeholder="http://" />
-                                <input class="form-control" type="text" name="type" placeholder="FRICO DRAIY" />
+                                <input class="form-control" type="number" name="itemnumber" placeholder="Material Number" /><br />
+                                <input class="form-control" type="text" name="itemname" placeholder="Product Name" /><br />
+                                <input class="form-control" type="decimal" name="itemprice" placeholder="0.00" /><br />
+                                <input class="form-control" type="number" name="itemsku" placeholder="SKU" /><br />
+                                <input class="form-control" type="text" name="plant" placeholder="Prod. Plant" /><br />
+                                <input class="form-control" type="number" name="instock" placeholder="In Stock" /><br />
+                                <input class="form-control" type="url" name="link" placeholder="http://" /><br />
+                                <input class="form-control" type="text" name="type" placeholder="FRICO DRAIY" /><br />
+                                <select class="form-control" name="group">
+                                    <option>Select Group</option>
+                                    <option value="AL-SHIFA HONEY">AL-SHIFA HONEY</option>
+                                    <option value="SARY HONEY">SARY HONEY</option>
+                                    <option value="CONVINIENCE">CONVINIENCE</option>
+                                    <option value="PASTRY">PASTRY</option>
+                                    <option value="SUNBULAH-VEGTABLES">SUNBULAH-VEGTABLES</option>
+                                    <option value="Canned Food">Canned Food</option>
+                                    <option value="LAMB MEAT">LAMB MEAT</option>
+                                    <option value="CHICKEN MEAT">CHICKEN MEAT</option>
+                                    <option value="CHEESE">CHEESE</option>
+                                    <option value="FRENCH FRIES">FRENCH FRIES</option>
+                                    <option value="BREAD">BREAD</option>
+                                    <option value="CROISSANT">CROISSANT</option>
+                                    <option value="BREAD RETAIL PACK">BREAD RETAIL PACK</option>
+                                    <option value="SEA FOOD">SEA FOOD</option>
+                                    <option value="FRUITS">FRUITS</option>
+                                    <option value="WALIMAH-VEGTABLES">WALIMAH-VEGTABLES</option>
+                                    <option value="FRICO">FRICO</option>
+                                    <option value="OTHERS">OTHERS</option>
+                                </select><br />
+                                </select><br />
                                 <input class="form-control" type="text" name="itempic" value="item.png" placeholder="Upload an Image" />
                             <input class="btn btn-primary" type="submit" value="Add Product" />
                         </form>

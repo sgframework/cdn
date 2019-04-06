@@ -21,7 +21,7 @@ class Order extends Model
         'created_at'
     ];   
 
-	public function name()
+	public function user()
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
     }
@@ -29,9 +29,21 @@ class Order extends Model
     public function branchname()
 	{
 		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');
-	}
+    }
 
-   
+    
+
+    public function ordersOfMine()
+    {
+    	return $this->belongsToMany('cdn\User', 'orders', 'idnumber', 'ordernumber');
+    }
+
+
+
+
+
+
+
    public function orderId()
    {
        return $this->belongsToMany('cdn\User', 'orderidnumber', 'idnumber', 'orderid');

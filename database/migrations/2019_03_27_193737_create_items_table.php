@@ -18,11 +18,12 @@ class CreateItemsTable extends Migration
             $table->integer('itemnumber');
             $table->string('itemname');
             $table->decimal('itemprice', 8, 2)->nullable();
-            $table->integer('itemsku');
+            $table->integer('itemsku')->nullable();
             $table->integer('plant')->nullable();
             $table->integer('instock')->nullable();
             $table->string('link')->nullable();
             $table->string('type')->nullable();
+            $table->string('group')->nullable();
             $table->string('itempic')->default("item.png");
             $table->timestamps();
         });

@@ -44,10 +44,44 @@ class User extends Authenticatable
     }
 
 
+
+// Orders
+
+    public function orders()
+    {
+    return $this->hasMany('cdn\Models\Order');
+    }
+    public function ordersOfMine()
+    {
+    	return $this->belongsToMany('cdn\User', 'orders', 'idnumber', 'ordernumber');
+    }
+    
+     public function orderOf()
+    {
+    	return $this->belongsToMany('cdn\User', 'orders', 'ordernumber', 'idnumber');
+    }
+
+    public function pendingOrders()
+    {
+    	return $this->friendsOfMine()->wherePivot('status', false)->get();
+    }
+
+
+    public function addOrder(User $user)
+    {
+    	$this->orderOf()->attach($user->id);
+    }
+
+
     public function orderId()
     {
         return $this->belongsToMany('cdn\Models\Order', 'orderidnumber', 'orderid', 'idnumber');
     }
+
+
+
+
+    // Name
 
     public function name()
     {
@@ -117,13 +151,8 @@ class User extends Authenticatable
     }
     
     
-    public function orders()  {
-    	return $this->hasMany('cdn\Models\Order', 'ordernumber');
-    
-    }
-
     public function ordersByUser()  {
-    	return $this->belongsTo('cdn\User\Order', 'ordernumber');
+    	return $this->belongsTo('cdn\Models\Order', 'ordernumber');
     
     }
     public function urgentOrders() {

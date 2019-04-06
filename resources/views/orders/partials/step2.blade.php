@@ -14,13 +14,7 @@
             //
             //
             // endShow -->
-            <script>
-                var msg = '{{Session::get('alert')}}';
-                var exist = '{{Session::has('alert')}}';
-                if(exist){
-                alert(msg);
-                }
-            </script>
+
 
             <style>
                 td {
@@ -33,6 +27,13 @@
                                     <th style="padding-left:20px;padding-top:5px;background-color:black; color:white">@markdown ### Order# **{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}** @endmarkdown</th>
                                     <th style="background-color:black; color:white">@markdown @endmarkdown</th>
                                 <tr>
+            <script>
+                var msg = '{{Session::get('alert')}}';
+                var exist = '{{Session::has('alert')}}';
+                if(exist){
+                alert(msg);
+                }
+            </script>
                                     <th>Name</th>
                                     <th>ID#</th>
                                 </tr>
@@ -95,7 +96,7 @@ Order# {{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }} =
                     <span style="color:green">{!! session('message') !!}</span>
                 @endif
                 
-                    <a style= "float:right" href="/order/{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}">Go to your order page &rarr;</a>           
+                    <a style= "float:right" href="/orders/order/{{ (Session::has('slug') ? Session::get('slug') : '' ) }}">Go to your order page &rarr;</a>           
                     @else
 
 

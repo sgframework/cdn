@@ -745,14 +745,19 @@ print "$name_first\n$name_last\n$name_company\n";
     });    
 </script>
 </head>
+
+
 <body>
+
+
     <form>
         <input type="text" id="name" placeholder="Name">
         <input type="text" id="email" placeholder="Email Address">
         <input type="button" class="add-row" value="Add Row">
-    </form>
-    <table>
-        <thead>
+
+
+        <table class="table table-striped table-sm">
+                <thead>
             <tr>
                 <th>Select</th>
                 <th>Name</th>
@@ -767,6 +772,9 @@ print "$name_first\n$name_last\n$name_company\n";
             </tr>
         </tbody>
     </table>
+
+    </form>
+
     <button type="button" class="delete-row">Delete Row</button>
                                             <table class="table table-striped table-sm">
                                                 <thead>
@@ -806,6 +814,28 @@ print "$name_first\n$name_last\n$name_company\n";
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+
+                    <button id="addContentBtn"> add content to table</button>
+<table id="testTbl"></table>
+<script>
+
+$(document).ready(function() {
+
+   ("#addContentBtn").click(function(){
+        var str="<tr><td>1</td><td><button>button</button></td></tr>" +
+         "<tr><td>2</td><td><button>button</button></td></tr>" ;
+        $(str).appendTo("#testTbl");
+   })
+
+   //this is event delegation
+   $("#testTbl").on("click","button",function(){
+                alert("clicked");
+   })
+
+   </script>
+
+
                     </div>
                     </div>
                 </div>
@@ -817,6 +847,82 @@ print "$name_first\n$name_last\n$name_company\n";
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+
+
+
+
+
+
+
+
+<script>
+                    $(document).ready(function(){
+
+var data_fo = $('.partner').html();
+var sd = '<div class="btn btn-danger remove-add-more">Remove</div>';
+var max_fields = 5; //maximum input boxes allowed
+var wrapper = $(".partners"); //Fields wrapper
+var add_button = $(".add-more"); //Add button ID
+
+var x = 1; //initlal text box count
+$(add_button).click(function(e){ //on add input button click
+  e.preventDefault();
+  if(x < max_fields){ //max input box allowed
+    x++; //text box increment
+    var partnerClone = $('.partner').first().clone();
+    $(sd).appendTo(partnerClone);
+    $(wrapper).append(partnerClone);
+  }
+});
+
+$(wrapper).on("click",".remove-add-more", function(e){ //user click on remove text
+    e.preventDefault();
+    $(this).parent('.partner').remove();
+    $(this).remove();
+    x--;
+});
+});
+
+</script>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class="form-group add-field">
+  <div class="partners">  
+    <div class="partner">
+      <table>
+        <tr>
+          <td>
+            <select name="partnerSelect[]" id="partnerSelect" class="form-control">
+            <option disabled selected value> -- select an option -- </option>
+            <?php                                       
+            ?>
+            <option value=""></option>
+
+            </select>  
+          </td>
+          <td><input type="text" placeholder="Enter description" name="description[]" id="description" class="form-control" /></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="btn btn-warning add-more"><span>+ Add More</span></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
                     </div>
                     </div>
                 </div>
@@ -828,6 +934,36 @@ print "$name_first\n$name_last\n$name_company\n";
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+
+                    <form>
+    Fruit:
+    <select name="name" id="branchname">
+        <option>Apple</option>
+        <option>Banana</option>
+        <option>Orange</option>
+        <option>Pear</option>
+    </select>
+    Variety:
+    <select name="branchnumber" id="branchnumber">
+    </select>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+@php
+
+
+@endphp
+
+
                     </div>
                     </div>
                 </div>

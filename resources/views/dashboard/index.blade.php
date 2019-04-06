@@ -9,7 +9,7 @@
                 <div class="card-header"><i class="fas fa-tachometer-alt"></i> <strong><span style="font-size:18px">Dashboard</span></strong></div>
                 <div class="card-body">
                     <center>
-                <span class="nav-item"><a style="display: inline-block;" class="inline nav-link" href="{{ route('dashboard.orders') }}"><i class="fas fa-asterisk"></i> My Orders</a><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-asterisk"></i> My Orders</a><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-search"></i> Search Database</a></span>
+                <span class="nav-item"><a style="display: inline-block;" class="inline nav-link" href="{{ route('dashboard.orders') }}"><i class="fas fa-asterisk"></i> My Orders</a><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-search"></i> Search Database</a></span>
                 <div class="row justify-content-left">
 </center>
                 <div class="col-md-4">
@@ -26,6 +26,7 @@ Phone Number: {{ Auth::user()->phonenumber }}
 Email: {{ Auth::user()->email }}
 
 Total Orders 998
+
 
 -------------------
 

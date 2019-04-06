@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use cdn\Models\Order;
+use cdn\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +45,6 @@ Route::get('/order/{ordernumber}', function (Request $request) {
         $arr
     ]);
 
-
     
     return response($arr1, 200)
                   ->header('Content-Type', 'application/json');
@@ -53,12 +53,27 @@ Route::get('/order/{ordernumber}', function (Request $request) {
 
 
 
+//Route::get('test', function(){
+//   return "<h1>" . Order::get("color") . "</h1>";
+//});
+
+
+
 Route::get('test', function(){
-    return "<h1>" . Order::get("color") . "</h1>";
+    return "<pre>" . print_r(User::all(), true) . "</pre>";
+});
+
+
+Route::get('/dashboard/orders/{slug}', function(){
+    return $slug;
+
 });
 
 
 
-Route::get('test', function(){
-    return "<pre>" . print_r(Order::all(), true) . "</pre>";
+
+
+Route::get('/orders/user/{slug}', function(){
+        
+    $order = \cdn\Models\Order::where('slug', $slug)->firstOrFail(); 
 });

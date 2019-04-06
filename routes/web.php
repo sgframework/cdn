@@ -26,7 +26,7 @@ Auth::routes();
 
 
 
-Route::get('test', function(){
+Route::get('test0', function(){
     return "<code>" . print_r(Order::all(), true) . "</code>";
 });
 
@@ -200,21 +200,16 @@ Route::get('/orders', [
 
 ]);
 
-Route::get('/{$user}/orders', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@getOrdersbyUser
-    user',
-'as' => 'orders.user',
-
-]);
 
 
+/*
 Route::post('/order/insert', [
     'uses' => '\cdn\Http\Controllers\OrdersController@InsertOrders',
 'as' => 'orders.insert',
 
 ]);
 
-
+*/
 
 Route::get('/order/add', [
     'uses' => '\cdn\Http\Controllers\OrdersController@addOrder',
@@ -264,6 +259,24 @@ Route::get('/dashboard/orders', [
 ]);
 
 
+
+
+Route::get('/orders/order/{slug}', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@getOrderNumber',
+    'as' => 'orders.order'])->where('slug', '[\d\-]+');
+
+
+Route::get('/orders/order/{slug}/insert', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@editOrderNumber',
+    'as' => 'orders.edit'])->where('slug', '[\d\-]+');
+    
+    
+
+Route::post('/orders/order/{slug}/update', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@updateOrderItems',
+    'as' => 'order.update'])->where('slug', '[\d\-]+');
+        
+          
 
 /*
 * Search

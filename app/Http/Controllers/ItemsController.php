@@ -66,16 +66,19 @@ class ItemsController extends Controller
             'instock' => $request['instock'],
             'link' => $request['link'],
             'type' => $request['type'],
+            'group' => $request['group'],
             'itempic' => $request['itempic']
         ]);
-        $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type', 'itempic')->orderBy('created_at', 'desc')->paginate(10);
+        $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type', 'group', 'itempic')->orderBy('created_at', 'desc')->paginate(10);
         return redirect()->route('items.index')->with('info', 'Your item has been created')->with('items', $items);
     }
     	
 
         public function getItems(Request $request)
         {
-            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type', 'itempic')->orderBy('created_at', 'desc')->paginate(10);
+            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type', 'group', 'itempic')->orderBy('created_at', 'desc')->paginate(10);
+            dump($items);
+
             return view('items.index')->with('items', $items);
         }
 

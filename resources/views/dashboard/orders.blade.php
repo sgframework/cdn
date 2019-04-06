@@ -18,15 +18,33 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-            <div class="card-header" style="font-size:12px;float:right;padding-top:15px;padding-bottom:15px; text-align:center">
-                        <a href="{{ route('orders.add') }}"><i class="fas fa-plus"></i> <span>New Order</span></a>&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('orders.index') }}"><i class="fas fa-edit"></i> <span>Edit Orders</span></a>
-                    </div>
-                <button onclick="fun('orders')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-eye"></i> <span style="padding-left:10ox;">Orders Overview</span></button>
-                <div id="orders" class="w3-container w3-hide">
+            @if(!Session::has('ordernumber') ? : '' )
 
+                <span style="text-align:center;font-size:26px;padding-bottom:320px;padding-top:120px">You haven't created any orders recently! you can create a <a href="{{ route('orders.add') }}"><i class="fas fa-plus"></i> New Order</a></span>&nbsp;&nbsp;&nbsp;            
+
+
+
+
+
+
+
+
+                    @else
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+
+ 
+                <button onclick="fun('orders')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-eye"></i> <span style="padding-left:10ox;">Orders Overview</span></button> 
+                <div class="card-header" style="font-size:12px;float:right;padding-top:15px;padding-bottom:15px; text-align:center">
+                <a href="{{ route('orders.add') }}"><i class="fas fa-plus"></i> <span>New Order</span></a>&nbsp;&nbsp;&nbsp;
+          <a href="{{ route('orders.index') }}"><i class="fas fa-edit"></i> <span>Edit Orders</span></a>
+                </div>
+                <div id="orders" class="w3-container w3-hide">
                 <div style="padding-left:8px" class="row">
                     <div class="card col-lg-5">
+
 @markdown
 
 
@@ -54,16 +72,19 @@ Total orders: $count(orders);
 
 __Order Status:__ 
 
-
-[Order URL](http://localhost) [Order URL](http://localhost)
-
+[Go to order# {{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }} page]({{ url('/orders/order') }}/{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}-{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }} )
 
 -----------------------
 
 @endmarkdown
 
-
-                                </div>
+            @if($errors->any())
+            <h4>{{$errors->first()}}</h4>
+            @endif
+                    @if (!$orders->count())
+                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                    @else
+                    </div>
                                 <hr />
                                 <div style="padding-left:8px;padding-top:8px" class="col-sm-6">
                                     <span class="h5"><i class="fas fa-history"></i> Orders Summery</span>
@@ -72,43 +93,20 @@ __Order Status:__
                                                     <tr>
                                                         <th>Order#</th>
                                                         <th>PO#</th>
-                                                        <th>Status</th>
+                                                        <th>Urgent</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}</td>
-                                                        <td>{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}</td>
-                                                        <td><pre>Just created</pre></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}</td>
-                                                        <td>{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}</td>
-                                                        <td><pre>Just created<i style="color:red" class="dot"></i></pre></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}</td>
-                                                        <td>{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}</td>
-                                                        <td><pre>Just created</pre></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}</td>
-                                                        <td>{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}</td>
-                                                        <td><pre>Just created</pre></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}</td>
-                                                        <td>{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}</td>
-                                                        <td><pre>Just created</pre></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}</td>
-                                                        <td>{{ (Session::has('ponumber') ? Session::get('ponumber') : '' ) }}</td>
-                                                        <td><pre>Just created</pre></td>
-                                                    </tr>                                            
-                                                    </table>
-                                                </tbody>
-                                            </div>
+                                                @foreach ($orders as $order)
+                                                    @include('dashboard/partials/ordersblock')
+                                                @endforeach	
+                                            </table>
+
+                                @endif
+
+                                </div>
+                                </div>
+
+                                </div>
                                         </div>
                                         <hr />
                                     <div class="">
@@ -191,6 +189,8 @@ __Order Status:__
                                 <b><p style="padding-left:45px"></p></b>
                                 <div class="col-md-2">
 
+                                @endif
+
                                 </div>
                             </div>
                         </div>
@@ -200,4 +200,5 @@ __Order Status:__
         </div>
     </div>
 </div>
+
 @endsection

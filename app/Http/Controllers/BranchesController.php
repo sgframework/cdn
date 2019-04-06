@@ -2,6 +2,7 @@
 namespace cdn\Http\Controllers;
 use cdn\User;
 use cdn\Models\Branch;
+use DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -53,14 +54,23 @@ class BranchesController extends Controller
         return view('branches.index')->with('branches', $branches);
     }
     	
-        public function getBranches(Request $request)
-        {
-            $branches = Branch::select('branchname', 'branchnumber', 'logo')->orderBy('created_at', 'desc')->paginate(10);       
-            return view('branches.index')->with('branches', $branches)->with('msg', 'You`ve just added a new branch successfully.');
-        }
-        
-        public function addBranch()
-        {
-            return view ('branches.add');
-        }
+    public function getBranches(Request $request)
+    {
+        $branches = Branch::select('branchname', 'branchnumber', 'logo')->orderBy('created_at', 'desc')->paginate(10);       
+        return view('branches.index')->with('branches', $branches)->with('msg', 'You`ve just added a new branch successfully.');
+    }
+    
+    public function addBranch()
+    {
+        return view ('branches.add');
+    }
+
+
+    public function dynDD()
+    {
+        $branches_list = DB::table('branches')
+                        ->groupBy('branchname')
+                        ->get();
+        return view('orders.add')->with('branches_list', $branches_list);
+    }
 }

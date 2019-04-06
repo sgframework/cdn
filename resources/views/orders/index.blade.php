@@ -6,7 +6,7 @@
         <div class="col-md-12 ml-sm-auto col-lg-12">
             <div class="card">
                 <div class="card-header">Orders List</div>
-                    <div class="card-body" style="background-color: lightgray">
+                    <div class="card-body">
                         @if (!$orders->count())
                             <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"><hr />
                         @else

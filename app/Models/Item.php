@@ -14,6 +14,7 @@ class Item extends Model
     	'instock',
         'link',
         'type',
+        'group',
         'itempic',
     ];   
 
