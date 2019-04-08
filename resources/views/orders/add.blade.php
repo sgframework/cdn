@@ -4,6 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+
             <div class="card">
             @if (Route::has('login'))
                     @auth
@@ -43,6 +44,7 @@
 @endmarkdown
 
 
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
                 <form class="form-inline" method="POST" action="{{ route('orders.insert.step1') }}">
@@ -50,7 +52,7 @@
                     <label hidden style="padding-left:20px" for="staffname">Name:</label>
                         <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />
                     </label>
-                    <input hidden class="form-control" type="text" class="input" name="branchname" value="Othaim Market" />
+                    <!--<input hidden class="form-control" type="text" class="input" name="branchname" value="" />-->
 
                     <input hidden class="form-control" type="text" class="input" name="created_at" value="{{ $timestamp = now() }}" />&nbsp;&nbsp;&nbsp;
                     <input hidden class="form-control" type="number" class="input" name="ordernumber" value="0000{{ mt_rand(7000000, 8888000) }}" />&nbsp;&nbsp;&nbsp;
@@ -60,24 +62,42 @@
                         <input class="form-control" width="20px" type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
                                 
                                 
-                                
-                                <select name="branchname" id="branchname" class="form-control dynamic" data-dependent="branchnumber">
-                                    <option value="empty">Select Branch</option>
-                                        <optgroup label="Othaim Markets. أسواق العثيم">
-                                            @foreach($branches_list as $branch)
-                                            <option value="{{ $branch->branchname }}">&nbsp;&nbsp;{{ $branch->branchname }}</option>
-                                            @endforeach      
-                                        </optgroup>
-                                </select>&nbsp;&nbsp;&nbsp;
 
-                                <select name="branchnumber" id="branchnumber" class="form-control dynamic">
+                                <!--<select name="branchnumber" id="branchnumber" class="form-control dynamic" data-dependent="branchnumber">
+                                    <option value="empty">Select Branch</option>
+                                            @foreach($branches_list as $branch)
+                                            <option value="{{ $branch->branchnumber }}-{{ $branch->branchname }}">&nbsp;{{ $branch->branchnumber }}&nbsp;{{ $branch->branchname }}</option>
+                                            @endforeach      
+                                </select>&nbsp;&nbsp;&nbsp;-->
+          
+                                <script>
+                                $(document).ready(function(){
+                                    $("input").click(function(){
+                                            $(this).next().show();
+                                            $(this).next().hide();
+                                        });
+
+                                    });
+                                </script>
+                                <input name="branchnumber" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                                <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                                <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
+                                                    @foreach($branches_list as $branch)
+                                                    <option name="branchname" value="{{ $branch->branchnumber }}-{{ $branch->branchname }}"></option>
+                                                    @endforeach 
+                                        </datalist>
+
+
+
+
+                                <!--<select name="branchnumber" id="branchnumber" class="form-control dynamic">
                                     <option value="empty">Select Branch</option>
                                         <optgroup label="">
                                             @foreach($branches_list as $branch)
                                             <option value="{{ $branch->branchnumber }}">&nbsp;&nbsp;{{ $branch->branchnumber }}</option>
                                             @endforeach      
                                         </optgroup>
-                                </select>&nbsp;&nbsp;&nbsp;
+                                </select>&nbsp;&nbsp;&nbsp;-->
                                 <script>
 
 $(document).ready(function(){

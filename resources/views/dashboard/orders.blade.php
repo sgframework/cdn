@@ -78,6 +78,7 @@ __Order Status:__
 
 @endmarkdown
 
+
             @if($errors->any())
             <h4>{{$errors->first()}}</h4>
             @endif
@@ -93,7 +94,8 @@ __Order Status:__
                                                     <tr>
                                                         <th>Order#</th>
                                                         <th>PO#</th>
-                                                        <th>Urgent</th>
+                                                        <th>Status</th>
+                                                        <th>URL</th>
                                                     </tr>
                                                 </thead>
                                                 @foreach ($orders as $order)
@@ -104,6 +106,7 @@ __Order Status:__
                                 @endif
 
                                 </div>
+
                                 </div>
 
                                 </div>

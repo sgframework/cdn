@@ -31,7 +31,8 @@ class SearchController extends Controller
     		return redirect()->route('global.index');
     	}
     	
-    	$branches = Branch::where(DB::raw("CONCAT(branchname, '', 'branchnumber')"), 'LIKE', "%{$query}%")
+		$branches = Branch::where(DB::raw("CONCAT(branchname, '', 'branchnumber')"), 'LIKE', "%{$query}%")
+		->orWhere('branchnumber', 'LIKE', "%{$query}%")
     	->get();
     	
     	

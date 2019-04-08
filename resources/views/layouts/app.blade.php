@@ -10,12 +10,16 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
-    <!-- Fonts -->
+    <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
+    <script src="{{ asset('js/prism.js') }}" defer></script>
+    <script src="{{ asset('js/init.js') }}" defer></script>
+            <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">

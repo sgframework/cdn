@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('branchname');
             $table->string('urgent')->default('0')->nullable();
             $table->string('slug');
+            $table->string('status')->default('Just Created')->nullable();
             $table->index('ordernumber');
             $table->timestamps();
 

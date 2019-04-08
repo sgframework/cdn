@@ -23,6 +23,7 @@ use cdn\Models\Order;
     ]);
 
 Auth::routes();
+Auth::routes(['verify' => true]);
 
 
 
@@ -58,6 +59,12 @@ Route::get('/tests', [
     'uses' => '\cdn\Http\Controllers\RootController@getTest',
 'as' => 'tests.index',
 ]);
+
+Route::get('/tests/othaim', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@listOthiam',
+'as' => 'tests.othaim',
+]);
+
 
 Route::get('/tests/review', [
     'uses' => '\cdn\Http\Controllers\RootController@getReview',
@@ -266,18 +273,28 @@ Route::get('/orders/order/{slug}', [
     'as' => 'orders.order'])->where('slug', '[\d\-]+');
 
 
-Route::get('/orders/order/{slug}/insert', [
+Route::get('/orders/order/{slug}/edit', [
     'uses' => '\cdn\Http\Controllers\OrdersController@editOrderNumber',
     'as' => 'orders.edit'])->where('slug', '[\d\-]+');
     
     
 
-Route::post('/orders/order/{slug}/update', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@updateOrderItems',
-    'as' => 'order.update'])->where('slug', '[\d\-]+');
+Route::post('/orders/order/{slug}/insert', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@insertOrderItems',
+    'as' => 'orders.insert'])->where('slug', '[\d\-]+');
+    
+    
         
-          
-
+Route::get('/orders/order/{slug}/review', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@reviewOrderItems',
+    'as' => 'orders.review'])->where('slug', '[\d\-]+');
+    
+Route::post('/orders/order/{slug}/submit', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@submitOrder',
+    'as' => 'orders.submit'])->where('slug', '[\d\-]+');
+        
+            
+    
 /*
 * Search
 */

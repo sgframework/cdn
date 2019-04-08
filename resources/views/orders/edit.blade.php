@@ -6,6 +6,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12 ml-sm-12 col-lg-12">
+        @if ($errors->has('success'))
+    				<span class="help-block">{{ $errors->first('success') }}</span>
+                @endif
+                @if ($errors->has('alert'))
+    				<span class="help-block">{{ $errors->first('alert') }}</span>
+    			@endif
             <div class="card">
                 <div style="font-size:20px" class="card-header"><b>Edit Order# {{ $order->ordernumber }}</b></div>
                     <div class="card-body">
@@ -48,10 +54,10 @@
                                                         <tr>
                                                             <td>{{ $order->ordernumber }}</td>
                                                             <td>{{ $order->staffname }}#{{ $order->staffid }}</td>
-                                                            <td>{{ $order->branchname }}&nbsp;#{{ $order->branchnumber }}</td>
+                                                            <td>{{ $branchname }}</td>
                                                             <td>{{ $order->ponumber }}</td>
                                                             <td>{{ $order->urgent }}</td>
-                                                            <td>Pending</td>
+                                                            <td>{{ $status }}</td>
                                                             <td>{{ $order->created_at->diffForHumans() }}</td>
                                                             <td>{{ $order->updated_at->diffForHumans() }}</td>
                                                         </tr>	
@@ -69,22 +75,103 @@
 ------------------------
 
 @endmarkdown
-                                    <center><button class="btn btn-default" onclick="myFunction()">ADD <i class="fas fa-plus"></i></button></center><br />
-                                         <div class="table-responsive">
-                                            <table class="table table-striped table-sm" id="myTable">
-                                                <thead style="font-size:12px">
-                                                    <tr>
-                                                        <th width="60%">Item</th>
-                                                        <th width="10%">Qty.</th>
-                                                        <th width="10%">Free</th>
-                                                        <th width="10%">Price</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        <form action="" method="POST">
-                                            <table id="items" class="table table-striped table-sm">
-                                                <tbody style="font-size:10px">
 
+<!--<form action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
+    @csrf
+    <select name='itemnumber' class='form-control'><option>Select one</option><?php foreach($items as $item) {?><option width='60%' value='<?php echo $item->itemnumber; ?>'><?php echo $item->itemnumber; ?> <?php echo $item->itemname; }?></option></select>
+    <input  width='10%' class='form-control' type='number' name='itemqty' />";
+    <input width='10%' class='form-control' type='number' name='freeitem' />";
+    <input width='10%' class='form-control' type='number' name='itemprice' />
+    <input type="submit" class="btn btn-primary" />
+
+</form>-->
+
+
+
+
+                                    <!--<center><button class="btn btn-default" onclick="myFunction()">ADD <i class="fas fa-plus"></i></button></center><br />-->
+                                    <div class="table-responsive">
+                                    @if($errors->any())
+                            <h4>{{$errors->first()}}</h4>
+                            @endif
+                                    @if (!$orderitems->count())
+                                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                                    @else
+                                    </div>
+                                                <hr />
+                                                <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
+                                                    <span class="h5"><i class="fas fa-history"></i> Orders Summery</span>
+                                                            <table width="100%" class="table-dark table-responsive-sm dark" id="myTable">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Item#</th>
+                                                                        <th>Desc.</th>
+                                                                        <th>Qty</th>
+                                                                        <th>Free</th>
+                                                                        <th>Price</th>
+                                                                        <th>Ststus</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                @foreach ($orderitems as $orderitem)
+                                                                    @include('dashboard/partials/orderitemsblock')
+                                                                @endforeach	
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Item#</th>
+                                                                        <th>Desc.</th>
+                                                                        <th>Qty</th>
+                                                                        <th>Free</th>
+                                                                        <th>Price</th>
+                                                                        <th>Ststus</th>
+                                                                    </tr>
+                                                                </thead>
+                                                            </table>
+                                                            @endif
+                                                        <form class="form-inline" action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
+                                                                @csrf
+                                                            <input autofocus width="60%" name="itemnumber" class="form-control" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
+                                                            <input hidden name="itemname" class="form-control" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
+                                                                <datalist id="{{ $item->itemnumber }}-{{ $item->itemname }}" class="">
+                                                                    @foreach($items as $item)
+                                                                        <option name="itemnumber" value="{{ $item->itemnumber }}-{{ $item->itemname }}"></option>
+                                                                    @endforeach 
+                                                                </datalist>                   
+                                                            <input width="10%" class="form-control" type="number" name="itemqty" placeholder="Qty." />
+                                                            <input width="10%" class="form-control" type="number" name="freeitem" placeholder="Free" />
+                                                            <input width="10%" class="form-control" type="number" name="itemprice" placeholder="Price" />
+                                                            <hr /><br />
+                                                            <input type="submit" class="btn btn-primary" /> 
+                                                        </form>
+
+
+
+
+                                            <script>
+                                $(document).ready(function(){
+                                    $("input").click(function(){
+                                            $(this).next().show();
+                                            $(this).next().hide();
+                                        });
+
+                                    });
+                                </script>
+
+
+
+
+
+<br /><hr />
+    <form class="form-inline" action="{{ route('orders.review', ['orderId' => $order->slug]) }}" method="GET">
+    @csrf
+        <input type="submit" value="Review" class="btn btn-info" /> 
+</form>
+
+
+
+
+                                            <!--<table id="items" class="table table-striped table-sm">
+
+                                                <tbody style="font-size:10px">
 
                                         </div>
                                             <script>
@@ -96,21 +183,21 @@
                                                 var cell3 = row.insertCell(2);
                                                 var cell4 = row.insertCell(3);
                                                 cell1.innerHTML = "<select name='itemnumber' class='form-control'><option>Select one</option><?php foreach($items as $item) {?><option width='60%' value='<?php echo $item->itemnumber; ?>'><?php echo $item->itemnumber; ?> <?php echo $item->itemname; }?></option></select>";
-                                                cell2.innerHTML = "<input  width='10%' class='form-control' type='number' name='qty' />";
-                                                cell3.innerHTML = "<input width='10%' class='form-control' type='number' name='free' />";
-                                                cell4.innerHTML = "<input width='10%' class='form-control' type='number' name='price' />";
+                                                cell2.innerHTML = "<input  width='10%' class='form-control' type='number' name='itemqty' />";
+                                                cell3.innerHTML = "<input width='10%' class='form-control' type='number' name='freeitem' />";
+                                                cell4.innerHTML = "<input width='10%' class='form-control' type='number' name='itemprice' />";
                                                 }
                                                 
                                             </script>
+
                                                 </tbody>
-                                            </table>
-                                            <hr />
-                                                <input type="submit" class="btn btn-success" />
-                                            </form>
+                                                <input type="submit" class="btn btn-primary" />
+                                            
+                                            </table>-->
 		                                </div>
                                     </div>						
                                 </div>  
-                            <br /><hr />
+                            <br />
                         </div>
                     </div>
                 </div>     

@@ -47,7 +47,7 @@
                                                             <td><img class="media-object" alt="{{ $order->ordernumber }}" src="{{ asset('images/uploads/avatars') }}/{{ Auth::user()->photo }}" style="width:40px; height:40px; float:center; border-radius:50%;"></td>
                                                             <td>{{ $order->ordernumber }}</td>
                                                             <td>{{ $order->staffname }}#{{ $order->staffid }}</td>
-                                                            <td>{{ $order->branchname }}&nbsp;#{{ $order->branchnumber }}</td>
+                                                            <td>{{ $order->branchname }}</td>
                                                             <td>{{ $order->ponumber }}</td>
                                                             <td>{{ $order->urgent }}</td>
                                                             <td><a href="{{ url('/orders/order/' . $order->slug) }}">{{ url('/orders/order/' . $order->slug) }}</a></td>
@@ -63,7 +63,7 @@
                                     </div>					
                                 </div>  
                             <br /><hr />
-                        <a href="{{ url('/orders/order/' . $order->slug . '/insert') }}"><i class="fas fa-edit"></i>Edit Order</a>
+                        <a href="{{ url('/orders/order/' . $order->slug . '/edit') }}"><i class="fas fa-edit"></i>Edit Order</a>
                     </div>
                 </div>
             </div>     

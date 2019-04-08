@@ -16,8 +16,11 @@ class ProfileController extends Controller
     {
 		$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
         $branches = Branch::select('branchname', 'branchnumber')->orderBy('updated_at', 'desc')->paginate(10);
-        $orders = Order::select('ordernumber', 'orderid', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
-        return view('dashboard.index')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
+		$orders = Order::select('ordernumber', 'orderid', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'desc')->paginate(10);
+		$currentuser = \Auth::user();
+		$orderitems = OrderItems::where('staffid', '=', $currentuser->idnumber)->get();
+		dump($orderitems);
+		return view('dashboard.index')->with('orderitems', $orderitems)->with('orders', $orders)->with('items', $items)->with('branches', $branches);
 		
     }
     public function getEdit()

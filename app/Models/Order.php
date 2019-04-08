@@ -18,7 +18,9 @@ class Order extends Model
     	'branchname',
         'urgent',
         'slug',
-        'created_at'
+        'status',
+        'created_at',
+        'updated_at'
     ];   
 
 	public function user()
@@ -38,8 +40,12 @@ class Order extends Model
     	return $this->belongsToMany('cdn\User', 'orders', 'idnumber', 'ordernumber');
     }
 
+    public function scopeOrder($query)
+    {
+        return $query->where('votes', '>', 100);
+    }
 
-
+    
 
 
 
@@ -53,6 +59,13 @@ class Order extends Model
     {
         return $this->hasMany('cdn\Models\Order', 'orderid');
     }
+
+    public function getOrderItems(Order $slug)
+    {
+        return $this->hasMany('cdn\Models\OrderItems', 'itemnumber');
+    }
+
+
 
     public function scopeNotUrgent($query)
 	{
@@ -105,6 +118,8 @@ class Order extends Model
     {
         return $this->belongsTo('cdn\Models\Order', 'orderid');
     }
+
+    
 
 	public function orders($id)
 	{
@@ -188,10 +203,7 @@ class Order extends Model
     	}
     	return null;
     }
-    public function getOrderItems()
-    {
-    	return $this->poNumber() ?: $this->item;
-    }
+
     public function getOrderList()
     {    	
     	if ($this->poNumber && $this->itemNumber) {

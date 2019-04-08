@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'ipool.remotewebaccess.com'),
+    'host' => env('MAIL_HOST', 'localhost'),
 
     /*
     |--------------------------------------------------------------------------
@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 110),
+    'port' => env('MAIL_PORT', 25),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,8 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'root@ies.com'),
-        'name' => env('MAIL_FROM_NAME', 'Root'),
+        'address' => env('MAIL_FROM_ADDRESS', 'root@ipool.remotewebaccess.com'),
+        'name' => env('MAIL_FROM_NAME', 'SunbulahGroupCDN'),
     ],
 
     /*

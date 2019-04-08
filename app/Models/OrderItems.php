@@ -14,7 +14,8 @@ class OrderItems extends Model
     	'ordernumber',
     	'staffname',
     	'staffid',
-    	'ponumber',
+        'ponumber',
+        'branchname',
     	'branchnumber',
     	'itemnumber',
         'orderitems',
@@ -22,16 +23,23 @@ class OrderItems extends Model
         'freeitem',
         'itemprice',
         'orderstatus',
+        'slug',
+
     ];   
 
     public function name()
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
     }
+
+    public function getItemsPerOrder(OrderItems $slug)
+    {
+        return $this->hasMany('cdn\Models\Order', 'itemnumber', 'slug');
+    }
     
     public function orderstatus(Request $request)
     {
-		return $this->hasMany('cdn\Models\OrderItems', 'orderstatus');
+		return $this->hasMany('cdn\Models\Order', 'slug');
     }
 
     public function getOrderStatus(getOrderItems $request)

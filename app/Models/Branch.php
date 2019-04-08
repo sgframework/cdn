@@ -37,7 +37,15 @@ class Branch extends Model
     		return $this->branchname;
     	}
     	return null;
-    }
+	}
+	
+
+	public function scopeBranch($query, $keywords)
+	{
+		return $query->where('branchname', 'LIKE', '%'.$keywords.'%');
+	}
+
+
     
     public function getBranchName()
     {

@@ -94,11 +94,90 @@
             //
             //
             // endShow -->
-            </div>
-            </div>
-        </div>
-    </div>
-</div>                    @else
+
+
+
+
+
+@markdown
+
+# Open Orders
+
+@endmarkdown
+
+                            @if (!$orders->count())
+                                <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                            @else
+                            <table class="table-dark table-responsive-sm dark" id="myTable">
+                                <thead style="font-size:12px">
+                                    <tr>
+                                        <th>Order#</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Status</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                        @foreach ($orders as $order)
+                                        <tbody style="font-size:12px">
+
+                                        <tr>
+                                        <td><a style= "float:left" href="/orders/order/{{ $order->slug }}">{{ $order->slug }}</a></td>
+                                        <td>{{ $order->ponumber }}</td>
+                                        <td>{{ $order->branchname }}</td>
+                                        <td>{{ $order->status }}</td>
+                                        <td>{{ $order->updated_at->diffForHumans() }}</td>
+                                        </tr>	
+                                        </tbody>
+
+                                        @endforeach	
+                                </div>
+                            </div>
+                        </table>
+                        @endif
+                        <br /><hr />                                      
+@markdown
+
+# Processed Orders
+
+@endmarkdown
+                    @if (!$processedorders->count())
+                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                    @else
+                            <table class="table-dark table-responsive-sm dark" id="myTable">
+                                <thead style="font-size:12px">
+                                    <tr>
+                                        <th>Order#</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Status</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                        @foreach ($processedorders as $processedorder)
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td><a style= "float:left" href="/orders/order/{{ $processedorder->slug }}">{{ $processedorder->slug }}</a></td>
+                                        <td>{{ $processedorder->ponumber }}</td>
+                                        <td>{{ $processedorder->branchname }}</td>
+                                        <td>{{ $processedorder->status }}</td>
+                                        <td>{{ $processedorder->updated_at->diffForHumans() }}</td>
+                                        </tr>	
+                                        </tbody>
+                                        @endforeach	
+                                </div>
+                            </div>
+                        </table>
+                        @endif
+                    @else
             <!-- If user loggedOut show below content until endShow part -->          
             <div class="container">
     <div class="row justify-content-center">

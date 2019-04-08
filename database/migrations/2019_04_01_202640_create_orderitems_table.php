@@ -20,16 +20,20 @@ class CreateOrderitemsTable extends Migration
             $table->string('staffname')->nullable();
             $table->integer('staffid')->nullable();
             $table->integer('ponumber')->nullable();
+            $table->string('branchname')->nullable();
             $table->integer('branchnumber')->nullable();
-            $table->integer('itemnumber')->nullable();
             $table->string('orderitems')->nullable();
+            $table->integer('itemnumber')->nullable();
             $table->integer('itemqty')->nullable();
             $table->integer('freeitem')->nullable();
-            $table->integer('orderstatus')->nullable();
             $table->decimal('itemprice', 8, 2)->nullable();
-            $table->index(['ordernumber', 'ponumber']);
+            $table->string('orderstatus')->default('Inserting Items')->nullable();
+            $table->string('slug');
+            $table->index(['ordernumber', 'ponumber', 'slug', 'orderstatus']);
             $table->timestamps();
         });
+
+        //[0] - Just Created, [1] - Inserting Items, [2] - Submitted, [3] - Processed
 
 
     }
