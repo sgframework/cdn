@@ -161,10 +161,9 @@
 
 
 <br /><hr />
-    <form class="form-inline" action="{{ route('orders.review', ['orderId' => $order->slug]) }}" method="GET">
-    @csrf
-        <input type="submit" value="Review" class="btn btn-info" /> 
-</form>
+
+<a href="{{ route('orders.review', ['orderId' => $order->slug]) }}">Review your order</a>
+
 
 
 

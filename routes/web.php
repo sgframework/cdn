@@ -287,7 +287,7 @@ Route::post('/orders/order/{slug}/insert', [
         
 Route::get('/orders/order/{slug}/review', [
     'uses' => '\cdn\Http\Controllers\OrdersController@reviewOrderItems',
-    'as' => 'orders.review'])->where('slug', '[\d\-]+');
+    'as' => 'orders.review']);
     
 Route::post('/orders/order/{slug}/submit', [
     'uses' => '\cdn\Http\Controllers\OrdersController@submitOrder',

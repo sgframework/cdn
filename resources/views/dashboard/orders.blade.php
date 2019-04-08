@@ -39,7 +39,7 @@
                 <button onclick="fun('orders')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-eye"></i> <span style="padding-left:10ox;">Orders Overview</span></button> 
                 <div class="card-header" style="font-size:12px;float:right;padding-top:15px;padding-bottom:15px; text-align:center">
                 <a href="{{ route('orders.add') }}"><i class="fas fa-plus"></i> <span>New Order</span></a>&nbsp;&nbsp;&nbsp;
-          <a href="{{ route('orders.index') }}"><i class="fas fa-edit"></i> <span>Edit Orders</span></a>
+          <!--<a href="{{ route('orders.index') }}"><i class="fas fa-edit"></i> <span>Edit Orders</span></a>-->
                 </div>
                 <div id="orders" class="w3-container w3-hide">
                 <div style="padding-left:8px" class="row">
@@ -112,7 +112,7 @@ __Order Status:__
                                 </div>
                                         </div>
                                         <hr />
-                                    <div class="">
+                                    <!--<div class="">
                                     <span class="h5"><i class="fas fa-list"></i> Orders List</span>
                                         <div class="table-responsive">
                                             <table class="table table-striped table-sm">
@@ -172,7 +172,7 @@ __Order Status:__
                                     <canvas class="my-4" id="myChart" width="900" height="380"></canvas>                                       
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <script>
                             function fun(id) {
                             var x = document.getElementById(id);

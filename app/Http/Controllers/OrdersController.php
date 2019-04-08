@@ -158,9 +158,11 @@ class OrdersController extends Controller
             
             
             //$string = "123,456,78,000";  
-            $split = preg_split("/\-/", $request['branchnumber'], -1);  
+            $split = preg_split("/\-/", $request['branchname'], -1);  
             $branchname = implode("-",$split);
             $branchnumber = implode("-",$split);
+            //dump($branchname);
+            //dump($branchnumber);
             
         
 
@@ -173,6 +175,7 @@ class OrdersController extends Controller
                 'branchname' => $branchname,
                 'urgent' => $request['urgent'],
                 'slug' => $slug,
+                'status' => 'Just Created',
                 'created_at' => $request['created_at'],
                 
                 ]);
@@ -187,7 +190,7 @@ class OrdersController extends Controller
                 'itemqty' => $request['itemqty'],
                 'freeitem' => $request['freeitem'],
                 'itemprice' => $request['itemprice'],
-                'orderstatus' => $request['orderstatus'],
+                'orderstatus' => 'Just Created',
                 'slug' => $slug,
 
             ]);
@@ -311,6 +314,7 @@ class OrdersController extends Controller
             dump($order);
             //$orders = Order::where('slug', '=', $slug)->get('ordernumber');
 
+
             return view('orders.order')->withOrder($order);
         }
         public function editOrderNumber($slug)
@@ -322,7 +326,7 @@ class OrdersController extends Controller
             $ordernumber = $order;
             $orderitemslug = OrderItems::where('slug', $slug)->first(); 
             //$orderitems = OrderItems::whereNotNull('orderitems')->get();
-            dump($order);
+            //dump($order);
             //dump($orders);
             //dump($split);
             //dump($ordernumber);
@@ -335,9 +339,9 @@ class OrdersController extends Controller
             //dump($branchnumber);
 
             $branchname = Order::select('branchname')->where('slug', '=', $slug)->get();
-            dump($branchname);
+            //dump($branchname);
             $status = Order::select('status')->where('slug', '=', $slug)->get();
-            dump($status);
+            //dump($status);
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
             //dump($items);
             return view('orders.edit')->withOrder($order)->with('status', $status)->with('items', $items)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('orderitemslug', $orderitemslug);
@@ -346,7 +350,9 @@ class OrdersController extends Controller
         public function insertOrderItems(Request $request, $slug)
         {
             $this->validate($request, [
+                'orderid' => 'max:255',
                 'orderitems' => 'max:255',
+                'ponumber' => 'max:255',
                 'itemnumber' => 'max:255',
                 'itemqty' => 'max:20',
                 'freeitem' => 'max:20',
@@ -369,9 +375,11 @@ class OrdersController extends Controller
         $staffname = \Auth::user()->name;
         $branchnumber = Order::select('branchnumber')->where('slug', '=', $slug)->get();
         $branchname = Order::select('branchname')->where('slug', '=', $slug)->get();
+        $ponumber = Order::select('branchname')->where('slug', '=', $slug)->get();
         OrderItems::create([
         'staffid' => $staffid,
         'staffname' => $staffname,
+        'ponumber' => $ponumber,
         'branchnumber' => $branchnumber,
         'branchname' => $branchname,
         'itemnumber' => $itemnumber,
@@ -406,28 +414,93 @@ class OrdersController extends Controller
         }
         public function reviewOrderItems(Request $request, $slug)
         {
-            $order = OrderItems::where('slug', $slug)->get();           
 
+
+
+
+
+
+
+
+
+
+                        //$currentuser = \Auth::user();
+                        //$order = OrderItems::where('slug', '=', $slug)->first();
+                        //$ordernumber = $order;
+                        //$orderitemslug = OrderItems::where('slug', $slug)->first(); 
+                        //$orderitems = OrderItems::whereNotNull('orderitems')->get();
+                        //dump($order);
+                        //dump($orders);
+                        //dump($split);
+                        //dump($ordernumber);
+                        //dump($orderitemslug);
+                        //dump($orderitems);
+                        //$order = OrderItems::where('slug', $slug)->first();           
+                        //$staffid = \Auth::user()->idnumber;
+                        //$staffname = \Auth::user()->name;
+                        //$branchnumber = Order::select('branchnumber')->where('slug', '=', $slug)->first();
+                        //dump($branchnumber);
+            
+                        //$branchname = Order::select('branchname')->where('slug', '=', $slug)->get();
+                        //dump($branchname);
+                        //$status = Order::select('status')->where('slug', '=', $slug)->get();
+                        //dump($status);
+                        //$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
+                        //dump($items);
+
+
+
+
+
+
+
+            $currentuser = \Auth::user();
+
+            $order = OrderItems::where('slug', '=', $slug)->get();           
             $status = Order::select('status')->where('slug', '=', $slug)->get();
-            $split = preg_split("/\-/", $request['itemnumber'], -1);  
-            $slug = implode("-",$split);
-            $orderitems = OrderItems::all();
-            $itemnumber = implode("-",$split);
+            $slug = OrderItems::where('slug', '=', $slug)->get();
+            $getOnlySlug = OrderItems::select('slug')->where('slug', '=', $order)->first();
+            //dump($slug);
+            dump($slug);
+
+            $orderitems =  OrderItems::where('staffid', '=', $currentuser->idnumber)->get();
+            $itemnumber = $slug;
             $staffid = \Auth::user()->idnumber;
             $staffname = \Auth::user()->name;
-            $ordernumber = OrderItems::select('ordernumber')->where('slug', '=', $slug)->firstOrFail();
-            $ponumber = OrderItems::select('ponumber')->where('slug', '=', $slug)->firstOrFail();
-            $branchnumber = OrderItems::select('branchnumber')->where('slug', '=', $slug)->firstOrFail();
-            $branchname = OrderItems::select('branchname')->where('slug', '=', $slug)->firstOrFail();
-            $table = OrderItems::select()->where('slug', '=', $slug)->firstOrFail();
+            $ordernumber = OrderItems::select('ordernumber')->where('staffid', '=', $currentuser->idnumber)->first();
+            //$ponumber = Order::select('ponumber')->where('staffid', '=', $currentuser->idnumber)->where('slug', '=', $slug)->get();
+            //$ponumber = OrderItems::select('ponumber')->where('staffid', '=', $currentuser->idnumber)->where('slug', '=', $slug)->count();
+            //dump($ponumber);
 
-            return view ('orders.review')->withOrder($order)->with('slug', $slug)->with('table', $table)->with('status', $status)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('ordernumber', $ordernumber)->with('ponumber', $ponumber);
+            //dump($ponumber);
+            //dump($order);
+
+            $branchnumber = OrderItems::select('branchnumber')->where('slug', '=', $slug)->first();
+            //dump($branchnumber);
+
+            $branchname = OrderItems::select('branchname')->where('slug', '=', $slug)->first();
+            //dump($branchname);
+
+            $table = OrderItems::all()->where('slug', '=', $slug);
+            $reviewitems = $slug;
+            //dump($table);
+            dump($reviewitems);
+            $split = preg_split("/\ -\ /", $slug);  
+            //$branchname = implode("-",$split);
+            //$branchnumber = implode("-",$split);
+            $ponumber = OrderItems::select()->where('slug', '=', $slug)->first();
+
+            dump($ponumber);
+            //dump($branchname);
+            //dump($branchnumber);
+
+            return view ('orders.review')->with('split', $split)->with('ordernumber', $ordernumber)->with('reviewitems', $reviewitems)->with('order', $order)->with('slug', $slug)->with('table', $table)->with('status', $status)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('ordernumber', $ordernumber)->with('ponumber', $ponumber);
         }
         public function  submitOrder($slug)
         {
             $order = OrderItems::select('slug')->where('slug', $slug)->get();           
 
-            Mail::send('orders.review',[$staffid, $staffname, $ordernumber], function($message) {
+            Mail::send('orders.review',[], function($message) {
                 $message
                 ->to('root@ipool.remotewebaccess.com')
                 ->subject('New Order Just Submitted');

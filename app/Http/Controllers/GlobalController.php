@@ -28,11 +28,9 @@ class GlobalController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function getIndex(Request $request)
+    public function getIndex(Request $request, Order $slug)
     {
-        $currentuser = \Auth::user();
-        $slug = OrderItems::select('slug')->where('staffid', '=', $currentuser->idnumber)->get();           
-        $order = Order::where('slug', '=', $slug)->first();
+
                    
         /*
                     //$currentuser = \Auth::user();
@@ -63,10 +61,6 @@ class GlobalController extends Controller
                     return view('global.index')->withOrder($order)->with('slug', $slug)->with('status', $status)->with('items', $items)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('orderitemslug', $orderitemslug);
                 */
 
-                $items = Item::all();
-                $branches = Branch::all();
-                //$orders = Order::all()->where('ordernumber', '=', $ordernumber)->first();
-                $currentuser = \Auth::user();
     
                 /*
                 $orderid = DB::table('orders')
@@ -91,19 +85,25 @@ class GlobalController extends Controller
                 dump($orders);
                 return view('global.index')->withOrder($orderid)->with('orders', $orders)->with('orderitems', $orderitems)->with('items', $items)->with('branches', $branches)->with('ordernumber', $ordernumber)->with('ponumber', $ponumber)->with('slug', $slug); 
                 */
-
-
-                $orders = Order::select()->where('status', '=', 'Editing')->orderBy('updated_at', 'desc')->paginate(10);
+                $currentuser = \Auth::user();
+                $orderitems = Order::where('staffid', '=', $currentuser->idnumber)->first();
+                dump($orderitems);
+                $order = Order::where('slug', '=', $slug)->first();
+                $items = Item::all();
+                $branches = Branch::all();
+                //$orders = Order::all()->where('ordernumber', '=', $ordernumber)->first();
+                $jcorders = Order::select()->where('status', '=', 'Just Created')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
+                $orders = Order::select()->where('status', '=', 'Editing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
+                $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
+                $completedorders = Order::select()->where('status', '=', 'Completed')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $orderitems = OrderItems::where('staffid', '=', $currentuser->idnumber)
                 ->get();
-                $processedorders = Order::where('status', '=', 'Processed')
-                ->get();
-                $branches = Branch::select('branchname', 'branchnumber')->get();
+                $processedorders = Order::where('status', '=', 'Processed')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $ordernumber = Order::where('ordernumber', '=', $currentuser->idnumber)->get();
-                dump($orders);
-                dump($orderitems);
-                dump($ordernumber);
-                return view('global.index')->with('processedorders', $processedorders)->with('ordernumber', $ordernumber)->with('orderitems', $orderitems)->with('orders', $orders)->with('branches', $branches);
+                //dump($orders);
+                //dump($orderitems);
+                //dump($ordernumber);
+                return view('global.index')->with('completedorders', $completedorders)->with('processingorders', $processingorders)->with('jcorders', $jcorders)->with('processedorders', $processedorders)->with('ordernumber', $ordernumber)->with('orderitems', $orderitems)->with('orders', $orders)->with('branches', $branches);
 
     }
 }

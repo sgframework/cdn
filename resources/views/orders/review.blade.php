@@ -6,7 +6,7 @@
 
 # Order Review
 
-## Order# {{ $ordernumber }}
+## Order# 
 
 @endmarkdown
 
@@ -18,53 +18,55 @@
             <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
         @else
         </div>
+        
 <table>
 
     <thead>
         
         <tr>
             <th>Order# </th>
-            <th>Ipsum</th>
+            <th>PO#</th>
             <th>Dolor</th>
             <th>Sit</th>
-        </tr>        
+        </tr>   
+        <br />     
         <tr>
+        </thead>
+        <tbody>
+        <td>@markdown **{{ $ordernumber }}** @endmarkdown</td>
+        <td>@markdown ** ** @endmarkdown</td>
+        <td>@markdown **{{ $ordernumber }}** @endmarkdown</td>
+        <td>@markdown **{{ $ordernumber }}** @endmarkdown</td>
+        </tbody>
+
+
+        <thead>
+
             <th>Material Code</th>
             <th>Mat. Description(Optional)</th>
             <th>Qty</th>
             <th>Free</th>
             <th>Price</th>
+            <th>Status</th>
         </tr>
     </thead>
-    @foreach ($orderitems as $orderitem)
-        @include('dashboard/partials/orderitemsblock')
+    @foreach ($reviewitems as $reviewitem)
+        @include('dashboard/partials/orderitemsreviewblock')
     @endforeach
 </table>
 <hr /><br />
+
+
+</div>
+    <hr /><br />
     <form class="form-inline" action="" method="POST">
     @csrf
         <hr /><br />
-        <input type="submit" class="btn btn-primary" /> 
+        <input type="submit" /> 
     </form>
-
-
-    <hr /><br />
-    <hr /><br />
-    <hr /><br />
-    <hr /><br />
-    <hr /><br />
-    <hr /><br />
-    <hr /><br />
-    <hr /><br />
     <hr /><br />
 
-    <p style="font-size:10px">{{ dump($table) }}</p>
-    <p style="font-size:10px">{{ dump($orderitems) }}</p>
 
-
-
+    <pre style="font-size:12px">{{ var_dump($reviewitems) }}</pre>
     @endif
-
-    
-
 @endsection

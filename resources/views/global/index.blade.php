@@ -87,7 +87,7 @@
 	</div>-->
     <div class="top-right links">
 </div>
-        <div class="card-header">Welcome to SunbulahGroup Development Framework.</div>
+        <div class="card-header"><span style="font-size:24px"><i class="fas fa-history"></i> Orders Summery.</div></span>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
@@ -96,19 +96,61 @@
             // endShow -->
 
 
+@markdown
 
+#### Just Created Orders [0]
+
+@endmarkdown
+                    @if (!$jcorders->count())
+                        <p>You haven't created any order recently.</p>
+                    @else
+                            <table class="table-responsive-sm processed" id="myTable">
+                                <thead style="font-size:12px">
+                                    <tr>
+                                        <th>Order#</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Status</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                        @foreach ($jcorders as $jcorder)
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td><a style= "float:center" href="/orders/order/{{ $jcorder->slug }}">{{ $jcorder->slug }}</a></td>
+                                        <td>{{ $jcorder->ponumber }}</td>
+                                        <td>{{ $jcorder->branchname }}</td>
+                                        <td id="status">{{ $jcorder->status }}</td>
+                                        <td>{{ $jcorder->updated_at->diffForHumans() }}</td>
+                                        </tr>	
+                                        </tbody>
+                                        @endforeach	
+                                </div>
+                            </div>
+                        </table>
+<center>{!! $jcorders->render() !!}</center>
+
+@endif
+
+
+
+<br /><hr />                                     
 
 
 @markdown
 
-# Open Orders
+#### Open Orders [1]
 
 @endmarkdown
 
                             @if (!$orders->count())
-                                <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                                <p>You haven't created any order yet.</p> <span><a href="{{ route('orders.add') }}">Create New Order +</a></span><span style="float:right"></span>
                             @else
-                            <table class="table-dark table-responsive-sm dark" id="myTable">
+                            <table class="table-responsive-sm" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
                                         <th>Order#</th>
@@ -126,7 +168,7 @@
                                         <tbody style="font-size:12px">
 
                                         <tr>
-                                        <td><a style= "float:left" href="/orders/order/{{ $order->slug }}">{{ $order->slug }}</a></td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $order->slug }}">{{ $order->slug }}</a></td>
                                         <td>{{ $order->ponumber }}</td>
                                         <td>{{ $order->branchname }}</td>
                                         <td>{{ $order->status }}</td>
@@ -138,17 +180,20 @@
                                 </div>
                             </div>
                         </table>
-                        @endif
                         <br /><hr />                                      
+
+                        <center>{!! $orders->render() !!}</center>
+
+                        @endif
 @markdown
 
-# Processed Orders
+#### Processed Orders [2]
 
 @endmarkdown
                     @if (!$processedorders->count())
-                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                        <p>You have no processed orders.</p>
                     @else
-                            <table class="table-dark table-responsive-sm dark" id="myTable">
+                            <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
                                         <th>Order#</th>
@@ -165,10 +210,10 @@
                                         @foreach ($processedorders as $processedorder)
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td><a style= "float:left" href="/orders/order/{{ $processedorder->slug }}">{{ $processedorder->slug }}</a></td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $processedorder->slug }}">{{ $processedorder->slug }}</a></td>
                                         <td>{{ $processedorder->ponumber }}</td>
                                         <td>{{ $processedorder->branchname }}</td>
-                                        <td>{{ $processedorder->status }}</td>
+                                        <td id="status">{{ $processedorder->status }}</td>
                                         <td>{{ $processedorder->updated_at->diffForHumans() }}</td>
                                         </tr>	
                                         </tbody>
@@ -176,7 +221,73 @@
                                 </div>
                             </div>
                         </table>
-                        @endif
+<center>{!! $processedorders->render() !!}</center>
+@endif
+
+<br /><hr />                                     
+
+
+@markdown
+
+#### Completed Orders [3]
+
+@endmarkdown
+
+
+                            @if (!$completedorders->count())
+                                <p>You have no completed orders.</p>
+                            @else
+                            <table class="table-responsive-sm processed" id="myTable">
+                                <thead style="font-size:12px">
+                                    <tr>
+                                        <th>Order#</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Status</th>
+                                        <th>Updated</th>
+                                    </tr>
+                                </thead>
+                                <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                        @foreach ($completedorders as $completedorder)
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td><a style= "float:center" href="/orders/order/{{ $completedorder->slug }}">{{ $completedorder->slug }}</a></td>
+                                        <td>{{ $completedorder->ponumber }}</td>
+                                        <td>{{ $completedorder->branchname }}</td>
+                                        <td id="status">{{ $completedorder->status }}</td>
+                                        <td>{{ $completedorder->updated_at->diffForHumans() }}</td>
+                                        </tr>	
+                                        </tbody>
+                                        @endforeach	
+                                </div>
+                            </div>
+                        </table>
+<center>{!! $completedorders->render() !!}</center>
+@endif
+
+<br /><hr />                            
+
+
+@markdown
+
+```
+
+    Order Status Codes:
+        [0] -> 'Just Created',
+        [1] - > 'Editing',
+        [2] - > 'Processing',
+        [3] - > 'Completed'
+
+
+```
+@endmarkdown
+
+
+
+
                     @else
             <!-- If user loggedOut show below content until endShow part -->          
             <div class="container">
