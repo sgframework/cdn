@@ -15,16 +15,18 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('orderid')->nullable();
+            $table->string('orderid')->nullable();
             $table->integer('ordernumber');
             $table->string('staffname');
             $table->integer('staffid');
-            $table->integer('ponumber');
+            $table->string('ponumber');
             $table->integer('branchnumber');
             $table->string('branchname');
-            $table->string('urgent')->default('0')->nullable();
+            $table->string('urgent')->default('off')->nullable();
             $table->string('slug');
-            $table->string('status')->default('Just Created')->nullable();
+            $table->string('status')->default('JustCreated')->nullable();
+            $table->integer('totalqty')->nullable();
+            $table->decimal('totalprice', 8, 2)->nullable();         
             $table->index('ordernumber');
             $table->timestamps();
 

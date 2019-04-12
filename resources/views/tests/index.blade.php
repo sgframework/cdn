@@ -95,7 +95,7 @@ echo struuid(true);  //Return sample: F451FAHSUCD90N6YNRBQHLZ9E1W
         <div class="card-header"><h4>Items List<h4></div>
             <div class="card-body">
                 <div class="table-responsive">
-                        <table class="table table-bordered" id="crud_table">
+                        <table  id="table" class="table table-bordered" id="crud_table">
                             <tr>
                                 <th width="5%">#</th>
                                 <th width="24%">Product</th>
@@ -246,7 +246,7 @@ echo struuid(true);  //Return sample: F451FAHSUCD90N6YNRBQHLZ9E1W
 
 
 
-
+<a href="#table">upTable</a>
 
 
 

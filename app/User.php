@@ -2,6 +2,8 @@
 
 namespace cdn;
 
+use Root;
+use Order;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,28 +40,71 @@ class User extends Authenticatable
     ];
 
 
-    public function user(User $idnumber)
+    public function user()
     {
     	return $this->idnumber;
     }
 
 
+    public function idnumber()
+    {
+        return $this->idnumber;
+    }
 
 // Orders
 
-    public function orders()
-    {
-    return $this->hasMany('cdn\Models\Order');
-    }
+    /* MTO - belongTo */
+
     public function ordersOfMine()
     {
-    	return $this->belongsToMany('cdn\User', 'orders', 'idnumber', 'ordernumber');
+        return $this->belongsTo('cdn\Models\Order', 'staffid');
+    }
+
+    
+
+
+
+    /* OTM  - hasMany*/
+
+
+
+    public function orders()  {
+    	return $this->hasMany('cdn\Models\Order', 'staffid');
+    
+    }
+
+    public function orderCount()
+    {
+        return $this->user()->orders();
+    }
+    public function urgentOrders() 
+    {
+    	return $this->user()->hasMany('cdn\Models\Order', 'urgent')->wherePivot('urgent', on)->get();
+    }
+    
+    public function uploads() 
+    {
+    	return $this->hasMany('cdn\Models\Upload', 'idnumber');
+    }
+
+    /* MTM - belongsToMany */
+
+
+
+    public function orderId()
+    {
+        return $this->belongsToMany('cdn\Models\Order', 'orders', 'orderid', 'ponumber', 'slug', 'staffid');
     }
     
      public function orderOf()
     {
     	return $this->belongsToMany('cdn\User', 'orders', 'ordernumber', 'idnumber');
     }
+    public function ordersByUser()  {
+    	return $this->belongsTo('cdn\Models\Order', 'ordernumber');
+    
+    }
+    
 
     public function pendingOrders()
     {
@@ -69,14 +114,11 @@ class User extends Authenticatable
 
     public function addOrder(User $user)
     {
-    	$this->orderOf()->attach($user->id);
+    	$this->orderOf()->attach($user->idnumber);
     }
 
 
-    public function orderId()
-    {
-        return $this->belongsToMany('cdn\Models\Order', 'orderidnumber', 'orderid', 'idnumber');
-    }
+
 
 
 
@@ -151,18 +193,7 @@ class User extends Authenticatable
     }
     
     
-    public function ordersByUser()  {
-    	return $this->belongsTo('cdn\Models\Order', 'ordernumber');
-    
-    }
-    public function urgentOrders() {
-    	return $this->hasMany('cdn\Models\Order', 'urgentordernumber');
-    }
-    
-        public function uploads() {
-    	return $this->hasMany('cdn\Models\Upload', 'idnumber');
-    }
-    
+
 
     
 

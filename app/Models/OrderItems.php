@@ -3,7 +3,6 @@ namespace cdn\Models;
 use cdn\User;
 use cdn\Models\Item;
 use cdn\Models\Order;
-use cdn\Models\Status;
 use cdn\Models\Branch;
 use Illuminate\Database\Eloquent\Model;
 class OrderItems extends Model
@@ -24,6 +23,9 @@ class OrderItems extends Model
         'itemprice',
         'orderstatus',
         'slug',
+        'totalqty',
+        'totalfree',
+        'totalprice',
 
     ];   
 
@@ -36,10 +38,53 @@ class OrderItems extends Model
     {
         return $this->hasMany('cdn\Models\Order', 'itemnumber', 'slug');
     }
+
+    public function items()
+    {
+    return $this->belongsToMany('cdn\Models\Item')->withPivot('orderitems', 'itemnumber','itemprice');
+    }
+
+    public function scopeOrders($query)
+    {
+        return $query->whereNotNull('ponumber');
+    }
+    public function orderNumber()
+	{
+		return $this->belongsTo('cdn\Models\Order', 'ponumber');
+    }
+    
+
+    public function Orders(OrderItems $slug)
+    {
+        return $this->belongsTo('cdn\User', 'idnumber', 'ordernumber', 'slug');
+    }
+
+  
+    public function getOrders(OrderItems $slug)
+    {
+        return $this->hasMany('cdn\User', 'idnumber', 'ordernumber', 'slug');
+    }
     
     public function orderstatus(Request $request)
     {
 		return $this->hasMany('cdn\Models\Order', 'slug');
+    }
+
+
+
+    public function getOrderNumber(Order $slug)
+    {
+        return $this->ordernumber;
+    }
+
+    public function getOrderIdNumber(Order $slug)
+    {
+        return $this->orderid;
+    }
+
+    public function getOrderSlug(Order $slug)
+    {
+        return $this->slug;
     }
 
     public function getOrderStatus(getOrderItems $request)

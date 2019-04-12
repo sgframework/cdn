@@ -15,11 +15,11 @@ class CreateOrderitemsTable extends Migration
     {
         Schema::create('orderitems', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('orderid')->nullable();
+            $table->string('orderid')->nullable();
             $table->integer('ordernumber')->nullable();
             $table->string('staffname')->nullable();
             $table->integer('staffid')->nullable();
-            $table->integer('ponumber')->nullable();
+            $table->string('ponumber')->nullable();
             $table->string('branchname')->nullable();
             $table->integer('branchnumber')->nullable();
             $table->string('orderitems')->nullable();
@@ -27,13 +27,16 @@ class CreateOrderitemsTable extends Migration
             $table->integer('itemqty')->nullable();
             $table->integer('freeitem')->nullable();
             $table->decimal('itemprice', 8, 2)->nullable();
-            $table->string('orderstatus')->default('Inserting Items')->nullable();
+            $table->string('orderstatus')->default('Editing')->nullable();
             $table->string('slug');
-            $table->index(['ordernumber', 'ponumber', 'slug', 'orderstatus']);
+            $table->integer('totalqty')->nullable();
+            $table->integer('totalfree')->nullable();  
+            $table->decimal('totalprice', 8, 2)->nullable();         
+            $table->index(['ponumber', 'branchnumber', 'itemnumber']);
             $table->timestamps();
         });
 
-        //[0] - Just Created, [1] - Inserting Items, [2] - Submitted, [3] - Processed
+        //[0] - JustCreated, [1] - Editing, [2] - Reviewing, [3] - Submitted, [4] - Completed
 
 
     }

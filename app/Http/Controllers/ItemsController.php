@@ -76,8 +76,8 @@ class ItemsController extends Controller
 
         public function getItems(Request $request)
         {
-            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type', 'group', 'itempic')->orderBy('created_at', 'desc')->paginate(10);
-            dump($items);
+            $items = Item::select()->orderBy('itemnumber', 'asc')->paginate(600);
+            //dump($items);
 
             return view('items.index')->with('items', $items);
         }

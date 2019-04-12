@@ -7,11 +7,66 @@
 
  * {box-sizing: border-box;}
 
+
+
+ .justcreated {
+  color:rgb(179, 179, 179);
+  background-color:rgb(0, 0, 0);
+  text-align: left;
+}
+ .editing {
+  color:rgb(0, 174, 255);
+  background-color:black;
+  text-align: left;
+}
+.reviewing {
+  color:yellow;
+  background-color:black;
+  text-align: left;
+}
+.submitted {
+  color:rgb(255, 153, 0);
+  background-color:black;
+  text-align: left;
+}
+.prcessed {
+  color:#e3342f;
+  background-color:black;
+  text-align: left;
+}
+.completed {
+  color:#38c172;
+  background-color:rgb(0, 0, 0);
+  text-align: left;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*
  .form-inline {  
    display: flex;
    flex-flow: row wrap;
    align-items: left;
+
  }
+ */
+
+
+
+
  
  .form-inline label {
    margin: 5px 10px 5px 0;
@@ -36,6 +91,8 @@
  .form-inline button:hover {
    background-color: royalblue;
  }
+
+ /*
  
  @media (max-width: 2px) {
    .form-inline input {
@@ -47,6 +104,25 @@
      align-items: stretch;
    }
  }
+*/
+
+
+ @media (min-width: 52px) {
+.form-inline .form-control1 {
+    display: inline-block;
+    width: 620px;
+    vertical-align: middle;
+  }
+}
+
+@media (min-width: 52px) {
+  .form-inline .form-control2 {
+      display: inline-block;
+      width: 100px;
+      vertical-align: middle;
+    }
+  }
+  
 
  #myInput {
     background-image: url('{{ asset(`image/searchicon.png`) }}'); /* Add a search icon to input */
@@ -67,8 +143,8 @@
   }
   
   #myTable th, #myTable td {
-    text-align: center; /* Left-align text */
-    padding-left: 0px; /* Add padding */
+    text-align: left; /* Left-align text */
+    padding-left: 4px; /* Add padding */
     border: 1.5px solid rgb(189, 189, 189); /* Add a grey border */
 
   }
@@ -76,6 +152,8 @@
   #myTable tr {
     /* Add a bottom border to all table rows */
     border-bottom: 1.5px solid rgb(95, 95, 95); 
+    padding-left: 4px;
+    padding-right: 4px;
   }
 
   #myTable {
@@ -92,6 +170,7 @@
   border: 1px solid rgb(97, 97, 97);
   font-size: 12px;
   color: rgb(255, 255, 255);
+
 }
 
 #items.dark {
@@ -100,6 +179,8 @@
   border: 1px solid rgb(97, 97, 97);
   font-size: 12px;
   color: rgb(255, 255, 255);
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 #myTP {
@@ -128,7 +209,7 @@
 
 #myTable tbody tr {
 
-  text-align: center;
+  text-align: left;
 }
   
   #myTable tr.header, #myTable tr:hover {

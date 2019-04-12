@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=0.4, maximum-scale=0.5, user-scalable=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SunbulahGroup') }}</title>
@@ -13,6 +13,8 @@
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Styles -->
+    <link href="{{ asset('css/stylesheet.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/excel-2007.css') }}" rel="stylesheet">
     <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
     <!--<link href="{{ asset('css/styles.css') }}" rel="stylesheet">-->
     <!--<link rel="manifest" href="{{ asset('js/manifest.json') }}">
@@ -73,30 +75,65 @@ input:focus {
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
+.btn-primary {
+    background-image: -webkit-linear-gradient(top, #337ab7 0%, #265a88 100%);
+    background-image: -o-linear-gradient(top, #337ab7 0%, #265a88 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#337ab7), to(#265a88));
+    background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+    background-repeat: repeat-x;
+    border-color: #245580;
+}
 
+.btn-primary {
+    color: #fff;
+    background-color: #3490dc;
+    border-color: #3490dc;
+}
 
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0rem;
+    font-size: .9rem;
+    line-height: 1.6;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
 
 html{
             font:0.75em/1.5 sans-serif;
             color:#333;
             background-color:#fff;
-            padding:1em;
+            padding:0em;
         }
 
         /* Tables */
         table{
             width:100%;
-            margin-bottom:1em;
+            margin-bottom:0em;
             border-collapse: collapse;
+            text-align:left;
         }
         th{
             font-weight:bold;
             background-color:#ddd;
+            text-align:left;
         }
         th,
         td{
-            padding:0.5em;
+            padding:0em;
             border:1px solid #ccc;
+            text-align:left;
         }
     </style>
 </head>
@@ -105,8 +142,8 @@ html{
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                <img width="22px" height="22px" src="{{ asset('image/sgimg.png') }}" />
-                <span class="input navbar-toggler-icon">{{ config('app.name', 'SunbulahGroup') }}<span>
+                <img width="35px" height="35px" src="{{ asset('image/sgimg.png') }}" />
+                  <b><span style="font-size:32px" class="input navbar-toggler-icon">{{ config('app.name', 'SunbulahGroup') }}<span></b>
                 </a>
                     
                 
@@ -158,7 +195,6 @@ html{
         </main>
     </div>
 </body>
-<hr>
 <footer class="footer">
       <div class="container">
         <div id="ftr-wrap">

@@ -1,15 +1,11 @@
 <?php
 namespace cdn\Models;
-use cdn\User;
-use cdn\Models\Item;
-use cdn\Models\Branch;
-use cdn\Models\orderItems;
-use cdn\Models\Status;
 use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     protected $table = 'orders';
     protected $fillable = [
+    	'orderid',
     	'ordernumber',
     	'staffname',
     	'staffid',
@@ -19,11 +15,71 @@ class Order extends Model
         'urgent',
         'slug',
         'status',
+        'totalqty',
+        'totalprice',
         'created_at',
         'updated_at'
     ];   
 
-	public function user()
+
+    /* MTM - belongsToMany */
+
+
+    /*public function orderId()
+    {
+        return $this->belongsToMany('cdn\User', 'ponumber', 'idnumber', 'orderid');
+    }*/
+
+    
+    /* MTO - belongTo */
+    public function orders()
+    {
+        return $this->belongTo('cdn\User', 'idnumber');
+    }
+    /*public function ordersOfMine()
+    {
+        return $this->belongTo('cdn\User', 'idnumber');
+    }*/ 
+    public function getOrderItems(OrderItems $itemnumber)
+    {
+        return $this->belongTo('cdn\Models\Order', 'slug');
+    }
+ 
+    /* OTM  - hasMany*/
+
+    public function ordersOfMine()
+    {
+        return $this->belongTo('cdn\User', 'idnumber')->hasMany('cdn\Models\Order', 'ponumber');
+    }
+
+    public function orderId()
+	{
+    	return $this->hasMany('cdn\Models\Order', 'staffid');
+   	}
+
+    
+
+    public function getOrderItemsById(User $name)
+    {
+        return $this->hasMany('cdn\Models\Order', 'orderid');
+    }
+    public function items()
+	{
+		return $this->hasMany('cdn\Models\OrderItems', 'slug');
+    }
+    public function orderItems()
+	{
+		return $this->hasMany('cdn\Models\OrderItems', 'orderid');
+    }
+    /*public function orders($id)
+	{
+        return $this->hasMany('cdn\Models\Order', 'ponumber');
+    }*/
+
+    /* OTO hasOne / belongsTo*/
+
+
+    public function user()
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
     }
@@ -32,59 +88,6 @@ class Order extends Model
 	{
 		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');
     }
-
-    
-
-    public function ordersOfMine()
-    {
-    	return $this->belongsToMany('cdn\User', 'orders', 'idnumber', 'ordernumber');
-    }
-
-    public function scopeOrder($query)
-    {
-        return $query->where('votes', '>', 100);
-    }
-
-    
-
-
-
-
-   public function orderId()
-   {
-       return $this->belongsToMany('cdn\User', 'orderidnumber', 'idnumber', 'orderid');
-   }
-       
-       public function getOrderById(User $name)
-    {
-        return $this->hasMany('cdn\Models\Order', 'orderid');
-    }
-
-    public function getOrderItems(Order $slug)
-    {
-        return $this->hasMany('cdn\Models\OrderItems', 'itemnumber');
-    }
-
-
-
-    public function scopeNotUrgent($query)
-	{
-		return $query->whereNull('urgent');
-    }
-    
-    public function items()
-	{
-		return $this->hasMany('cdn\Models\Order', 'orderid');
-    }
-    public function orderItems()
-	{
-		return $this->hasMany('cdn\Models\OrderItems', 'orderid');
-    }
-    
-
-
-
-
     public function staffName()
 	{
 		return $this->belongsTo('cdn\User', 'name');
@@ -92,13 +95,11 @@ class Order extends Model
     public function staffId()
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
-    }
-    
+    } 
     public function orderNumber()
 	{
 		return $this->belongsTo('cdn\Models\Order', 'ponumber');
     }
-
     public function poNumber()
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
@@ -112,35 +113,43 @@ class Order extends Model
     {
         return $this->belongsTo('cdn\User', 'name');
     }
-    
-    
     public function getOrderNumber(Request $request)
     {
         return $this->belongsTo('cdn\Models\Order', 'orderid');
     }
-
-    
-
-	public function orders($id)
-	{
-    		return $this->hasMany('cdn\Models\Order', 'orderid');
-   	}
-
     public function staffOrders(Order $orders)
     {
         return $this->belongsTo('cdn\User', 'idnumber');
     }
-
     public function item()
 	{
 		return $this->belongsTo('cdn\Models\Item', 'itemnumber');
     }
-
-
     public function itemNumber()
 	{
 		return $this->belongsTo('cdn\Models\Order', 'ponumber');
     }
+    
+    
+
+
+
+    /* Scoopes */
+    public function scopeOrder($query)
+    {
+        return $query->whereNotNull('ordernumber');
+    }
+
+    public function scopeNotUrgent($query)
+	{
+		return $query->whereNull('urgent');
+    }
+
+    public function scopeUrgent($query)
+	{
+		return $query->whereNotNull('urgent');
+    }
+    
     public function getOrderByStaff()
     {
     	if ($this->ordernumber && $this->ponumber) {

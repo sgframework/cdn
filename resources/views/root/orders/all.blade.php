@@ -99,6 +99,67 @@
 
 @markdown
 
+#### Just Submitted Orders [0]
+
+Total Submitted Orders: {{ $header->count() }}
+
+Total Orders Items: {{ $submittedorders->count() - $header->count() }}
+
+@endmarkdown
+
+
+                    @if (!$submittedorders->count())
+                        <p>You haven't created any order recently.</p>
+                    @else
+
+                    
+                            <table class="table-responsive-sm processed" id="myTable">
+                    
+
+                                <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                        <thead style="font-size:12px">
+                                    <tr>
+                                        <th>By#ID</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Total Items</th>
+                                        <th>Total Qtys</th>
+                                        <th>Total Price</th>
+                                        <th>Submitted@</th>
+                                    </tr>
+                                </thead>
+                                @foreach ($submittedorders as $submittedorder)
+
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td>{{ $submittedorder->staffname }}#{{ $submittedorder->staffid }}</td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $submittedorder->slug }}">{{ $submittedorder->ponumber }}</a></td>
+                                        <td>{{ $submittedorder->branchname }}</td>
+                                        <td>{{ $submittedorder->totalqty }}</td>
+                                        <td>{{ $submittedorder->totalprice }}</td>
+                                        <td>{{ $submittedorder->totalprice }}</td>
+                                        <td><pre class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->diffForHumans() }}</pre></td>
+                                        </tr>	
+                                        </tbody>
+
+
+                                    @endforeach	
+                                </div>
+                            </div>
+                        </table>
+
+@endif
+
+
+
+<br /><hr />                                     
+
+
+@markdown
+
 #### Just Created Orders [0]
 
 @endmarkdown
@@ -108,10 +169,11 @@
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
+                                        <th>Order#</th>
                                         <th>PO#</th>
-                                        <th>Branch#Name</th>
+                                        <th>BranchName#Number</th>
                                         <th>Status</th>
-                                        <!--<th>Updated</th>-->
+                                        <th>Updated</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
@@ -121,10 +183,11 @@
                                         @foreach ($jcorders as $jcorder)
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $jcorder->slug }}">{{ $jcorder->ponumber }}</a></td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $jcorder->slug }}">{{ $jcorder->slug }}</a></td>
+                                        <td>{{ $jcorder->ponumber }}</td>
                                         <td>{{ $jcorder->branchname }}</td>
                                         <td class="{{ strtolower($jcorder->status) }}" id="status">{{ $jcorder->status }}</td>
-                                        <!--<td>{{ $jcorder->updated_at->diffForHumans() }}</td>-->
+                                        <td>{{ $jcorder->updated_at->diffForHumans() }}</td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	
@@ -147,18 +210,16 @@
 @endmarkdown
 
                             @if (!$orders->count())
-                                <p>You haven't created any order yet.</p><br /><hr />    
-
+                                <p>You haven't created any order yet.</p> <span><a href="{{ route('orders.add') }}">Create New Order +</a></span><span style="float:right"></span>
                             @else
-                            <br /><hr />    
-
                             <table class="table-responsive-sm" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
+                                        <th>Order#</th>
                                         <th>PO#</th>
-                                        <th>Branch#Name</th>
+                                        <th>BranchName#Number</th>
                                         <th>Status</th>
-                                        <!--<th>Updated</th>-->
+                                        <th>Updated</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
@@ -169,10 +230,11 @@
                                         <tbody style="font-size:12px">
 
                                         <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $order->slug }}">{{ $order->ponumber }}</a></td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $order->slug }}">{{ $order->slug }}</a></td>
+                                        <td>{{ $order->ponumber }}</td>
                                         <td>{{ $order->branchname }}</td>
                                         <td class="{{ strtolower($order->status) }}">{{ $order->status }}</td>
-                                        <!--<td>{{ $order->updated_at->diffForHumans() }}</td>-->
+                                        <td>{{ $order->updated_at->diffForHumans() }}</td>
                                         </tr>	
                                         </tbody>
 
@@ -190,39 +252,40 @@
 #### Reviewing Orders [2]
 
 @endmarkdown
-                    @if (!$reviewingdorders->count())
+                    @if (!$reviewingorders->count())
                         <p>You are not reviewing any order.</p>
                     @else
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
+                                        <th>Order#</th>
                                         <th>PO#</th>
-                                        <th>Branch#Name</th>
+                                        <th>BranchName#Number</th>
                                         <th>Status</th>
-                                        <!--<th>Updated</th>-->
+                                        <th>Updated</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
                                 <a class="pull-left" href="">
                                 </a>
                                 <div class="media-body">
-                                        @foreach ($reviewingdorders as $reviewingdorder)
+                                        @foreach ($reviewingorders as $reviewingorder)
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $reviewingdorder->slug }}">{{ $reviewingdorder->ponumber }}</a></td>
-                                        <td>{{ $reviewingdorder->branchname }}</td>
-                                        <td class="{{ strtolower($reviewingdorder->status) }}">{{ $reviewingdorder->status }}</td>
-                                        <!--<td>{{ $reviewingdorder->updated_at->diffForHumans() }}</td>-->
+                                        <td><a style= "float:center" href="/orders/order/{{ $reviewingorder->slug }}">{{ $reviewingorder->slug }}</a></td>
+                                        <td>{{ $reviewingorder->ponumber }}</td>
+                                        <td>{{ $reviewingorder->branchname }}</td>
+                                        <td class="{{ strtolower($reviewingorder->status) }}">{{ $reviewingorder->status }}</td>
+                                        <td>{{ $reviewingorder->updated_at->diffForHumans() }}</td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	
                                 </div>
                             </div>
                         </table>
-<center>{!! $reviewingdorders->render() !!}</center>
+<center>{!! $reviewingorders->render() !!}</center>
 @endif
 
-<span id="submitted"></span>
 <br /><hr />    
 @markdown
 
@@ -237,6 +300,7 @@
                     @endif
                         <p>You have no submited orders yet!</p>
                     @else
+                    <span id="submitted"></span>
                     @if (Session::has('alert'))
                     <div class="alert alert-success">{{ Session::get('alert') }}</div>
                     @endif
@@ -245,9 +309,9 @@
                                     <tr>
                                         <th>Order#</th>
                                         <th>PO#</th>
-                                        <th>Branch#Name</th>
-                                        <th>Tot. Items</th>
-                                        <th>Tot. Qtys</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Status</th>
+                                        <th>Updated</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
@@ -260,8 +324,8 @@
                                         <td>{{ $processedorder->slug }}</td>
                                         <td>{{ $processedorder->ponumber }}</td>
                                         <td>{{ $processedorder->branchname }}</td>
-                                        <td>{{ $processedorder->totalqty }}</td>
-                                        <td>{{ $processedorder->totalprice }}</td>
+                                        <td class="{{ strtolower($processedorder->status) }}">{{ $processedorder->status }}</td>
+                                        <td>{{ $processedorder->updated_at->diffForHumans() }}</td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	
@@ -289,9 +353,9 @@
                                     <tr>
                                         <th>Order#</th>
                                         <th>PO#</th>
-                                        <th>Branch#Name</th>
+                                        <th>BranchName#Number</th>
                                         <th>Status</th>
-                                        <!--<th>Updated</th>-->
+                                        <th>Updated</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
@@ -323,11 +387,11 @@
 ```
 
     Order Status Codes:
-        [0] -> 'Just Created' => [editable],
-        [1] -> 'Editing' => [editable],
-        [2] -> 'Reviewing' => [editable],
-        [3] -> 'Submitted/Processing' => [not_editable],
-        [4] -> 'Completed' => [not_editable]
+        [0] -> 'Just Created',
+        [1] -> 'Editing',
+        [2] -> 'Reviewing',
+        [3] -> 'Processing',
+        [4] -> 'Completed'
 
 
 ```

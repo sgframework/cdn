@@ -15,8 +15,8 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->increments('itemid');
-            $table->integer('itemnumber');
-            $table->string('itemname');
+            $table->integer('itemnumber')->nullable();
+            $table->string('itemname')->nullable();
             $table->decimal('itemprice', 8, 2)->nullable();
             $table->integer('itemsku')->nullable();
             $table->integer('plant')->nullable();
@@ -25,6 +25,7 @@ class CreateItemsTable extends Migration
             $table->string('type')->nullable();
             $table->string('group')->nullable();
             $table->string('itempic')->default("item.png");
+            $table->index('itemnumber', 'itemprice');
             $table->timestamps();
         });
     }

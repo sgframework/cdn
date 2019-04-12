@@ -51,18 +51,31 @@
 		    <div class="card-body">
 			@if (!$items->count())
 				<p>No results found, sorry</p>
-			@else
+      @else
+      <table id="myTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Product</th>
+                            <th>Material</th>
+                            <th>Price</th>
+                            <th>SKU</th>
+                            <th>Plant</th>
+                            <th>InStock</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
 
 				@foreach ($items as $item)
 					@include('items/partials/itemblock')
 				@endforeach			
-				</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		@endif
-
+        </table>			
+                    @endif
+                    </div>  
+                </div>
+            </div>
+        </div><br /><hr />
+    </div>
+</div>
 
 	@stop

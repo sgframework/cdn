@@ -46,7 +46,10 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
+                             
+                            @if($errors->any())
+                            <span style="font-size:9px;color:red">* <h4>{{$errors->first()}}</h4>
+                            </span>@endif
                 <form class="form-inline" method="POST" action="{{ route('orders.insert.step1') }}">
                 @csrf
                     <label hidden style="padding-left:20px" for="staffname">Name:</label>
@@ -59,7 +62,7 @@
                     <label hidden for="staffid">ID#</label>
                         <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
                     </label>
-                        <input class="form-control" width="20px" type="number" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
+                        <input class="form-control" width="20px" type="text" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
                                 
                                 
 
@@ -70,15 +73,7 @@
                                             @endforeach      
                                 </select>&nbsp;&nbsp;&nbsp;-->
           
-                                <script>
-                                $(document).ready(function(){
-                                    $("input").click(function(){
-                                            $(this).next().show();
-                                            $(this).next().hide();
-                                        });
 
-                                    });
-                                </script>
                                 <input name="branchnumber" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
@@ -86,10 +81,6 @@
                                                     <option name="branchname" value="{{ $branch->branchnumber }}-{{ $branch->branchname }}"></option>
                                                     @endforeach 
                                         </datalist>
-
-
-
-
                                 <!--<select name="branchnumber" id="branchnumber" class="form-control dynamic">
                                     <option value="empty">Select Branch</option>
                                         <optgroup label="">
@@ -146,7 +137,18 @@ $(document).ready(function(){
                             <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
                         <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
                     <div style="float:right; padding-left:4px"><button type="submit">Next</button></div>
-                </form><br /><hr />
+                </form>
+                                <script>
+                                    $(document).ready(function(){
+                                    $("input").click(function(){
+                                            $(this).next().show();
+                                            
+                                        });
+
+                                    });
+                                </script>
+                
+                <br /><hr />
 
 <script>
 

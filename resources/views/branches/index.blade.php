@@ -8,12 +8,13 @@
 <div class="row justify-content-center">
 <div class="col-md-12">
     <div class="card">
-        <div class="card-header">
+    <div class="card-header"><h4><h4></div>
+        <div style="padding-left:20px;padding-top:20px" class="">
             <strong>Branches List</strong>
             <div class="input-group">
-                <form class="form-inline input" role="search"  action="{{ route('search.branches') }}">
-                    <input class="input-group-addon" name="query" type="text" placeholder="Search" />
-                    <input type="submit" class="input-group-addon" />
+                <form class="form-inline input" role="search" action="{{ route('search.branches') }}">
+                    <input class="form-control" width="80%" name="query" type="text" placeholder="Search Branches" />
+                    <input type="submit" class="form-control btn btn-primary" />
                 </form>
             </div>
         </div>
@@ -31,6 +32,9 @@
                               <th>#</th>
                               <th>Branch Name</th>
                               <th>Branch Number</th>
+                              <th>Sales Group</th>
+                              <th>Dist. Channel</th>
+                              <th>Office</th>
                           </tr>
                       </thead>
                         @foreach ($branches as $branch)

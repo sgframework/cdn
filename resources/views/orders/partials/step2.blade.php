@@ -20,25 +20,31 @@
 
 
             <style>
-                th tr td{
+                th tr td {
                     /**padding-right:20px;**/
                     text-align: left;
                     width:20px;
                 }
             </style>
                 <div class="table-responsive">
+                @if (Session::has('info'))
+                    <div class="alert alert-info">{{ Session::get('info') }}</div>
+                    @endif
+
                     <table class="table table-striped table-sm">
+                        
                         <thead>
                                     <th style="padding-left:20px;padding-top:5px;background-color:black; color:white">@markdown ### Order# **{{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }}** @endmarkdown</th>
                                     <th style="background-color:black; color:white">@markdown @endmarkdown</th>
                                 <tr>
-            <span style="color:green" class="help-block"><script>
+            <!--<span style="color:green" class="help-block"><script>
                 var msg = '{{Session::get('alert')}}';
                 var exist = '{{Session::has('alert')}}';
                 if(exist){
                 alert(msg);
                 }
-            </script></span>
+            </script></span>-->
+
                                     <th>Name</th>
                                     <th>ID#</th>
                                 </tr>
@@ -64,12 +70,14 @@
 
                         <thead>
                                 <tr>
-                                    <th>Branch</th>
+                                <th>Branch</th>
+                                <th>Status</th>
                                 </tr>
                         </thead>
                         <tbody>
                                 <tr>
-                                    <td><pre>{{ (Session::has('branchnumber') ? Session::get('branchnumber') : '' ) }}</pre></td>
+                                <td><pre>{{ (Session::has('branchnumber') ? Session::get('branchnumber') : '' ) }}</pre></td>
+                                <td class="{{ strtolower((Session::has('status') ? Session::get('status') : '' )) }}">{{ (Session::has('status') ? Session::get('status') : '' ) }}</td>
                                 </tr>
                         </tbody>
                     </table>

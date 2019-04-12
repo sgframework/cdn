@@ -86,24 +86,28 @@ class GlobalController extends Controller
                 return view('global.index')->withOrder($orderid)->with('orders', $orders)->with('orderitems', $orderitems)->with('items', $items)->with('branches', $branches)->with('ordernumber', $ordernumber)->with('ponumber', $ponumber)->with('slug', $slug); 
                 */
                 $currentuser = \Auth::user();
-                $orderitems = Order::where('staffid', '=', $currentuser->idnumber)->first();
-                dump($orderitems);
+                //$orderitems = Order::where('staffid', '=', $currentuser->idnumber)->get();
+                
+                // ** MAIN DUMP ** //
+                //dump($orderitems);               
+                // ** MAIN DUMP ** //
+                
                 $order = Order::where('slug', '=', $slug)->first();
                 $items = Item::all();
                 $branches = Branch::all();
                 //$orders = Order::all()->where('ordernumber', '=', $ordernumber)->first();
-                $jcorders = Order::select()->where('status', '=', 'Just Created')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
+                $jcorders = Order::select()->where('status', '=', 'JustCreated')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $orders = Order::select()->where('status', '=', 'Editing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $completedorders = Order::select()->where('status', '=', 'Completed')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
-                $orderitems = OrderItems::where('staffid', '=', $currentuser->idnumber)
-                ->get();
-                $processedorders = Order::where('status', '=', 'Processed')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
+                $reviewingdorders = Order::select()->where('status', '=', 'Reviewing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
+                $orderitems = OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
+                $processedorders = Order::where('status', '=', 'Submitted')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $ordernumber = Order::where('ordernumber', '=', $currentuser->idnumber)->get();
                 //dump($orders);
-                //dump($orderitems);
+                dump($orderitems);
                 //dump($ordernumber);
-                return view('global.index')->with('completedorders', $completedorders)->with('processingorders', $processingorders)->with('jcorders', $jcorders)->with('processedorders', $processedorders)->with('ordernumber', $ordernumber)->with('orderitems', $orderitems)->with('orders', $orders)->with('branches', $branches);
+                return view('global.index')->with('reviewingdorders', $reviewingdorders)->with('completedorders', $completedorders)->with('processingorders', $processingorders)->with('jcorders', $jcorders)->with('processedorders', $processedorders)->with('ordernumber', $ordernumber)->with('orderitems', $orderitems)->with('orders', $orders)->with('branches', $branches);
 
     }
 }

@@ -28,13 +28,13 @@ Auth::routes(['verify' => true]);
 
 
 Route::get('test0', function(){
-    return "<code>" . print_r(Order::all(), true) . "</code>";
+    return "<pre>" . print_r(Order::all(), true) . "</pre>";
 });
 
 
 
 Route::get('test1', function(){
-    return "<p style='color:red'>" . Order::get("ordernumber")->where('ponumber', "990998") . "</p><br /><hr />";
+    return "<p style='color:red'>" . Order::get("ordernumber")->where('ponumber', "99088543") . "</p><br /><hr />";
 });
 
 
@@ -54,6 +54,34 @@ Route::get('/root', [
     'uses' => '\cdn\Http\Controllers\RootController@getIndex',
 'as' => 'root.index',
 ]);
+
+/*
+Route::get('/root/orders/{slug}', [
+    'uses' => '\cdn\Http\Controllers\RootController@getOrdersByUserId',
+'as' => 'root.orders',
+]);
+
+*/
+Route::get('/root/orders/{idnumber}', [
+    'uses' => '\cdn\Http\Controllers\RootController@getOrdersByUserId',
+'as' => 'root.user.orders',
+]);
+
+Route::get('/root/orders/{idnumber}/{slug}', [
+    'uses' => '\cdn\Http\Controllers\RootController@getOrdersByIdAndSlug',
+'as' => 'root.userorder.orders',
+]);
+
+Route::get('/root/users/orders/all', [
+    'uses' => '\cdn\Http\Controllers\RootController@getAllOrders',
+'as' => 'root.orders.all',
+]);
+
+/*
+http://ipool.remotewebaccess.com/root/orders/5303/00007230991-42002222
+http://ipool.remotewebaccess.com/root/orders/00007230991-42002222
+http://ipool.remotewebaccess.com/root/orders/5303
+*/
 
 Route::get('/tests', [
     'uses' => '\cdn\Http\Controllers\RootController@getTest',
@@ -268,32 +296,58 @@ Route::get('/dashboard/orders', [
 
 
 
+
+
 Route::get('/orders/order/{slug}', [
     'uses' => '\cdn\Http\Controllers\OrdersController@getOrderNumber',
-    'as' => 'orders.order'])->where('slug', '[\d\-]+');
+    'as' => 'orders.order'])/*->where('slug', '[\d\-]+')*/;
 
 
 Route::get('/orders/order/{slug}/edit', [
     'uses' => '\cdn\Http\Controllers\OrdersController@editOrderNumber',
-    'as' => 'orders.edit'])->where('slug', '[\d\-]+');
-    
-    
+    'as' => 'orders.edit'])/*->where('slug', '[\d\-]+')*/;
+  
 
+Route::post('/orders/order/{slug}/remove', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@removeOrderItem',
+    'as' => 'orders.remove']);
+    
+        
 Route::post('/orders/order/{slug}/insert', [
     'uses' => '\cdn\Http\Controllers\OrdersController@insertOrderItems',
-    'as' => 'orders.insert'])->where('slug', '[\d\-]+');
+    'as' => 'orders.insert'])/*->where('slug', '[\d\-]+')*/;
     
     
         
 Route::get('/orders/order/{slug}/review', [
     'uses' => '\cdn\Http\Controllers\OrdersController@reviewOrderItems',
     'as' => 'orders.review']);
+
+
+Route::post('/orders/order/{slug}/backedit', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@backEditOrderItems',
+    'as' => 'orders.backedit']);
     
 Route::post('/orders/order/{slug}/submit', [
     'uses' => '\cdn\Http\Controllers\OrdersController@submitOrder',
-    'as' => 'orders.submit'])->where('slug', '[\d\-]+');
-        
-            
+    'as' => 'orders.submit']);
+
+
+  /*  
+Route::post('/orders/order/submit', function (\Illuminate\Http\Request $request, \Illuminate\Mail\Mailer $mailer) {
+    $mailer
+        ->to('root@ies.com')
+        ->send(new \cdn\Mail\OrderSubmitted);
+    return redirect()->back();
+    
+})->name('orders.submit');
+
+*/
+
+Route::get('/orders/order/{slug}/success', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@successOrder',
+    'as' => 'orders.success'])->where('slug', '[\d\-]+');
+                
     
 /*
 * Search
@@ -344,7 +398,7 @@ Route::get('/item/add', [
 */
 
 Route::get('/alert', function () {
-    return redirect()->route('home')->with('info', 'You have been signed up');
+    return redirect()->route('global.index')->with('alert', 'Congratulations! Your order have been submitted successfully.');
 });
 
 

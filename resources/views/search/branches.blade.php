@@ -49,20 +49,29 @@
         <div class="card-header"><i class="fas fa-search"></i> Search Console.</div>
 		<h4 style="padding-top:25px;padding-left:25px">Your search for "{{ Request::input('query') }}"</h4>
 		    <div class="card-body">
-			@if (!$branches->count())
-				<p>No results found, sorry</p>
-			@else
-
-				@foreach ($branches as $branch)
-					@include('branches/partials/branchblock')
-				@endforeach			
-				</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		@endif
-
-
+                    @if (!$branches->count())
+                      <p>No results found, sorry</p>
+                    @else
+                        <table id="myTable">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Branch Name</th>
+                                    <th>Branch Number</th>
+                                    <th>Sales Group</th>
+                                    <th>Dist. Channel</th>
+                                    <th>Office</th>
+                                </tr>
+                            </thead>
+                            @foreach ($branches as $branch)
+                              @include('branches/partials/branchblock')
+                            @endforeach			
+                    @endif
+                      </table>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 	@stop

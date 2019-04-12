@@ -89,7 +89,7 @@ __Order Status:__
                                 <hr />
                                 <div style="padding-left:8px;padding-top:8px" class="col-sm-6">
                                     <span class="h5"><i class="fas fa-history"></i> Orders Summery</span>
-                                            <table class="table table-striped table-lg">
+                                            <table class="table table-striped-sm" id="">
                                                 <thead>
                                                     <tr>
                                                         <th>Order#</th>

@@ -2,16 +2,14 @@
 	<a class="pull-left" href="">
 	</a>
 	<div class="media-body">
-		@if ($reviewitem->itemnumber)
+		@if ($reviewitem->slug)
 			<tbody style="font-size:12px">
 				<tr>
-				<td>{{ $reviewitem->itemnumber }}</td>
-				<td>{{ $reviewitem->orderitems }}</td>
-				<td>{{ $reviewitem->itemqty }}</td>
-				<td>{{ $reviewitem->freeitem }}</td>
-				<td>{{ $reviewitem->itemprice }}</td>
-				<td><pre style="color:black">{{ $reviewitem->orderstatus }}</pre></td>
-				dump($ordernumber)
+					<td>{{ $reviewitem->orderitems }}</td>
+					<td style="text-align:center">{{ $reviewitem->itemnumber }}</td>
+					<td style="text-align:center">{{ $reviewitem->itemqty }}</td>
+					<td style="text-align:center">{{ $reviewitem->freeitem }}</td>
+					<td style="text-align:center">{{ $reviewitem->itemprice }}</td>
 				</tr>                                            
 			</tbody>
 		@endif

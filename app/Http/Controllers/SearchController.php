@@ -18,7 +18,11 @@ class SearchController extends Controller
     	}
     	
     	$items = Item::where(DB::raw("CONCAT(itemname, '', 'itemnumber')"), 'LIKE', "%{$query}%")
-    	->orWhere('itemsku', 'LIKE', "%{$query}%")->get();
+		->orWhere('itemnumber', 'LIKE', "%{$query}%")
+		->orWhere('type', 'LIKE', "%{$query}%")
+		->orWhere('group', 'LIKE', "%{$query}%")
+		->orWhere('itemsku', 'LIKE', "%{$query}%")
+		->get();
     	
     	
         return view('search.items')->with('items', $items);
@@ -32,7 +36,7 @@ class SearchController extends Controller
     	}
     	
 		$branches = Branch::where(DB::raw("CONCAT(branchname, '', 'branchnumber')"), 'LIKE', "%{$query}%")
-		->orWhere('branchnumber', 'LIKE', "%{$query}%")
+		->orWhere('branchnumber', 'LIKE', "%{$query}%")->orWhere('salesgroup', 'LIKE', "%{$query}%")
     	->get();
     	
     	

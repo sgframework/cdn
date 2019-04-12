@@ -13,14 +13,19 @@
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
             <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Styles -->
+    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('css/stylesheet.css') }}" rel="stylesheet">-->
+    
     <link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
