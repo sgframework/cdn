@@ -317,10 +317,34 @@ class OrdersController extends Controller
             // ** MAIN DUMP **//
             //dump($orderitems);
             // ** MAIN DUMP **//
+
+
+
+
+            $belongstaffid = Order::where('slug', '=', $slug)->first();
+            dump(['By', $belongstaffid->staffname, 'ID', $belongstaffid->staffid]);
+            $belongbranch = Order::where('slug', '=', $slug)->first();
+            dump(['Branch#Name', $belongbranch->branchname]);
+
+
+            $orderitemslist = OrderItems::select('itemnumber')->where('slug', '=', $slug)->orderBy('created_at', 'desc')->whereNotNull('itemnumber')->first();
+            $orderitemnumber = $orderitemslist;
+            dump(['Order Item#', $orderitemnumber]);
+
+            $items = Item::select()->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
+
+            $belongorderitems = OrderItems::where('orderitems', '=', $items)->get();
+            $belongitem = Item::where('itemnumber', '=', $orderitemnumber->itemnumber)->whereNotNull('itemnumber')->first();
+            $belongprice = $belongitem->itemprice;
+            //dump(['Order Name', $belongorderitems]);
+            dump(['Item Data', $belongitem]);
+            dump(['Item Price', $belongprice]);
+
+
+
             $branchname = Order::select('branchname')->where('slug', '=', $slug)->get();
             $branchnumber = Order::select('branchnumber')->where('slug', '=', $slug)->get();
             $status = Order::select('status')->where('slug', '=', $slug)->get();
-            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
             return view('orders.edit')->withOrder($order)->with('status', $status)->with('items', $items)->with('branchnumber', $branchnumber)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('orderitemslug', $orderitemslug);
         }
 
@@ -348,6 +372,7 @@ class OrdersController extends Controller
         $orderitems = implode("-",$split);
         $itemnumber = implode("-",$split);
 
+
         
         //$orderitems =  OrderItems::select('itemnumber')->where('slug', '=', $slug)->orderBy('created_at', 'desc')->get();
         //dump($orderitems);
@@ -364,10 +389,27 @@ class OrdersController extends Controller
         //$itemnumber = Item::select('itemnumber')->where('itemnumber', '=', $request['itemnumber'])->get();
         $items = Item::all();
         $reviewitems = OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
-        $itemprice = Item::select('itemprice')->where('itemnumber', '=', $request['itemnumber'])->get();
+        //$itemprice = Item::select('itemprice')->where('itemnumber', '=', $request['itemnumber'])->get();
 
 
+        $belongstaffid = Order::where('slug', '=', $slug)->first();
+        //dump(['By', $belongstaffid->staffname, 'ID', $belongstaffid->staffid]);
+        $belongbranch = Order::where('slug', '=', $slug)->first();
+        //dump(['Branch#Name', $belongbranch->branchname]);
 
+
+        $orderitemslist = OrderItems::select('itemnumber')->where('slug', '=', $slug)->orderBy('created_at', 'desc')->whereNotNull('itemnumber')->first();
+        $orderitemnumber = $orderitemslist;
+        //dump(['Order Item#', $orderitemnumber]);
+
+        $items = Item::select()->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
+
+        $belongorderitems = OrderItems::where('orderitems', '=', $items)->get();
+        $belongitem = Item::where('itemnumber', '=', $request['itemnumber'])->whereNotNull('itemnumber')->first();
+        $belongprice = $belongitem->itemprice;
+        //dump(['Order Name', $belongorderitems]);
+        //dump(['Item Data', $belongitem]);
+        dump(['Item Price', $belongprice]);
 
 
 
@@ -383,7 +425,7 @@ class OrdersController extends Controller
         'orderitems' => $orderitems,
         'itemqty' => $request['itemqty'],
         'freeitem' => $request['freeitem'],
-        'itemprice' => $itemprice,
+        'itemprice' => $belongprice,
         'orderstatus' => 'Editing',
         'slug' => $slug,
 

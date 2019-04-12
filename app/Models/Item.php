@@ -1,6 +1,5 @@
 <?php
 namespace cdn\Models;
-use cdn\User;
 use cdn\Models\OrderItems;
 use Illuminate\Database\Eloquent\Model;
 class Item extends Model
@@ -40,7 +39,7 @@ class Item extends Model
     }
     public function Price()
 	{
-		return $this->belongsToMany('cdn\Models\Item', 'itemnumber', 'itemname');
+		return $this->belongsToMany('cdn\Models\Item', 'itemname');
     }
 
 
