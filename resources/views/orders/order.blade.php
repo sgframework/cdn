@@ -68,6 +68,7 @@
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
                                     <?php $totalprice = 0; ?>
+                                    <?php $totalqtyprice = 0; ?>
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                     @if (Session::has('submitted'))
                                         <div class="alert alert-danger">{{ Session::get('submitted') }}</div>
@@ -77,6 +78,7 @@
                                         <?php $totalqty += $orderitem->itemqty; ?>
                                         <?php $totalfree += $orderitem->itemfree; ?>
                                         <?php $totalprice += $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
                                             @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
                                         <tfoot>
@@ -85,12 +87,14 @@
                                                     <th>{{ $totalqty }}</th>
                                                     <th>{{ $totalfree }}</th>
                                                     <th>{{ $totalprice }}.00 SAR</th>
+                                                    <th>{{ $totalqtyprice }}.00 SAR</th>
                                                 </tr>
                                             <tr>
                                                 <th>Item# - Desc.</th>
                                                 <th>Qty</th>
                                                 <th>Free</th>
                                                 <th>Price</th>
+                                                <th>Qty * Price</th>
                                                 <!--<th>Delete</th>-->
                                             </tr>
                                         </tfoot>

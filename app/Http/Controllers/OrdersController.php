@@ -134,12 +134,12 @@ class OrdersController extends Controller
             /*$branches = DB::table('branches')
             ->where('branchname', 'LIKE', 'Othaim ')
             ->get(['branchname', 'branchnumber', 'dc']);*/
-            dump($branches);
+            //dump($branches);
 
             $branches_list1 = DB::table('branches')
             ->where('dc', '=', '24')
             ->get();
-            dump($branches_list1);
+            //dump($branches_list1);
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
 
             return view ('tests.index')->with('items', $items)->with('branches', $branches)->with('branches_list1', $branches_list1);
@@ -228,7 +228,7 @@ class OrdersController extends Controller
             $branches = Branch::select('branchname', 'branchnumber')->orderBy('created_at', 'desc');
             $slug = Session::get('ordernumber') . "-" . Session::get('ponumber');
             $order = Order::where('slug', '=', $slug)->first(); 
-            dump($order);
+            //dump($order);
             return view ('orders.partials.step2')->with('items', $items)->with('branches', $branches);
         }
 
@@ -285,7 +285,7 @@ class OrdersController extends Controller
             ->get();
             $ordernumber = OrderItems::select()->where('staffid', '=', $currentuser->idnumber)->get();
             $ponumber = OrderItems::select('ponumber')->where('staffid', '=', $currentuser->idnumber)->get();
-            dump($ponumber);
+            //dump($ponumber);
             $slug = OrderItems::select('slug')->where('staffid', '=', $currentuser->idnumber)->get();                       
             $orderitems = OrderItems::where('staffid', '=', $currentuser->idnumber)
             ->get();
@@ -315,30 +315,18 @@ class OrdersController extends Controller
             $ordernumber = $order;
             $orderitemslug = OrderItems::where('slug', $slug)->first(); 
             // ** MAIN DUMP **//
-            //dump($orderitems);
+            //dump(['Order Items#', $orderitems]);
             // ** MAIN DUMP **//
 
 
 
 
-            $belongstaffid = Order::where('slug', '=', $slug)->first();
-            dump(['By', $belongstaffid->staffname, 'ID', $belongstaffid->staffid]);
-            $belongbranch = Order::where('slug', '=', $slug)->first();
-            dump(['Branch#Name', $belongbranch->branchname]);
 
-
-            $orderitemslist = OrderItems::select('itemnumber')->where('slug', '=', $slug)->orderBy('created_at', 'desc')->whereNotNull('itemnumber')->first();
-            $orderitemnumber = $orderitemslist;
-            dump(['Order Item#', $orderitemnumber]);
 
             $items = Item::select()->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
+            //dump(['Order Items#', $items]);
 
-            $belongorderitems = OrderItems::where('orderitems', '=', $items)->get();
-            $belongitem = Item::where('itemnumber', '=', $orderitemnumber->itemnumber)->whereNotNull('itemnumber')->first();
-            $belongprice = $belongitem->itemprice;
-            //dump(['Order Name', $belongorderitems]);
-            dump(['Item Data', $belongitem]);
-            dump(['Item Price', $belongprice]);
+
 
 
 
@@ -358,6 +346,7 @@ class OrdersController extends Controller
                 'itemqty' => 'required|max:20',
                 'freeitem' => 'max:20',
                 'itemprice' => 'max:20',
+                'totalqtyprice' => 'max:20',
                 'orderstatus' => 'max:255',
 
             ]);
@@ -403,13 +392,15 @@ class OrdersController extends Controller
         //dump(['Order Item#', $orderitemnumber]);
 
         $items = Item::select()->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
-
+  
         $belongorderitems = OrderItems::where('orderitems', '=', $items)->get();
         $belongitem = Item::where('itemnumber', '=', $request['itemnumber'])->whereNotNull('itemnumber')->first();
         $belongprice = $belongitem->itemprice;
+        //$totalqtyprice = $belongitem->itemprice * $request['itemqty'];
+
         //dump(['Order Name', $belongorderitems]);
         //dump(['Item Data', $belongitem]);
-        dump(['Item Price', $belongprice]);
+        //dump(['Item Price', $belongprice]);
 
 
 
@@ -426,6 +417,7 @@ class OrdersController extends Controller
         'itemqty' => $request['itemqty'],
         'freeitem' => $request['freeitem'],
         'itemprice' => $belongprice,
+        'totalqtyprice' => $belongprice * $request['itemqty'],
         'orderstatus' => 'Editing',
         'slug' => $slug,
 
@@ -436,7 +428,7 @@ class OrdersController extends Controller
         //Response::json( $order );
         $orders = Order::all();
         $orderitems = OrderItems::all();
-        return redirect()->back()->with('alert', 'Your item have been inserted successfully.');
+        return redirect()->back()->with('required', 'This field is required')->with('alert', 'Your item have been inserted successfully.');
         }
 
         
@@ -485,7 +477,9 @@ class OrdersController extends Controller
                 $itemprice = Item::select('itemnumber')->where('itemnumber', '=', $orderitem)->get();
 
     			return $query->where('itemnumber', 'LIKE', $orderitem);    
-    		});
+            });
+            $orderitems = OrderItems::where('slug', '=', $slug)->orderBy('created_at', 'desc')->get();
+
             
             $data = OrderItems::all();
             //dump($data);
@@ -515,6 +509,58 @@ class OrdersController extends Controller
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
             return view('orders.backedit')->withOrder($order)->with('status', $status)->with('items', $items)->with('branchnumber', $branchnumber)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('orderitemslug', $orderitemslug);
         }
+
+        public function attachPo(Request $request, $slug)
+        {
+    $target_dir = "../public/attachments/pos/";
+	$target_file = $target_dir . $slug . '-' .  basename($_FILES["fileToUpload"]["name"]);
+	$uploadOk = 1;
+	$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		// Check if image file is a actual image or fake image
+		if(isset($_POST["fileToUpload"])) {
+		    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+		    if($check !== false) {
+		        echo "File is an image - " . $check["mime"] . ".";
+		        $uploadOk = 1;
+		    } else {
+		        echo "File is not an image.";
+		        $uploadOk = 0;
+		    }
+		}
+		// Check if file already exists
+		//if (file_exists($target_file)) {
+		  //  echo "Sorry, file already exists.";
+		   // $uploadOk = 0;
+		//}
+		// Check file size
+		if ($_FILES["fileToUpload"]["size"] > 500000000) {
+		    echo "Sorry, your file is too large.";
+		    $uploadOk = 0;
+		}
+		// Allow certain file formats
+		if($imageFileType != "jpg" && $imageFileType != "pdf" && $imageFileType != "png" && $imageFileType != "jpeg"
+		&& $imageFileType != "gif" ) {
+		    echo "Sorry, only JPG, JPEG, PNG, GIF and PDF files are allowed.";
+		    $uploadOk = 0;
+		}
+		// Check if $uploadOk is set to 0 by an error
+		if ($uploadOk == 0) {
+		    echo "Sorry, your file was not uploaded.";
+		// if everything is ok, try to upload file
+		} else {
+		    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+		        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+		            	Order::where('slug', '=', $slug)->update([
+    		'attachedpo' => basename( $_FILES["fileToUpload"]["name"]),
+    	]);
+        return redirect()->back()->with('success', 'Your PO has been attached to this order => You can submit now.');
+		        
+		    } else {
+		        echo "Sorry, there was an error uploading your file.";
+		    }
+		}
+
+        }
         public function submitOrder(Request $request, $slug)
         {
             $this->validate($request, [
@@ -527,19 +573,30 @@ class OrdersController extends Controller
                 'totalprice' => 'max:255'
             ]);
 
-            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalqty' => $request['totalqty'], 'totalprice' => $request['totalprice'], 'updated_at' => now(), 'status' => 'Submitted']);
+            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'], 'totalprice' => $request['totalprice'], 'updated_at' => now(), 'status' => 'Submitted']);
             OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'branchnumber' => $request['branchnumber'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
-            
-
             return redirect()->route('global.index', 'Your_Order_Have_Been#submitted')->with('alert', 'Congratulations! Your order have been submitted successfully.');
         }
 
-        public function removeOrderItem($itemname)
+
+
+        public function removeOrderItem($slug, $itemnumber)
         {
-            DB::table('orderitems')->where('itemname', '=', $itemname)->delete();
-            return redirect('orders.edit');
+            
+            $delitemnumber  = OrderItems::select($slug)->where('itemnumber', '=', $itemnumber);
+            $delitemnumber->delete();            
+            return redirect()->back()->with('warning', 'Item removed successfully.');
+
         }
 
+        public function tableDestroy($slug)
+        {
+            $delitemnumber  = OrderItems::select($slug)->where('slug', '=', $slug);
+            $delitemnumber->delete();            
+            return redirect()->back()->with('danger', 'Table Flushed Successfully.');
+
+
+        }
         public function successOrder($slug) 
         {
             

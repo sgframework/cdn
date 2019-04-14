@@ -9,11 +9,20 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
+    <!--<script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>-->
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
+
+
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 
             <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -26,7 +35,7 @@
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!--<link href="{{ asset('css/stylesheet.css') }}" rel="stylesheet">-->
     
-    <link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">
+    <!--<link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">-->
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -109,9 +118,9 @@
                         <span class="nav-item">
                             <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
                         </span>
-                        <span class="nav-item">
+                        <!--<span class="nav-item">
                             <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
-                        </span>
+                        </span>-->
                         <span class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-dashboard"></i>Dashboard</a>
                         </span>  

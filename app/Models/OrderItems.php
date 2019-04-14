@@ -23,6 +23,7 @@ class OrderItems extends Model
         'totalqty',
         'totalfree',
         'totalprice',
+        'totalqtyprice'
 
     ];   
 

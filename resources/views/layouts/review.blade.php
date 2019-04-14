@@ -135,6 +135,14 @@ html{
             border:1px solid #ccc;
             text-align:left;
         }
+        input {
+    border: none;
+    width: 80%;
+    height: 3%;
+    font-family: Verdana, Helvetica, Arial, FreeSans, sans-serif;
+    font-size: 12px;
+    padding: 0 4px 0 4px;
+        }
     </style>
 </head>
 <body>

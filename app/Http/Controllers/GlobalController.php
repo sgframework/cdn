@@ -105,7 +105,7 @@ class GlobalController extends Controller
                 $processedorders = Order::where('status', '=', 'Submitted')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(7);
                 $ordernumber = Order::where('ordernumber', '=', $currentuser->idnumber)->get();
                 //dump($orders);
-                dump($orderitems);
+                //dump($orderitems);
                 //dump($ordernumber);
                 return view('global.index')->with('reviewingdorders', $reviewingdorders)->with('completedorders', $completedorders)->with('processingorders', $processingorders)->with('jcorders', $jcorders)->with('processedorders', $processedorders)->with('ordernumber', $ordernumber)->with('orderitems', $orderitems)->with('orders', $orders)->with('branches', $branches);
 

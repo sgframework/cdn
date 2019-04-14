@@ -32,6 +32,7 @@ class CreateOrderitemsTable extends Migration
             $table->integer('totalqty')->nullable();
             $table->integer('totalfree')->nullable();  
             $table->decimal('totalprice', 8, 2)->nullable();         
+            $table->decimal('totalqtyprice', 8, 2)->nullable();         
             $table->index(['ponumber', 'branchnumber', 'itemnumber']);
             $table->timestamps();
         });

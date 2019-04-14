@@ -89,7 +89,8 @@
     <div class="top-right links">
 </div>
         <div class="card-header"><span style="font-size:24px"><i class="fas fa-history"></i> Orders Summery.</div></span>
-            <div class="card-body">
+            
+        <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
             //
@@ -234,6 +235,7 @@
                     <span id="submitted"></span>
                     @if (Session::has('alert'))
                     <div class="alert alert-success">{{ Session::get('alert') }}</div>
+                        <a href="{{ route('orders.add') }}">+ Create New Order</a>
                     @endif
                         <p>You have no submited orders yet!</p>
                     @else
@@ -248,6 +250,8 @@
                                         <th>Branch#Name</th>
                                         <th>Tot. Items</th>
                                         <th>Tot. Qtys</th>
+                                        <th>Tot. Price</th>
+                                        <th>Qty * Price</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
@@ -260,8 +264,10 @@
                                         <td>{{ $processedorder->slug }}</td>
                                         <td>{{ $processedorder->ponumber }}</td>
                                         <td>{{ $processedorder->branchname }}</td>
+                                        <td>{{ $processedorder->totalitems }}</td>
                                         <td>{{ $processedorder->totalqty }}</td>
-                                        <td>{{ $processedorder->totalprice }}</td>
+                                        <td>{{ $processedorder->totalprice }} SAR</td>
+                                        <td>{{ $processedorder->totalqty * $processedorder->totalprice }}.00 SAR</td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	
@@ -290,7 +296,10 @@
                                         <th>Order#</th>
                                         <th>PO#</th>
                                         <th>Branch#Name</th>
-                                        <th>Status</th>
+                                        <th>Tot. Items</th>
+                                        <th>Tot. Qtys</th>
+                                        <th>Tot. Price</th>
+                                        <th>Qty * Price</th>
                                         <!--<th>Updated</th>-->
                                     </tr>
                                 </thead>
@@ -301,11 +310,13 @@
                                         @foreach ($completedorders as $completedorder)
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $completedorder->slug }}">{{ $completedorder->slug }}</a></td>
+                                        <td>{{ $completedorder->slug }}</td>
                                         <td>{{ $completedorder->ponumber }}</td>
                                         <td>{{ $completedorder->branchname }}</td>
-                                        <td class="{{ strtolower($completedorder->status) }}">{{ $completedorder->status }}</td>
-                                        <td>{{ $completedorder->updated_at->diffForHumans() }}</td>
+                                        <td>{{ $completedorder->totalitems }}</td>
+                                        <td>{{ $completedorder->totalqty }}</td>
+                                        <td>{{ $completedorder->totalprice }} SAR</td>
+                                        <td>{{ $completedorder->totalqty * $completedorder->totalprice }}.00 SAR</td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	
@@ -316,6 +327,25 @@
 @endif
 
 <br /><hr />                            
+
+
+<br /><hr />                            
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br /><hr />                            
+
 
 
 @markdown
@@ -332,7 +362,6 @@
 
 ```
 @endmarkdown
-
 
 
 

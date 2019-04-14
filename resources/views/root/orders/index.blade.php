@@ -1,5 +1,5 @@
 
-@extends('layouts.app')
+@extends('layouts.review')
 @section('content')
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -29,6 +29,9 @@
             }
             .position-ref {
                 position: relative;
+            }
+            table {
+                border-collapse: inherit;
             }
             .top-right {
                 position: absolute;
@@ -88,31 +91,156 @@
 	</div>-->
     <div class="top-right links">
 </div>
-        <div class="card-header"><span style="font-size:24px"><i class="fas fa-history"></i> Orders Summery.</div></span>
+        <div class="card-header"><span style="font-size:18px"><i class="fas fa-history"></i> Order#{{ $belongordernumber->slug }} Submition Form.</div></span>
             <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
             //
             //
             // endShow -->
+            <a href="{{ url('/root/users/orders/all') }}">&larr; Back to all orders</a>
 
+            @if ( $order->status == "Completed")
+            <div style="font-size:22px;padding-top:50px; padding-bottom:50px; padding-left:280px"  class="alert alert-danger"><i class="fas fa-times"></i> <span style="color:green;background-color:black">'completed',</span> 'This order is completed, CONNOT be modefied. {{ Session::get('completed') }}
+            </div>
+<table class="table-responsive-sm processed" id="myTable">
+                    
+
+                    <div class="media">
+                    <a class="pull-left" href="">
+                    </a>
+                    <div class="media-body">
+                            <thead style="font-size:12px">
+                        <tr>
+                            <th>By#ID</th>
+                            <th>Order#</th>
+                            <th>PO#</th>
+                            <th>BranchName#Number</th>
+                            <th>Total Items</th>
+                            <th>Total Qtys</th>
+                            <th>Total Price</th>
+                            <th>Created@</th>
+                            <th>Submitted@</th>
+                        </tr>
+
+                        
+                    </thead>
+                            <tbody style="font-size:12px">
+                            <tr>
+                                <td>{{ $belongordernumber->staffname }}#{{ $belongstaffid->staffid }}</td>
+                                <td>{{ $belongordernumber->ordernumber }}</td>
+                                <td>{{ $belongordernumber->ponumber }}</td>
+                                <td>{{ $belongbranch->branchname }}</td>
+                                <td>{{ $belongordernumber->totalitems }}</td>
+                                <td>{{ $belongordernumber->totalqty }}</td>
+                                <td>{{ $belongordernumber->totalprice }} SAR</td>
+                                <td>{{ $belongcreateddate->created_at }}</td>
+                                <td>{{ $belongcreateddate->updated_at }}</td>
+                            </tr>	
+                            </tbody>
+</table>
+
+        <table class="table-responsive-sm processed"> 
+                                <thead style="font-size:12px">
+                                    <tr>
+                                        <th>Mat. Description</th>
+                                        <th>material code</th>
+                                        <th>Qty.</th>
+                                        <th>ZTTO</th>
+                                        <th>Price</th>
+                                        <!--<th>Qty * Price</th>-->
+                                        <th>Created</th>
+                                    </tr>
+                                </thead>
+                                <?php $totalqty = 0; ?>
+                                <?php $totalfree = 0; ?>
+                                <?php $totalprice = 0; ?>
+                                <?php $totalqtyprice = 0; ?>
+                                @foreach ($completedprofiles as $completedprofile)
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td>{{ $completedprofile->orderitems }}</td>
+                                        <td style="text-align:center">{{ $completedprofile->itemnumber }}</td>
+                                        <td style="text-align:center">{{ $completedprofile->itemqty }}</td>
+                                        <td style="text-align:center">{{ $completedprofile->freeitem }}</td>
+                                        <td style="text-align:center">{{ $completedprofile->itemprice }} SAR</td>
+                                        <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemprice }} SAR</td>-->
+                                        <!--<td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->slug }}</a></td>-->
+                                        <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->diffForHumans() }}</a></td>
+                                        </tr>	
+                                        </tbody>
+                                        @endforeach	
+                                            <?php $totalqty += $belongordernumber->itemqty; ?>
+                                            <?php $totalfree += $completedprofile->freeitem; ?>
+                                            <?php $totalprice += $completedprofile->itemprice; ?>
+                                            <?php $totalqtyprice += $belongordernumber->totalqty + $belongordernumber->totalprice; ?>
+                                        <tfoot>
+                                            <tr>
+                                                <th style="text-align:center">Totals</th>
+                                                <th></th>
+                                                <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
+                                                <th style="text-align:center">{{ $totalfree }}</th>
+                                                <th style="text-align:center">{{ $belongordernumber->totalprice }} SAR</th>
+                                                <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
+                                                <th></th>
+                                            </tr>
+
+                                        </tfoot>
+
+                                </div>
+                            </div>
+                        </table>
+                
+                @if (Session::has('completed'))
+                        <div class="alert alert-danger"><i class="fas fa-times"></i> 'completed', 'This order is completed, CONNOT be modefied. {{ Session::get('completed') }}</div>
+                @endif
+            @else
+<br />
 
 @markdown
 
-#### Just Submitted Orders [0]
-
-Total Submitted Orders: {{ $header->count() }}
-
-Total Orders Items: {{ $submittedorders->count() - $header->count() }}
+#### * **Copy & paste to excelsheet.**
 
 @endmarkdown
+                        <table class="table-responsive-sm processed" id="myTable">
+                        
+                        <tr>
+                            <td style="text-align:center">{{ $belongordernumber->ponumber }}</td>
+                            <td></td>
+                            <td style="text-align:center">{{ $belongordernumber->branchnumber }}</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        @foreach ($profiles as $profile)
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="text-align:center">{{ $profile->itemnumber }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="text-align:center">{{ $profile->itemqty }}</td>
 
-
-                    @if (!$submittedorders->count())
-                        <p>You haven't created any order recently.</p>
-                    @else
-
+                                        </tr>	
+                                        </tbody>
+                                        @endforeach	
+                        
+                    </table>
+                    <br />
                     
+                    <form action="{{ route('orders.complete', ['staffid' => $order->staffid, 'orderId' => $order->slug]) }}" method="POST">
+                                @csrf
+                            <input width="20px" value="Complete Order" type="submit" class="btn btn-primary" />
+                        </form>
+<br />
+
+
+<embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="420" height="300" alt="pdf" />
+<img  width="420" height="300" src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" />
+
+<br />
+
                             <table class="table-responsive-sm processed" id="myTable">
                     
 
@@ -120,71 +248,94 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                 <a class="pull-left" href="">
                                 </a>
                                 <div class="media-body">
-                                        @foreach ($submittedorders as $submittedorder)
                                         <thead style="font-size:12px">
                                     <tr>
                                         <th>By#ID</th>
+                                        <th>Order#</th>
                                         <th>PO#</th>
                                         <th>BranchName#Number</th>
                                         <th>Total Items</th>
                                         <th>Total Qtys</th>
                                         <th>Total Price</th>
+                                        <th>Created@</th>
                                         <th>Submitted@</th>
                                     </tr>
+
+                                    
                                 </thead>
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td>{{ $submittedorder->staffname }}#{{ $submittedorder->staffid }}</td>
-                                        <td><a style= "float:center" href="/orders/order/{{ $submittedorder->slug }}">{{ $submittedorder->ponumber }}</a></td>
-                                        <td>{{ $submittedorder->branchname }}</td>
-                                        <td>{{ $submittedorder->totalqty }}</td>
-                                        <td>{{ $submittedorder->totalprice }}</td>
-                                        <td>{{ $submittedorder->totalprice }}</td>
-                                        <td><pre class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->diffForHumans() }}</pre></td>
+                                            <td>{{ $belongordernumber->staffname }}#{{ $belongstaffid->staffid }}</td>
+                                            <td>{{ $belongordernumber->ordernumber }}</td>
+                                            <td>{{ $belongordernumber->ponumber }}</td>
+                                            <td>{{ $belongbranch->branchname }}</td>
+                                            <td>{{ $belongordernumber->totalitems }}</td>
+                                            <td>{{ $belongordernumber->totalqty }}</td>
+                                            <td>{{ $belongordernumber->totalprice }} SAR</td>
+                                            <td>{{ $belongcreateddate->created_at }}</td>
+                                            <td>{{ $belongcreateddate->updated_at }}</td>
                                         </tr>	
                                         </tbody>
-
+        </table>
+        <table class="table-responsive-sm processed"> 
                                 <thead style="font-size:12px">
                                     <tr>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Status</th>
-                                        <th>Status</th>
-                                        <th>Status</th>
-                                        <th>Status</th>
-                                        <th>Status</th>
-                                        <th>Updated</th>
+                                        <th>Mat. Description</th>
+                                        <th>material code</th>
+                                        <th>Qty.</th>
+                                        <th>ZTTO</th>
+                                        <th>Price</th>
+                                        <!--<th>Qty * Price</th>-->
+                                        <th>Created</th>
                                     </tr>
                                 </thead>
-                                
+                                <?php $totalqty = 0; ?>
+                                <?php $totalfree = 0; ?>
+                                <?php $totalprice = 0; ?>
+                                <?php $totalqtyprice = 0; ?>
                                 @foreach ($profiles as $profile)
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td>#{{ $profile->staffid }}/{{ $profile->staffname }}</td>
                                         <td>{{ $profile->orderitems }}</td>
-                                        <td>{{ $profile->itemnumber }}</td>
-
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{ $profile->totalqty }}</td>
-                                        <td>{{ $profile->totalprice }}</td>
-                                        <td class="{{ strtolower($profile->status) }}" id="status">{{ $profile->status }}</td>
-                                        <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->slug }}</a></td>
-                                        <td>{{ $profile->updated_at->diffForHumans() }}</td>
+                                        <td style="text-align:center">{{ $profile->itemnumber }}</td>
+                                        <td style="text-align:center">{{ $profile->itemqty }}</td>
+                                        <td style="text-align:center">{{ $profile->freeitem }}</td>
+                                        <td style="text-align:center">{{ $profile->itemprice }} SAR</td>
+                                        <!--<td style="text-align:center">{{ $profile->itemqty * $profile->itemprice }} SAR</td>-->
+                                        <!--<td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->slug }}</a></td>-->
+                                        <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->updated_at->diffForHumans() }}</a></td>
                                         </tr>	
                                         </tbody>
+                                        @endforeach	
+                                            <?php $totalqty += $profile->itemqty; ?>
+                                            <?php $totalfree += $profile->freeitem; ?>
+                                            <?php $totalprice += $profile->itemprice; ?>
+                                            <?php $totalqtyprice += $belongordernumber->totalqty + $belongordernumber->totalprice; ?>
+                                        <tfoot>
+                                            <tr>
+                                                <th style="text-align:center">Totals</th>
+                                                <th></th>
+                                                <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
+                                                <th style="text-align:center">{{ $totalfree }}</th>
+                                                <th style="text-align:center">{{ $belongordernumber->totalprice }} SAR</th>
+                                                <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
+                                                <th></th>
+                                            </tr>
 
-                                        @endforeach
-                                    @endforeach	
+                                        </tfoot>
+
                                 </div>
                             </div>
                         </table>
+                        
+                        <br />
 
-@endif
+
+<br /><br />
 
 
 
+<br />
 <br /><hr />                                     
 
 
@@ -194,7 +345,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
 
 @endmarkdown
                     @if (!$jcorders->count())
-                        <p>You haven't created any order recently.</p>
+                        <p>{{ $order->staffname }} didn't create any order recently.</p>
                     @else
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
@@ -235,12 +386,12 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
 
 @markdown
 
-#### Open Orders [1]
+#### Editing Orders [1]
 
 @endmarkdown
 
                             @if (!$orders->count())
-                                <p>You haven't created any order yet.</p> <span><a href="{{ route('orders.add') }}">Create New Order +</a></span><span style="float:right"></span>
+                                <p>{{ $order->staffname }} didn't create any order recently.</p> 
                             @else
                             <table class="table-responsive-sm" id="myTable">
                                 <thead style="font-size:12px">
@@ -283,7 +434,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
 
 @endmarkdown
                     @if (!$reviewingorders->count())
-                        <p>You are not reviewing any order.</p>
+                        <p>{{ $order->staffname }} didn't review any order yet.</p>
                     @else
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
@@ -319,7 +470,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
 <br /><hr />    
 @markdown
 
-#### Submitted Orders [3]
+#### Other Submitted Orders [3]
 
 @endmarkdown
 
@@ -351,7 +502,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                         @foreach ($processedorders as $processedorder)
                                         <tbody style="font-size:12px">
                                         <tr>
-                                        <td>{{ $processedorder->slug }}</td>
+                                        <td><a style= "float:center" href="/root/orders/{{ $processedorder->staffid }}/{{ $processedorder->slug }}">{{ $processedorder->slug }}</td>
                                         <td>{{ $processedorder->ponumber }}</td>
                                         <td>{{ $processedorder->branchname }}</td>
                                         <td class="{{ strtolower($processedorder->status) }}">{{ $processedorder->status }}</td>
@@ -376,7 +527,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
 
 
                             @if (!$completedorders->count())
-                                <p>You have no completed orders.</p>
+                                <p>{{ $order->staffname }} have no completed orders.</p>
                             @else
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
@@ -420,14 +571,14 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
         [0] -> 'Just Created',
         [1] -> 'Editing',
         [2] -> 'Reviewing',
-        [3] -> 'Processing',
+        [3] -> 'Processing' ==> 'You_Are_Here',
         [4] -> 'Completed'
 
 
 ```
 @endmarkdown
 
-
+@endif
 
 
                     @else

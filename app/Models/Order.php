@@ -15,10 +15,12 @@ class Order extends Model
         'urgent',
         'slug',
         'status',
+        'totalitems',
         'totalqty',
         'totalprice',
         'created_at',
-        'updated_at'
+        'updated_at',
+        'attachedpo'
     ];   
 
 

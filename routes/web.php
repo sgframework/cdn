@@ -308,9 +308,13 @@ Route::get('/orders/order/{slug}/edit', [
     'as' => 'orders.edit'])/*->where('slug', '[\d\-]+')*/;
   
 
-Route::post('/orders/order/{slug}/remove', [
+Route::post('/orders/order/{slug}/remove/{itemnumber}', [
     'uses' => '\cdn\Http\Controllers\OrdersController@removeOrderItem',
     'as' => 'orders.remove']);
+
+Route::post('/orders/order/{slug}/destroy/', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@tableDestroy',
+    'as' => 'orders.destroy']);
     
         
 Route::post('/orders/order/{slug}/insert', [
@@ -327,7 +331,11 @@ Route::get('/orders/order/{slug}/review', [
 Route::post('/orders/order/{slug}/backedit', [
     'uses' => '\cdn\Http\Controllers\OrdersController@backEditOrderItems',
     'as' => 'orders.backedit']);
-    
+
+Route::post('/orders/order/{slug}/attachpo', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@attachPo',
+    'as' => 'orders.attachpo']);
+
 Route::post('/orders/order/{slug}/submit', [
     'uses' => '\cdn\Http\Controllers\OrdersController@submitOrder',
     'as' => 'orders.submit']);
@@ -344,9 +352,13 @@ Route::post('/orders/order/submit', function (\Illuminate\Http\Request $request,
 
 */
 
+Route::post('/root/orders/{idnumber}/{slug}/success', [
+    'uses' => '\cdn\Http\Controllers\RootController@completeOrder',
+    'as' => 'orders.complete']);
+
 Route::get('/orders/order/{slug}/success', [
     'uses' => '\cdn\Http\Controllers\OrdersController@successOrder',
-    'as' => 'orders.success'])->where('slug', '[\d\-]+');
+    'as' => 'orders.success']);
                 
     
 /*

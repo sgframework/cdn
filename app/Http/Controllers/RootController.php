@@ -45,8 +45,10 @@ class RootController extends Controller
 
         Session::flash('message','Empty input not accepted');
         $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'asc')->paginate(10);
-        $branches = Branch::select('branchname', 'branchnumber')->get();
+        $branches = Branch::select('branchname', 'branchnumber')->paginate(10);
         $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'asc')->paginate(10);
+
+        
         return view('tests.index')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
     }
     public function getReview()
@@ -57,6 +59,48 @@ class RootController extends Controller
         $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'orderitems', 'itemnumber', 'itemqty', 'freeitem', 'itemprice', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'asc')->paginate(10);
         return view('orders.review')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
     }
+
+
+
+    function getAllMonths(){
+		$month_array = array();
+		$posts_dates = Post::orderBy( 'created_at', 'ASC' )->pluck( 'created_at' );
+		$posts_dates = json_decode( $posts_dates );
+		if ( ! empty( $posts_dates ) ) {
+			foreach ( $posts_dates as $unformatted_date ) {
+				$date = new \DateTime( $unformatted_date->date );
+				$month_no = $date->format( 'm' );
+				$month_name = $date->format( 'M' );
+				$month_array[ $month_no ] = $month_name;
+			}
+		}
+		return $month_array;
+	}
+	function getMonthlyPostCount( $month ) {
+		$monthly_post_count = Post::whereMonth( 'created_at', $month )->get()->count();
+		return $monthly_post_count;
+	}
+	function getMonthlyPostData() {
+		$monthly_post_count_array = array();
+		$month_array = $this->getAllMonths();
+		$month_name_array = array();
+		if ( ! empty( $month_array ) ) {
+			foreach ( $month_array as $month_no => $month_name ){
+				$monthly_post_count = $this->getMonthlyPostCount( $month_no );
+				array_push( $monthly_post_count_array, $monthly_post_count );
+				array_push( $month_name_array, $month_name );
+			}
+		}
+		$max_no = max( $monthly_post_count_array );
+		$max = round(( $max_no + 10/2 ) / 10 ) * 10;
+		$monthly_post_data_array = array(
+			'months' => $month_name_array,
+			'post_count_data' => $monthly_post_count_array,
+			'max' => $max,
+		);
+		return $monthly_post_data_array;
+    }
+
 
     
     public function getAllOrders(Order $slug, User $idnumber)
@@ -86,10 +130,12 @@ class RootController extends Controller
                 $processedorders = Order::where('status', '=', 'Submitted')->orderBy('updated_at', 'asc')->paginate(7);
                 $ordernumber = Order::where('status', '=', 'Submitted')->get();
                 $stafforders = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('ponumber')->groupBy('staffid')->get();
-                $submittedorders = Order::select()->where('status', '=', 'Submitted')->whereNotNull('ponumber')->groupBy('slug')->get();
-                $orders = OrderItems::select()->where('staffid', '=', $submittedorders)->orderBy('updated_at', 'asc')->paginate(7);
-                $stafforderitems = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('itemprice')->groupBy('staffid')->get();
+                $submittedorders = Order::select()->where('status', '=', 'Submitted')->whereNotNull('ponumber')->orderBy('updated_at', 'desc')->groupBy('slug')->get();
+                $orders = OrderItems::select()->where('staffid', '=', $submittedorders)->orderBy('updated_at', 'asc')->get();
+                $stafforderitems = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('itemprice')->orderBy('updated_at', 'asc')->groupBy('staffid')->get();
+                $completedorders = Order::select()->where('status', '=', 'Completed')->whereNotNull('ponumber')->groupBy('slug')->orderBy('updated_at', 'desc')->get();
 
+                //$completedorders =  OrderItems::select()->where('orderstatus', '=', 'Completed')->whereNotNull('itemprice')->groupBy('staffid')->get();
                 $itemprice = $items;
                 $root = Root::select()->get();
                 //dump($root);
@@ -105,6 +151,7 @@ class RootController extends Controller
                 ->withOrder($order)
                 ->withId($id)
                 ->with('submittedorders', $submittedorders)
+                ->with('completedorders', $completedorders)
                     ->with('reviewingorders', $reviewingorders)
                     ->with('completedorders', $completedorders)
                     ->with('processingorders', $processingorders)
@@ -136,18 +183,18 @@ class RootController extends Controller
         //dump($root->orderItems);
         
         $belongstaffid = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
-        dump(['By', $belongstaffid->staffname, 'ID', $belongstaffid->staffid]);
+        //dump(['By', $belongstaffid->staffname, 'ID', $belongstaffid->staffid]);
         $belongbranch = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
-        dump(['Branch#Name', $belongbranch->branchname]);
+        //dump(['Branch#Name', $belongbranch->branchname]);
 
 
 
         $belongordernumber = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
-        dump(['Order#', $belongordernumber->ordernumber, 'PO#', $belongordernumber->ponumber, 'slug', $belongordernumber->slug]);
+        //dump(['Order#', $belongordernumber->ordernumber, 'PO#', $belongordernumber->ponumber, 'slug', $belongordernumber->slug]);
         //$belongponumber = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
         //dump(['PO#', $belongponumber->ponumber]);
         $belongcreateddate = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
-        dump(['Created@', $belongcreateddate->created_at, 'Updated@', $belongcreateddate->updated_at]);
+        //dump(['Created@', $belongcreateddate->created_at, 'Updated@', $belongcreateddate->updated_at]);
         //$belongupdateddate = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
         //dump(['Updated@', $belongupdateddate->updated_at]);
                 $currentuser = \Auth::user();
@@ -160,7 +207,7 @@ class RootController extends Controller
                 $items = Item::all();
                 $branches = Branch::all();
                 //$orders = Order::all()->where('ordernumber', '=', $ordernumber)->first();
-                $jcorders = Order::select()->where('status', '=', 'JustCreated')->orderBy('updated_at', 'asc')->paginate(7);
+                $jcorders = Order::select()->where('slug', '=', $slug)->where('status', '=', 'JustCreated')->orderBy('updated_at', 'asc')->paginate(7);
                 $editingorders = Order::select()->where('status', '=', 'Editing')->orderBy('updated_at', 'asc')->paginate(7);
                 $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->orderBy('updated_at', 'asc')->paginate(7);
                 $completedorders = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->paginate(7);
@@ -178,7 +225,9 @@ class RootController extends Controller
 
                 //dump($currentuser);
                 $profiles = OrderItems::where('orderstatus', '=', 'Submitted')->where('slug', '=', $slug)->whereNotNull('itemnumber')->get();
+                $completedprofiles = OrderItems::where('orderstatus', '=', 'Completed')->where('slug', '=', $slug)->whereNotNull('itemnumber')->get();
                 $header = Order::where('status', '=', 'Submitted')->get();
+                $completedheader = Order::where('status', '=', 'Completed')->get();
                 //dump($slug);
                 //dump($idnumber);
                 //dump($stafforderitems);
@@ -187,6 +236,7 @@ class RootController extends Controller
                 return view('root.orders.index')
                 ->withOrder($order)
                 ->withId($id)
+                ->with('completed', 'This order is completed, CONNOT be modefied.')
                 ->with('submittedorders', $submittedorders)
                     ->with('reviewingorders', $reviewingorders)
                     ->with('completedorders', $completedorders)
@@ -198,7 +248,13 @@ class RootController extends Controller
                     ->with('editingorders', $editingorders)
                     ->with('orders', $orders)
                     ->with('header', $header)
+                    ->with('completedheader', $completedheader)
                     ->with('profiles', $profiles)
+                    ->with('completedprofiles', $completedprofiles)
+                    ->with('belongstaffid', $belongstaffid)
+                    ->with('belongbranch', $belongbranch)
+                    ->with('belongordernumber', $belongordernumber)
+                    ->with('belongcreateddate', $belongcreateddate)
                     ->with('stafforders', $stafforders)
                     ->with('stafforderitems', $stafforderitems)
                     ->with('branches', $branches);
@@ -250,6 +306,7 @@ class RootController extends Controller
         return view('root.orders.index')
         ->withOrder($order)
         ->withId($id)
+        ->with('completed', 'This order is completed, CONNOT be modefied.')
         ->with('submittedorders', $submittedorders)
             ->with('reviewingorders', $reviewingorders)
             ->with('completedorders', $completedorders)
@@ -265,6 +322,14 @@ class RootController extends Controller
             ->with('stafforders', $stafforders)
             ->with('stafforderitems', $stafforderitems)
             ->with('branches', $branches);
+    }
+
+    public function completeOrder($idnumber, $slug)
+    {
+        
+        Order::where('slug', $slug)->update(['updated_at' => now(), 'status' => 'Completed']);
+        OrderItems::where('slug', $slug)->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+        return redirect()->route('root.orders.all', 'Order_Have_Been_Marked_As#completed')->with('success', 'Success! Order has beem marked as completed');
     }
 
     public function getMd()

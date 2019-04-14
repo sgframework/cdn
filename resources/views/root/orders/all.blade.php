@@ -97,22 +97,31 @@
             // endShow -->
 
 
+
+
+
+            @if (!$submittedorders->count())
+                        <p>There are no submitted orders yet!</p>
+                    @else
+
+                    @if (Session::has('success'))
+                            <div class="alert alert-success">{{ Session::get('success') }}</div>
+                            <br />
+                    @endif
+
 @markdown
 
 #### Just Submitted Orders [0]
 
-Total Submitted Orders: {{ $header->count() }}
-
-Total Orders Items: {{ $submittedorders->count() - $header->count() }}
-
 @endmarkdown
 
 
-                    @if (!$submittedorders->count())
-                        <p>You haven't created any order recently.</p>
-                    @else
 
-                    
+
+            <?php $totalqty = 0; ?>
+            <?php $totalitems = 0; ?>
+            <?php $totalprice = 0; ?>
+            <?php $totalqtyprice = 0; ?>      
                             <table class="table-responsive-sm processed" id="myTable">
                     
 
@@ -128,6 +137,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                         <th>Total Items</th>
                                         <th>Total Qtys</th>
                                         <th>Total Price</th>
+                                        <th>Qty * Price</th>
                                         <th>Submitted@</th>
                                     </tr>
                                 </thead>
@@ -136,27 +146,133 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                         <tbody style="font-size:12px">
                                         <tr>
                                         <td>{{ $submittedorder->staffname }}#{{ $submittedorder->staffid }}</td>
-                                        <td><a style= "float:center" href="/orders/order/{{ $submittedorder->slug }}">{{ $submittedorder->ponumber }}</a></td>
+                                        <td><a style= "float:center" href="/root/orders/{{ $submittedorder->staffid }}/{{ $submittedorder->slug }}">{{ $submittedorder->ponumber }}</a></td>
                                         <td>{{ $submittedorder->branchname }}</td>
-                                        <td>{{ $submittedorder->totalqty }}</td>
-                                        <td>{{ $submittedorder->totalprice }}</td>
-                                        <td>{{ $submittedorder->totalprice }}</td>
-                                        <td><pre class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->diffForHumans() }}</pre></td>
+                                        <td style="text-align:center">{{ $submittedorder->totalitems }}</td>
+                                        <td style="text-align:center">{{ $submittedorder->totalqty }}</td>
+                                        <td style="text-align:center">{{ $submittedorder->totalprice }} SAR</td>
+                                        <td style="text-align:center">{{ $submittedorder->totalqty * $submittedorder->totalprice }}.00 SAR</td>
+                                        <td style="text-align:center"><pre class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->diffForHumans() }}</pre></td>
                                         </tr>	
                                         </tbody>
-
-
+                                    <?php $totalqty += $submittedorder->totalqty; ?>
+                                    <?php $totalitems += $submittedorder->totalitems; ?>
+                                    <?php $totalprice += $submittedorder->totalprice; ?>
+                                    <?php $totalqtyprice += $submittedorder->totalqty * $submittedorder->totalprice; ?>
                                     @endforeach	
+
+                                    <tfoot>
+                                            <tr>
+                                            <th style="text-align:center"><b>Totals</b></th>
+                                            <th></th>
+                                            <th></th>
+                                            <td style="text-align:center">{{ $totalitems }}</td>
+                                            <td style="text-align:center">{{ $totalqty }}</td>
+                                            <td style="text-align:center">{{ $totalprice }}.00 SAR</td>
+                                            <td style="text-align:center">{{ $totalqtyprice }}.00 SAR</td>
+                                            </tr>
+                                        </tfoot>
+                                        
                                 </div>
                             </div>
                         </table>
+
+@markdown                        
+Total Submitted Orders: {{ $header->count() }}
+
+Total Orders Items: {{ $totalqty }}
+
+@endmarkdown
 
 @endif
 
 
 
 <br /><hr />                                     
+@markdown
 
+#### Just Completed Orders [1]
+
+@endmarkdown
+            <?php $totalqty = 0; ?>
+            <?php $totalitems = 0; ?>
+            <?php $totalprice = 0; ?>
+            <?php $totalqtyprice = 0; ?>     
+
+
+
+                    @if (!$completedorders->count())
+                        <p>You haven't created any order recently.</p>
+                    @else
+                            <table class="table-responsive-sm processed" id="myTable">
+                    
+
+                                <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                        <thead style="font-size:12px">
+                                    <tr>
+                                        <th>By#ID</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Total Items</th>
+                                        <th>Total Qtys</th>
+                                        <th>Total Price</th>
+                                        <th>Qty * Price</th>
+                                        <th>Completed@</th>
+                                    </tr>
+                                </thead>
+                                @foreach ($completedorders as $completedorder)
+
+                                        <tbody style="font-size:12px">
+                                        <tr>
+                                        <td>{{ $completedorder->staffname }}#{{ $completedorder->staffid }}</td>
+                                        <td><a style= "float:center" href="/root/orders/{{ $completedorder->staffid }}/{{ $completedorder->slug }}">{{ $completedorder->ponumber }}</a></td>
+                                        <td>{{ $completedorder->branchname }}</td>
+                                        <td style="text-align:center">{{ $completedorder->totalitems }}</td>
+                                        <td style="text-align:center">{{ $completedorder->totalqty }}</td>
+                                        <td style="text-align:center">{{ $completedorder->totalprice }} SAR</td>
+                                        <td style="text-align:center">{{ $completedorder->totalqty * $completedorder->totalprice }}.00 SAR</td>
+                                        <td style="text-align:center"><pre class="{{ strtolower($completedorder->status) }}" id="status">{{ $completedorder->updated_at }}</pre></td>
+                                        </tr>	
+                                        </tbody>
+                                    <?php $totalqty += $completedorder->totalqty; ?>
+                                    <?php $totalitems += $completedorder->totalitems; ?>
+                                    <?php $totalprice += $completedorder->totalprice; ?>
+                                    <?php $totalqtyprice += $completedorder->totalqty * $completedorder->totalprice; ?>
+                                    @endforeach	
+
+                                    <tfoot>
+                                            <tr>
+                                            <th style="text-align:center"><b>Totals</b></th>
+                                            <th></th>
+                                            <th></th>
+                                            <td style="text-align:center">{{ $totalitems }}</td>
+                                            <td style="text-align:center">{{ $totalqty }}</td>
+                                            <td style="text-align:center">{{ $totalprice }}.00 SAR</td>
+                                            <td style="text-align:center">{{ $totalqtyprice }}.00 SAR</td>
+                                            </tr>
+                                        </tfoot>
+                                        
+                                </div>
+                            </div>
+                        </table>
+
+                        @markdown
+
+Total Completed Orders: {{ $completedorders->count() }}
+
+Total Orders Items: <td style="text-align:center">{{ $totalitems }}</td>
+
+
+@endmarkdown
+                <br /><hr />         <br /><br />
+                
+                <h2>Users Timline</h2>
+
+
+@endif
 
 @markdown
 
@@ -194,7 +310,6 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                 </div>
                             </div>
                         </table>
-<center>{!! $jcorders->render() !!}</center>
 
 @endif
 
@@ -244,7 +359,6 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                         </table>
                         <br /><hr />                                      
 
-                        <center>{!! $orders->render() !!}</center>
 
                         @endif
 @markdown
@@ -283,7 +397,6 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                 </div>
                             </div>
                         </table>
-<center>{!! $reviewingorders->render() !!}</center>
 @endif
 
 <br /><hr />    
@@ -332,12 +445,11 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                 </div>
                             </div>
                         </table>
-<center>{!! $processedorders->render() !!}</center>
 @endif
 
 <br /><hr />                                     
 
-
+<div id="#completed"></div>
 @markdown
 
 #### Completed Orders [4]
@@ -348,6 +460,7 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                             @if (!$completedorders->count())
                                 <p>You have no completed orders.</p>
                             @else
+
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
@@ -376,7 +489,6 @@ Total Orders Items: {{ $submittedorders->count() - $header->count() }}
                                 </div>
                             </div>
                         </table>
-<center>{!! $completedorders->render() !!}</center>
 @endif
 
 <br /><hr />                            

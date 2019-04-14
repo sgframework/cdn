@@ -1,4 +1,5 @@
-@extends('layouts.app')
+                                          
+                                          @extends('layouts.app')
 
 @section('content')    
 <div class="container">
@@ -34,7 +35,7 @@
                                                         <th>Order#</th>
                                                         <th>PO#</th>
                                                         <th>ID#</th>
-                                                        <th>Branch#</th>
+                                                        <th>Branch#Name</th>
                                                         <th>Status</th>
                                                         <th>Last Updated</th>
                                                     </tr>
@@ -49,7 +50,7 @@
                                                             <td>{{ $order->ordernumber }}</td>
                                                             <td>{{ $order->ponumber }}</td>
                                                             <td>{{ $order->staffid }}</td>
-                                                            <td>{{ $order->branchnumber }}</td>
+                                                            <td>{{ $order->branchname }}</td>
                                                             <td class="{{ strtolower($order->status) }}">{{ $order->status }}</td>
                                                             <td>{{ $order->updated_at->diffForHumans() }}</td>
                                                         </tr>	
@@ -66,11 +67,25 @@
                                         </form>-->
                                         <!--<center><button class="btn btn-default" onclick="myFunction()">ADD <i class="fas fa-plus"></i></button></center><br />-->
                                     <div class="table-responsive">
-                                    @if($errors->any())
-                            <h4>{{$errors->first()}}</h4>
-                            @endif
 
-                            <form class="form-inline" action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
+
+                                    @if (Session::has('alert'))
+                    <br />
+                    <div padding-top="20px"></div>
+                        <div class="alert alert-success">{{ Session::get('alert') }}</div>
+                    @endif
+                    @if (Session::has('warning'))
+                    <br />
+                    <div padding-top="20px"></div>
+                        <div class="alert alert-warning">{{ Session::get('warning') }}</div>
+                    @endif
+                    
+                    @if($errors->any())
+                    <br />
+                    <div padding-top="20px"></div>
+                        <div class="alert alert-danger">{{ $errors->first() }}</div>
+                    @endif
+                    <form class="form-inline" action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
                                                     @csrf
                                                 
                                                     <input  placeholder="Select Item" width="60%" name="itemnumber" class="form-control1" list="{{ $item->itemnumber }}-{{ $item->itemname }}" autofocus>
@@ -83,7 +98,7 @@
                                                 <input width="10%" class="form-control2" type="number" name="itemqty" placeholder="Qty." />
                                                 <input width="10%" class="form-control2" value="0" type="number" name="freeitem" placeholder="Free" />
 
-                                                <input id="price" width="20%" class="form-control2" type="number" name="itemprice" placeholder="Price" />
+                                                <input hidden id="price" width="20%" class="form-control2" type="number" name="itemprice" placeholder="Price" />
 
                                                 <input type="submit" value="Insert &darr;" style="color:red" class="form-control2" />
                                             </form>
@@ -98,7 +113,6 @@
                                             </script>
 
 
-
                                     @if (!$orderitems->count())
                                         <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
                                     @else
@@ -106,29 +120,35 @@
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
                                     <?php $totalprice = 0; ?>
+                                    <?php $totalqtyprice = 0; ?>
 
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                                 <table width="100%" class="table-responsive-sm" id="myTable">
-        
+
                                                     @foreach ($orderitems as $orderitem)
                                                     <?php $totalqty += $orderitem->itemqty; ?>
                                                     <?php $totalfree += $orderitem->itemfree; ?>
                                                     <?php $totalprice += $orderitem->itemprice; ?>
+                                                    <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
                                                         @include('dashboard/partials/orderitemsblock')
+
                                                     @endforeach	
                                                     <tfoot>
                                                             <tr>
                                                                     <td><b>Total</b></td>
-                                                                    <th>{{ $totalqty }}</th>
-                                                                    <th>{{ $totalfree }}</th>
-                                                                    <th>{{ $totalprice }}.00 SAR</th>
+                                                                    <th style="text-align:center">{{ $totalqty }}</th>
+                                                                    <th style="text-align:center">{{ $totalfree }}</th>
+                                                                    <th style="text-align:center">{{ $totalprice }}.00 SAR</th>
+                                                                    <th style="text-align:center">{{ $totalqtyprice }}.00 SAR</th>
 
                                                             </tr>
                                                         <tr>
                                                             <th>Item# - Desc.</th>
-                                                            <th>Qty</th>
-                                                            <th>Free</th>
-                                                            <th>Price</th>
+                                                            <th style="text-align:center">Qty</th>
+                                                            <th style="text-align:center">Free</th>
+                                                            <th style="text-align:center">Price</th>
+                                                            <th style="text-align:center">Qty * Price</th>
+                                                            <th style="text-align:center">rm</th>
 
                                                             <!--<th>Delete</th>-->
                                                         </tr>
@@ -137,6 +157,7 @@
                                                 </table>
                                                 @endif
                                               <br />
+
                                             <center><button style="float:right" class="form-inline btn btn-default"><a style="color:black" href="{{ route('orders.review', ['orderId' => $order->slug]) }}">Review your order &rarr;</a></button></center>
     	                                </div>
                                     </div>						
