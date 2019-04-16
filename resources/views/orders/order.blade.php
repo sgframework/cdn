@@ -58,8 +58,86 @@
                                     </div>					
                                 </div>  
                         @if ($order->status == 'Reviewing')
+                        @if (!$orderitems->count())
+                                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                                    @else
+                                    <?php $totalqty = 0; ?>
+                                    <?php $totalfree = 0; ?>
+                                    <?php $totalprice = 0; ?>
+                                    <?php $totalqtyprice = 0; ?>
+                                    <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
+                                    @if (Session::has('submitted'))
+                                        <div class="alert alert-danger">{{ Session::get('submitted') }}</div>
+                                    @endif
+                                    <table width="100%" class="table-responsive-sm" id="myTable">
+                                        @foreach ($orderitems as $orderitem)
+                                        <?php $totalqty += $orderitem->itemqty; ?>
+                                        <?php $totalfree += $orderitem->itemfree; ?>
+                                        <?php $totalprice += $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                            @include('dashboard/partials/orderitemsblock')
+                                        @endforeach	
+                                        <tfoot>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <th style="text-align:center">{{ $totalqty }}</th>
+                                                    <th style="text-align:center">{{ $totalfree }}</th>
+                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
+                                                </tr>
+                                            <tr>
+                                                <th>Item# - Desc.</th>
+                                                <th style="text-align:center">Qty</th>
+                                                <th style="text-align:center">Free</th>
+                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Qty * Price</th>
+                                                <!--<th>Delete</th>-->
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    @endif
+                                    <br /><hr />
                         <a href="{{ url('/orders/order/' . $order->slug . '/review') }}"><i class="{{ strtolower($order->status) }}"> Finish review your order and submit it</i></a>
                         @elseif ($order->status == 'Editing')
+                        @if (!$orderitems->count())
+                                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                                    @else
+                                    <?php $totalqty = 0; ?>
+                                    <?php $totalfree = 0; ?>
+                                    <?php $totalprice = 0; ?>
+                                    <?php $totalqtyprice = 0; ?>
+                                    <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
+                                    @if (Session::has('submitted'))
+                                        <div class="alert alert-danger">{{ Session::get('submitted') }}</div>
+                                    @endif
+                                    <table width="100%" class="table-responsive-sm" id="myTable">
+                                        @foreach ($orderitems as $orderitem)
+                                        <?php $totalqty += $orderitem->itemqty; ?>
+                                        <?php $totalfree += $orderitem->itemfree; ?>
+                                        <?php $totalprice += $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                            @include('dashboard/partials/orderitemsblock')
+                                        @endforeach	
+                                        <tfoot>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <th style="text-align:center">{{ $totalqty }}</th>
+                                                    <th style="text-align:center">{{ $totalfree }}</th>
+                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
+                                                </tr>
+                                            <tr>
+                                                <th>Item# - Desc.</th>
+                                                <th style="text-align:center">Qty</th>
+                                                <th style="text-align:center">Free</th>
+                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Qty * Price</th>
+                                                <!--<th>Delete</th>-->
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    @endif
+                                    <br /><hr />
                         <a href="{{ url('/orders/order/' . $order->slug . '/edit') }}"><i class="fas fa-edit"> Finish <span class="editing">editing</span> your order for <span class="reviewing">review</span> and <span class="submitted"> submittion.</span></i></a>
                         @elseif ($order->status == 'Submitted')
                                     @if (!$orderitems->count())
@@ -84,25 +162,71 @@
                                         <tfoot>
                                                 <tr>
                                                     <td><b>Total</b></td>
-                                                    <th>{{ $totalqty }}</th>
-                                                    <th>{{ $totalfree }}</th>
-                                                    <th>{{ $totalprice }}.00 SAR</th>
-                                                    <th>{{ $totalqtyprice }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ $totalqty }}</th>
+                                                    <th style="text-align:center">{{ $totalfree }}</th>
+                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
                                                 </tr>
                                             <tr>
                                                 <th>Item# - Desc.</th>
-                                                <th>Qty</th>
-                                                <th>Free</th>
-                                                <th>Price</th>
-                                                <th>Qty * Price</th>
+                                                <th style="text-align:center">Qty</th>
+                                                <th style="text-align:center">Free</th>
+                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Qty * Price</th>
                                                 <!--<th>Delete</th>-->
                                             </tr>
                                         </tfoot>
                                     </table>
                                     @endif
                                     <br /><hr />
+                                    <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="500" height="400" alt="pdf" />
+
+                                    <br /><hr />
                         <i class="fas fa-exclamation-triangle"></i> You Cannot <span class="editing">edit</span> or <span class="reviewing">review</span> <span class="submitted">submitted</span> or <span class="completed">completed</span> orders
                         @elseif ($order->status == 'Completed')
+                        
+                        @if (!$orderitems->count())
+                                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                                    @else
+                                    <?php $totalqty = 0; ?>
+                                    <?php $totalfree = 0; ?>
+                                    <?php $totalprice = 0; ?>
+                                    <?php $totalqtyprice = 0; ?>
+                                    <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
+                                    @if (Session::has('submitted'))
+                                        <div class="alert alert-danger">{{ Session::get('submitted') }}</div>
+                                    @endif
+                                    <table width="100%" class="table-responsive-sm" id="myTable">
+                                        @foreach ($orderitems as $orderitem)
+                                        <?php $totalqty += $orderitem->itemqty; ?>
+                                        <?php $totalfree += $orderitem->itemfree; ?>
+                                        <?php $totalprice += $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                            @include('dashboard/partials/orderitemsblock')
+                                        @endforeach	
+                                        <tfoot>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <th style="text-align:center">{{ $totalqty }}</th>
+                                                    <th style="text-align:center">{{ $totalfree }}</th>
+                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
+                                                </tr>
+                                            <tr>
+                                                <th>Item# - Desc.</th>
+                                                <th style="text-align:center">Qty</th>
+                                                <th style="text-align:center">Free</th>
+                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Qty * Price</th>
+                                                <!--<th>Delete</th>-->
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    @endif
+                                <br /><hr />
+                                <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="500" height="400" alt="pdf" />
+                                <br /><hr />
+
                         <i class="fas fa-exclamation-triangle"></i> You Cannot <span class="editing">edit</span> or <span class="reviewing">review</span> <span class="submitted">submitted</span> or <span class="completed">completed</span> orders
                         @else 
                             <a href="{{ url('/orders/order/' . $order->slug . '/edit') }}"><i class="fas fa-edit"> <span class="editing">Edit</span> your order.</i></a>

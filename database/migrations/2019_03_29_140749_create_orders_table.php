@@ -27,7 +27,7 @@ class CreateOrdersTable extends Migration
             $table->string('status')->default('JustCreated')->nullable();
             $table->integer('totalitems')->nullable();
             $table->integer('totalqty')->nullable();
-            $table->decimal('totalprice', 8, 2)->nullable(); 
+            $table->decimal('totalprice', 12, 2)->nullable(); 
             $table->string('attachedpo')->nullable();        
             $table->index('ordernumber');
             $table->timestamps();

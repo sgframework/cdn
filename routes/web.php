@@ -126,6 +126,18 @@ Route::get('/user/{id}', [
     'as' => 'dashboard.index'
 ]);
 
+Route::get('/user/{id}/orders/archive', [
+    'uses' => '\cdn\Http\Controllers\ProfileController@getArchive',
+    'as' => 'dashboard.archive'
+]);
+
+//{{ route('dashboard.orders') }}
+
+Route::get('/user/{id}/orders/', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@getOrdersbyUser',
+'as' => 'dashboard.orders',
+
+]);
 
 
 
@@ -199,12 +211,12 @@ Route::get('/signout', [
 
 //{{ route('dashboard.index') }}
 
-Route::get('/dashboard', [
+/*Route::get('/dashboard', [
     'uses' => '\cdn\Http\Controllers\ProfileController@getProfile',
 'as' => 'dashboard.index',
 ]);
 
-
+*/
 //{{ route('branches.index') }}
 
 Route::post('/branch/insert', [
@@ -285,13 +297,6 @@ Route::post('/order/insert/step2', [
 
 
 
-//{{ route('dashboard.orders') }}
-
-Route::get('/dashboard/orders', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@getOrdersbyUser',
-'as' => 'dashboard.orders',
-
-]);
 
 
 

@@ -9,8 +9,8 @@
 					<td style="text-align:center">{{ $reviewitem->itemnumber }}</td>
 					<td style="text-align:center">{{ $reviewitem->itemqty }}</td>
 					<td style="text-align:center">{{ $reviewitem->freeitem }}</td>
-					<td style="text-align:center">{{ $reviewitem->itemprice }}</td>
-					<td style="text-align:center">{{ $reviewitem->itemqty * $reviewitem->itemprice }}</td>
+					<td style="text-align:center">{{ number_format($reviewitem->itemprice) }}.00 SAR</td>
+					<td style="text-align:center">{{ number_format($reviewitem->itemqty * $reviewitem->itemprice) }}.00 SAR</td>
 				</tr>                                            
 			</tbody>
 		@endif

@@ -94,8 +94,8 @@
                 <div id="orders" class="w3-container w3-hide">
                     <div style="padding-top:15px; text-align:center">
                         <a href="{{ route('orders.add') }}"><i class="fas fa-plus"></i> <span>New Order</span></a>
-                        <a href="{{ route('orders.urgent') }}"><i class="fas fa-plus"></i> <span>New Urgent Order</span></a>
-                        <a href="{{ route('orders.index') }}"><i class="fas fa-list"></i> <span>All Orders</span></a>
+                        <!--<a href="{{ route('orders.urgent') }}"><i class="fas fa-plus"></i> <span>New Urgent Order</span></a>-->
+                        <a href="{{ route('root.orders.all') }}"><i class="fas fa-list"></i> <span>All Orders</span></a>
                         <a href="{{ route('orders.index') }}"><i class="fas fa-list"></i> <span>Edit Orders</span></a>
                         <a href="{{ route('orders.index') }}"><i class="fas fa-link"></i> <span>Important Links</span></a>
                     </div>

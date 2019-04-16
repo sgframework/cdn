@@ -89,8 +89,8 @@
                 <th></th>
                 <td style="text-align:center">{{ $totalqty }}</td>
                 <td style="text-align:center">{{ $totalfree }}</td>
-                <td style="text-align:center">{{ $totalprice }}.00 SAR</td>
-                <td style="text-align:center">{{ $totalqtyprice }}.00 SAR</td>
+                <td style="text-align:center">{{ number_format($totalprice) }}.00 SAR</td>
+                <td style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</td>
             </tr>
         </tfoot>
     </table>
@@ -105,6 +105,7 @@
     <input hidden name="totalqty" value="{{ $totalqty }}">
     <input hidden name="totalfree" value="{{ $totalfree }}">
     <input hidden name="totalprice" value="{{ $totalprice }}">
+    <input hidden name="totalqtyprice" value="{{ $totalqtyprice }}">
     <input hidden name="totalitems" value="{{ $orderitems->count() - 1 }}">
 <div style="padding-left:20px">
 <h2>Uplaod PO Attachment <span style="color:red">*</span></h2>

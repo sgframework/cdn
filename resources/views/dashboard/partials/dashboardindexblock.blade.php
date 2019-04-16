@@ -2,14 +2,17 @@
 	<a class="pull-left" href="">
 	</a>
 	<div class="media-body">
-		@if ($order->ordernumber)
+		@if ($yesterdaysorder->ordernumber)
 			<tbody style="font-size:12px">
 				<tr>
-					<td><a style= "float:left" href="/orders/order/{{ $order->slug }}">{{ $order->ponumber }}</a></td>
-					<td class="{{ strtolower($order->status) }}">{{ $order->status }}</td>
-					<td><pre>{{ $order->created_at->diffForHumans() }}</a></pre></td>
-					<td><pre>{{ $order->updated_at->diffForHumans() }}</a></pre></td>
-					<!--<td><pre><a style= "" href="/orders/order/{{ $order->slug }}">{{ $order->slug }}</a></pre></td>-->
+					<td><a style= "float:left" href="/orders/order/{{ $yesterdaysorder->slug }}">{{ $yesterdaysorder->ponumber }}</a></td>
+					<!--<td class="{{ strtolower($yesterdaysorder->status) }}">{{ $yesterdaysorder->status }}</td>-->
+					<td>{{ $yesterdaysorder->branchname }}</td>
+					<td>{{ $yesterdaysorder->totalitems }}</td>
+					<td>{{ $yesterdaysorder->totalqty }}</td>
+					<td>{{ $yesterdaysorder->totalprice }}</td>
+					<!--<td>{{ $yesterdaysorder->updated_at->diffForHumans() }}</td>-->
+					<!--<td><pre><a style= "" href="/orders/order/{{ $yesterdaysorder->slug }}">{{ $yesterdaysorder->slug }}</a></pre></td>-->
 				</tr>                                            
 			</tbody>
 		@endif

@@ -122,7 +122,7 @@
                             <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
                         </span>-->
                         <span class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard.index') }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                            <a class="nav-link" href="{{ route('dashboard.index', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
                         </span>  
                     </ul>
                     <!-- Right Side Of Navbar -->

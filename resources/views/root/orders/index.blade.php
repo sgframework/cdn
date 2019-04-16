@@ -133,7 +133,7 @@
                                 <td>{{ $belongbranch->branchname }}</td>
                                 <td>{{ $belongordernumber->totalitems }}</td>
                                 <td>{{ $belongordernumber->totalqty }}</td>
-                                <td>{{ $belongordernumber->totalprice }} SAR</td>
+                                <td>{{ number_format($belongordernumber->totalprice) }}.00 SAR</td>
                                 <td>{{ $belongcreateddate->created_at }}</td>
                                 <td>{{ $belongcreateddate->updated_at }}</td>
                             </tr>	
@@ -163,7 +163,7 @@
                                         <td style="text-align:center">{{ $completedprofile->itemnumber }}</td>
                                         <td style="text-align:center">{{ $completedprofile->itemqty }}</td>
                                         <td style="text-align:center">{{ $completedprofile->freeitem }}</td>
-                                        <td style="text-align:center">{{ $completedprofile->itemprice }} SAR</td>
+                                        <td style="text-align:center">{{ number_format($completedprofile->itemprice) }}.00 SAR</td>
                                         <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemprice }} SAR</td>-->
                                         <!--<td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->slug }}</a></td>-->
                                         <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->diffForHumans() }}</a></td>
@@ -180,7 +180,7 @@
                                                 <th></th>
                                                 <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
                                                 <th style="text-align:center">{{ $totalfree }}</th>
-                                                <th style="text-align:center">{{ $belongordernumber->totalprice }} SAR</th>
+                                                <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
                                                 <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
                                                 <th></th>
                                             </tr>
@@ -271,7 +271,7 @@
                                             <td>{{ $belongbranch->branchname }}</td>
                                             <td>{{ $belongordernumber->totalitems }}</td>
                                             <td>{{ $belongordernumber->totalqty }}</td>
-                                            <td>{{ $belongordernumber->totalprice }} SAR</td>
+                                            <td>{{ number_format($belongordernumber->totalprice) }}.00 SAR</td>
                                             <td>{{ $belongcreateddate->created_at }}</td>
                                             <td>{{ $belongcreateddate->updated_at }}</td>
                                         </tr>	
@@ -284,7 +284,8 @@
                                         <th>material code</th>
                                         <th>Qty.</th>
                                         <th>ZTTO</th>
-                                        <th>Price</th>
+                                        <th>Item Price</th>
+                                        <th>Total Price</th>
                                         <!--<th>Qty * Price</th>-->
                                         <th>Created</th>
                                     </tr>
@@ -300,7 +301,8 @@
                                         <td style="text-align:center">{{ $profile->itemnumber }}</td>
                                         <td style="text-align:center">{{ $profile->itemqty }}</td>
                                         <td style="text-align:center">{{ $profile->freeitem }}</td>
-                                        <td style="text-align:center">{{ $profile->itemprice }} SAR</td>
+                                        <td style="text-align:center">{{ number_format($profile->itemprice) }}.00 SAR</td>
+                                        <td style="text-align:center">{{ number_format($profile->itemqty * $profile->itemprice) }}.00 SAR</td>
                                         <!--<td style="text-align:center">{{ $profile->itemqty * $profile->itemprice }} SAR</td>-->
                                         <!--<td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->slug }}</a></td>-->
                                         <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->updated_at->diffForHumans() }}</a></td>
@@ -317,7 +319,8 @@
                                                 <th></th>
                                                 <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
                                                 <th style="text-align:center">{{ $totalfree }}</th>
-                                                <th style="text-align:center">{{ $belongordernumber->totalprice }} SAR</th>
+                                                <th style="text-align:center">{{ number_format($belongordernumber->itemprice) }}.00 SAR</th>
+                                                <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
                                                 <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
                                                 <th></th>
                                             </tr>
@@ -338,245 +341,6 @@
 <br />
 <br /><hr />                                     
 
-
-@markdown
-
-#### Just Created Orders [0]
-
-@endmarkdown
-                    @if (!$jcorders->count())
-                        <p>{{ $order->staffname }} didn't create any order recently.</p>
-                    @else
-                            <table class="table-responsive-sm processed" id="myTable">
-                                <thead style="font-size:12px">
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Status</th>
-                                        <th>Updated</th>
-                                    </tr>
-                                </thead>
-                                <div class="media">
-                                <a class="pull-left" href="">
-                                </a>
-                                <div class="media-body">
-                                        @foreach ($jcorders as $jcorder)
-                                        <tbody style="font-size:12px">
-                                        <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $jcorder->slug }}">{{ $jcorder->slug }}</a></td>
-                                        <td>{{ $jcorder->ponumber }}</td>
-                                        <td>{{ $jcorder->branchname }}</td>
-                                        <td class="{{ strtolower($jcorder->status) }}" id="status">{{ $jcorder->status }}</td>
-                                        <td>{{ $jcorder->updated_at->diffForHumans() }}</td>
-                                        </tr>	
-                                        </tbody>
-                                        @endforeach	
-                                </div>
-                            </div>
-                        </table>
-<center>{!! $jcorders->render() !!}</center>
-
-@endif
-
-
-
-<br /><hr />                                     
-
-
-@markdown
-
-#### Editing Orders [1]
-
-@endmarkdown
-
-                            @if (!$orders->count())
-                                <p>{{ $order->staffname }} didn't create any order recently.</p> 
-                            @else
-                            <table class="table-responsive-sm" id="myTable">
-                                <thead style="font-size:12px">
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Status</th>
-                                        <th>Updated</th>
-                                    </tr>
-                                </thead>
-                                <div class="media">
-                                <a class="pull-left" href="">
-                                </a>
-                                <div class="media-body">
-                                        @foreach ($orders as $order)
-                                        <tbody style="font-size:12px">
-
-                                        <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $order->slug }}">{{ $order->slug }}</a></td>
-                                        <td>{{ $order->ponumber }}</td>
-                                        <td>{{ $order->branchname }}</td>
-                                        <td class="{{ strtolower($order->status) }}">{{ $order->status }}</td>
-                                        <td>{{ $order->updated_at->diffForHumans() }}</td>
-                                        </tr>	
-                                        </tbody>
-
-                                        @endforeach	
-                                </div>
-                            </div>
-                        </table>
-                        <br /><hr />                                      
-
-                        <center>{!! $orders->render() !!}</center>
-
-                        @endif
-@markdown
-
-#### Reviewing Orders [2]
-
-@endmarkdown
-                    @if (!$reviewingorders->count())
-                        <p>{{ $order->staffname }} didn't review any order yet.</p>
-                    @else
-                            <table class="table-responsive-sm processed" id="myTable">
-                                <thead style="font-size:12px">
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Status</th>
-                                        <th>Updated</th>
-                                    </tr>
-                                </thead>
-                                <div class="media">
-                                <a class="pull-left" href="">
-                                </a>
-                                <div class="media-body">
-                                        @foreach ($reviewingorders as $reviewingorder)
-                                        <tbody style="font-size:12px">
-                                        <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $reviewingorder->slug }}">{{ $reviewingorder->slug }}</a></td>
-                                        <td>{{ $reviewingorder->ponumber }}</td>
-                                        <td>{{ $reviewingorder->branchname }}</td>
-                                        <td class="{{ strtolower($reviewingorder->status) }}">{{ $reviewingorder->status }}</td>
-                                        <td>{{ $reviewingorder->updated_at->diffForHumans() }}</td>
-                                        </tr>	
-                                        </tbody>
-                                        @endforeach	
-                                </div>
-                            </div>
-                        </table>
-<center>{!! $reviewingorders->render() !!}</center>
-@endif
-
-<br /><hr />    
-@markdown
-
-#### Other Submitted Orders [3]
-
-@endmarkdown
-
-                    @if (!$processedorders->count())
-                    <span id="submitted"></span>
-                    @if (Session::has('alert'))
-                    <div class="alert alert-success">{{ Session::get('alert') }}</div>
-                    @endif
-                        <p>You have no submited orders yet!</p>
-                    @else
-                    <span id="submitted"></span>
-                    @if (Session::has('alert'))
-                    <div class="alert alert-success">{{ Session::get('alert') }}</div>
-                    @endif
-                            <table class="table-responsive-sm processed" id="myTable">
-                                <thead style="font-size:12px">
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Status</th>
-                                        <th>Updated</th>
-                                    </tr>
-                                </thead>
-                                <div class="media">
-                                <a class="pull-left" href="">
-                                </a>
-                                <div class="media-body">
-                                        @foreach ($processedorders as $processedorder)
-                                        <tbody style="font-size:12px">
-                                        <tr>
-                                        <td><a style= "float:center" href="/root/orders/{{ $processedorder->staffid }}/{{ $processedorder->slug }}">{{ $processedorder->slug }}</td>
-                                        <td>{{ $processedorder->ponumber }}</td>
-                                        <td>{{ $processedorder->branchname }}</td>
-                                        <td class="{{ strtolower($processedorder->status) }}">{{ $processedorder->status }}</td>
-                                        <td>{{ $processedorder->updated_at->diffForHumans() }}</td>
-                                        </tr>	
-                                        </tbody>
-                                        @endforeach	
-                                </div>
-                            </div>
-                        </table>
-<center>{!! $processedorders->render() !!}</center>
-@endif
-
-<br /><hr />                                     
-
-
-@markdown
-
-#### Completed Orders [4]
-
-@endmarkdown
-
-
-                            @if (!$completedorders->count())
-                                <p>{{ $order->staffname }} have no completed orders.</p>
-                            @else
-                            <table class="table-responsive-sm processed" id="myTable">
-                                <thead style="font-size:12px">
-                                    <tr>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Status</th>
-                                        <th>Updated</th>
-                                    </tr>
-                                </thead>
-                                <div class="media">
-                                <a class="pull-left" href="">
-                                </a>
-                                <div class="media-body">
-                                        @foreach ($completedorders as $completedorder)
-                                        <tbody style="font-size:12px">
-                                        <tr>
-                                        <td><a style= "float:center" href="/orders/order/{{ $completedorder->slug }}">{{ $completedorder->slug }}</a></td>
-                                        <td>{{ $completedorder->ponumber }}</td>
-                                        <td>{{ $completedorder->branchname }}</td>
-                                        <td class="{{ strtolower($completedorder->status) }}">{{ $completedorder->status }}</td>
-                                        <td>{{ $completedorder->updated_at->diffForHumans() }}</td>
-                                        </tr>	
-                                        </tbody>
-                                        @endforeach	
-                                </div>
-                            </div>
-                        </table>
-<center>{!! $completedorders->render() !!}</center>
-@endif
-
-<br /><hr />                            
-
-
-@markdown
-
-```
-
-    Order Status Codes:
-        [0] -> 'Just Created',
-        [1] -> 'Editing',
-        [2] -> 'Reviewing',
-        [3] -> 'Processing' ==> 'You_Are_Here',
-        [4] -> 'Completed'
-
-
-```
-@endmarkdown
 
 @endif
 
