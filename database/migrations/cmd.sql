@@ -80,27 +80,52 @@ INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values (
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303961", "Othaim Markets Co. 328", "4639", "24", "CENR");
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303816", "Lulu Saudi Hypermarkets LLC. Jamiye", "1621", "24", "CENQ");
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302990", "PANDA #10014", "2409", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303603", "Othaim Markets Co. 194", "4401", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302918", "AlSADHAN Trading Co. 80 Sahafa", "1869", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302952", "PANDA #116", "2409", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303159", "PANDA #140", "2409", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303693", "PANDA #314", "2508", "24", "CENQ");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303035", "PANDA #132", "2745", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302984", "PANDA #128", "4401", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303277", "PANDA #139", "1171", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302960", "PANDA #127", "1171", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303083", "PANDA #155", "4688", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303871", "Othaim Markets Co. 317", "4401", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302912", "PANDA #10012", "2745", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303397", "PANDA #137", "2745", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303143", "PANDA #135", "2409", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303222", "PANDA #10003", "4688", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302938", "PANDA #104", "4688", "24", "CENR");
 
 
 
+
+302938	PANDA #104	4688	24	CENR
+
+303222	PANDA #10003	4688	24	CENR
+
+303143	PANDA #135	2409	24	CENR
+303397	PANDA #137	2745	24	CENR
+302912	PANDA #10012	2745	24	CENR
+303871	Othaim Markets Co. 317	4401	24	CENR
+303083	PANDA #155	4688	24	CENR
+302960	PANDA #127	1171	24	CENR
+303277	PANDA #139	1171	24	CENR
+302984	PANDA #128	4401	24	CENR
+303035	PANDA #132	2745	24	CENR
+303693	PANDA #314	2508	24	CENQ
+303159	PANDA #140	2409	24	CENR
+302952	PANDA #116	2409	24	CENR
+302918	AlSADHAN Trading Co. 80 Sahafa	1869	24	CENR
+303603	Othaim Markets Co. 194	4401	24	CENR
 302990	PANDA #10014	2409	24	CENR
-
 303816	Lulu Saudi Hypermarkets LLC. Jamiye	1621	24	CENQ
-
-
 303961	Othaim Markets Co. 328	4639	24	CENR
-
 302964	PANDA #129	5275	24	CENR
-
 303918	Danube Co. Limited - 148 Green Oasi	5275	24	CENR
-
-
 303777	Danube Co. Limited - 144 Yarmuk	5275	24	CENR
-
 303936	Danube Co. Limited - 155 Ghadeer	5275	24	CENR
-
 303862	Danube Co. Limited - 150 Waha	5275	24	CENR
-
 303063	PANDA #136	2409	24	CENR
 303655  PANDA #10029	1275	24	CENR
 303026	PANDA #131	2745	24	CENR
@@ -127,17 +152,79 @@ INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values (
 
 
 
+/** DELETE RECORDS **/
+
 DELETE FROM orders WHERE id=1;
+DELETE FROM orders WHERE id=147;
 
 
 DELETE FROM orders WHERE ponumber=40896073;
 DELETE FROM orderitems WHERE ponumber=987888;
 DELETE FROM orders WHERE ponumber=11596335;
+DELETE FROM branches WHERE branchnumber=303603;
+
+303603
 DELETE FROM orderitems WHERE ponumber=11596335;
 DELETE FROM orders WHERE ponumber="4433232 f";
 DELETE FROM orderitems WHERE ponumber="4433232 f";
 DELETE FROM orders WHERE ponumber=242333;
 DELETE FROM orderitems WHERE ponumber=242333;
+DELETE FROM orders WHERE ponumber='[{"ponumber":"test0"}]';
+
+DELETE FROM orderitems WHERE ponumber="40861618 1";
+DELETE FROM orders WHERE ponumber="40861618 1";
+
+
+DELETE FROM orderitems WHERE ponumber="40861527 1";
+DELETE FROM orders WHERE ponumber="40861527 1";
+
+DELETE FROM orderitems WHERE ponumber="40861484 1";
+DELETE FROM orders WHERE ponumber="40861484 1";
+
+
+DELETE FROM orderitems WHERE ponumber="40856878 1";
+DELETE FROM orders WHERE ponumber="40856878 1";
+
+
+DELETE FROM orderitems WHERE ponumber="40856737 1";
+DELETE FROM orders WHERE ponumber="40856737 1";
+
+DELETE FROM orderitems WHERE ponumber="40861916 1";
+DELETE FROM orders WHERE ponumber="40861916 1";
+
+
+DELETE FROM items WHERE itemnumber ="56060006";
+DELETE FROM items WHERE itemnumber ="56060106";
+DELETE FROM items WHERE itemnumber ="56060506";
+
+56060006
+56060106
+56060506
+
+
+
+"40861527 1"
+"40861484 1"
+"40856878 1"
+"40856737 1"
+"40861916 1"
+
+DELETE FROM orderitems WHERE ponumber='[{"ponumber":"test0"}]';
+
+
+DELETE FROM orders WHERE ponumber="test0";
+DELETE FROM orderitems WHERE ponumber="test0";
+
+SELECT * FROM orders where ponumber=11631534;
+SELECT * FROM orderitems where ponumber=11631534;
+DELETE FROM orders WHERE id="195";
+DELETE FROM orderitems WHERE id="1273";
+
+
+
+
+11631534
+
 11596335
 4433232 f
 987888
@@ -153,8 +240,8 @@ DELETE FROM orders WHERE ponumber="454444 f";
 DELETE FROM orderitems WHERE ponumber="454444 f";
 454444 f
 
-DELETE FROM orders WHERE ponumber="test3";
-DELETE FROM orderitems WHERE ponumber="test3";
+DELETE FROM orders WHERE ponumber="test0000";
+DELETE FROM orderitems WHERE ponumber="test0000";
 23232323
 
 
@@ -173,29 +260,118 @@ INSERT INTO items (itemnumber, itemname, itemprice) Values
 
 
 
+/** Update Records **/
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="445725";
+
+Select * from users;
+
+UPDATE users
+SET is_permission = "2"
+WHERE id="4";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="445725";
+
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="80597";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="80597";
+
+
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="314616";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="314616";
+
+
+
+
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="62202";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="62202";
+
+
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="78354";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="78354";
+
+
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="445726";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="445726";
 
 
 
 
 
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="314617";
 
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="314617";
+
+
+
+UPDATE orders
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="40847527";
+
+UPDATE orderitems
+SET staffid = "1275", staffname = "Michael Lanes"
+WHERE ponumber="40847527";
+
+
+SELECT * FROM orders where ponumber="40788687";
+
+
+Select * FROM orderitems WHERE ponumber="445725";
 
 /* sgdb0 Commands */
 
 SELECT * FROM migrations;
 DELETE FROM migrations WHERE id=49;
-DELETE FROM migrations WHERE id=76;
-DELETE FROM migrations WHERE id=77;
+        DELETE FROM migrations WHERE id=82;
+        DELETE FROM migrations WHERE id=83;
+        drop table orders;
+        drop table orderitems;
+
+SELECT * FROM orders WHERE ponumber=11608607;
+SELECT * FROM orders WHERE ponumber="test0";
+SELECT * FROM orderitems WHERE ponumber="test0";
+
 
 
 SELECT * FROM orders WHERE ponumber=11608607;
-SELECT * FROM orders WHERE ponumber=test0;
-SELECT * FROM orderitems WHERE ponumber=test0;
-
+DELETE FROM orders WHERE ponumber="test0";
+DELETE FROM orderitems WHERE ponumber="test0";
 
 11608607
-drop table orders;
-drop table orderitems;
+
+SELECT * from orders where ponumber="40845520 f";
+
 /*drop table items;*/
 
 

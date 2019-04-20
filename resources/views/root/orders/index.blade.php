@@ -74,8 +74,12 @@
 </header>-->
 <div class="container">
     <div class="row justify-content-center">
+    @if ( Auth::user()->is_permission == '0')
+    <div style="padding-top:200px;padding-bottom:200px">
+    <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+        </div>
 
-    @if (Route::has('login'))
+        @else
                     @auth
     <!--<div class="col-md-12">
     <span style="float:left"><a class="btn btn-primary" href="{{ route('items.add') }}">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="{{ route('items.index') }}">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
@@ -101,8 +105,10 @@
             <a href="{{ url('/root/users/orders/all') }}">&larr; Back to all orders</a>
 
             @if ( $order->status == "Completed")
-            <div style="font-size:22px;padding-top:50px; padding-bottom:50px; padding-left:280px"  class="alert alert-danger"><i class="fas fa-times"></i> <span style="color:green;background-color:black">'completed',</span> 'This order is completed, CONNOT be modefied. {{ Session::get('completed') }}
-            </div>
+                <div style="padding-top:20p"></div>
+                <div class="badge badge-dark"><i class="fas fa-times"></i> <span style="color:green;background-color:black"> Completed!</span> This order is completed, CONNOT be modefied. {{ Session::get('completed') }}
+                </div>
+            <br />
 <table class="table-responsive-sm processed" id="myTable">
                     
 
@@ -134,8 +140,8 @@
                                 <td>{{ $belongordernumber->totalitems }}</td>
                                 <td>{{ $belongordernumber->totalqty }}</td>
                                 <td>{{ number_format($belongordernumber->totalprice) }}.00 SAR</td>
-                                <td>{{ $belongcreateddate->created_at }}</td>
-                                <td>{{ $belongcreateddate->updated_at }}</td>
+                                <td>{{ $belongcreateddate->created_at->format('d/m/y g:ia') }}</td>
+                                <td>{{ $belongcreateddate->updated_at->format('d/m/y g:ia') }}</td>
                             </tr>	
                             </tbody>
 </table>
@@ -145,11 +151,11 @@
                                     <tr>
                                         <th>Mat. Description</th>
                                         <th>material code</th>
-                                        <th>Qty.</th>
-                                        <th>ZTTO</th>
-                                        <th>Price</th>
+                                        <th style="text-align:center">Qty.</th>
+                                        <th style="text-align:center">ZTTO</th>
+                                        <th style="text-align:center">Price</th>
                                         <!--<th>Qty * Price</th>-->
-                                        <th>Created</th>
+                                        <th>Completed</th>
                                     </tr>
                                 </thead>
                                 <?php $totalqty = 0; ?>
@@ -166,7 +172,7 @@
                                         <td style="text-align:center">{{ number_format($completedprofile->itemprice) }}.00 SAR</td>
                                         <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemprice }} SAR</td>-->
                                         <!--<td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->slug }}</a></td>-->
-                                        <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->diffForHumans() }}</a></td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->format('d/m/y g:ia') }}</a></td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	
@@ -231,7 +237,7 @@
                     
                     <form action="{{ route('orders.complete', ['staffid' => $order->staffid, 'orderId' => $order->slug]) }}" method="POST">
                                 @csrf
-                            <input width="20px" value="Complete Order" type="submit" class="btn btn-primary" />
+                            <input style="color:white" width="20px" value="Complete Order" type="submit" class="btn btn-primary" />
                         </form>
 <br />
 
@@ -272,8 +278,8 @@
                                             <td>{{ $belongordernumber->totalitems }}</td>
                                             <td>{{ $belongordernumber->totalqty }}</td>
                                             <td>{{ number_format($belongordernumber->totalprice) }}.00 SAR</td>
-                                            <td>{{ $belongcreateddate->created_at }}</td>
-                                            <td>{{ $belongcreateddate->updated_at }}</td>
+                                            <td>{{ $belongcreateddate->created_at->format('d/m/y g:ia') }}</td>
+                                            <td>{{ $belongcreateddate->updated_at->format('d/m/y g:ia') }}</td>
                                         </tr>	
                                         </tbody>
         </table>
@@ -287,7 +293,7 @@
                                         <th>Item Price</th>
                                         <th>Total Price</th>
                                         <!--<th>Qty * Price</th>-->
-                                        <th>Created</th>
+                                        <th>Submitted@</th>
                                     </tr>
                                 </thead>
                                 <?php $totalqty = 0; ?>
@@ -305,7 +311,7 @@
                                         <td style="text-align:center">{{ number_format($profile->itemqty * $profile->itemprice) }}.00 SAR</td>
                                         <!--<td style="text-align:center">{{ $profile->itemqty * $profile->itemprice }} SAR</td>-->
                                         <!--<td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->slug }}</a></td>-->
-                                        <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->updated_at->diffForHumans() }}</a></td>
+                                        <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->updated_at->format('d/m/y g:ia') }}</a></td>
                                         </tr>	
                                         </tbody>
                                         @endforeach	

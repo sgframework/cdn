@@ -9,12 +9,25 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
-    <!--<script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>-->
+    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
+
+
+    <!--JUST ENABLED-->
+    
+    
+    <!--JUST ENABLED-->
+
+
+    <!--JUST DISABLED-->
+        <!--
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        -->
+    <!--JUST DISABLED-->
 
 
 
@@ -65,6 +78,8 @@
     <!-- Add to Homescreen -->
 </head>
 <body>
+
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">

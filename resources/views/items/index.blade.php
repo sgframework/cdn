@@ -12,7 +12,7 @@
             <div class="input-group">
                 <form class="form-inline input" role="search" action="{{ route('search.items') }}">
                     <input class="form-control" width="80%" name="query" type="text" placeholder="Search Products" />
-                    <input type="submit" class="form-control btn btn-primary input-group-addon" />
+                    <input  style="background-color:black" type="submit" class="form-control btn btn-primary input-group-addon" />
                 </form>
                 </div>
             </div>

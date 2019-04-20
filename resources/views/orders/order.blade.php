@@ -223,10 +223,23 @@
                                         </tfoot>
                                     </table>
                                     @endif
-                                <br /><hr />
-                                <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="500" height="400" alt="pdf" />
-                                <br /><hr />
 
+                                @php
+
+
+                                $checkembed = asset("attachments/pos/$order->slug-$order->attachedpo.pdf" );
+
+
+                                @endphp
+
+                                @if ($checkembed == 404)
+                                no attachment
+                                @else
+                                <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="500" height="400" alt="pdf" />
+
+
+                                <br /><hr />
+                                @endif
                         <i class="fas fa-exclamation-triangle"></i> You Cannot <span class="editing">edit</span> or <span class="reviewing">review</span> <span class="submitted">submitted</span> or <span class="completed">completed</span> orders
                         @else 
                             <a href="{{ url('/orders/order/' . $order->slug . '/edit') }}"><i class="fas fa-edit"> <span class="editing">Edit</span> your order.</i></a>

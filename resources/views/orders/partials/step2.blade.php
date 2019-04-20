@@ -107,8 +107,8 @@ Order# {{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }} =
                 @if (Session::has('message'))
                     <span style="color:green">{!! session('message') !!}</span>
                 @endif
-                
-                    <a style= "float:right" href="/orders/order/{{ (Session::has('slug') ? Session::get('slug') : '' ) }}">Go to your order page &rarr;</a>           
+                    <form action="/orders/order/{{ (Session::has('slug') ? Session::get('slug') : '' ) }}/edit" method="GET">
+                    <input class="btn btn-primary" style="float:right" value="Proceed to insert items &rarr;" type="submit" />           
                     @else
 
 

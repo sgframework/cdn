@@ -11,6 +11,7 @@ use cdn\Models\Item;
 use cdn\Models\Root;
 use DB;
 use Auth;
+use Mail;
 use cdn\User;
 
 use Illuminate\Http\Request;
@@ -33,16 +34,35 @@ class RootController extends Controller
      */
     public function getIndex()
     {
-        return view('root.index');
+        $thisdayorders = Order::where('status', '=', 'Submitted')->orderBy('updated_at', 'asc')->get();
+        $userorders = Order::where('status', '=', 'Submitted')->orderBy('updated_at', 'asc')->groupBy('staffid')->get();
+        $todayssubmittedorders = $thisdayorders->where('status', '=', 'Submitted');
+        return view('root.index')->with('todayssubmittedorders', $todayssubmittedorders )->with('userorders', $userorders);
     }
     public function getTest()
     {
+
+
+
+
+
         Session::flash('message','Empty input not accepted');
         $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'asc')->paginate(10);
         $branches = Branch::select('branchname', 'branchnumber')->paginate(10);
         $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'asc')->paginate(10);        
         return view('tests.index')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
     }
+
+
+
+
+    public function getCsv()
+    {
+
+    }
+
+
+    
     public function getReview()
     {    
         $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'asc')->paginate(10);
@@ -102,13 +122,13 @@ class RootController extends Controller
         $items = Item::all();
         $branches = Branch::all();
         //$orders = Order::all()->where('ordernumber', '=', $ordernumber)->first();
-        $jcorders = Order::select()->where('status', '=', 'JustCreated')->orderBy('updated_at', 'asc')->paginate(20);
-        $editingorders = Order::select()->where('status', '=', 'Editing')->orderBy('updated_at', 'asc')->paginate(20);
-        $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->orderBy('updated_at', 'asc')->paginate(20);
-        $completedorders = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->paginate(20);
-        $reviewingorders = Order::select()->where('status', '=', 'Reviewing')->orderBy('updated_at', 'asc')->paginate(20);
+        $jcorders = Order::select()->where('status', '=', 'JustCreated')->orderBy('updated_at', 'asc')->get();
+        $editingorders = Order::select()->where('status', '=', 'Editing')->orderBy('updated_at', 'asc')->get();
+        $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->orderBy('updated_at', 'asc')->get();
+        $completedorders = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+        $reviewingorders = Order::select()->where('status', '=', 'Reviewing')->orderBy('updated_at', 'asc')->get();
         $orderitems = OrderItems::all();
-        $processedorders = Order::where('status', '=', 'Submitted')->orderBy('updated_at', 'asc')->paginate(7);
+        $processedorders = Order::where('status', '=', 'Submitted')->orderBy('updated_at', 'asc')->get();
         $ordernumber = Order::where('status', '=', 'Submitted')->get();
         $stafforders = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('ponumber')->groupBy('staffid')->get();
         $submittedorders = Order::select()->where('status', '=', 'Submitted')->whereNotNull('ponumber')->orderBy('updated_at', 'desc')->groupBy('slug')->get();
@@ -147,8 +167,8 @@ class RootController extends Controller
         $sumthismonthorders = $thismonthorders->sum('totalprice');
 		/* All Orders*/
 		$date1 = \Carbon\Carbon::today()->subDays();
-		$allorders = Order::where('created_at', '>=', $date1)->get();
-		$sumallorders = $allorders->sum('totalprice');
+		//$allorders = Order::where('created_at', '>=', $today)->get();
+		//$sumallorders = $allorders->sum('totalprice');
         //$completedorders =  OrderItems::select()->where('orderstatus', '=', 'Completed')->whereNotNull('itemprice')->groupBy('staffid')->get();
         $itemprice = $items;
         $root = Root::select()->get();
@@ -166,6 +186,7 @@ class RootController extends Controller
 
         $sumsubmittedorders = $submittedorders->sum('totalprice');
         $sumcompletedorders = $completedorders->sum('totalprice');
+        $sumallorders = $sumcompletedorders + $sumsubmittedorders;
 
         dump([ 
             'Total Submitted Orders' => $submittedorders->count(),
@@ -253,7 +274,8 @@ class RootController extends Controller
         $ordernumber = Order::where('status', '=', 'Submitted')->get();
         $stafforders = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('ponumber')->groupBy('staffid')->get();
         $submittedorders = Order::select()->where('status', '=', 'Submitted')->whereNotNull('ponumber')->groupBy('slug')->get();
-        $orders = OrderItems::select()->where('staffid', '=', $submittedorders)->orderBy('updated_at', 'asc')->paginate(7);
+        //dump($submittedorders);
+        $orders = OrderItems::select()->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->paginate(7);
         $stafforderitems = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('itemprice')->groupBy('staffid')->get();
         $itemprice = $items;
         //dump($currentuser);
@@ -298,7 +320,7 @@ class RootController extends Controller
     {
         $order = Order::where('staffid', '=', $idnumber)->first();
         $id = User::where('idnumber', '=', $idnumber)->first();
-        dump($id);      
+        //dump($id);      
         $currentuser = \Auth::user();
         $orderitems = Order::where('staffid', '=', $currentuser->idnumber)->first();
         // ** MAIN DUMP ** //
@@ -322,12 +344,12 @@ class RootController extends Controller
         $stafforderitems = OrderItems::select()->where('orderstatus', '=', 'Submitted')->whereNotNull('itemprice')->groupBy('staffid')->get();
         $itemprice = $items;
         $root = Root::select()->get();
-        dump($root);
+        //dump($root);
         //dump($currentuser);
         $profiles = OrderItems::where('orderstatus', '=', 'Submitted')->where('staffid', '=', $idnumber)->whereNotNull('itemnumber')->get();
         $header = Order::where('status', '=', 'Submitted')->get();
         //dump($slug);
-        dump($idnumber);
+        //dump($idnumber);
         //dump($stafforderitems);
         //dump($header);
         //dump($profiles);
@@ -351,12 +373,50 @@ class RootController extends Controller
             ->with('stafforderitems', $stafforderitems)
             ->with('branches', $branches);
     }
-    public function completeOrder($idnumber, $slug)
+    public function completeOrder(Request $request, $idnumber, $slug)
     {   
         Order::where('slug', $slug)->update(['updated_at' => now(), 'status' => 'Completed']);
         OrderItems::where('slug', $slug)->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+        
+        $order = Order::where('slug', '=', $slug)->where('staffid', '=', $idnumber)->get();
+        $reviewitems = OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
+        /*Mail::send(url('/export-orders-csv' . '/'. Auth::user()->idnumber . '/completed'), function($message) {
+                $message
+                ->to('root@ipool.remotewebaccess.com')
+                ->subject('Your order is completed');
+            });*/
+
+
+        /*Mail::send('orders.review',
+        array(
+            'ponumber' => $order->ponumber,
+            'Customer' => $order->branchname,
+            'Tot. Price' => $order->totalprice,
+            'Completed@' => $order->updated_at
+        ), function($message)
+    {
+        $message->from('root@ies.com');
+        $message->to('root@ies.com')->subject('Order Completed');
+    });*/
         return redirect()->route('root.orders.all', 'Order_Have_Been_Marked_As#completed')->with('success', 'Success! Order has beem marked as completed');
     }
+
+    public function getTree()
+    {
+        $users = User::all();
+        $links = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+        return view('root.tree')->with('links', $links)->with('users', $users);
+    }    
+
+
+    public function getReadMe()
+    {
+        $users = User::all();
+        $links = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+
+        return view('root.readme')->with('links', $links)->with('users', $users);
+    }
+
     public function getMd()
     {
         $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'asc')->paginate(10);
@@ -366,6 +426,6 @@ class RootController extends Controller
     }
     public function getMail()
     {
-        return $this->view('tests.mail');
+        return view('tests.mail');
     }    
 }

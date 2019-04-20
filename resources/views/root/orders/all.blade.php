@@ -72,7 +72,14 @@
 <div class="container">
     <div class="row justify-content-center">
 
-    @if (Route::has('login'))
+    @if ( Auth::user()->is_permission == '0')
+    <div style="padding-top:200px;padding-bottom:200px">
+    <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+        </div>
+
+        @else
+
+
                     @auth
     <!--<div class="col-md-12">
     <span style="float:left"><a class="btn btn-primary" href="{{ route('items.add') }}">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="{{ route('items.index') }}">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
@@ -97,18 +104,29 @@
             // endShow -->
 
 
-            @if (!$submittedorders->count())
-                        <p>There are no submitted orders yet!</p>
-                    @else
+<?php
+$page = 'http://ipool.remotewebaccess.com/root/users/orders/all';
+$sec = "120";
+//dump($page);
+?>
+        <head>
+            <meta http-equiv="refresh" content="<?php echo $sec?>;URL='<?php echo $page?>'">
+        </head>
                     @if (Session::has('success'))
                             <div class="alert alert-success">{{ Session::get('success') }}</div>
                             <br />
                     @endif
+
 @markdown
 
 #### All Submitted Orders
 
 @endmarkdown
+            @if (!$submittedorders->count())
+                        <p>There are no submitted orders yet!</p>
+            @else
+
+
             <?php $totalqty = 0; ?>
             <?php $totalitems = 0; ?>
             <?php $totalprice = 0; ?>
@@ -138,7 +156,7 @@
                                         <td style="text-align:center">{{ $submittedorder->totalitems }}</td>
                                         <td style="text-align:center">{{ $submittedorder->totalqty }}</td>
                                         <td style="text-align:center">{{ number_format($submittedorder->totalprice) }}.00 SAR</td>
-                                        <td style="text-align:center"><pre class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->diffForHumans() }}</pre></td>
+                                        <td style="text-align:center"><span class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->format('d/m/y g:iA') }}</span></td>
                                         </tr>	
                                         </tbody>
                                     <?php $totalqty += $submittedorder->totalqty; ?>
@@ -209,7 +227,7 @@ Total Submitted Orders: {{ $header->count() }}
                                         <td style="text-align:center">{{ $completedorder->totalitems }}</td>
                                         <td style="text-align:center">{{ $completedorder->totalqty }}</td>
                                         <td style="text-align:center">{{ number_format($completedorder->totalprice) }}.00 SAR</td>
-                                        <td style="text-align:center"><pre class="{{ strtolower($completedorder->status) }}" id="status">{{ $completedorder->updated_at }}</pre></td>
+                                        <td style="text-align:center"><span class="{{ strtolower($completedorder->status) }}">{{ $completedorder->updated_at->format('d/m/y g:iA') }}</span></td>
                                         </tr>	
                                         </tbody>
                                     <?php $totalqty += $completedorder->totalqty; ?>
@@ -236,14 +254,16 @@ Total Submitted Orders: {{ $header->count() }}
 Total Completed Orders: <strong>{{ $completedorders->count() }}</strong>
 
 @endmarkdown
-                <br /><hr />         <br /><br />
+       <br /><br />
                 
                 <!--<h2>Users Timline</h2>-->
 
 
 @endif
 
+
                     @else
+
             <!-- If user loggedOut show below content until endShow part -->          
             <div class="container">
     <div class="row justify-content-center">
@@ -302,6 +322,7 @@ Total Completed Orders: <strong>{{ $completedorders->count() }}</strong>
                         <!--@if (Route::has('register'))
                             <a style="float:right" href="{{ route('register') }}">Register</a>
                         @endif-->
+                        
                     @endauth
                 </div>
             @endif

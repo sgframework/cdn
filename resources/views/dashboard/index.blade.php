@@ -4,9 +4,17 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card">
+                
+
                 <div class="card-header"><i class="fas fa-tachometer-alt"></i> <strong><span style="font-size:18px">Dashboard</span></strong></div>
+                <div style="float:right;padding-left:20px" class="input-group">
+                <form class="form-inline input" role="search" action="{{ route('search.pos') }}">
+                    <input class="form-control" width="80%" name="query" type="text" placeholder="Search Orders" />
+                    <input style="background-color:black" value="Search" type="submit" class="form-control btn btn-primary" />
+                </form>
+            </div>
                     <div class="card-body">
                         <center>
                         <span class="nav-item"><a style="display: inline-block;" class="inline nav-link" href="{{ route('dashboard.orders', ['idnumber' => Auth::user()->idnumber ]) }}"><i class="fas fa-asterisk"></i> My Orders</a><a style="display: inline-block;" class="inline nav-link" href="{{ route('dashboard.archive', ['id' => $id->idnumber]) }}"><i class="fas fa-archive"></i> Orders Archive</a><a style="display: inline-block;" class="inline nav-link" href=""><i class="fas fa-search"></i> Search Database</a></span>
@@ -17,6 +25,9 @@
                                         <div style="padding-top:14px;padding-bottom:8px">
                                             <img style="border-radius:50%" width="125px" height="125px" src="{{ asset('images/uploads/avatars') }}/{{ Auth::user()->photo }}" />                    
                                         </div>
+
+
+
 @markdown
 
 ### {{ Auth::user()->name }}
@@ -43,6 +54,9 @@ Email: {{ Auth::user()->email }}
                                                 <span style="padding-left:34px" class="reviewing"> - Reviewing Orders {{ $reviewingorderscount->count() }}</span>
                                                 <span style="padding-left:34px" class="submitted"> - Submitted Orders {{ $submittedorderscount->count() }}</span>
                                                 <span style="padding-left:34px" class="completed"> - Completed Orders {{ $completedorderscount->count() }}</span>
+                                                <br />
+                                            <form action="{{ url('/export-orders-csv/' . Auth::user()->idnumber . '/completed') }}" method="GET">
+                                                <button class="btn btn-sm btn-outline-secondary">Export Today's Report</button>
                                             </div>
                                         <div style="padding-left:8px;padding-top:8px" class="col-sm-8">
 
@@ -59,7 +73,7 @@ Email: {{ Auth::user()->email }}
                                                 </tr>
                                             </thead>
                                             @foreach ($todaysjustcreatedorders as $todaysjustcreatedorder)
-
+                                                @include('dashboard/partials/todaysjustcreatedordersblock')
                                             @endforeach
                                             @foreach ($todayseditingorders as $todayseditingorder)
                                                 @include('dashboard/partials/todayseditingordersblock')
@@ -83,18 +97,16 @@ Email: {{ Auth::user()->email }}
                                                         <tr>
                                                             <th>PO#</th>
                                                             <th>Branch#</th>
-                                                            <th>Items Count</th>
-                                                            <th>Qtys.</th>
-                                                            <th>Tot. Price</th>
-                                                            <th>Status</th>
+                                                            <th style="text-align:center">Items Count</th>
+                                                            <th style="text-align:center">Qtys.</th>
+                                                            <th style="text-align:center">Tot. Price</th>
+                                                            <th style="text-align:center">Submitted/Completed@</th>
                                                         </tr>
                                                     </thead>
                                                 @foreach ($todayssubmittedorders as $todayssubmittedorder)
-
                                                     @include('dashboard/partials/todayssubmittedordersblock')
                                                 @endforeach	
                                                 @foreach ($todayscompletedorders as $todayscompletedorder)
-
                                                     @include('dashboard/partials/todayscompletedordersblock')
                                                 @endforeach	
                                                 <tfoot>
@@ -109,17 +121,263 @@ Email: {{ Auth::user()->email }}
                                             </table>               
                                             </div>
                                         </div>
-                                    </div>
                                         <a href="#back-top" class="go-top"><i style="font-size: 22px; top: -26px;" class="glyphicon glyphicon-circle-arrow-up"></i></a>
                                 <b><p style="padding-left:45px"></p></b>
                                 <div class="col-md-2">
                                 </div>
-                            </div>
-                        </div>
-                    </div>  
-                </div>
+
+                                
+@markdown
+
+## Customers List
+
+@endmarkdown
+
+
+                                            <table id="myTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Customer#Name</th>
+                                                            <th>SalesGroup</th>
+                                                            <th>DC</th>
+                                                            <th>Office</th>
+                                                            <th>Sales</th>
+                                                        </tr>
+                                                    </thead>
+                                                @foreach ($branches_list as $branch)
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>{{ $branch->branchnumber }} - {{ $branch->branchname }}</td>
+                                                            <td>{{ $branch->salesgroup }}</td>
+                                                            <td>{{ $branch->dc }}</td>
+                                                            <td>{{ $branch->office }}</td>
+                                                            <td>N/A .00 SAR</td>
+                                                        </tr>
+                                                    </tbody>
+                                                @endforeach	
+                                                <tfoot>
+                                                        <tr>
+                                                            <th>Totals</th>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td>N/A .00 SAR</td>
+                                                        </tr>
+                                                    </tfoot>
+                                            </table>  
+                                        </div>
+                                    </div>
+                                </div>
+
+<br />
+<hr />
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<!-- Additional files for the Highslide popup effect -->
+<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
+<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
+<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />
+                </div>  
             </div>
-        </div><br /><hr />
+        </div>
+
+
+        <div style="padding-left:8px" class="row">
+
+        <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
+
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script>
+Highcharts.chart('container', {
+
+chart: {
+    scrollablePlotArea: {
+        minWidth: 700
+    }
+},
+
+data: {
+    csvURL: '<?php echo asset('csv/analytics.csv'); ?>',
+    beforeParse: function (csv) {
+        return csv.replace(/\n\n/g, '\n');
+    }
+},
+
+title: {
+    text: 'Yearly Sales Report'
+},
+
+subtitle: {
+    text: 'Sales Stats'
+},
+
+xAxis: {
+    tickInterval: 7 * 24 * 3600 * 500, // one week
+    tickWidth: 0,
+    gridLineWidth: 1,
+    labels: {
+        align: 'left',
+        x: 3,
+        y: -3
+    }
+},
+
+yAxis: [{ // left y axis
+    title: {
+        text: null
+    },
+    labels: {
+        align: 'left',
+        x: 3,
+        y: 16,
+        format: '{value:.,0f}'
+    },
+    showFirstLabel: false
+}, { // right y axis
+    linkedTo: 0,
+    gridLineWidth: 0,
+    opposite: true,
+    title: {
+        text: null
+    },
+    labels: {
+        align: 'right',
+        x: -3,
+        y: 16,
+        format: '{value:.,0f}'
+    },
+    showFirstLabel: false
+}],
+
+legend: {
+    align: 'left',
+    verticalAlign: 'top',
+    borderWidth: 0
+},
+
+tooltip: {
+    shared: true,
+    crosshairs: true
+},
+
+plotOptions: {
+    series: {
+        cursor: 'pointer',
+        point: {
+            events: {
+                click: function (e) {
+                    hs.htmlExpand(null, {
+                        pageOrigin: {
+                            x: e.pageX || e.clientX,
+                            y: e.pageY || e.clientY
+                        },
+                        headingText: this.series.name,
+                        maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
+                            this.y + ' orders',
+                        width: 200
+                    });
+                }
+            }
+        },
+        marker: {
+            lineWidth: 1
+        }
+    }
+},
+
+series: [{
+    name: 'All orders',
+    lineWidth: 4,
+    marker: {
+        radius: 4
+    }
+}, {
+    name: 'New orders'
+}]
+});
+
+</script>
+
+
+
+
+
+
+
+<script>
+var myLineChart = new Chart(ctx, {
+    type: 'line',
+    data: data,
+    options: options
+});
+</script>
+
+<canvas id="myChart"></canvas>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+            label: '# of Votes',
+            data: [<?php echo $sumyesterdaysales; ?>, <?php echo $sumthisdayorders; ?>, <?php echo $sumallorders; ?>, 3, 5, 2, 3],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+
+        </div><br />
     </div>
 </div>
 @endsection

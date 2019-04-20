@@ -11,7 +11,7 @@
 					<td style="text-align:center">{{ $todayssubmittedorder->totalqty }}</td>
 					<td style="text-align:center">{{ number_format($todayssubmittedorder->totalprice) }}.00 SAR</td>
 					<!--<td>{{ $todayssubmittedorder->updated_at->diffForHumans() }}</td>-->
-					<td class="{{ strtolower($todayssubmittedorder->status) }}">{{ $todayssubmittedorder->status }}</td>
+					<td style="text-align:center" class="{{ strtolower($todayssubmittedorder->status) }}">{{ $todayssubmittedorder->updated_at->format('d/m/y g:iA') }}</td>
 					<!--<td><pre><a style= "" href="/orders/order/{{ $todayssubmittedorder->slug }}">{{ $todayssubmittedorder->slug }}</a></pre></td>-->
 				</tr>                            
 			</tbody>

@@ -57,6 +57,6 @@ class AuthController extends Controller
     public function getSignout()
     {
     	Auth::logout();
-    	return redirect()->route('index');
+    	return redirect()->route('login');
     }
 }

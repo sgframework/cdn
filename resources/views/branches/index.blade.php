@@ -14,7 +14,7 @@
             <div class="input-group">
                 <form class="form-inline input" role="search" action="{{ route('search.branches') }}">
                     <input class="form-control" width="80%" name="query" type="text" placeholder="Search Branches" />
-                    <input type="submit" class="form-control btn btn-primary" />
+                    <input style="background-color:black" type="submit" class="form-control btn btn-primary" />
                 </form>
             </div>
         </div>

@@ -96,6 +96,10 @@
             //
             //
             // endShow -->
+
+
+
+
 @markdown
 
 #### Just Created Orders [0]
@@ -122,7 +126,7 @@
                                         <tr>
                                         <td><a style= "float:center" href="/orders/order/{{ $jcorder->slug }}">{{ $jcorder->ponumber }}</a></td>
                                         <td>{{ $jcorder->branchname }}</td>
-                                        <td class="{{ strtolower($jcorder->status) }}" id="status">{{ $jcorder->status }} {{ $jcorder->updated_at->diffForHumans()  }}</td>
+                                        <td class="{{ strtolower($jcorder->status) }}" id="status">{{ $jcorder->status }} {{ $jcorder->updated_at }}</td>
                                         <!--<td>{{ $jcorder->updated_at->diffForHumans() }}</td>-->
                                         </tr>	
                                         </tbody>
@@ -130,7 +134,6 @@
                                 </div>
                             </div>
                         </table>
-<center>{!! $jcorders->render() !!}</center>
 @endif
 <br /><hr />                                     
 @markdown
@@ -175,7 +178,6 @@
                         </table>
                         <br /><hr />                                      
 
-                        <center>{!! $editingorders->render() !!}</center>
 
                         @endif
 @markdown
@@ -212,9 +214,8 @@
                                 </div>
                             </div>
                         </table>
-<center>{!! $reviewingdorders->render() !!}</center>
 @endif
-<span id="submitted"></span>
+
 <br /><hr />    
 @markdown
 
@@ -230,9 +231,7 @@
                     @endif
                         <p>You have no submited orders yet!</p>
                     @else
-                    @if (Session::has('alert'))
-                    <div class="alert alert-success">{{ Session::get('alert') }}</div>
-                    @endif
+
                     <?php $totalqty = 0; ?>
                     <?php $totalfree = 0; ?>
                     <?php $totalprice = 0; ?>
@@ -261,7 +260,7 @@
                                             <td style="text-align:center">{{ $processedorder->totalitems }}</td>
                                             <td style="text-align:center">{{ $processedorder->totalqty }}</td>
                                             <td style="text-align:center">{{ number_format($processedorder->totalprice) }} SAR</td>
-                                            <td class="{{ strtolower($processedorder->status) }}">{{ $processedorder->status }} {{ $processedorder->updated_at->diffForHumans() }}</td>
+                                            <td class="{{ strtolower($processedorder->status) }}">{{ $processedorder->status }} {{ $processedorder->updated_at->format('d/m/y g:iA') }}</td>
                                             <?php $totalqty += $processedorder->totalitems; ?>
                                             <?php $totalfree += $processedorder->totalqty; ?>
                                             <?php $totalprice += $processedorder->totalprice; ?>
@@ -280,7 +279,6 @@
                                     </div>
                                 </div>
                             </table>
-<center>{!! $processedorders->render() !!}</center>
 @endif
 <br /><hr />                                     
 @markdown
@@ -320,7 +318,7 @@
                                         <td style="text-align:center">{{ $thisdaycompletedorder->totalitems }}</td>
                                         <td style="text-align:center">{{ $thisdaycompletedorder->totalqty }}</td>
                                         <td style="text-align:center">{{ number_format($thisdaycompletedorder->totalprice) }} SAR</td>
-                                        <td class="{{ strtolower($thisdaycompletedorder->status) }}">{{ $thisdaycompletedorder->status }} {{ $thisdaycompletedorder->updated_at->diffForHumans() }}</td>
+                                        <td class="{{ strtolower($thisdaycompletedorder->status) }}">{{ $thisdaycompletedorder->status }} {{ $thisdaycompletedorder->updated_at->format('d/m/y g:iA') }}</td>
                                         <?php $totalqty += $thisdaycompletedorder->totalitems; ?>
                                         <?php $totalfree += $thisdaycompletedorder->totalqty; ?>
                                         <?php $totalprice += $thisdaycompletedorder->totalprice; ?>
@@ -339,7 +337,6 @@
                                 </div>
                             </div>
                         </table>
-<center>{!! $thisdaycompletedorders->render() !!}</center>
 @endif
 
 <br /><hr />                            

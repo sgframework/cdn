@@ -64,8 +64,19 @@
     </head>
 <div class="container">
     <div class="row justify-content-center">
-    @if (Route::has('login'))
+
+
+    @if ( Auth::user()->is_permission == '0')
+    <div style="padding-top:200px;padding-bottom:200px">
+    <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+        </div>
+
+        @else
+
                     @auth
+
+
+
     <header class="header">
     <form class="form-inline input" role="search" action="{{ route('search.items') }}">
             <div class="form-group">
@@ -89,7 +100,6 @@
 	</div>-->
     <div class="top-right links">
 </div>
-        <div class="card-header">
             <button onclick="fun('orders')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Orders</button>
                 <div id="orders" class="w3-container w3-hide">
                     <div style="padding-top:15px; text-align:center">
@@ -98,7 +108,6 @@
                         <a href="{{ route('root.orders.all') }}"><i class="fas fa-list"></i> <span>All Orders</span></a>
                         <a href="{{ route('orders.index') }}"><i class="fas fa-list"></i> <span>Edit Orders</span></a>
                         <a href="{{ route('orders.index') }}"><i class="fas fa-link"></i> <span>Important Links</span></a>
-                    </div>
                 </div>
         </div>
             <script>
@@ -112,15 +121,35 @@
                 }
             </script>
             </div>
+
+
+
         <div class="card">
-            <div class="card-body">     
-        <button onclick="fun('products')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Products</button>
-            <div id="products" class="w3-container w3-hide">
-                <div style="padding-top:15px; text-align:center">
-                    <a href="{{ route('items.add') }}"><i class="fas fa-plus"></i> <span>Add Product</span></a>
-                    <a href="{{ route('items.index') }}"><i class="fas fa-list"></i> <span>All Products</span></a>
-                </div>
+            <!--<div class="top-left">
+	<a href="{{ url('/') }}">SunbulahGroup</a>
+	</div>-->
+    <div class="top-right">
+</div>
+            <button onclick="fun('export')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-file-export"></i> Export Reports</button>
+        <div id="export" class="w3-container w3-hide">
+            <div style="padding-top:15px; text-align:left">
+                <ul>
+                    <li><a href="{{ url('/export-orders-csv/today') }}"><i class="fas fa-download"></i></i> All Todays Orders Report CSV</a></li>
+                    <li><a href="{{ url('/export-orderitems-csv/today') }}"><i class="fas fa-download"></i></i> All Todays Order Items Report CSV</a></li>
+                    <li><a href="{{ url('/export-orders-orderitems-csv/today') }}"><i class="fas fa-download"></i></i> All Todays Orders + Items Report CSV</a></li>
+                    <li><a href="{{ url('/export-orders-orderitems-csv/excel') }}"><i class="fas fa-save"></i></i> All Todays Orders + Items copy & paste => excel</a></li>
+                    
+                </ul>
             </div>
+
+        </div>
+        <div style="padding-top:10px;padding-left:10px;padding-bottom:10px">
+            @if (!$todayssubmittedorders->count())
+                There are no submitted orders to be exported.
+            @else
+            <li><a href="{{ url('/export-orders-orderitems-csv/submitted/to/completed') }}"><i class="fas fa-save"></i></i> All Todays Submitted Orders + Items copy & paste => excel <span style="font-size:9px">Change orderstatus => 'Completed'</span></a></li>
+            <ul>Ready to be exported {{ $todayssubmittedorders->count() }} orders from {{ $userorders->count() }} user</ul>
+            @endif
         </div>
             <script>
                 function fun(id) {
@@ -132,14 +161,13 @@
                 }
                 }
             </script>
-        </div>
             </div>
-                </div>
-                <!-- If user loggedIn show below content until endShow part 
-                //
-                //
-                //
-                // endShow -->
+
+            </div>
+
+
+
+
             </div>
         </div>
     </div>
@@ -149,19 +177,58 @@
     <div class="row justify-content-center">
 
     <div class="col-md-12">
+
+
+
+
+
+
+
+
+        <div class="card">
+        <button onclick="fun('products')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Products</button>
+            <div id="products" class="w3-container w3-hide">
+                <div style="padding-top:15px; text-align:center">
+                    <a href="{{ route('items.add') }}"><i class="fas fa-plus"></i> <span>Add Product</span></a>
+                    <a href="{{ route('items.index') }}"><i class="fas fa-list"></i> <span>All Products</span></a>
+                </div>
+            </div>
+            <script>
+                function fun(id) {
+                var x = document.getElementById(id);
+                if (x.className.indexOf("w3-show") == -1) {
+                    x.className += " w3-show";
+                } else { 
+                    x.className = x.className.replace(" w3-show", "");
+                }
+                }
+            </script>
+        </div>
+            </div>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="card">
             <!--<div class="top-left">
 	<a href="{{ url('/') }}">SunbulahGroup</a>
 	</div>-->
     <div class="top-right links">
 </div>
-        <div class="card-header">
             <button onclick="fun('branches')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-list"></i> Branches</button>
                 <div id="branches" class="w3-container w3-hide">
                 <div style="padding-top:15px; text-align:center">
                     <a href="{{ route('branches.add') }}"><i class="fas fa-plus"></i> <span>Add Branch</span></a>
                     <a href="{{ route('branches.index') }}"><i class="fas fa-list"></i> <span>All Branches</span></a>
-                </div>
             </div>
         </div>
                 <script>
@@ -176,7 +243,6 @@
                 </script>
             </div>
         <div class="card">
-            <div class="card-body">
                 <button onclick="fun('management')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-cogs"></i> Management</button>
                     <div id="management" class="w3-container w3-hide">
                     <div style="padding-top:15px; text-align:center">
@@ -187,10 +253,10 @@
                     <a href=""><i class="fas fa-envelope"></i> <span>Manage Mail</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-random"></i> <span>Manage Routes</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-exclamation-triangle"></i> <span>Manage Notifications</span></a>&nbsp;&nbsp;
+                    <a href="{{ route('root.tree') }}"><i class="fas fa-info fa-fw"></i> <span>Tree</span></a>&nbsp;&nbsp;
+                    <i class="fa fa-book"></i><span id="manual"><a href="http://ipool.remotewebaccess.com/root/readme#manual"> SunbulahGroup Framework Manual</a></span>
             </div>
-
-            </div>
-            </div>
+        </div>
                 <script>
                 function fun(id) {
                 var x = document.getElementById(id);

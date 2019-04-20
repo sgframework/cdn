@@ -1,6 +1,8 @@
 <?php
 
+use cdn\User;
 use cdn\Models\Order;
+use cdn\Models\OrderItems;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +52,9 @@ Route::group(['middleware' => 'is-admin'], function () {
 });
 
 
+
+/** Root Routes */
+
 Route::get('/root', [
     'uses' => '\cdn\Http\Controllers\RootController@getIndex',
 'as' => 'root.index',
@@ -77,6 +82,31 @@ Route::get('/root/users/orders/all', [
 'as' => 'root.orders.all',
 ]);
 
+Route::get('/root/readme', [
+    'uses' => '\cdn\Http\Controllers\RootController@getReadMe',
+'as' => 'root.readme',
+]);
+
+
+/** Orders Routes */
+Route::post('/root/orders/{idnumber}/{slug}/success', [
+    'uses' => '\cdn\Http\Controllers\RootController@completeOrder',
+    'as' => 'orders.complete']);
+
+Route::get('/orders/order/{slug}/success', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@successOrder',
+    'as' => 'orders.success']);
+
+/* {{ route('root.tree') }} */
+
+Route::get('root/tree', [
+    'uses' => '\cdn\Http\Controllers\RootController@getTree',
+    'as' => 'root.tree']);    
+
+
+
+
+
 /*
 http://ipool.remotewebaccess.com/root/orders/5303/00007230991-42002222
 http://ipool.remotewebaccess.com/root/orders/00007230991-42002222
@@ -85,6 +115,11 @@ http://ipool.remotewebaccess.com/root/orders/5303
 
 Route::get('/tests', [
     'uses' => '\cdn\Http\Controllers\RootController@getTest',
+'as' => 'tests.index',
+]);
+
+Route::get('/tests-csv', [
+    'uses' => '\cdn\Http\Controllers\RootController@getCsv',
 'as' => 'tests.index',
 ]);
 
@@ -357,15 +392,6 @@ Route::post('/orders/order/submit', function (\Illuminate\Http\Request $request,
 
 */
 
-Route::post('/root/orders/{idnumber}/{slug}/success', [
-    'uses' => '\cdn\Http\Controllers\RootController@completeOrder',
-    'as' => 'orders.complete']);
-
-Route::get('/orders/order/{slug}/success', [
-    'uses' => '\cdn\Http\Controllers\OrdersController@successOrder',
-    'as' => 'orders.success']);
-                
-    
 /*
 * Search
 */
@@ -379,6 +405,15 @@ Route::get('/search/branches', [
     'uses' => '\cdn\Http\Controllers\SearchController@getBranches',
     'as' => 'search.branches'
 ]);
+
+
+/**{{ route('search.pos') }} */
+
+Route::get('/search/pos', [
+    'uses' => '\cdn\Http\Controllers\SearchController@getPos',
+    'as' => 'search.pos'
+]);
+
 
 
 Route::get('/submit-rtv', [
@@ -433,80 +468,575 @@ Route::get('/alert', function () {
 
 
 
+//****
+//EXPORT CSV REPORTS
+/**/
 
 
+/* Export All Orders CSV */
+
+Route::get('/export-orders-csv' , function() {
+
+    $table = Order::all();
+    $filename = "orders.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, array('ordernumber', 'By#ID',  'PO#', 'Branch#Name', 'Created'));
+
+    foreach($table as $row) {
+        fputcsv($handle, array($row['ordernumber'], $row['staffid'], $row['ponumber'], $row['created_at']));
+    }
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    return Response::download($filename, 'orders.csv', $headers);
+});
+
+
+/* Export All Orderitems CSV */
+
+Route::get('/export-orderitems-csv' , function() {
+
+    $table = OrderItems::all();
+    $filename = "orders.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, array(
+        'By',
+        'PO#',
+        'Customer',
+        'Items',
+        'Qty',
+        'Price',
+    ));
+
+    foreach($table as $row) {
+        fputcsv($handle,array(
+            $row['staffname'],
+            $row['ponumber'],
+            $row['branchname'],
+            $row['orderitems'],
+            $row['itemqty'],
+            $row['itemprice']
+    ));
+    }
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    return Response::download($filename, 'orders.csv', $headers);
+});
+
+
+
+/* Export Todays Orders CSV */
+
+Route::get('/export-orders-csv/today' , function() {
+
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $todaysorders = Order::whereDate('created_at', $today )->get();
+    $sumalltodaysorders = $todaysorders->sum('totalprice');
+    $filename = "orders.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, array(
+        'By',
+        'PO#',
+        'Customer',
+        'Items',
+        'Total Qtys',
+        'Total Price',
+        'Status',
+        'SUM',
+        'SUM' => number_format($sumalltodaysorders) . ' SAR',
+
+    ));
+
+
+    foreach($todaysorders as $row) {
+        fputcsv($handle,array(
+            $row['staffname'],
+            $row['ponumber'],
+            $row['branchname'],
+            $row['orderitems'],
+            $row['totalqty'],
+            number_format($row['totalprice']) . '.00',
+            $row['status'],
+
+    ));
+
+
+    }
+
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    return Response::download($filename, date("Y-m-d") . '-orders.csv', $headers);
+});
+
+
+/* Export All Todays Orders With Items CSV */
+
+Route::get('/export-orders-orderitems-csv/today' , function() {
+
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $yesterday = date("Y-m-d", strtotime( '1 days' ) );	
+    //$todaysorders = Order::whereDate('created_at', $today )->get();
+    $todaysorderitems = OrderItems::whereBetween('created_at', array($today, $yesterday))->get();
+    $sumalltodaysorders = $todaysorderitems->sum('totalprice');
+    $filename = "orders-orderitems-today.csv";
+    $handle = fopen($filename, 'w+');
+
+    fputcsv($handle, array(
+        'By-ID',
+        'PO#',
+        'Customer',
+        'Items',
+        'Total Qtys',
+        'Item Price',
+        'Total Price',
+
+
+    ));
+
+
+    foreach($todaysorderitems as $row) {
+        fputcsv($handle,array(
+            $row['staffname'] . '-' . $row['staffid'],
+            $row['ponumber'],
+            $row['branchname'],
+            $row['orderitems'],
+            $row['itemqty'],
+            number_format($row['itemprice']) . '.00',
+            $row['itemqty'] * $row['itemprice']
+
+    ));
+
+
+    }
+
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    return Response::download($filename,  date("Y-m-d") . '-orders+items.csv', $headers);
+});
+
+
+/* Export All Todays Orders With Items Copy & Paste => Excel */
+
+Route::get('/export-orders-orderitems-csv/excel' , function() {
+
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $todaysorders = Order::whereDate('created_at', $today )->get();
+    $todaysorderitems = OrderItems::whereDate('created_at', $today )->get();
+    $sumalltodaysorders = $todaysorders->sum('totalprice');
+    $filename = "orders-orderitems-today.csv";
+    $handle = fopen($filename, 'w+');
+    
+    fputcsv($handle, array(
+
+        'row identification', 
+        'Distribution Channe',
+        'PO#',
+        ' ',
+        'Customer#',
+        'Item#',
+        ' ',
+        ' ',
+        'Qty',
+
+
+    ));
+
+
+    foreach($todaysorderitems as $row) {
+        fputcsv($handle,array(
+            'H',
+            '24',
+            $row['ponumber'],
+            ' ',
+            $row['branchnumber'],
+            $row['itemnumber'],
+            ' ',
+            ' ',
+            $row['itemqty'],
+
+    ));
+
+
+    }
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    return Response::download($filename,  date("Y-m-d") . '-orders+items.csv', $headers);
+});
+
+
+
+/* Export All Todays Submitted Orders With Items Copy & Paste => Excel -> Change to Completed*/
+
+Route::get('/export-orders-orderitems-csv/submitted/to/completed' , function() {
+
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $todaysorders = Order::whereDate('created_at', $today )->where('status', '=', 'Submitted' )->get();
+    $todaysorderitems = OrderItems::whereDate('created_at', $today )->where('orderstatus', '=', 'Submitted' )->get();
+    $sumalltodaysorders = $todaysorders->sum('totalprice');
+    $filename = "orders-orderitems-today.csv";
+    $handle = fopen($filename, 'w+');
+    
+    fputcsv($handle, array(
+        'row identification', 
+        'Distribution Channe',
+        'PO#',
+        ' ',
+        'Customer#',
+        'Item#',
+        ' ',
+        ' ',
+        'Qty',
+
+
+
+    ));
+
+
+    foreach($todaysorderitems as $row) {
+        fputcsv($handle,array(
+            'H',
+            '24',
+            $row['ponumber'],
+            ' ',
+            $row['branchnumber'],
+            $row['itemnumber'],
+            ' ',
+            ' ',
+            $row['itemqty'],
+
+    ));
+
+
+    }
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed']);
+    OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+    
+    return Response::download($filename, 'submitted-' . date("Y-m-d") . '-orders+items.csv', $headers);
+});
 
 /*
-* Friends
-
-
-Route::get('/friends', [
-    'uses' => '\cdn\Http\Controllers\FriendController@getIndex',
-'as' => 'friend.index',
-'middleware' => ['auth'],
-]);
-
-Route::get('/friends/add/{username}', [
-    'uses' => '\cdn\Http\Controllers\FriendController@getAdd',
-'as' => 'friend.add',
-'middleware' => ['auth'],
-]);
-
-
-Route::get('/friends/accept/{username}', [
-    'uses' => '\cdn\Http\Controllers\FriendController@getAccept',
-'as' => 'friend.accept',
-'middleware' => ['auth'],
-]);
-
-Route::post('/friends/delete/{username}', [
-    'uses' => '\cdn\Http\Controllers\FriendController@postDelete',
-'as' => 'friend.delete',
-'middleware' => ['auth'],
-]);
+Route::get('user/{id}', function ($id) {
+    return 'User '.$id;
+});
 */
 
-/*
-* Statuses
+/** Export Report By UserId */
+Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
+
+    //$currentuser = \Auth::user()->idnumber;
+
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $todaysorders = Order::whereDate('created_at', $today )->where('status', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
+    $todaysorderitems = OrderItems::whereNotNull('orderitems')->whereDate('created_at', $today )->where('orderstatus', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
+    $totalurgent = $todaysorders->where('urgent', '=', 'on')->count();
+    $totalregular = $todaysorders->where('urgent', '=', NULL)->count();
+    $totalitems = $todaysorders->sum('totalitems');
+    $totalqtys = $todaysorders->sum('totalqty');
+    $totalpos = $todaysorders->count('ponumber');
+    $allorders = Order::where('status', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
+
+    $sumalltodaysorders = $todaysorders->sum('totalprice');
+    $sumallusergrand = $allorders->sum('totalprice');
+    $filename = "orders-orderitems-today.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, array(
+        'Orders of', 
+        'Date',
+        'Total PO`s',
+        'Urgent # Regular',
+        'Total Items',
+        'Total Qtys',
+        'Total Sales',
+        'Total Grand'
 
 
-Route::get('/status/{slug}', [
-'uses' => '\cdn\Http\Controllers\StatusController@getShow',
-'as' => 'status-show'
-]);
+
+    ));
+    
+    
+    fputcsv($handle, array(
+        \Auth::user()->name . '#' .\Auth::user()->idnumber,
+        $today,
+        $totalpos,
+        $totalurgent . ' # ' . $totalregular,
+        $totalitems,
+        $totalqtys,
+        number_format($sumalltodaysorders),
+        number_format($sumallusergrand)
 
 
 
-Route::post('/status', [
-    'uses' => '\cdn\Http\Controllers\StatusController@postStatus',
-    'as' => 'status.post',
-    'middleware' => ['auth'],
-]);
-
-Route::get('/{username}/{statusId}', [
-'uses' => '\cdn\Http\Controllers\StatusController@getStatusId',
-'as' => 'status.byid'
-]);
-
-Route::get('/{username}/status/{slug}', [
-'uses' => '\cdn\Http\Controllers\StatusController@getSShow',
-'as' => 'status-sshow'
-]);
+    ));
+    
 
 
 
-
-Route::post('/status/{statusId}/reply', [
-    'uses' => '\cdn\Http\Controllers\StatusController@postReply',
-    'as' => 'status.reply',
-    'middleware' => ['auth'],
-]);
-
-Route::get('/status/{statusId}/like', [
-    'uses' => '\cdn\Http\Controllers\StatusController@getLike',
-    'as' => 'status.like',
-    'middleware' => ['auth'],
-]);
+    /** Empty Cells */ 
+    fputcsv($handle, array(
+        '',
+        '',
+        '',
+        '',
 
 
-*/
+    ));
+    
+    
+    fputcsv($handle, array(
+        '',
+        '',
+        '',
+        '',
+
+
+
+
+    ));
+    
+    /** End Empte Cells */
+
+    fputcsv($handle, array(
+        'PO#',
+        'Customer#',
+        'Total Items',
+        'Total Qtys',
+        'Total Sales',
+        'Currency',
+        'Completed',
+
+
+
+    ));
+
+
+    foreach($todaysorders as $row) {
+        fputcsv($handle,array(
+
+            $row['ponumber'],
+            $row['branchname'],
+            $row['totalitems'],
+            $row['totalqty'],
+            number_format($row['totalprice']),
+            ' SAR',
+            $row['updated_at']->format("d/m/y g:iA"),
+
+    ));
+
+
+    }
+
+
+        /** Empty Cells */ 
+        fputcsv($handle, array(
+            '',
+            '',
+            '',
+            '',
+    
+    
+        ));
+        
+        
+        fputcsv($handle, array(
+            '',
+            '',
+            '',
+            '',
+    
+    
+    
+    
+        ));
+        
+        /** End Empte Cells */
+
+
+    fputcsv($handle, array(
+        'PO#',
+        'Customer',
+        'Items',
+        'Qty',
+        'Price',
+    ));
+
+    foreach($todaysorderitems as $row) {
+        fputcsv($handle,array(
+            $row['ponumber'],
+            $row['branchname'],
+            $row['orderitems'],
+            $row['itemqty'],
+            number_format($row['itemprice']),
+    ));
+    }
+
+
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+
+    /*Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed']);
+    OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+    */
+    return Response::download($filename, $today . '-' . $idnumber . '-completed-orders-report.csv', $headers);
+});
+
+
+/* EXPORT CSV REPORTS */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Generate XML File test.xml */
+
+Route::get('/export-orders-orderitems-xml' , function() {
+
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $todaysorders = Order::whereDate('created_at', $today )->get();
+    $todaysorderitems = OrderItems::where('orderstatus', '=', 'Submitted' )->get();
+    $sumalltodaysorders = $todaysorders->sum('totalprice');
+    $filename = "orders-orderitems-today.csv";
+    $handle = fopen($filename, 'w+');
+    
+
+    $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><mydoc></mydoc>');
+
+    $xml->addAttribute('version', '1.0');
+    $xml->addChild('datetime', date('Y-m-d H:i:s'));
+
+    $person = $xml->addChild('person');
+    $person->addChild('firstname', 'Someone');
+    $person->addChild('secondname', 'Something');
+    $person->addChild('telephone', '123456789');
+    $person->addChild('email', 'me@something.com');
+
+    $address = $person->addchild('address');
+    $address->addchild('homeaddress', 'Andersgatan 2, 432 10 Göteborg');
+    $address->addChild('workaddress', 'Andersgatan 3, 432 10 Göteborg');
+
+    $xml->saveXML('test.xml');
+
+    $response = Response::make($xml->asXML(), 200);
+    $response->header('Content-Type', 'text/xml');
+
+    
+
+
+    fputcsv($handle, array(
+        'PO#',
+        ' ',
+        'Customer#',
+        'Item#',
+        ' ',
+        ' ',
+        'Qty',
+
+
+    ));
+
+
+    foreach($todaysorderitems as $row) {
+        fputcsv($handle,array(
+            $row['ponumber'],
+            ' ',
+            $row['branchnumber'],
+            $row['itemnumber'],
+            ' ',
+            ' ',
+            $row['itemqty'],
+
+    ));
+
+
+    }
+
+    fclose($handle);
+
+    $headers = array(
+        'Content-Type' => 'text/xml',
+        'Content-Transfer-Encoding' => 'binary',
+        'Content-Disposition' => 'attachment; filename=test.xml',
+        'Content-Description' => 'File Transfer',
+        'Cache-Control' => 'public'
+    );
+
+    return Response::download($filename, date("Y-m-d") . '-orders+items.xml', $headers);
+
+});
+
+
+
+
+
+

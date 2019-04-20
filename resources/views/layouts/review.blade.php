@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.4, maximum-scale=0.5, user-scalable=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'SunbulahGroup') }}</title>
@@ -10,11 +10,55 @@
     <script src="{{ asset('js/app.js') }}" defer></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <!-- Styles -->
     <link href="{{ asset('css/stylesheet.css') }}" rel="stylesheet">
     <link href="{{ asset('css/excel-2007.css') }}" rel="stylesheet">
+
+
+
+
+
+
+        <!--JUST ENABLED-->
+        <script src="{{ asset('js/bootstrap.js') }}" defer></script>
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+        
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/github-markdown.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/pilcrow.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/hljs-github.min.css') }}"/>
+
+        <!--JUST ENABLED-->
+
+
+
+
+        <!--JUST DISABLED-->
+        <!--
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/hljs-github.dark.min.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/pilcrow-dark.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/style.css') }}"/>
+
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+        -->
+        <!--JUST DISABLED-->
+
+
+
+
+
+
+
+
     <!--<link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
     <!--<link href="{{ asset('css/styles.css') }}" rel="stylesheet">-->
     <!--<link rel="manifest" href="{{ asset('js/manifest.json') }}">
@@ -145,7 +189,10 @@ html{
         }
     </style>
 </head>
-<body>
+
+
+
+<body class="markdown-body">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -162,45 +209,12 @@ html{
                     
                     </ul>
                     <!-- Right Side Of Navbar -->
-                    <!--<span class="nav-item">
-                    <a class="nav-link" href="">Browse All Products.</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="">Add Product</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="">Middle</a>
-                    </span>
-                    <span class="nav-item">
-                    <a class="nav-link" href="">Middle</a>
-                    </span>-->
-                    <ul class="navbar-nav ml-auto">
+                    @yield('content')
 
-                        <!-- Authentication Links -->
-                        @guest
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <!--@if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif-->
-                        @else
-
-    
-
-
-
-                        @endguest
-                    </ul>
                 </div>
             </div>
         </nav>
-        <main class="py-4">
-            @yield('content')
-        </main>
+
     </div>
 </body>
 <footer class="footer">

@@ -105,8 +105,9 @@ class OrdersController extends Controller
         {
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
             //$branches = Branch::select('branchname', 'branchnumber')->get();
+            $currentuser = \Auth::user();
             $branches_list = DB::table('branches')
-            /*->where('dc', '=', '24')*/
+            ->where('salesgroup', '=', $currentuser->idnumber)
             ->get();
             //dump($branches_list);
             /*$branches_list1 = DB::table('branches')
@@ -137,7 +138,7 @@ class OrdersController extends Controller
         $slug = $request['ordernumber'] . "-" . $request['ponumber'];
         $this->validate($request, [
             'orderid' => 'max:255',
-            'ponumber' => 'required|max:20',
+            'ponumber' => 'required|max:20|unique:orders',
             'branchnumber' => 'required|max:255',
             'branchname' => 'max:255',
         ]);
@@ -186,11 +187,11 @@ class OrdersController extends Controller
             $request->session()->put('slug', $slug);
             $request->session()->put('created_at', $request->created_at);
             $order = Order::where('slug', '=', $slug)->first();
-            Mail::send('orders.partials.step2',['ordernumber' => $request['ordernumber'],'ponumber' => $request['ponumber'],], function($message) {
+            /*Mail::send('orders.partials.step2',['ordernumber' => $request['ordernumber'],'ponumber' => $request['ponumber'],], function($message) {
                 $message
                 ->to('root@ipool.remotewebaccess.com')
                 ->subject('New Order Just Created');
-            });
+            });*/
             $branch =  Branch::where('branchnumber', '=', 'branchname')->get(['branchname']);
             $slug = $request['ordernumber'] . "-" . $request['ponumber'];
             //$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type');
@@ -436,7 +437,7 @@ class OrdersController extends Controller
             $status = Order::select('status')->where('slug', '=', $slug)->get();
             $order = Order::where('slug', '=', $slug)->first();
             $getOnlySlug = OrderItems::select('slug')->where('slug', '=', $order)->first();
-            dump($slug);         
+            //dump($slug);         
             $orderitems =  OrderItems::where('slug', '=', $slug)->orderBy('created_at', 'desc')->get();
             //dump($orderitems);
             $itemnumber = $slug;
@@ -446,7 +447,7 @@ class OrdersController extends Controller
             $branchnumber = OrderItems::select('branchnumber')->where('slug', '=', $slug)->first();
             $branchname = OrderItems::select('branchname')->where('slug', '=', $slug)->first();
             $table = OrderItems::all()->where('slug', '=', $slug);
-            $reviewitems = OrderItems::select()->where('slug', '=', $slug)->orderBy('created_at', 'desc')->get();
+            $reviewitems = OrderItems::select()->where('slug', '=', $slug)->whereNotNull('ponumber')->orderBy('created_at', 'desc')->get();
             //dump($reviewitems);
             $orderitems =  OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
             $itemprice = Item::select()->where('itemnumber', '=', $orderitems)->get();
@@ -549,11 +550,11 @@ class OrdersController extends Controller
             ]);
             Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'], 'totalprice' => $request['totalqtyprice'], 'updated_at' => now(), 'status' => 'Submitted']);
             OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'branchnumber' => $request['branchnumber'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
-            return redirect()->route('global.index', 'Your_Order_Have_Been#submitted')->with('alert', 'Congratulations! Your order have been submitted successfully.');
+            return redirect()->route('orders.add', '#Success!&create_new_order')->with('alert', 'Congratulations! Your order have been submitted successfully.');
         }
         public function removeOrderItem($slug, $itemnumber)
         {   
-            $delitemnumber  = OrderItems::select($slug)->where('itemnumber', '=', $itemnumber);
+            $delitemnumber  = OrderItems::where('slug', '=', $slug)->where('itemnumber', '=', $itemnumber);
             $delitemnumber->delete();            
             return redirect()->back()->with('warning', 'Item removed successfully.');
         }

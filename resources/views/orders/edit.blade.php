@@ -4,10 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12 ml-sm-12 col-lg-12">
-                @if ($errors->has('alert'))
-    				<span class="help-block">{{ $errors->first('alert') }}</span>
-                @endif
-                
+
             <div class="card">
                 <div style="font-size:20px" class="card-header"><b>Edit Order# {{ $order->ordernumber }}</b></div>
                     <div class="card-body">
@@ -66,16 +63,7 @@
                                         </form>-->
                                         <!--<center><button class="btn btn-default" onclick="myFunction()">ADD <i class="fas fa-plus"></i></button></center><br />-->
                                     <div class="table-responsive">
-                                            @if (Session::has('alert'))
-                                            <br />
-                                            <div padding-top="20px"></div>
-                                                <div class="alert alert-success">{{ Session::get('alert') }}</div>
-                                            @endif
-                                            @if (Session::has('warning'))
-                                            <br />
-                                            <div padding-top="20px"></div>
-                                                <div class="alert alert-warning">{{ Session::get('warning') }}</div>
-                                            @endif
+
                                             
                                             @if($errors->any())
                                             <br />
@@ -121,16 +109,16 @@
                                                     <?php $totalfree += $orderitem->itemfree; ?>
                                                     <?php $totalprice += $orderitem->itemprice; ?>
                                                     <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
-                                                        @include('dashboard/partials/orderitemsblock')
-                                                    @endforeach	
                                                     <input hidden width="20%" value="{{ $totalqtyprice }}" class="form-control2" type="number" name="totalqtyprice" />
-
                                                     </form>
+                                                        @include('dashboard/partials/orderitemsblock')
+                                                        
+                                                    @endforeach	
+
                                             <script>
                                                 $(document).ready(function(){
                                                 $("input").click(function(){
                                                         $(this).next().show();
-                                                        $(this).next().hide();
                                                     });
                                                 });
                                             </script>
@@ -160,9 +148,12 @@
                                               @elseif ( $order->status == 'Completed' )
                                               <div class="alert alert-alert"><i class="fas fa-exclamation-triangle"></i> Can't make edits on submitted or completed orders.</div>
                                                 @elseif ( $order->status == 'Reviewing' )
-                                                <center><button style="float:right" class="form-inline btn btn-default"><a style="color:black" href="{{ route('orders.review', ['orderId' => $order->slug]) }}">Review your order &rarr;</a></button></center>
-                                                @elseif ( $order->status == 'Editing' )
-                                                <center><button style="float:right" class="form-inline btn btn-default"><a style="color:black" href="{{ route('orders.review', ['orderId' => $order->slug]) }}">Review your order &rarr;</a></button></center>
+                                                <form action="{{ route('orders.review', ['orderId' => $order->slug]) }}" method="GET">
+                                                    <input style="float:right" type="submit" class="btn btn-primary" value="Review your order &rarr;" />
+                                                </form>                                                @elseif ( $order->status == 'Editing' )
+                                                <form action="{{ route('orders.review', ['orderId' => $order->slug]) }}" method="GET">
+                                                    <input style="float:right" type="submit" class="btn btn-primary" value="Review your order &rarr;" />
+                                                </form>
                                                 @elseif ( $order->status == 'JustCreated' )
                                                 <div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Can't review & submit an empty order !</div> 
                                                 @else
@@ -171,8 +162,21 @@
     	                                </div>
                                     </div>						
                                 </div>  
-                            <br />
-                        </div>
+                            </div>
+                    @if ($errors->has('alert'))
+                        <span class="help-block">{{ $errors->first('alert') }}</span>
+                    @endif
+                @if (Session::has('alert'))
+                <br />
+                <div padding-top="20px"></div>
+                    <div class="alert alert-success">{{ Session::get('alert') }}</div>
+                @endif
+                @if (Session::has('warning'))
+                <br />
+                <div padding-top="20px"></div>
+                    <div class="alert alert-warning">{{ Session::get('warning') }}</div>
+                @endif
+                <br />
                     </div>
                 </div>     
             </div>

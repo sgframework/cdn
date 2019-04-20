@@ -96,14 +96,14 @@ class GlobalController extends Controller
                 $items = Item::all();
                 $branches = Branch::all();
                 //$orders = Order::all()->where('ordernumber', '=', $ordernumber)->first();
-                $jcorders = Order::select()->where('status', '=', 'JustCreated')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
-                $editingorders = Order::select()->where('status', '=', 'Editing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
-                $orders = Order::select()->where('status', '=', 'Editing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
-                $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
+                $jcorders = Order::select()->where('status', '=', 'JustCreated')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
+                $editingorders = Order::select()->where('status', '=', 'Editing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
+                $orders = Order::select()->where('status', '=', 'Editing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
+                $processingorders = OrderItems::select()->where('orderstatus', '=', 'Processing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
                 //$completedorders = Order::select()->where('status', '=', 'Completed')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
-                $reviewingdorders = Order::select()->where('status', '=', 'Reviewing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
+                $reviewingdorders = Order::select()->where('status', '=', 'Reviewing')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
                 $orderitems = OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
-                $processedorders = Order::where('status', '=', 'Submitted')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
+                $processedorders = Order::where('status', '=', 'Submitted')->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
                 $ordernumber = Order::where('ordernumber', '=', $currentuser->idnumber)->get();
                 //dump($orders);
                 //dump($orderitems);
@@ -111,26 +111,26 @@ class GlobalController extends Controller
                 $currentuser = \Auth::user();
                 /* Todays Orders*/
                 $date = \Carbon\Carbon::today()->subDays(0);
-                $thisdayorders = Order::where('created_at', '>=', $date)->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Submitted')->orderBy('updated_at', 'desc')->paginate(20);
-                $thisdaycompletedorders = Order::where('created_at', '>=', $date)->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'desc')->paginate(20);
+                $thisdayorders = Order::where('created_at', '>=', $date)->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Submitted')->orderBy('updated_at', 'asc')->get();
+                $thisdaycompletedorders = Order::where('created_at', '>=', $date)->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
                 $sumthisdayorders = $thisdayorders->sum('totalprice');
                 $today = date("Y-m-d", strtotime( '0 days' ) );
                 /* Yesterdays Orders*/
                 $yesterday = date("Y-m-d", strtotime( '-1 days' ) );
-                $yesterdaysorders = Order::whereDate('created_at', $yesterday )->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
+                $yesterdaysorders = Order::whereDate('created_at', $yesterday )->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
                 $sumyesterdaysales = $yesterdaysorders->sum('totalprice');
                 /* Two Days Ago Orders*/
                 $twodaysago = date("Y-m-d", strtotime( '-2 days' ) );
-                $twodaysagoorders = Order::whereDate('created_at', $twodaysago )->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
+                $twodaysagoorders = Order::whereDate('created_at', $twodaysago )->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
                 /* All Orders*/
                 $date1 = \Carbon\Carbon::yesterday()->subDays(1);
-                $allorders = Order::where('created_at', '>=', $date1)->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'desc')->paginate(20);
+                $allorders = Order::where('created_at', '>=', $date1)->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
                 $sumallorders = $allorders->sum('totalprice');
                 $currentuser = \Auth::user();
                 $currentusername = $currentuser->name;
                 $currentuseridnumber = \Auth::user()->select('idnumber')->where('idnumber', '=', $currentuser->idnumber)->first();
-                $submittedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Submitted')->whereNotNull('ponumber')->orderBy('updated_at', 'desc')->groupBy('slug')->get();
-                $completedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->paginate(20);
+                $submittedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Submitted')->whereNotNull('ponumber')->orderBy('updated_at', 'asc')->groupBy('slug')->get();
+                $completedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
                 $sumsubmittedorders = $submittedorders->sum('totalprice');
                 $sumcompletedorders = $completedorders->sum('totalprice');
         

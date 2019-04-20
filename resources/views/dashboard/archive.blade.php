@@ -90,7 +90,7 @@ Email: {{ Auth::user()->email }}
                     <th style="font-size:10px;text-align:left;padding-left:0;"><strong>als</strong></th>
                     <td style="font-size:10px;text-align:center"><strong>{{ $totalqty }}</strong></td>
                     <td style="font-size:10px;text-align:center"><strong>{{ $totalfree }}</strong></td>
-                    <td style="font-size:10px;text-align:center"><strong>{{ number_format($totalprice) }}.00 SAR</b></td>
+                    <td style="font-size:10px;text-align:center"><strong>{{ number_format($totalprice) }}.00 SAR</strong></td>
                 </tr>
             </tfoot>
         </table>
@@ -110,7 +110,7 @@ Email: {{ Auth::user()->email }}
                     </div>  
                 </div>
             </div>
-        </div><br /><hr />
+        </div><br />
     </div>
     
 </div>

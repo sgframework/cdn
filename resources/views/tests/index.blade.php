@@ -20,6 +20,22 @@
             //
             // endShow -->
 
+
+
+
+
+
+
+
+            <a href="{{ route('tests.index') }}" class="btn btn-primary">Export as CSV</a>
+
+
+
+
+
+
+
+
             
 
                     <span>&larr; <a href="/root">Back</a></span><span style="float:right"><a href="{{ route('items.index') }}">Products List</a> &rarr;</span><br /><hr />

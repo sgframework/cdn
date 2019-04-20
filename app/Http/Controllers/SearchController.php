@@ -5,6 +5,8 @@ namespace cdn\Http\Controllers;
 use DB;
 use cdn\Models\Item;
 use cdn\Models\Branch;
+use cdn\Models\Order;
+use cdn\Models\OrderItems;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
@@ -41,5 +43,29 @@ class SearchController extends Controller
     	
     	
         return view('search.branches')->with('branches', $branches);
-    }
+	}
+	
+
+    public function getPos(Request $request)
+    {
+    	$query = $request->input('query');
+    	
+    	if (!$query) {
+    		return redirect()->route('dashboard.index', ['id' => Auth::user()->idnumber])->with('alert', 'Nothing Found !');
+    	}
+    	
+    	$pos = Order::where(DB::raw("CONCAT(ponumber, '', 'branchnumber')"), 'LIKE', "%{$query}%")
+		->orWhere('ponumber', 'LIKE', "%{$query}%")
+		->orWhere('slug', 'LIKE', "%{$query}%")
+		->get();
+    	$poitems = OrderItems::where('slug', 'LIKE', "%{$query}%")
+		->orWhere('ponumber', 'LIKE', "%{$query}%")
+		->get();
+    	
+    	
+        return view('search.pos')->with('pos', $pos)->with('poitems', $poitems);
+	}
+
+
+
 }

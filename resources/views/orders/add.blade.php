@@ -43,7 +43,10 @@
 
 @endmarkdown
 
-
+<span id="submittedd"></span>
+@if (Session::has('alert'))
+<div class="alert alert-success">{{ Session::get('alert') }}</div>
+@endif
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
                              
@@ -187,7 +190,7 @@ $(document).ready(function(){
 @markdown
 `You can see full documentation` [here][docs].
 
-[docs]: http://ipool.remotewebaccess.com/docs
+[docs]: http://ipool.remotewebaccess.com/root/readme#manual
 @endmarkdown
                 <pre style="float:right">{{ now() }}</pre>
                         @else

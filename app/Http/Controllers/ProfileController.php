@@ -3,13 +3,14 @@
 namespace cdn\Http\Controllers;
 
 use Auth;
+use DB;
 use cdn\User;
 use cdn\Models\Branch;
 use cdn\Models\Item;
 use cdn\Models\Order;
 use cdn\Models\OrderItems;
 use Illuminate\Http\Request;
-
+//2147483647
 class ProfileController extends Controller
 {
     public function getProfile($idnumber)
@@ -27,7 +28,7 @@ class ProfileController extends Controller
 		//$ordersbydate = Order::orderBy('created_at', 'ASC')->get();
 		/* Todays Orders*/
 		$date = \Carbon\Carbon::today()->subDays(0);
-		$thisdayorders = Order::where('created_at', '>=', $date)->where('staffid', '=', $currentuser->idnumber)->get();
+		$thisdayorders = Order::where('created_at', '>=', $date)->where('staffid', '=', $currentuser->idnumber)->orderBy('updated_at', 'asc')->get();
 		$todaysjustcreatedorders = $thisdayorders
 		->where('status', '=', 'JustCreated');
 		$todayseditingorders = $thisdayorders
@@ -51,8 +52,9 @@ class ProfileController extends Controller
 		$twodaysago = date("Y-m-d", strtotime( '-2 days' ) );
 		$twodaysagoorders = Order::whereDate('created_at', $twodaysago )->where('staffid', '=', $currentuser->idnumber)->get();
 		/* All Orders*/
-		$date1 = \Carbon\Carbon::yesterday()->subDays(1);
-		$allorders = Order::where('created_at', '>=', $date1)->where('staffid', '=', $currentuser->idnumber)->get();
+		dump($today);
+
+		$allorders = Order::where('staffid', '=', $currentuser->idnumber)->get();
 		$sumallorders = $allorders->sum('totalprice');
 		//dump($today);
 		//dump($thisdayorders);
@@ -73,7 +75,9 @@ class ProfileController extends Controller
 			'Total Sales' => number_format($sumallorders) . '.00 SAR',
 			'Account Created' => $currentuser->created_at->diffForHumans()
 		]);
-
+		$branches_list = DB::table('branches')
+		->where('salesgroup', '=', $currentuser->idnumber)
+		->get();
 		return view('dashboard.index')
 				->withOrder($order)
 				->with('justcreatedorderscount', $justcreatedorderscount)
@@ -81,6 +85,7 @@ class ProfileController extends Controller
 				->with('reviewingorderscount', $reviewingorderscount)
 				->with('submittedorderscount', $submittedorderscount)
 				->with('completedorderscount', $completedorderscount)
+				->with('branches_list', $branches_list)
 				->with('orderscount', $orderscount)
 				->with('orderitems', $orderitems)
 				->with('orders', $orders)

@@ -135,13 +135,6 @@
     margin-bottom: 12px; /* Add some space below the input */
   }
   
-  #myTable {
-    border-collapse: collapse; /* Collapse borders */
-    width: 100%; /* Full-width */
-    border: 1.5px solid rgb(141, 141, 141); /* Add a grey border */
-    font-size: 14px; /* Increase font-size */
-  }
-  
   #myTable th, #myTable td {
     text-align: left; /* Left-align text */
     padding-left: 4px; /* Add padding */
@@ -160,7 +153,7 @@
     border-collapse: collapse;
     width: 100%;
     border: 1px solid rgb(104, 104, 104);
-    font-size: 12px;
+    font-size: 10px;
     color: rgb(22, 22, 22);
 }
 
@@ -168,7 +161,7 @@
   border-collapse: collapse;
   width: 100%;
   border: 1px solid rgb(97, 97, 97);
-  font-size: 12px;
+  font-size: 10px;
   color: rgb(255, 255, 255);
 
 }
@@ -187,7 +180,7 @@
     border-collapse: collapse;
     width: 100%;
     border: 1px solid rgb(104, 104, 104);
-    font-size: 12px;
+    font-size: 10px;
     background-color: green;
 
 

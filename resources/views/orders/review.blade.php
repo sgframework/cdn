@@ -22,13 +22,21 @@
 
         </div>
         
-<table class="ExcelTable2007">
+
+
+
+
+
+<table class="">
 
     <thead>
         <tr>
             <th>By#ID </th>
             <th>PO#</th>
             <th>Branch</th>
+            <th>Order#</th>
+            <th>URL</th>
+            <th>Date - Time</th>
         </tr>  
     </thead>
     <tbody>
@@ -36,25 +44,13 @@
             <td>{{ $order->staffname }} #{{ $order->staffid }}</td>
             <td>{{ $order->ponumber }}</td>
             <td>{{ $order->branchname }}</td>
-        </tr>
-    </tbody>
-    </table>
-    <table class="ExcelTable2007">
-
-    <thead>
-        <tr>
-            <th>Order#</th>
-            <th>URL</th>
-            <th>Date - Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
             <td>{{ $order->ordernumber }}</td>
             <td><a href="{{ url('/orders/order') }}/{{ $order->slug }}/review">{{ $order->slug }}</a></td>
             <td>{{ $order->created_at }}</td>
         </tr>
     </tbody>
+    </table>
+
 @if (!$order->count())
     <p>You have no processed orders.</p>
 @else
@@ -66,7 +62,7 @@
             <?php $totalfree = 0; ?>
             <?php $totalprice = 0; ?>
             <?php $totalqtyprice = 0; ?>
-    <table  class="style31 ExcelTable2007">
+    <table  class="style31">
             <thead>
                 <th>Mat. Description(Optional)</th>
                 <th style="text-align:center">Material Code</th>
@@ -96,6 +92,15 @@
     </table>
 </div>
 <br />
+
+
+
+<main class="header-link py-4 hljs">
+    </main>
+
+    
+
+
     <form  enctype="multipart/form-data" action="{{ route('orders.submit', ['orderId' => $order->slug]) }}" method="POST">
     @csrf
     <input hidden name="orderid" value="{{ url('/root/orders') }}/{{ $order->staffid }}/{{ $order->slug }}">
@@ -115,14 +120,15 @@
     <button style="font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit"> Submit </button>
 </div>
     </form>
-    <form  enctype="multipart/form-data" action="{{ route('orders.attachpo', ['orderId' => $order->slug]) }}" method="POST">
-    @if (Session::has('success'))
+    <form enctype="multipart/form-data" action="{{ route('orders.attachpo', ['orderId' => $order->slug]) }}" method="POST">
+
+        <div style="float:left;padding-left:20px">
+        @if (Session::has('success'))
                 <br />
                     <div padding-top="20px"></div>
-                    <div style="font-size:16px;color:green;" class="alert alert-warning">{{ Session::get('success') }}</div>
+                    <div style="font-size:12px;color:green;" class="alert alert-success">{{ Session::get('success') }}</div>
                 <br />
     @endif
-        <div style="float:left;padding-left:20px">
             <input type="file" name="fileToUpload" id="fileToUpload"><br /><br />
             <input style="background-color:red;color:white" class="btn btn-info" type="submit" value="Upload PO" name="submit">
             <input type="hidden" name="_token" value="{{ Session::token() }}">
@@ -134,7 +140,7 @@
 </div>
 </div>
 
-    <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="500" height="400" alt="pdf" />
+    <center><embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="300" height="400" alt="pdf" /></center>
 
 
 <br />

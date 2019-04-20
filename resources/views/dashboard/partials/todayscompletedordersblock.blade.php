@@ -11,7 +11,7 @@
 					<td style="text-align:center">{{ $todayscompletedorder->totalqty }}</td>
 					<td style="text-align:center">{{ number_format($todayscompletedorder->totalprice) }}.00 SAR</td>
 					<!--<td>{{ $todayscompletedorder->updated_at->diffForHumans() }}</td>-->
-					<td class="{{ strtolower($todayscompletedorder->status) }}">{{ $todayscompletedorder->status }}</td>
+					<td style="text-align:center" class="{{ strtolower($todayscompletedorder->status) }}">{{ $todayscompletedorder->updated_at->format('d/m/y g:iA') }}</td>
 					<!--<td><pre><a style= "" href="/orders/order/{{ $todayscompletedorder->slug }}">{{ $todayscompletedorder->slug }}</a></pre></td>-->
 				</tr>                            
 			</tbody>
