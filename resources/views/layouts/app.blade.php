@@ -130,14 +130,28 @@
                         <span class="nav-item">
                             <a class="nav-link" href="{{ route('branches.index') }}">Browse Branches</a>
                         </span>
-                        <span class="nav-item">
-                            <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
-                        </span>
+
                         <!--<span class="nav-item">
                             <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
                         </span>-->
+                            @if ( Auth::user()->is_permission == '0')                        
+                        <span class="nav-item">
+                            <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
+                        </span>
                         <span class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard.index', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                        </span>
+                            @elseif ( Auth::user()->is_permission == '1')
+                            <span class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.manager', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                            </span>
+
+                            @elseif ( Auth::user()->is_permission == '2')
+                            <span class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard.admin', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                            </span>
+
+                            @endif    
                         </span>  
                     </ul>
                     <!-- Right Side Of Navbar -->
@@ -192,7 +206,7 @@
                 </ul>
             </div>
             <div class="copyright-sunbulahgroup">
-            <?='<span class="pull-left" style="font-size:10px; padding-left:0px;">Copyright &copy; ' . date("Y") . ' <a href="/">SunbulahGroub</a>.</span><span style="font-size:10px" class="copyright"> SA, Riyadh. C.R. 0001231212</span>';?>
+            <?='<span class="pull-left" style="font-size:10px; padding-left:0px;">Copyright &copy; ' . date("Y") . ' <a href="/">SunbulahGroup</a>.</span><span style="font-size:10px" class="copyright"> SA, Riyadh. C.R. 0001231212</span>';?>
             </div>     
         </div>
       </div>

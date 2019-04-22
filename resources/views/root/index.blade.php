@@ -254,7 +254,7 @@
                     <a href=""><i class="fas fa-random"></i> <span>Manage Routes</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-exclamation-triangle"></i> <span>Manage Notifications</span></a>&nbsp;&nbsp;
                     <a href="{{ route('root.tree') }}"><i class="fas fa-info fa-fw"></i> <span>Tree</span></a>&nbsp;&nbsp;
-                    <i class="fa fa-book"></i><span id="manual"><a href="http://ipool.remotewebaccess.com/root/readme#manual"> SunbulahGroup Framework Manual</a></span>
+                    <a href="http://ipool.remotewebaccess.com/root/readme#manual"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual</a></span>
             </div>
         </div>
                 <script>

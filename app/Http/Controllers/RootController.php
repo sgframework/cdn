@@ -146,7 +146,10 @@ class RootController extends Controller
 		$todaysreviewingorders = $thisdayorders
 		->where('status', '=', 'Reviewing');
 		$todayssubmittedorders = $thisdayorders
-		->where('status', '=', 'Submitted');
+        ->where('status', '=', 'Submitted');
+        $bystaffidsubmittedorders = $thisdayorders
+        ->where('status', '=', 'Submitted')->groupBy('staffid');
+        
 		$todayscompletedorders = $thisdayorders
 		->where('status', '=', 'Completed');
         //dump($todayssubmittedorders);	
@@ -231,7 +234,8 @@ class RootController extends Controller
 				->with('todayseditingorders', $todayseditingorders)
 				->with('todaysreviewingorders', $todaysreviewingorders)
 				->with('todayssubmittedorders', $todayssubmittedorders)
-				->with('todayscompletedorders', $todayscompletedorders);
+				->with('todayscompletedorders', $todayscompletedorders)
+				->with('bystaffidsubmittedorders', $bystaffidsubmittedorders);
     }
     public function getOrdersByIdAndSlug($idnumber, $slug)
     {   
@@ -400,6 +404,8 @@ class RootController extends Controller
     });*/
         return redirect()->route('root.orders.all', 'Order_Have_Been_Marked_As#completed')->with('success', 'Success! Order has beem marked as completed');
     }
+
+    
 
     public function getTree()
     {

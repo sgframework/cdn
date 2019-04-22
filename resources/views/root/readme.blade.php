@@ -159,8 +159,8 @@ It will generate a CSV format file, which you can drag and drop into excel sheet
 
 <hr />
 
-           @else
-                    @auth
+@elseif ( Auth::user()->is_permission == '1')
+
 
 
                     <strong><i class="fa fa-book"></i><span style="font-size:16px" id="manual"><a class="header-link" href="#manual"></a> SunbulahGroup Framework Manual</span></strong>
@@ -170,7 +170,11 @@ It will generate a CSV format file, which you can drag and drop into excel sheet
 
 
 
-                    <h2 id="order-create"><a class="header-link" href="#order-create"></a>Creating Orders</h2>
+                    <article class="markdown-body">
+
+
+
+<h3 id="order-create"><a class="header-link" href="#order-create"></a>Creating Orders</h3>
 
 @markdown
 
@@ -198,11 +202,10 @@ It will generate a CSV format file, which you can drag and drop into excel sheet
 
 
 
-
-
 ##### Step 2
 
 Confirmation page.
+
 
 This page is important, it is saving confirmed data in session and reset it with every new order.
 
@@ -226,29 +229,186 @@ This page is important, it is saving confirmed data in session and reset it with
 ![{{ asset('/images/assests/confirmation.png') }}]({{ asset('/images/assests/confirmation.png') }})
 
 
+All you have to do is proceed to next page.
 
+![{{ asset('/images/assests/edit-order.png') }}]({{ asset('/images/assests/edit-order.png') }})
 
+Warnings & Alerts
+
+    Can't review & submit an empty order !
+    Your item have been inserted successfully.
+
+Requierd fields
+
+    The Item field is required.
+    The Qty field is required.
+
+![{{ asset('/images/assests/items-insert.png') }}]({{ asset('/images/assests/items-insert.png') }})
+
+    You can delete an item by clicking on the x of the corresponding item row.
+
+##### Please note that as soon as you press review you CAN'T make any changes to the order. Neither delete nor insertion are allowed.
 @endmarkdown
 
 
+<h3 id="order-review"><a class="header-link" href="#order-review"></a>Reviewing Order</h3>
 
-
-
-<h2 id="reports"><a class="header-link" href="#reports"></a>Reports</h2>
 
 @markdown
 
-    * You can extract reports via two different methods:
+Don't forget to upload original po copy.
 
-        - 
-        -$GLOBALS
+![{{ asset('/images/assests/order-review.png') }}]({{ asset('/images/assests/order-review.png') }})
+
+![{{ asset('/images/assests/upload-po.png') }}]({{ asset('/images/assests/upload-po.png') }})
+
+Warnings & Alerts
+
+    Your PO has been attached to this order => You can submit now.
+        
+![{{ asset('/images/assests/submitted-success.png') }}]({{ asset('/images/assests/submitted-success.png') }})
+
+@endmarkdown
 
 
+
+
+
+<h3 id="order-status"><a class="header-link" href="#order-status"></a>Orders Statuses</h3>
+
+@markdown
+
+![{{ asset('/images/assests/order-status.png') }}]({{ asset('/images/assests/order-status.png') }})
+
+
+#### Orders Timeline By Status
+
+![{{ asset('/images/assests/timeline-by-status.png') }}]({{ asset('/images/assests/timeline-by-status.png') }})
+
+@endmarkdown
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h3 id="profile-dashboard"><a class="header-link" href="#profile-dashboard"></a>Profile, Dashboard & Reports</h3>
+
+@markdown
+
+##### Dashboard View
+
+![{{ asset('/images/assests/dashboard.png') }}]({{ asset('/images/assests/dashboard.png') }})
+
+You can extract reports and create a piviot tables easely.
+
+![{{ asset('/images/assests/export.png') }}]({{ asset('/images/assests/export.png') }})
+
+It will generate a CSV format file, which you can drag and drop into excel sheet.
+
+![{{ asset('/images/assests/exported-report.png') }}]({{ asset('/images/assests/exported-report.png') }})
+
+**Note that only completed orders are generated.**
+
+![{{ asset('/images/assests/piviot-table-create0.png') }}]({{ asset('/images/assests/piviot-table-create0.png') }})
+
+![{{ asset('/images/assests/piviot-table-created0.png') }}]({{ asset('/images/assests/piviot-table-created0.png') }})
 
 
 @endmarkdown
 
-<h2 id="orders-sorting"><a class="header-link" href="#orders-sorting"></a>Orders $_GLOBAL Sorting & Arrangement</h2>
+</article>
+
+
+<h2 id="admins"><a class="header-link" href="#admins"></a>Only admins and higher can see below section</h2>
+
+
+
+
+@elseif ( Auth::user()->is_permission == '2')
+
+
+<h2 id="superadmins"><a class="header-link" href="#superadmins"></a>Only super admins can see below section</h2>
+<h3 id="permissions"><a class="header-link" href="#permissions"></a>Permissions and access levels</h3>
+
+@markdown
+
+    is_permission [ 
+                    '0' => 'User', 011, 021, 031, 041
+                    '1' => 'Admin', 010, 020, 030, 040
+                    '2' => 'SuperAdmin' 000000
+                ];
+    -------------------------------------
+
+    Tree [SG]
+
+            * byDistriputionChannel
+                -> HASSAN M. RABAH 000000
+                    - Retail
+                        -> BASHAR AL DALAA  / KA MANAGER 001010
+                            -> FIRAS / KA SUPERVISOR  CSZ 001020
+                                -> Michael 001021
+                                -> Fahad 001022
+                                -> Abdalla Naser 001023
+                                -> M. Sayed 001024
+                                -> A. Medhat 001025
+                                -> Wail 001026
+                            -> Hazem / KA SUPERVISOR  CSL 001030
+                                -> Noufal 001031
+                                -> Ruben M. 001032
+                                -> Samsudin 001033
+                                -> Osama M.R. 001034
+                            -> M. Awaden  / KA SUPERVISOR CTK 001040
+                                -> A. Shawky 001041
+                                -> Hassan Fathi 001042
+                                -> Hesham 001043
+                                -> M. Hassan 001044
+                            -> WAEL GHAZI / KA SUPERVISOR Qaseem 001110
+                                -> Suneer 001111
+                                -> Fahad Hussein 001112
+                                -> Sultan Salman 001113
+                                -> Medhat 001114
+                    - Whole Sale 
+                        -> Odeh Hersh 002010
+                            -> Elsayed M. Ibrahim 002011
+                            -> Anas 002012
+                            -> Mujahed Radwan 002013
+                            -> Amr M. Eisa 002014
+
+                        -> WS channel Qaseem 002110
+                            -> Moneer 002111
+                            -> Nasser Ahmed 002112
+                        
+                    - Food Service
+                    - Van
+
+    -------------------------------------
+    
+                6 digits structre
+
+                    001 = Retail
+                        010 = MANAGER
+                            011 = User
+                    002 = WS
+                        020 = MANAGER
+                            021 = User    
+                    003 = FS
+                        030 = MANAGER
+                            031 = User
+                    004 = VAN
+                        040 = MANAGER
+                            041 = User
+
+@endmarkdown
+
+<h3 id="orders-sorting"><a class="header-link" href="#orders-sorting"></a>Orders $_GLOBAL Sorting & Arrangement</h3>
 
 @markdown
 
@@ -295,12 +455,12 @@ This page is important, it is saving confirmed data in session and reset it with
 
 @endmarkdown
 
-<h2 id="date-time-formats"><a class="header-link" href="#date-time-formats"></a>Date Time Formats</h2>
+<h3 id="date-time-formats"><a class="header-link" href="#date-time-formats"></a>Date Time Formats</h3>
 
 @markdown
 
 ```
-$today = date("d/m/y g:ia");                   // 19/04/19 5:47pm
+$today = date("d/m/y g:ia");                    // 19/04/19 5:47pm
 $today = date("d/m/y | g:i a");                 // 19/04/19 | 5:47 pm
 $today = date("dmy | g:i a");                   // 190419 | 5:47 pm
 $today = date("F j, Y, g:i a");                 // March 10, 2001, 5:16 pm
@@ -324,7 +484,7 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
     // Assuming today is March 10th, 2001, 5:16:18 pm, and that we are in the
     // Mountain Standard Time (MST) Time Zone
 
-    var_dump($today = date("d/m/y g:ia"));                   // 19/04/19 5:47pm
+    var_dump($today = date("d/m/y g:ia"));                    // 19/04/19 5:47pm
     var_dump($today = date("d/m/y | g:i a"));                 // 19/04/19 | 5:47 pm
     var_dump($today = date("dmy | g:i a"));                   // 190419 | 5:47 pm
     var_dump($today = date("F j, Y, g:i a"));                 // March 10, 2001, 5:16 pm
@@ -345,9 +505,49 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
 
 @endmarkdown
 
-<h2 id="data-base"><a class="header-link" href="#data-base"></a>Database & Tables Structure</h2>
+<h3 id="data-base"><a class="header-link" href="#data-base"></a>Database & Tables Structure</h3>
 
 @markdown
+
+
+
+
+
+
+
+Random important commands
+
+    /** SHOW RECORDS **/
+
+    mysql> SELECT * FROM orders where ponumber="11631534";
+    mysql> SELECT * FROM orderitems where ponumber="11631534";
+
+    /** INSERT RECORDS **/
+
+    mysql> INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) VALUES ("302959", "Othaim Markets Co. 172", "3761", "24", "CENR");
+
+
+    /** UPDATE RECORDS **/
+
+    mysql> UPDATE items SET itemnumber="56060009" WHERE itemnumber="56060006";
+    mysql> UPDATE items SET itemnumber="56060109" WHERE itemnumber="56060106";
+    mysql> UPDATE items SET itemnumber="56060509" WHERE itemnumber="56060506";
+
+
+    /** DELETE RECORDS **/
+
+    mysql> DELETE FROM orders WHERE id=147;
+    mysql> DELETE FROM orders WHERE ponumber=40896073;
+    mysql> DELETE FROM orderitems WHERE ponumber=987888;
+    mysql> DELETE FROM branches WHERE branchnumber=303603;
+    mysql> DELETE FROM items WHERE itemnumber="56060506";
+
+    /** DROP TABLE **/
+
+    DROP TABLE orders;
+    DROP TABLE orderitems;
+
+
 
         mysql> show tables;
         +-----------------+
@@ -361,6 +561,7 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
         +-----------------+
         5 rows in set (0.00 sec)
 
+        Import has been successfully finished, **595** queries executed. (items-no-duplicates.csv)
 
         mysql> desc users;
         +-------------------+---------------------+------+-----+-------------+----------------+
@@ -473,6 +674,26 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
         +---------------+------------------+------+-----+---------+----------------+
         21 rows in set (0.00 sec)
 
+
+
+        mysql> select * from users;
+        +----+-------------------------+------------------------+----------+-------------+---------------+
+        | id | name                    | email                  | idnumber | phonenumber | is_permission |
+        +----+-------------------------+------------------------+----------+-------------+---------------+
+        |  1 | Ahmed M. Sulaimani      | ads@sunbulahgroup.com  | 5303     |   562204816 |             2 |
+        |  2 | Anonymous 1001          | pin9.in9@gmail.com     | 5604     |   500100500 |             0 |
+        |  3 | Ahmed Al-Onazi          | aoz@sg.com             | 1231     |   590090033 |             0 |
+        |  4 | Mohammed Makki          | mzm@sunbulahgroup.com  | 1255     |   560004564 |             2 |
+        |  6 | Hasan Rabah             | hmr@sunbulahgroup.com  | 9090     |   544636421 |             2 |
+        |  7 | Ahmed Alonazi           | aai@sunbulahgroup.com  | 5298     |           0 |             0 |
+        |  8 | Micheal Lanes           | mel@sunbulahgroup.com  | 1275     |   500000000 |             0 |
+        |  9 | Abdalla Naser           | abr@sunbulahgroup.com  | 2409     |   552266786 |             0 |
+        | 10 | Mohammed Sayed          | med@sunbulahgroup.com  | 5275     |   568624977 |             0 |
+        | 11 | Fahed Dahasy            | fds@sunbulahgroup.com  | 2745     |   501003637 |             0 |
+        | 12 | 4401                    | 4401@sunbulahgroup.com | 4401     |   560004401 |             0 |
+        | 13 | 1171                    | 1171@sunbulahgroup.com | 1171     |   560001171 |             0 |
+        | 14 | Ahmed Medhat            | adk@sunbulahgroup.com  | 4688     |   563040670 |             0 |
+        +----+-------------------------+------------------------+----------+-------------+---------------+
 @endmarkdown
 
 <h5 id="orders"><a class="header-link" href="#orders"></a>Orders By Status in DB</h5>
@@ -589,7 +810,7 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
 @endmarkdown
 
 
-<h3 id="codes"><a class="header-link" href="#codes"></a>Codes & Syntaxes</h3>
+<!--<h3 id="codes"><a class="header-link" href="#codes"></a>Codes & Syntaxes</h3>
 
 <article class="markdown-body">
 
@@ -608,7 +829,7 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
   pointed salt-eaten stick out of the jetsam among the rocks, he clambered down
   the slope of the breakwater."
 
-@endmarkdown
+@endmarkdown-->
 
 
 </article>
@@ -624,7 +845,6 @@ $today = date("Y-m-d H:i:s");                   // 2001-03-10 17:16:18 (the MySQ
                     <div style="padding-top:220px">
                     </div>
                     <hr />
-                    @endauth
                 </div>
             @endif
         </div>

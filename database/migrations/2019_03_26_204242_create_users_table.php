@@ -23,6 +23,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('idnumber');
             $table->integer('phonenumber');
+            $table->string('dc');
+            $table->decimal('totalgrand'), 18, 2)->nullable(); 
             $table->string('photo')->default('default.svg');
             $table->tinyInteger('is_permission')->default('0');
             $table->rememberToken();

@@ -50,8 +50,12 @@
 
 
 
+.inline-form {
+  display: inline;
+  flex-flow: row wrap;
+  align-items: left;
 
-
+}
 
 
 

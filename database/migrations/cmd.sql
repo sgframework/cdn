@@ -23,6 +23,10 @@ DELETE FROM migrations WHERE id=46;
 
 INSERT INTO migrations (id, migration, batch) Values ("49", "2019_03_27_193737_create_items_table", "16");
 
+SELECT * FROM users;
+
+INSERT INTO users 
+
 update orders set status='Processed' where id=1;
 update orders set status='Just Created' where id=1;
 update orders set status='Completed' where id=30;
@@ -96,9 +100,12 @@ INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values (
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303143", "PANDA #135", "2409", "24", "CENR");
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303222", "PANDA #10003", "4688", "24", "CENR");
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302938", "PANDA #104", "4688", "24", "CENR");
-
-
-
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303889", "Danube Co. Limited - 152 Badiah", "2745", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303241", "Othaim Markets Co. 188", "3761", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302959", "Othaim Markets Co. 172", "3761", "24", "CENR");
+302959	Othaim Markets Co. 172	3761	24	CENR
+303241	Othaim Markets Co. 188	3761	24	CENR
+303889	Danube Co. Limited - 152 Badiah	2745	24	CENR
 
 302938	PANDA #104	4688	24	CENR
 
@@ -217,9 +224,17 @@ DELETE FROM orderitems WHERE ponumber="test0";
 
 SELECT * FROM orders where ponumber=11631534;
 SELECT * FROM orderitems where ponumber=11631534;
-DELETE FROM orders WHERE id="195";
-DELETE FROM orderitems WHERE id="1273";
 
+select * from orderitems where ponumber="7691971";
+DELETE FROM orders WHERE ponumber="7691971";
+DELETE FROM orderitems WHERE ponumber="7691971";
+
+DELETE FROM orders WHERE ponumber="132377";
+DELETE FROM orderitems WHERE ponumber="132377";
+
+132377
+
+7691971
 
 
 
@@ -240,8 +255,23 @@ DELETE FROM orders WHERE ponumber="454444 f";
 DELETE FROM orderitems WHERE ponumber="454444 f";
 454444 f
 
-DELETE FROM orders WHERE ponumber="test0000";
-DELETE FROM orderitems WHERE ponumber="test0000";
+DELETE FROM orders WHERE ponumber="test0";
+DELETE FROM orderitems WHERE ponumber="test0";
+DELETE FROM orders WHERE ponumber="40842498";
+DELETE FROM orderitems WHERE ponumber="40842498";
+DELETE FROM orders WHERE ponumber="11659851 f";
+DELETE FROM orderitems WHERE ponumber="11659851 f";
+DELETE FROM orders WHERE ponumber="11659851 f1";
+DELETE FROM orderitems WHERE ponumber="11659851 f1";
+
+
+DELETE FROM orders WHERE ponumber="123123";
+DELETE FROM orderitems WHERE ponumber="123123";
+
+
+11659851 f1
+11659851 f
+40842498
 23232323
 
 
@@ -249,9 +279,7 @@ DELETE FROM orderitems WHERE ponumber="test0000";
 /* Items Updates */
 
 INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("56060509", "SUNBULAH SHREDDED MOZZARELLA (6X1 KG)", "193"),
-("56060009", "SUNBULAH SHREDDED MOZZARELLA (24X200 G", "180"),
-("56060109", "SUNBULAH SHREDDED MOZZARELLA (12X500G)", "209");
+ ("55000418", "Nai Iced Tea (Promo Pack 3x473g)", "22");
 
 
 56060509	SUNBULAH SHREDDED MOZZARELLA (6X1 KG)	193

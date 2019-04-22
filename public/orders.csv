@@ -1,11 +1,85 @@
-By,PO#,Customer,Items,"Total Qtys","Total Price",Status,SUM,"16,095 SAR"
-"Ahmed Medhat",40868653,"303222-PANDA #10003",[],7,"1,351.00",Completed
-"Micheal Lanes",11639583,"302863-Danube Co. Limited - 125 Panorama",[],7,"1,790.00",Completed
-"Micheal Lanes",11639587,"302863-Danube Co. Limited - 125 Panorama",[],10,970.00,Completed
-"Micheal Lanes",40884487,"303334-PANDA #10026",[],10,"1,880.00",Completed
-"Micheal Lanes",40862097,"303334-PANDA #10026",[],46,"5,004.00",Completed
-"Micheal Lanes",40861666,"302887-PANDA #10010",[],15,"1,414.00",Completed
-"Mohammed Sayed",40880186,"302833-PANDA #10022",[],1,344.00,Completed
-"Mohammed Sayed",11656314,"303936-Danube Co. Limited - 155 Ghadeer",[],2,730.00,Completed
-"Mohammed Sayed",11643943,"302587-Danube Co. Limited - 120 Hayat",[],1,300.00,Completed
-"Mohammed Sayed",11656268,"303936-Danube Co. Limited - 155 Ghadeer",[],4,"2,312.00",Completed
+By,PO#,Customer,Items,"Total Qtys","Total Price",Status,SUM,"424,065 SAR"
+"Abdalla Naser",40901186,"303159-PANDA #140",[],130,"10,946.00",Completed
+"Micheal Lanes",11641907,"303452-Danube Co. Limited - 136 Tital",[],89,"9,792.00",Completed
+"Micheal Lanes",11662868,"303452-Danube Co. Limited - 136 Tital",[],8,"1,590.00",Completed
+"Micheal Lanes",11660771,"303452-Danube Co. Limited - 136 Tital",[],10,650.00,Completed
+"Micheal Lanes",11641827,"303452-Danube Co. Limited - 136 Tital",[],5,"1,045.00",Completed
+"Micheal Lanes","11659852 f","303452-Danube Co. Limited - 136 Tital",[],24,528.00,Completed
+"Micheal Lanes",11641912,"303800-Danube Co. Limited - 147 Aqiq",[],40,"4,203.00",Completed
+"Micheal Lanes",11663139,"303800-Danube Co. Limited - 147 Aqiq",[],3,665.00,Completed
+"Micheal Lanes",11660774,"303800-Danube Co. Limited - 147 Aqiq",[],15,975.00,Completed
+"Micheal Lanes","11659856 f","303800-Danube Co. Limited - 147 Aqiq",[],24,528.00,Completed
+"A. Shawky","19012461 f","303935-Saudi HypermarketsCo(LLC)-Riyadh Pa",[],10,"4,080.00",Completed
+"A. Shawky",19012490,"303935-Saudi HypermarketsCo(LLC)-Riyadh Pa",[],14,"2,877.00",Completed
+"A. Shawky","19018007 f","302509-Saudi HypermarketsCo(LLC)-TALA MALL",[],12,"1,304.00",Completed
+"A. Shawky","19012491 f","303935-Saudi HypermarketsCo(LLC)-Riyadh Pa",[],4,803.00,Completed
+"A. Shawky",190124912,"303935-Saudi HypermarketsCo(LLC)-Riyadh Pa",[],3,"1,316.00",Completed
+"A. Shawky",11649145,"303566-Danube Co. Limited - 138 Irqa",[],82,"7,389.00",Completed
+"A. Shawky","11650764 f","303566-Danube Co. Limited - 138 Irqa",[],3,794.00,Completed
+"A. Shawky",11650729,"303566-Danube Co. Limited - 138 Irqa",[],15,"1,912.00",Completed
+"A. Shawky","11649197 f","303566-Danube Co. Limited - 138 Irqa",[],12,"1,400.00",Completed
+"A. Shawky",11650616,"303566-Danube Co. Limited - 138 Irqa",[],4,"1,140.00",Completed
+"A. Shawky",11666411,"303566-Danube Co. Limited - 138 Irqa",[],3,261.00,Completed
+"A. Shawky",11649232,"303566-Danube Co. Limited - 138 Irqa",[],29,"9,194.00",Completed
+"A. Shawky","11649228 f","303566-Danube Co. Limited - 138 Irqa",[],1,163.00,Completed
+"A. Shawky",11648991,"303566-Danube Co. Limited - 138 Irqa",[],8,"2,317.00",Completed
+"A. Shawky",11650992,"303566-Danube Co. Limited - 138 Irqa",[],5,"1,536.00",Completed
+"A. Shawky","71650788 f","303566-Danube Co. Limited - 138 Irqa",[],2,907.00,Completed
+"Sultan Salman","220419 000",303884,[],10,"2,500.00",Completed
+"Sultan Salman","220419 001",303851,[],64,"6,475.00",Completed
+"Sultan Salman","220419 002","303693-PANDA #314",[],161,"14,614.00",Completed
+"Sultan Salman","220419 003",302803,[],2,"1,058.00",Completed
+"Sultan Salman","220419 004","302804-PANDA #30001",[],186,"15,282.00",Completed
+"Sultan Salman","220419 005","303693-PANDA #314",[],2,385.00,Completed
+"Sultan Salman","220419 05",303694,[],5,"1,084.00",Completed
+"Sultan Salman","220419 006f",303890,[],10,"2,500.00",Completed
+"Sultan Salman","220419 007s",303736,[],10,"2,500.00",Completed
+"Sultan Salman","220419 007","303693-PANDA #314",[],5,"1,495.00",Completed
+"Sultan Salman","220419 008","302804-PANDA #30001",[],55,"8,960.00",Completed
+"Sultan Salman","220419 009",302807,[],12,"1,959.00",Completed
+"Sultan Salman","220419 010",302812,[],4,710.00,Completed
+"Sultan Salman","220419 011",302807,[],437,"39,642.00",Completed
+"Sultan Salman","220419 012",303621,[],3,905.00,Completed
+"Sultan Salman","220419 013",302909,[],130,"14,171.00",Completed
+"Sultan Salman","220419 014",302803,[],2,386.00,Completed
+"Sultan Salman","220419 015",302364,[],28,"3,270.00",Completed
+"Sultan Salman","220419 015f",302364,[],1,260.00,Completed
+"Sultan Salman","220419 016",302811,[],29,"4,258.00",Completed
+"Sultan Salman","220419 017",303708,[],105,"9,597.00",Completed
+"Sultan Salman","220419 018",302811,[],286,"27,119.00",Completed
+"Sultan Salman","220419 019",303708,[],1,260.00,Completed
+"Sultan Salman","200419 020",302811,[],3,564.00,Completed
+"Sultan Salman","220419 021",302810,[],2,520.00,Completed
+"Sultan Salman","220419 022",302842,[],2,674.00,Completed
+Hesham,"220419 02",303551,[],75,"7,588.00",Completed
+Hashem,"220419 02f",303551,[],2,520.00,Completed
+Hashem,"220419 03","302173-Othaim Markets Co. 28",[],130,"16,820.00",Completed
+Hashem,"220419 03f","302173-Othaim Markets Co. 28",[],1,260.00,Completed
+Hashem,"220419 04",303544,[],237,"22,726.00",Completed
+Hashem,"220419 04f",303544,[],4,842.00,Completed
+"Micheal Lanes",40861443,"303305-PANDA #10004",[],61,"5,888.00",Completed
+"Hassan Fathi","220419 06","302336-Othaim Markets Co. 37",[],143,"18,082.00",Completed
+"Hassan Fathi","220419 06f","302336-Othaim Markets Co. 37",[],5,"1,300.00",Completed
+"Hassan Fathi","220419 07","304150-Othaim Markets Co. 370",[],75,"9,355.00",Completed
+"Hassan Fathi","220419 07f","304150-Othaim Markets Co. 370",[],7,"2,072.00",Completed
+"Hassan Fathi","220419 08",303872,[],86,"10,079.00",Completed
+"Hassan Fathi","220419 08f",303872,[],4,"1,316.00",Completed
+"Hassan Fathi","220419 09",303882,[],264,"23,859.00",Completed
+"Hassan Fathi","220419 09f",303882,[],3,"1,029.00",Completed
+"Abdalla Naser",41908502,"302852-PANDA #119",[],,0.00,Editing
+"Hassan Fathi",11675016,303227,[],30,"1,950.00",Completed
+"Hassan Fathi","220419 10",303494,[],52,"4,427.00",Completed
+"Hassan Fathi","220419 11","302342-Othaim Markets Co. 38",[],61,"7,246.00",Completed
+"Hassan Fathi","220419 11f","302342-Othaim Markets Co. 38",[],2,520.00,Completed
+"Hassan Fathi","220419 12","303603-Othaim Markets Co. 194",[],150,"15,929.00",Completed
+"Hassan Fathi","220419 12f","303603-Othaim Markets Co. 194",[],2,904.00,Completed
+"Fahed Dahasy",11675066,"303889-Danube Co. Limited - 152 Badiah",[],30,"1,950.00",Completed
+"Osama M.R.","220419 13","302180-Othaim Markets Co. 102",[],57,"5,672.00",Completed
+"Osama M.R.","220419 14","302301-Othaim Markets Co. 107",[],12,860.00,Completed
+"Osama M.R.","220419 15","302180-Othaim Markets Co. 102",[],2,590.00,Completed
+Samsudin,"220419 16",303007,[],75,"8,773.00",Completed
+Samsudin,"220419 17","304167-Othaim Markets Co. 374",[],70,"8,407.00",Completed
+Samsudin,"220419 17f","304167-Othaim Markets Co. 374",[],2,385.00,Completed
+Samsudin,"220419 18",303135,[],104,"12,245.00",Completed
+Samsudin,"220419 19","302292-Othaim Markets Co. 49",[],14,"2,488.00",Completed
+Samsudin,"220419 19f","302292-Othaim Markets Co. 49",[],2,520.00,Completed

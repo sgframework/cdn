@@ -106,7 +106,7 @@
 
 <?php
 $page = 'http://ipool.remotewebaccess.com/root/users/orders/all';
-$sec = "120";
+$sec = "10";
 //dump($page);
 ?>
         <head>
@@ -156,7 +156,7 @@ $sec = "120";
                                         <td style="text-align:center">{{ $submittedorder->totalitems }}</td>
                                         <td style="text-align:center">{{ $submittedorder->totalqty }}</td>
                                         <td style="text-align:center">{{ number_format($submittedorder->totalprice) }}.00 SAR</td>
-                                        <td style="text-align:center"><span class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->format('d/m/y g:iA') }}</span></td>
+                                        <td style="text-align:center"><a href="{{ url('/export-orders-csv/submitted/to/completed/now') }}"><span class="{{ strtolower($submittedorder->status) }}" id="status">{{ $submittedorder->updated_at->format('d/m/y g:iA') }}</span></a></td>
                                         </tr>	
                                         </tbody>
                                     <?php $totalqty += $submittedorder->totalqty; ?>
@@ -177,6 +177,12 @@ $sec = "120";
                                     </div>
                                 </div>
                             </table>
+
+                            $header->
+                            @foreach ($bystaffidsubmittedorders as $bystaffidsubmittedorder)
+
+                            <a href="{{ url('/export-orders-csv/submitted/to/completed') }}/{{ $bystaffidsubmittedorder->staffid }}/all">Export {{ $bystaffidsubmittedorder->staffname }}</a>
+                            @endforeach	
 
 
                             @endif

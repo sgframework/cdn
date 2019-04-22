@@ -8,6 +8,7 @@ use cdn\Models\OrderItems;
 use cdn\Models\Item;
 use DB;
 use Auth;
+use cdn\User;
 
 use Illuminate\Http\Request;
 
@@ -133,7 +134,8 @@ class GlobalController extends Controller
                 $completedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
                 $sumsubmittedorders = $submittedorders->sum('totalprice');
                 $sumcompletedorders = $completedorders->sum('totalprice');
-        
+                $users = User::all();
+
                 dump([ 
                     'Total Submitted Orders' => $submittedorders->count(),
                     'Total Completed Orders' => $completedorders->count(),
@@ -162,7 +164,13 @@ class GlobalController extends Controller
                         ->with('sumallorders', $sumallorders)
                         ->with('yesterdaysorders', $yesterdaysorders)
                         ->with('sumyesterdaysales', $sumyesterdaysales)
-                        ->with('thisdaycompletedorders', $thisdaycompletedorders);
+                        ->with('thisdaycompletedorders', $thisdaycompletedorders)
+                        ->with('users', $users);
 
+    }
+
+    public function getManager()
+    {
+        return view('global.manager');
     }
 }

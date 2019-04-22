@@ -25,8 +25,14 @@
                                         <div style="padding-top:14px;padding-bottom:8px">
                                             <img style="border-radius:50%" width="125px" height="125px" src="{{ asset('images/uploads/avatars') }}/{{ Auth::user()->photo }}" />                    
                                         </div>
+            @if ( Auth::user()->is_permission == '1')
 
 
+                @include(dashboard.manager)
+
+            @else
+
+            @auth
 
 @markdown
 
@@ -129,7 +135,7 @@ Email: {{ Auth::user()->email }}
                                 
 @markdown
 
-## Customers List
+## Sales By Customer
 
 @endmarkdown
 
@@ -365,7 +371,8 @@ var myChart = new Chart(ctx, {
 
 
 
-
+@endauth
+@endif
 
 
 
