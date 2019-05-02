@@ -48,8 +48,25 @@
 <div class="alert alert-success">{{ Session::get('alert') }}</div>
 @endif
 
+@if (!$lastorder)
+
+@else
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-                             
+<span>Last created order: </span>
+<span class="badge badge-dark">{{ $lastorder->ponumber }}</span> <span class="badge badge-dark"> {{ $lastorder->branchname }}</span>
+    @if( $lastorder->urgent === 'on' )
+    <span class="badge badge-danger">URGENT</span> 
+    @else
+    <span class="badge badge-secondary">REGULAR</span> 
+    @endif
+    @if( $lastorder->status === 'Submitted' )
+    <span class="badge submitted">{{ number_format($lastorder->totalprice) }}.00 SAR</span> 
+    @elseif( $lastorder->status === 'Completed' )
+    <span class="badge completed">{{ number_format($lastorder->totalprice) }}.00 SAR</span> 
+    @endif
+@endif
+
                             @if($errors->any())
                             <span style="font-size:9px;color:red">* <h4>{{$errors->first()}}</h4>
                             </span>@endif
@@ -67,7 +84,10 @@
                     </label>
                         <input class="form-control" width="20px" type="text" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
                                 
-                                
+          
+@if (!$branches_list)
+
+@else                                
 
                                 <!--<select name="branchnumber" id="branchnumber" class="form-control dynamic" data-dependent="branchnumber">
                                     <option value="empty">Select Branch</option>
@@ -75,23 +95,17 @@
                                             <option value="{{ $branch->branchnumber }}-{{ $branch->branchname }}">&nbsp;{{ $branch->branchnumber }}&nbsp;{{ $branch->branchname }}</option>
                                             @endforeach      
                                 </select>&nbsp;&nbsp;&nbsp;-->
-          
 
-                                <input name="branchnumber" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+
+                                <input name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
                                                     @foreach($branches_list as $branch)
                                                     <option name="branchname" value="{{ $branch->branchnumber }}-{{ $branch->branchname }}"></option>
                                                     @endforeach 
                                         </datalist>
-                                <!--<select name="branchnumber" id="branchnumber" class="form-control dynamic">
-                                    <option value="empty">Select Branch</option>
-                                        <optgroup label="">
-                                            @foreach($branches_list as $branch)
-                                            <option value="{{ $branch->branchnumber }}">&nbsp;&nbsp;{{ $branch->branchnumber }}</option>
-                                            @endforeach      
-                                        </optgroup>
-                                </select>&nbsp;&nbsp;&nbsp;-->
+                                        @endif
+
                                 <script>
 
 $(document).ready(function(){
@@ -138,8 +152,8 @@ $(document).ready(function(){
 </script>
 
                             <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
-                        <span style="color:red"> Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
-                    <div style="float:right; padding-left:4px"><button type="submit">Next</button></div>
+                        <span style="color:red">&nbsp;&nbsp;&nbsp; Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
+                    <div style="float:right; padding-left:4px">&nbsp;&nbsp;&nbsp;<input style="padding:5px 20px;background-color:#227dc7" class="btn btn-primary" value="Next" type="submit" /></div>
                 </form>
                                 <script>
                                     $(document).ready(function(){

@@ -5,7 +5,6 @@
  */
 
 
- * {box-sizing: border-box;}
 
 
 
@@ -40,8 +39,22 @@
   text-align: left;
 }
 
+.ahmedsulaimani {
+  color:#646464;
+  background-color:rgb(0, 0, 0);
+  text-align: left;
+}
 
 
+
+
+
+.makki {
+
+  color:#1e1c4b;
+  background-color:rgb(138, 138, 138);
+  text-align: left;
+}
 
 
 
@@ -73,12 +86,12 @@
 
  
  .form-inline label {
-   margin: 5px 10px 5px 0;
- }
+  margin: 5px 0px 0px 0;
+}
  
  .form-inline input {
    vertical-align: middle;
-   margin: 5px 10px 5px 0;
+   margin: 5px 0px 0px 0;
    padding: 10px;
    background-color: #fff;
    border: 1px solid #ddd;
@@ -111,22 +124,80 @@
 */
 
 
- @media (min-width: 52px) {
+
+ @media (min-width: 522px) {
 .form-inline .form-control1 {
     display: inline-block;
-    width: 620px;
+    width: 480px;
     vertical-align: middle;
+    display:block;width:50%;height:calc(2.19rem + 2px);padding:.375rem .75rem;font-size:.9rem;line-height:1.6;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   }
 }
 
 @media (min-width: 52px) {
   .form-inline .form-control2 {
       display: inline-block;
-      width: 100px;
+      width: 80px;
       vertical-align: middle;
+      display:block;width:12%;height:calc(2.19rem + 2px);padding:.375rem .75rem;font-size:.9rem;line-height:1.6;color:#495057;background-color:#fff;background-clip:padding-box;border:1px solid #ced4da;border-radius:.25rem;transition:border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
     }
   }
   
+  .blur {
+    text-align: center;
+    color: black;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+  }
+
+  
+  .centered {
+    position: absolute;
+    top: 160;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* padding: 4px 3px 4px 44px; */
+    width: -webkit-fill-available;
+}
+
+
+
+.newspaper {
+  -webkit-column-count: 3; /* Chrome, Safari, Opera */
+  -moz-column-count: 3; /* Firefox */
+  column-count: 3;
+
+  -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+  -moz-column-gap: 40px; /* Firefox */
+  column-gap: 40px;
+}
+
+
+
+
+/** COUNTER */
+
+
+
+/** COUNTER */
+
+
+.text-box {
+
+  padding-left:6px;
+  padding-right:6px;
+  color:white;
+  background:rgba(49, 50, 51, 0.700);
+  font-weight: 700;
+  font-size:12px;
+  width: -webkit-fill-available;
+
+}
+
+
+
+
 
  #myInput {
     background-image: url('{{ asset(`image/searchicon.png`) }}'); /* Add a search icon to input */
@@ -141,7 +212,7 @@
   
   #myTable th, #myTable td {
     text-align: left; /* Left-align text */
-    padding-left: 4px; /* Add padding */
+    padding-left: 0px; /* Add padding */
     border: 1.5px solid rgb(189, 189, 189); /* Add a grey border */
 
   }
@@ -156,17 +227,18 @@
   #myTable {
     border-collapse: collapse;
     width: 100%;
-    border: 1px solid rgb(104, 104, 104);
+    border: 1px solid rgb(97, 97, 97);
     font-size: 10px;
-    color: rgb(22, 22, 22);
+    color: rgb(97, 97, 97);
+    background-color: white;
 }
 
-#myTable.dark {
+#myTable .dark {
   border-collapse: collapse;
   width: 100%;
   border: 1px solid rgb(97, 97, 97);
   font-size: 10px;
-  color: rgb(255, 255, 255);
+  color: rgb(179, 179, 179);
 
 }
 
@@ -199,19 +271,57 @@
   background-color: green;
 }
 
-#myTable.tr:hover tbody:hover  {
-    color: black;
-    border: 2px solid black;
-}
 
 #myTable tbody tr {
-
+  
   text-align: left;
 }
+
+
+#myDarkTable {
+
+  background-color: #1b1d1f;
+  color: rgb(97, 97, 97);
+  border-collapse: collapse;
+  width: 100%;
+  border: 2px solid rgb(255, 94, 0);
+  font-size: 8px;
+}
+
+#myDarkTable tbody tr {
   
-  #myTable tr.header, #myTable tr:hover {
+  text-align: left;
+}
+
+
+  
+#myDarkTable th, #myDarkTable td {
+  text-align: left; /* Left-align text */
+  padding-left: 0px; /* Add padding */
+  border: 1.5px solid rgb(189, 189, 189); /* Add a grey border */
+
+}
+
+#myDarkTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1.5px solid rgb(95, 95, 95); 
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#myDarkTable tr.header, #myDarkTable th:hover tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #000000;
+  color: rgb(255, 255, 255);
+  border: 2px dotted #fc9230;
+}
+
+
+#myTable tr.header, #myTable th:hover tr:hover {
     /* Add a grey background color to the table header and on hover */
-    background-color: #cacaca;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+    border: 2px dotted #fc9230;
   }
   
   input[type=checkbox], input[type=radio] {

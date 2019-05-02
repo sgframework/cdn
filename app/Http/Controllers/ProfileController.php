@@ -52,7 +52,7 @@ class ProfileController extends Controller
 		$twodaysago = date("Y-m-d", strtotime( '-2 days' ) );
 		$twodaysagoorders = Order::whereDate('created_at', $twodaysago )->where('staffid', '=', $currentuser->idnumber)->get();
 		/* All Orders*/
-		dump($today);
+		//dump($today);
 
 		$allorders = Order::where('staffid', '=', $currentuser->idnumber)->get();
 		$sumallorders = $allorders->sum('totalprice');
@@ -68,13 +68,13 @@ class ProfileController extends Controller
 		$idnumber = \Auth::user()->idnumber;
 		//dump($idnumber);
 		//dump($orderitems);
-		dump([ 
+		/*dump([ 
 			$currentuser->name => $idnumber,
 			'Todays Total Sales' => number_format($sumthisdayorders) . '.00 SAR',
 			'Yesterdays Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
 			'Total Sales' => number_format($sumallorders) . '.00 SAR',
 			'Account Created' => $currentuser->created_at->diffForHumans()
-		]);
+		]);*/
 		$branches_list = DB::table('branches')
 		->where('salesgroup', '=', $currentuser->idnumber)
 		->get();
@@ -145,7 +145,7 @@ class ProfileController extends Controller
 			$twodaysago = date("Y-m-d", strtotime( '-2 days' ) );
 			$twodaysagoorders = Order::whereDate('created_at', $twodaysago )->where('staffid', '=', $currentuser->idnumber)->get();
 			/* All Orders*/
-			dump($today);
+			//dump($today);
 	
 			$allorders = Order::where('staffid', '=', $currentuser->idnumber)->get();
 			$sumallorders = $allorders->sum('totalprice');
@@ -166,21 +166,66 @@ class ProfileController extends Controller
 			$idnumber = \Auth::user()->idnumber;
 			//dump($idnumber);
 			//dump($orderitems);
-			dump([ 
-				$currentuser->name => $idnumber,
-				'Todays Total Sales' => number_format($sumthisdayorders) . '.00 SAR',
-				'Yesterdays Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
-				'Total Sales' => number_format($sumallorders) . '.00 SAR',
-				'Account Created' => $currentuser->created_at->diffForHumans()
-			]);
 			$branches_list = DB::table('branches')
 			->where('salesgroup', '=', $currentuser->idnumber)
 			->get();		
+			//dump($usersales);
 
-			
-	
+			$salesbycustomer = 
+
+			$retailtree = User::select()->where('dc',  'like', '00102%')->get();
+
+
+			$suaccesslevel = User::select()->where('is_permission',  '=', '2')->get();
+			$adminsaccesslevel = User::select()->where('is_permission',  '=', '1')->get();
+			$usersaccesslevel = User::select()->where('is_permission',  '=', '0')->get();
+				/* Head Manager */
+				$hasanrabah = User::select()->where('id',  '=', '6')->get();
+					/* KA MANAGER */
+					$bashar =  User::select()->where('dc',  '=', '001010')->get();
+					$basharteam = 
+						/* KA SUPERVISOR  CSZ */
+						$firas = User::select('dc')->where('dc',  '=', '001020')->get();
+							$firasteam = User::select()->where('dc',  '>=', '001021')->where('dc', '<', '001029')->get();
+								$sumfirasteamsales = $firasteam->sum('totalgrand');
+						/* KA SUPERVISOR  CSL */
+						$hazem = User::select()->where('dc',  '=', '001030')->get();
+							$hazemteam =  User::select()->where('dc',  '>=', '001031')->where('dc', '<', '001039')->get();
+								$sumhazemteamsales = $hazemteam->sum('totalgrand');
+						/* KA SUPERVISOR CTK */
+						$awaden = User::select()->where('dc',  '=', '001040')->get();
+							$awadenteam = User::select()->where('dc',  '>=', '001041')->where('dc', '<', '001049')->get();
+								$sumawadenteamsales = $awadenteam->sum('totalgrand');
+							/* WS MANAGER */ 
+						$odeh = User::select()->where('dc',  '=', '002010')->get();
+							$odehteam = User::select()->where('dc',  '>=', '002011')->where('dc', '<', '002019')->get();
+								$sumodehteamsales = $odehteam->sum('totalgrand');
+							$retailmngr = User::select()->where('dc',  'like', '001040')->get();
+
+			/*dump([ 
+				$currentuser->name => $idnumber,
+				'Todays Team Total Sales' => number_format($sumthisdayorders) . '.00 SAR',
+				'Yesterdays Team Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
+				'Total Team Sales' => number_format($sumawadenteamsales) . '.00 SAR',
+				'Account Created' => $currentuser->created_at->diffForHumans()
+			]);*/	
+//dump($hazemteam);
 		return view ('dashboard.manager')
 		->withOrder($order)
+		->with('hasanrabah', $hasanrabah)
+		->with('bashar', $bashar)
+		->with('firas', $firas)
+		->with('firasteam', $firasteam)
+		->with('sumfirasteamsales', $sumfirasteamsales)
+		->with('hazem', $hazem)
+		->with('hazemteam', $hazemteam)
+		->with('sumhazemteamsales', $sumhazemteamsales)
+		->with('awaden', $awaden)
+		->with('awadenteam', $awadenteam)
+		->with('sumawadenteamsales', $sumawadenteamsales)
+		->with('odeh', $odeh)
+		->with('odehteam', $odehteam)
+		->with('sumodehteamsales', $sumodehteamsales)
 		->with('justcreatedorderscount', $justcreatedorderscount)
 		->with('editingorderscount', $editingorderscount)
 		->with('reviewingorderscount', $reviewingorderscount)
@@ -246,7 +291,7 @@ class ProfileController extends Controller
 			$twodaysago = date("Y-m-d", strtotime( '-2 days' ) );
 			$twodaysagoorders = Order::whereDate('created_at', $twodaysago )->where('staffid', '=', $currentuser->idnumber)->get();
 			/* All Orders*/
-			dump($today);
+			//dump($today);
 	
 			$allorders = Order::where('staffid', '=', $currentuser->idnumber)->get();
 			$sumallorders = $allorders->sum('totalprice');
@@ -262,13 +307,13 @@ class ProfileController extends Controller
 			$idnumber = \Auth::user()->idnumber;
 			//dump($idnumber);
 			//dump($orderitems);
-			dump([ 
+			/*dump([ 
 				$currentuser->name => $idnumber,
 				'Todays Total Sales' => number_format($sumthisdayorders) . '.00 SAR',
 				'Yesterdays Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
 				'Total Sales' => number_format($sumallorders) . '.00 SAR',
 				'Account Created' => $currentuser->created_at->diffForHumans()
-			]);
+			]);*/
 			$branches_list = DB::table('branches')
 			->where('salesgroup', '=', $currentuser->idnumber)
 			->get();
@@ -373,12 +418,12 @@ class ProfileController extends Controller
 		$allorders = Order::where('created_at', '>=', $date1)->where('staffid', '=', $currentuser->idnumber)->get();
 		$sumallorders = $allorders->sum('totalprice');
 
-		dump([ 
+		/*dump([ 
 			$currentuser->name => $idnumber, 
 			'Todays Total Sales' => number_format($sumthisdayorders) . '.00 SAR',
 			'Yesterdays Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
 			'Total Sales' => number_format($sumallorders) . '.00 SAR'
-			]);
+			]);*/
 
 		//dump($thisdayorders);
 		//dump($yesterdaysorders);

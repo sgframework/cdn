@@ -11,10 +11,23 @@
     ALTER TABLE `orderitems` ADD CONSTRAINT `ref` FOREIGN KEY (`parent_data`) REFERENCES `parent`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 ALTER TABLE orderitems
-  ADD totalqtyprice DECIMAL(4,2);
+  ADD askedprice DECIMAL(18,2);
 
 ALTER TABLE orders
   ADD attachedpo VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE orders
+  ADD totalfree INT(255) DEFAULT NULL;
+
+ALTER TABLE orders
+  ADD discount  DECIMAL(18,2);
+
+ALTER TABLE orders
+  ADD processedby VARCHAR(255) DEFAULT NULL;
+
+
+              $table->integer('')->nullable();
+
 
             ALTER TABLE `orderitems` ADD CONSTRAINT `ref` FOREIGN KEY (`parent_data`) REFERENCES `parent`(`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
@@ -103,6 +116,24 @@ INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values (
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303889", "Danube Co. Limited - 152 Badiah", "2745", "24", "CENR");
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303241", "Othaim Markets Co. 188", "3761", "24", "CENR");
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302959", "Othaim Markets Co. 172", "3761", "24", "CENR");
+
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("303935", "Saudi HypermarketsCo(LLC)-Riyadh Pa", "1869", "24", "CENR");
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302803", "PANDA #34", "2508", "24", "CENQ");
+
+
+
+302803	PANDA #34	2508	24	CENQ
+
+
+130131401
+3271165 f
+
+40041718	EMPANADA DOUGH ( 12 X 360 G)	125
+
+
+
+303935	Saudi HypermarketsCo(LLC)-Riyadh Pa	1869	24	CENR
+
 302959	Othaim Markets Co. 172	3761	24	CENR
 303241	Othaim Markets Co. 188	3761	24	CENR
 303889	Danube Co. Limited - 152 Badiah	2745	24	CENR
@@ -204,11 +235,21 @@ DELETE FROM items WHERE itemnumber ="56060006";
 DELETE FROM items WHERE itemnumber ="56060106";
 DELETE FROM items WHERE itemnumber ="56060506";
 
+
+DELETE FROM orderitems WHERE ponumber="3271165 f1";
+DELETE FROM orders WHERE ponumber="3271165 f";
+3271165 f
 56060006
 56060106
 56060506
 
 
+UPDATE orders set totalprice=2090 where ponumber="240419 01f";
+totalprice
+
+240419 01f
+
+240419 01f
 
 "40861527 1"
 "40861484 1"
@@ -219,8 +260,191 @@ DELETE FROM items WHERE itemnumber ="56060506";
 DELETE FROM orderitems WHERE ponumber='[{"ponumber":"test0"}]';
 
 
+
+
+
+DELETE FROM orders WHERE ponumber="11698226";
+DELETE FROM orderitems WHERE ponumber="11698226";
+
+
+
+
+DELETE FROM orders WHERE ponumber="156872";
+DELETE FROM orderitems WHERE ponumber="156872";
+
+DELETE FROM orders WHERE ponumber="156872 1";
+DELETE FROM orderitems WHERE ponumber="156872 1";
+
+DELETE FROM orders WHERE ponumber="240419 009";
+DELETE FROM orderitems WHERE ponumber="240419 009";
+
+DELETE FROM orders WHERE ponumber="240419 012f";
+DELETE FROM orderitems WHERE ponumber="240419 012f";
+
+DELETE FROM orders WHERE ponumber="111701 111";
+DELETE FROM orderitems WHERE ponumber="111701 111";
+
+
+
+DELETE FROM orders WHERE ponumber="270419 666663";
+DELETE FROM orderitems WHERE ponumber="270419 666663";
+
+
+
+
+START TRANSACTION;
+
+BEGIN;
+
+
+update orders;
+ROLLBACK;
+
+ --COMMIT; 
+
+START TRANSACTION;
+  UPDATE orders
+set staffname="A. Shawky", staffid="1869"
+  WHERE created_at BETWEEN  '2019-02-30 16:00:59' AND '2019-04-30 17:00:00'; 
+ROLLBACK;
+
+
+
+DELETE FROM orders WHERE ponumber="test";
+DELETE FROM orderitems WHERE ponumber="test";
+
 DELETE FROM orders WHERE ponumber="test0";
 DELETE FROM orderitems WHERE ponumber="test0";
+
+DELETE FROM orders WHERE ponumber="test1";
+DELETE FROM orderitems WHERE ponumber="test1";
+
+DELETE FROM orders WHERE ponumber="test2";
+DELETE FROM orderitems WHERE ponumber="test2";
+
+DELETE FROM orders WHERE ponumber="test3";
+DELETE FROM orderitems WHERE ponumber="test3";
+
+DELETE FROM orders WHERE ponumber="test4";
+DELETE FROM orderitems WHERE ponumber="test4";
+
+DELETE FROM orders WHERE ponumber="test5";
+DELETE FROM orderitems WHERE ponumber="test5";
+
+DELETE FROM orders WHERE ponumber="test6";
+DELETE FROM orderitems WHERE ponumber="test6";
+
+DELETE FROM orders WHERE ponumber="test7";
+DELETE FROM orderitems WHERE ponumber="test7";
+
+DELETE FROM orders WHERE ponumber="test8";
+DELETE FROM orderitems WHERE ponumber="test8";
+
+DELETE FROM orders WHERE ponumber="test9";
+DELETE FROM orderitems WHERE ponumber="test9";
+
+DELETE FROM orders WHERE ponumber="test10";
+DELETE FROM orderitems WHERE ponumber="test10";
+
+DELETE FROM orders WHERE ponumber="test11";
+DELETE FROM orderitems WHERE ponumber="test11";
+
+DELETE FROM orders WHERE ponumber="test12";
+DELETE FROM orderitems WHERE ponumber="test12";
+
+DELETE FROM orders WHERE ponumber="test13";
+DELETE FROM orderitems WHERE ponumber="test13";
+
+DELETE FROM orders WHERE ponumber="test14";
+DELETE FROM orderitems WHERE ponumber="test14";
+
+DELETE FROM orders WHERE ponumber="test15";
+DELETE FROM orderitems WHERE ponumber="test15";
+
+DELETE FROM orders WHERE ponumber="test16";
+DELETE FROM orderitems WHERE ponumber="test16";
+
+DELETE FROM orders WHERE ponumber="test17";
+DELETE FROM orderitems WHERE ponumber="test17";
+
+DELETE FROM orders WHERE ponumber="test18";
+DELETE FROM orderitems WHERE ponumber="test18";
+
+DELETE FROM orders WHERE ponumber="test19";
+DELETE FROM orderitems WHERE ponumber="test19";
+
+DELETE FROM orders WHERE ponumber="test20";
+DELETE FROM orderitems WHERE ponumber="test20";
+
+DELETE FROM orders WHERE ponumber="test21";
+DELETE FROM orderitems WHERE ponumber="test21";
+
+DELETE FROM orders WHERE ponumber="test22";
+DELETE FROM orderitems WHERE ponumber="test22";
+
+DELETE FROM orders WHERE ponumber="test23";
+DELETE FROM orderitems WHERE ponumber="test23";
+
+DELETE FROM orders WHERE ponumber="test24";
+DELETE FROM orderitems WHERE ponumber="test24";
+
+DELETE FROM orders WHERE ponumber="test25";
+DELETE FROM orderitems WHERE ponumber="test25";
+
+DELETE FROM orders WHERE ponumber="test26";
+DELETE FROM orderitems WHERE ponumber="test26";
+
+DELETE FROM orders WHERE ponumber="test27";
+DELETE FROM orderitems WHERE ponumber="test27";
+
+DELETE FROM orders WHERE ponumber="test28";
+DELETE FROM orderitems WHERE ponumber="test28";
+
+DELETE FROM orders WHERE ponumber="test29";
+DELETE FROM orderitems WHERE ponumber="test29";
+
+DELETE FROM orders WHERE ponumber="test30";
+DELETE FROM orderitems WHERE ponumber="test30";
+
+DELETE FROM orders WHERE ponumber="test31";
+DELETE FROM orderitems WHERE ponumber="test31";
+
+DELETE FROM orders WHERE ponumber="test32";
+DELETE FROM orderitems WHERE ponumber="test32";
+
+DELETE FROM orders WHERE ponumber="test33";
+DELETE FROM orderitems WHERE ponumber="test33";
+
+DELETE FROM orders WHERE ponumber="test34";
+DELETE FROM orderitems WHERE ponumber="test34";
+
+DELETE FROM orders WHERE ponumber="test35";
+DELETE FROM orderitems WHERE ponumber="test35";
+
+DELETE FROM orders WHERE ponumber="test36";
+DELETE FROM orderitems WHERE ponumber="test36";
+
+DELETE FROM orders WHERE ponumber="test37";
+DELETE FROM orderitems WHERE ponumber="test37";
+
+DELETE FROM orders WHERE ponumber="test38";
+DELETE FROM orderitems WHERE ponumber="test38";
+
+DELETE FROM orders WHERE ponumber="test39";
+DELETE FROM orderitems WHERE ponumber="test39";
+
+DELETE FROM orders WHERE ponumber="test40";
+DELETE FROM orderitems WHERE ponumber="test40";
+
+DELETE FROM orders WHERE ponumber="19013828";
+DELETE FROM orderitems WHERE ponumber="19013828";
+
+
+
+
+DELETE FROM orders WHERE ponumber="2329890 f";
+DELETE FROM orderitems WHERE ponumber="2329890 f";
+
 
 SELECT * FROM orders where ponumber=11631534;
 SELECT * FROM orderitems where ponumber=11631534;
@@ -275,11 +499,55 @@ DELETE FROM orderitems WHERE ponumber="123123";
 23232323
 
 
+DELETE FROM orders WHERE status="JustCreated";
+DELETE FROM orderitems WHERE orderstatus="JustCreated";
+
 
 /* Items Updates */
 
 INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("55000418", "Nai Iced Tea (Promo Pack 3x473g)", "22");
+ ("54000010", "KETTLE SEA SALT 45GX50", "77");
+
+
+
+INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302803", "PANDA #34", "2508", "24", "CENQ");
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54000110", "KETTLE SALT & VINEGAR 45G*50", "77");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54000210", "KETTLE HONEY MUSTARD 45GX50", "77");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54000410", "KETTLE SEA SALT 170G*12", "64");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54000510", "KETTLE SALT&VINEGAR 170G*12", "64");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54000610", "KETTLE HONEY MUSTARD 170G*12", "64");
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54001210", "BUFFIES PEANUTS 30GX50", "57");
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("54001310", "BUFFIES PEANUTS 65GX24", "58");
+
+
+
+54000010	KETTLE SEA SALT 45GX50	77
+54000110	KETTLE SALT & VINEGAR 45G*50	77
+54000210	KETTLE HONEY MUSTARD 45GX50	77
+54000410	KETTLE SEA SALT 170G*12	64
+54000510	KETTLE SALT&VINEGAR 170G*12	64
+54000610	KETTLE HONEY MUSTARD 170G*12	64
+54001210	BUFFIES PEANUTS 30GX50	57
+54001310	BUFFIES PEANUTS 65GX24	55
+
 
 
 56060509	SUNBULAH SHREDDED MOZZARELLA (6X1 KG)	193
@@ -293,11 +561,80 @@ UPDATE orders
 SET staffid = "1275", staffname = "Michael Lanes"
 WHERE ponumber="445725";
 
+UPDATE orders
+SET processedby = "5303"
+WHERE status="Completed";
+
+UPDATE orders
+SET staffid = "3761", staffname = "Hesham"
+WHERE ponumber="220419 02";
+
+
+UPDATE orderitems
+SET staffid = "3761", staffname = "Hesham"
+WHERE ponumber="220419 02";
+3761
+220419 02
+
+
 Select * from users;
+
+/** Define REGULAR USERS */
+
+
+UPDATE users
+SET is_permission = "0";
+
+
+/** Define SUPER USERS */
 
 UPDATE users
 SET is_permission = "2"
 WHERE id="4";
+
+UPDATE users
+SET is_permission = "2"
+WHERE id="6";
+
+UPDATE users
+SET is_permission = "2"
+WHERE id="1";
+
+/** Define ADMINS */
+
+
+UPDATE users
+SET is_permission = "1"
+WHERE id="25";
+
+
+
+UPDATE users
+SET is_permission = "1"
+WHERE id="20";
+
+
+UPDATE users
+SET is_permission = "1"
+WHERE id="23";
+
+
+UPDATE users
+SET is_permission = "1"
+WHERE id="24";
+
+UPDATE users
+SET is_permission = "1"
+WHERE id="19";
+
+
+
+
+
+
+UPDATE users
+SET is_permission = "1"
+WHERE id="28";
 
 UPDATE orderitems
 SET staffid = "1275", staffname = "Michael Lanes"

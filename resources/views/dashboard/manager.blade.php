@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.root')
 
 @section('content')    
 
@@ -47,119 +47,514 @@ Email: {{ Auth::user()->email }}
 
 @endmarkdown
 
-Sales Group 
 
-
-
-                                                <li style="font-size:12px">Today's Team Orders: <b>{{ $thisdayorders->count() }}</b></li>
-                                                <li style="font-size:12px">Today's Team Sales: <b>{{ number_format($sumthisdayorders) }}.00 SAR</b></li>
-                                                <li style="font-size:12px">Yesterday's Team Orders: <b>{{ $yesterdaysorders->count() }}</b></li>
-                                                <li style="font-size:12px">Yesterday's Team Sales: <b>{{ number_format($sumyesterdaysales) }}.00 SAR</b></li>
-                                                <li style="font-size:12px" class="">All Team Orders: <b>{{ $orderscount->count() }}</b></li>
-                                                <li style="font-size:12px">All Team Sales: <b>{{ number_format($sumallorders) }}.00 SAR</b></li>
-                                                <span style="padding-left:34px" class="justcreated"> - JustCreated Orders {{ $justcreatedorderscount->count() }}</span>
-                                                <span style="padding-left:34px" class="editing"> - Editing Orders {{ $editingorderscount->count() }}</span>
-                                                <span style="padding-left:34px" class="reviewing"> - Reviewing Orders {{ $reviewingorderscount->count() }}</span>
-                                                <span style="padding-left:34px" class="submitted"> - Submitted Orders {{ $submittedorderscount->count() }}</span>
-                                                <span style="padding-left:34px" class="completed"> - Completed Orders {{ $completedorderscount->count() }}</span>
                                                 <br />
                                             <form action="{{ url('/export-orders-csv/' . Auth::user()->idnumber . '/completed') }}" method="GET">
                                                 <button class="btn btn-sm btn-outline-secondary">Export Today's Report</button>
                                             </div>
                                         <div style="padding-left:8px;padding-top:8px" class="col-sm-8">
 
+
+
+
+
+<!-- FIRAS SECTION START -->
+
+@if ( \Auth::user()->dc == '001020' )
+
+
+
 @markdown
 
-## Team
+### Sales by Team Members 
 
 @endmarkdown
+
+
+
+
+
+
+<div class="row">
+
+
+
+      
+<!-- Firas Team --> 
+
+<div class="col-md-4" >
+      <!-- FIRAS SECTION -->
+      <div class="my-3 p-3 bg-white rounded box-shadow">
+        <strong><h3 class="border-bottom border-gray pb-2 mb-0">Firas Team</h3></strong>
+        <div class="newspaper media text-muted pt-3">
+          <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $firas->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong><h5 class="border-bottom border-gray pb-2 mb-0"> <strong class="d-block text-gray-dark">{{ $firas->name }} <span class="badge badge-danger">SUPERVISOR</span></strong></h5></strong>
+          </p>
+        </div>
+        <!-- MICHAEL LANES SECTION -->
+        <div class="media text-muted pt-3">
+        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $michael->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"><span>@</span>{{ $michael->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
+            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $michael->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countmichaelorders->count() }}</h3></a>
+         </p>
+          </div>
+          @if($countmichaelorders->count() == 0)
+          @else
+          <div class="media text-muted pt-3">
+          <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>PO#</th>
+                        <th>customer</th>
+                        <th style="color:red">F</th>
+                        <th style="color:green">Discount</th>
+                    </tr>
+                </thead>
+                @foreach($countmichaelorders as $countmichaelorder)
+                <tbody>
+                    <tr>
+                    <td><a style= "float:center" href="/root/orders/{{ $countmichaelorder->staffid }}/{{ $countmichaelorder->slug }}">{{ $countmichaelorder->ponumber }}</a></td>
+                    <td>{{ $countmichaelorder->branchname }}</td>
+                    @if ($countmichaelorder->totalfree == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:red">{{ $countmichaelorder->totalfree }}</td>
+                    @endif
+                    @if  ($countmichaelorder->discount == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:green">{{ $countmichaelorder->discount }}</td>
+                    @endif    
+                </tr>
+            </tbody> 
+                @endforeach
+        </table>
+    </div>
+    <br />
+            @endif
+        <!-- MOHAMMED SAYED SECTION -->
+        <div class="media text-muted pt-3">
+        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $mohammedsayed->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"><span>@</span>{{ $mohammedsayed->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
+            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $mohammedsayed->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countmohammedsayedorders->count() }}</h3></a>
+         </p>
+          </div>
+          @if($countmohammedsayedorders->count() == 0)
+          @else
+          <div class="media text-muted pt-3">
+          <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>PO#</th>
+                        <th>customer</th>
+                        <th style="color:red">F</th>
+                        <th style="color:green">Discount</th>
+                    </tr>
+                </thead>
+                @foreach($countmohammedsayedorders as $countmohammedsayedorder)
+                <tbody>
+                    <tr>
+                    <td><a style= "float:center" href="/root/orders/{{ $countmohammedsayedorder->staffid }}/{{ $countmohammedsayedorder->slug }}">{{ $countmohammedsayedorder->ponumber }}</a></td>
+                    <td>{{ $countmohammedsayedorder->branchname }}</td>
+                    @if ($countmohammedsayedorder->totalfree == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:red">{{ $countmohammedsayedorder->totalfree }}</td>
+                    @endif
+                    @if  ($countmohammedsayedorder->discount == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:green">{{ $countmohammedsayedorder->discount }}</td>
+                    @endif    
+                </tr>
+            </tbody> 
+                @endforeach
+                </table>
+    </div>
+    <br />
+            @endif
+
+        <!-- Fahad Dahasy SECTION -->
+        <div class="media text-muted pt-3">
+        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $fahaddahasy->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"><span>@</span>{{ $fahaddahasy->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
+            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $fahaddahasy->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countfahaddahasyorders->count() }}</h3></a>
+         </p>
+          </div>
+          @if($countfahaddahasyorders->count() == 0)
+          @else
+          <div class="media text-muted pt-3">
+          <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>PO#</th>
+                        <th>customer</th>
+                        <th style="color:red">F</th>
+                        <th style="color:green">Discount</th>
+                    </tr>
+                </thead>
+                @foreach($countfahaddahasyorders as $countfahaddahasyorder)
+                <tbody>
+                    <tr>
+                    <td><a style= "float:center" href="/root/orders/{{ $countfahaddahasyorder->staffid }}/{{ $countfahaddahasyorder->slug }}">{{ $countfahaddahasyorder->ponumber }}</a></td>
+                    <td>{{ $countfahaddahasyorder->branchname }}</td>
+                    @if ($countfahaddahasyorder->totalfree == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:red">{{ $countfahaddahasyorder->totalfree }}</td>
+                    @endif
+                    @if  ($countfahaddahasyorder->discount == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:green">{{ $countfahaddahasyorder->discount }}</td>
+                    @endif    
+                </tr>
+            </tbody> 
+                @endforeach
+        </table>
+        </div>
+        <br />
+        @endif
+        <!-- Abdullah Naseer SECTION -->
+        <div class="media text-muted pt-3">
+        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $abdullahnaser->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"><span>@</span>{{ $abdullahnaser->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
+            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $abdullahnaser->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countabdullahnaserorders->count() }}</h3></a>
+         </p>
+          </div>
+          @if($countabdullahnaserorders->count() == 0)
+          @else
+          <div class="media text-muted pt-3">
+          <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>PO#</th>
+                        <th>customer</th>
+                        <th style="color:red">F</th>
+                        <th style="color:green">Discount</th>
+                    </tr>
+                </thead>
+                @foreach($countabdullahnaserorders as $countabdullahnaserorder)
+                <tbody>
+                    <tr>
+                    <td><a style= "float:center" href="/root/orders/{{ $countabdullahnaserorder->staffid }}/{{ $countabdullahnaserorder->slug }}">{{ $countabdullahnaserorder->ponumber }}</a></td>
+                    <td>{{ $countabdullahnaserorder->branchname }}</td>
+                    @if ($countabdullahnaserorder->totalfree == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:red">{{ $countabdullahnaserorder->totalfree }}</td>
+                    @endif
+                    @if  ($countabdullahnaserorder->discount == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:green">{{ $countabdullahnaserorder->discount }}</td>
+                    @endif    
+                </tr>
+            </tbody> 
+                @endforeach
+        </table>
+        </div>
+        <br />
+        @endif
+        <!-- Ahmed Medhat SECTION -->
+        <div class="media text-muted pt-3">
+        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $ahmedmedhat->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"><span>@</span>{{ $ahmedmedhat->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
+            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $ahmedmedhat->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countahmedmedhatorders->count() }}</h3></a>
+         </p>
+          </div>
+          @if($countahmedmedhatorders->count() == 0)
+          @else
+          <div class="media text-muted pt-3">
+          <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>PO#</th>
+                        <th>customer</th>
+                        <th style="color:red">F</th>
+                        <th style="color:green">Discount</th>
+                    </tr>
+                </thead>
+                @foreach($countahmedmedhatorders as $countahmedmedhatorder)
+                <tbody>
+                    <tr>
+                    <td><a style= "float:center" href="/root/orders/{{ $countahmedmedhatorder->staffid }}/{{ $countahmedmedhatorder->slug }}">{{ $countahmedmedhatorder->ponumber }}</a></td>
+                    <td>{{ $countahmedmedhatorder->branchname }}</td>
+                    @if ($countahmedmedhatorder->totalfree == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:red">{{ $countahmedmedhatorder->totalfree }}</td>
+                    @endif
+                    @if  ($countahmedmedhatorder->discount == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:green">{{ $countahmedmedhatorder->discount }}</td>
+                    @endif    
+                </tr>
+            </tbody> 
+                @endforeach
+        </table>
+        </div>
+        <br />
+        @endif
+        
+        <!-- Wail SECTION -->
+        <div class="media text-muted pt-3">
+        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $wail->photo }}" data-holder-rendered="true">
+          <p class="media-body pb-3 mb-0 small lh-125">
+            <strong class="d-block text-gray-dark"><span>@</span>{{ $wail->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
+            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $wail->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countwailorders->count() }}</h3></a>
+         </p>
+          </div>
+          @if($countwailorders->count() == 0)
+          @else
+          <div class="media text-muted pt-3">
+          <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>PO#</th>
+                        <th>customer</th>
+                        <th style="color:red">F</th>
+                        <th style="color:green">Discount</th>
+                    </tr>
+                </thead>
+                @foreach($countwailorders as $countwailorder)
+                <tbody>
+                    <tr>
+                    <td><a style= "float:center" href="/root/orders/{{ $countwailorder->staffid }}/{{ $countwailorder->slug }}">{{ $countwailorder->ponumber }}</a></td>
+                    <td>{{ $countwailorder->branchname }}</td>
+                    @if ($countwailorder->totalfree == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:red">{{ $countwailorder->totalfree }}</td>
+                    @endif
+                    @if  ($countwailorder->discount == 0)
+                    <td></td>
+
+                    @else
+                    <td style="color:green">{{ $countwailorder->discount }}</td>
+                    @endif    
+                </tr>
+            </tbody> 
+                @endforeach
+        </table>
+    </div>
+    <br />
+            @endif
+
+
+        </div>
+</div>   
+
+<!-- END OF FIRAS TEAM SECTION -->
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-12">
+
+<div class="" style="padding-top:14px;padding-bottom:8px">
+
+                               
+<span style="font-size:10px"><img style="border-radius:50%" width="40px" height="40px" src="{{ asset('images/uploads/avatars') }}/{{ $member->photo }}" /> <b>{{ $member->name }} #{{ $member->idnumber }}</b> | <i class="fa fa-phone"></i> <tel href="0{{ $member->phonenumber }}">0{{ $member->phonenumber }}</tel> |<i class="fa fa-money"></i> <b>Total Sales: {{ number_format($member->totalgrand) }} SAR</b> </span>
+    
+</div>   
+
+</div>
+
+
+<h5>Today's Team Total Sales: {{ number_format($sumfirasteamsales) }}.00 SAR</h5>
+</div>
+
+
+
+
+
+
+
+<!-- FIRAS SECTION END -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- HAZEM SECTION START -->
+
+@elseif (  \Auth::user()->dc == '001030'  )
+
+
+
+@markdown
+
+### Sales by Team Members 
+
+@endmarkdown
+
+@foreach ($hazemteam as $member)
+<div class="col-md-12">
+
+<div class="" style="padding-top:14px;padding-bottom:8px">
+
+                               
+<span style="font-size:10px"><img style="border-radius:50%" width="40px" height="40px" src="{{ asset('images/uploads/avatars') }}/{{ $member->photo }}" /> <b>{{ $member->name }} #{{ $member->idnumber }}</b> | <i class="fa fa-phone"></i> <tel href="0{{ $member->phonenumber }}">0{{ $member->phonenumber }}</tel> |<i class="fa fa-money"></i> <b>Total Sales: {{ number_format($member->totalgrand) }} SAR</b> </span>
+   
+</div>   
+
+</div>
+
+@endforeach
+<h5>Today's Team Total Sales: {{ number_format($sumhazemteamsales) }}.00 SAR</h5>
+</div>
+
+
+
+
+
+
+
+
+<!-- HAZEM SECTION END -->
+
+
+
+
+
+<!-- AWADEN SECTION START -->
+
+@elseif (  \Auth::user()->dc == '001040'  )
+
+
+@markdown
+
+### Sales by Team Members 
+
+@endmarkdown
+
+@foreach ($awadenteam as $member)
+<div class="col-md-12">
+
+<div class="" style="padding-top:14px;padding-bottom:8px">
+
+                               
+<span style="font-size:10px"><img style="border-radius:50%" width="40px" height="40px" src="{{ asset('images/uploads/avatars') }}/{{ $member->photo }}" /> <b>{{ $member->name }} #{{ $member->idnumber }}</b> | <i class="fa fa-phone"></i> <tel href="0{{ $member->phonenumber }}">0{{ $member->phonenumber }}</tel> |<i class="fa fa-money"></i> <b>Total Sales: {{ number_format($member->totalgrand) }} SAR</b> </span>
+
+</div>   
+</div>
+
+@endforeach
+
+<br />
+<h6>Today's Team Total Sales: <b>{{ number_format($sumawadenteamsales) }}.00 SAR</b></h6>
+
+
+</div>
+
+
+
+
+<!-- AWADEN SECTION END -->
+
+
+
+
+
+<!-- ODEH SECTION START -->
+
+@elseif (  \Auth::user()->dc == '002010'  )
+
+
+
+@markdown
+
+### Sales by Team Members 
+
+@endmarkdown
+
+@foreach ($odehteam as $member)
+<div class="col-md-12">
+
+<div class="" style="padding-top:14px;padding-bottom:8px">
+
+                               
+<span style="font-size:10px"><img style="border-radius:50%" width="40px" height="40px" src="{{ asset('images/uploads/avatars') }}/{{ $member->photo }}" /> <b>{{ $member->name }} #{{ $member->idnumber }}</b> | <i class="fa fa-phone"></i> <tel href="0{{ $member->phonenumber }}">0{{ $member->phonenumber }}</tel> |<i class="fa fa-money"></i> <b>Total Sales: {{ number_format($member->totalgrand) }} SAR</b> </span>
+
+@endforeach
+
+<h5>Today's Team Total Sales: {{ number_format($sumodehteamsales) }}.00 SAR</h5>
+</div>
+
+
+
+
+
+
+<!-- ODEH SECTION END -->
+
+
+
+
+
+
+
+
+@endif
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
                  <br />
-                                    <strong><span><span>JustCeated, Edititng and Reviewing orders are listed here. &darr;</span><br />
-                                        <table id="myTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>Name#ID</th>
-                                                    <th>PO#</th>
-                                                    <th>Customer#</th>
-                                                    <th>Status@Time</th>
-                                                </tr>
-                                            </thead>
-                                            @foreach ($todaysjustcreatedorders as $todaysjustcreatedorder)
-                                                @include('dashboard/partials/todaysjustcreatedordersblock')
-                                            @endforeach
-                                            @foreach ($todayseditingorders as $todayseditingorder)
-                                                @include('dashboard/partials/todayseditingordersblock')
-                                            @endforeach	
-                                            @foreach ($todaysreviewingorders as $todaysreviewingorder)
-                                                @include('dashboard/partials/todaysreviewingordersblock')
-                                            @endforeach		
-                                        </table><br />
-                                        <strong><span>Submitted and Completed orders are listed here. &darr;</span><br /> 
-                                        <span id="submitted"></span>
-                                        @if (Session::has('alert'))
-                                        <!--<div class="alert alert-success">{{ Session::get('alert') }}</div>-->
-                                        @endif
 
-                                        <?php $totalqty = 0; ?>
-                                        <?php $totalfree = 0; ?>
-                                        <?php $totalprice = 0; ?>
-                                        <?php $totalqtyprice = 0; ?>
-                                            <table id="myTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>PO#</th>
-                                                            <th>Branch#</th>
-                                                            <th style="text-align:center">Items Count</th>
-                                                            <th style="text-align:center">Qtys.</th>
-                                                            <th style="text-align:center">Tot. Price</th>
-                                                            <th style="text-align:center">Submitted/Completed@</th>
-                                                        </tr>
-                                                    </thead>
-                                                @foreach ($todayssubmittedorders as $todayssubmittedorder)
-                                                    @include('dashboard/partials/todayssubmittedordersblock')
-                                                @endforeach	
-                                                @foreach ($todayscompletedorders as $todayscompletedorder)
-                                                    @include('dashboard/partials/todayscompletedordersblock')
-                                                @endforeach	
-                                                <tfoot>
-                                                    <tr>
-                                                        <th style="text-align:center"></th>
-                                                        <td style="text-align:center"><b>Totals</b></td>
-                                                        <th style="text-align:center">{{ $sumthisdayfreeorders }}</th>
-                                                        <th style="text-align:center">{{ $sumthisdayordersqty }}</th>
-                                                        <th style="text-align:center">{{ number_format($sumthisdayorders) }}.00 SAR</th>
-                                                    </tr>
-                                                </tfoot>
-                                            </table>               
-                                            </div>
-                                        </div>
-                                        <a href="#back-top" class="go-top"><i style="font-size: 22px; top: -26px;" class="glyphicon glyphicon-circle-arrow-up"></i></a>
-                                <b><p style="padding-left:45px"></p></b>
-                                <div class="col-md-2">
-                                </div>
-
-@markdown
-
-## Sales By Saleman
-
-@endmarkdown
-<div class="col-md-6">
-
-@foreach ($users as $user)
-
-<div class="inline-form" style="padding-top:14px;padding-bottom:8px">
-
-                               
-<span style="font-size:10px"><img style="border-radius:50%" width="40px" height="40px" src="{{ asset('images/uploads/avatars') }}/{{ $user->photo }}" />{{ $user->name }} #{{ $user->idnumber }} | <tel href="0{{ $user->phonenumber }}">0{{ $user->phonenumber }}</tel> | Sales:</span>
-
-</div>   
-
-
-@endforeach
 </div>
 
 
@@ -207,204 +602,6 @@ Sales Group
 
 <br />
 <hr />
-
-
-
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-<!-- Additional files for the Highslide popup effect -->
-<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
-<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />
-                </div>  
-            </div>
-        </div>
-
-
-        <div style="padding-left:8px" class="row">
-
-        <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
-
-
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<script>
-Highcharts.chart('container', {
-
-chart: {
-    scrollablePlotArea: {
-        minWidth: 700
-    }
-},
-
-data: {
-    csvURL: '<?php echo asset('csv/analytics.csv'); ?>',
-    beforeParse: function (csv) {
-        return csv.replace(/\n\n/g, '\n');
-    }
-},
-
-title: {
-    text: 'Yearly Sales Report'
-},
-
-subtitle: {
-    text: 'Sales Stats'
-},
-
-xAxis: {
-    tickInterval: 7 * 24 * 3600 * 500, // one week
-    tickWidth: 0,
-    gridLineWidth: 1,
-    labels: {
-        align: 'left',
-        x: 3,
-        y: -3
-    }
-},
-
-yAxis: [{ // left y axis
-    title: {
-        text: null
-    },
-    labels: {
-        align: 'left',
-        x: 3,
-        y: 16,
-        format: '{value:.,0f}'
-    },
-    showFirstLabel: false
-}, { // right y axis
-    linkedTo: 0,
-    gridLineWidth: 0,
-    opposite: true,
-    title: {
-        text: null
-    },
-    labels: {
-        align: 'right',
-        x: -3,
-        y: 16,
-        format: '{value:.,0f}'
-    },
-    showFirstLabel: false
-}],
-
-legend: {
-    align: 'left',
-    verticalAlign: 'top',
-    borderWidth: 0
-},
-
-tooltip: {
-    shared: true,
-    crosshairs: true
-},
-
-plotOptions: {
-    series: {
-        cursor: 'pointer',
-        point: {
-            events: {
-                click: function (e) {
-                    hs.htmlExpand(null, {
-                        pageOrigin: {
-                            x: e.pageX || e.clientX,
-                            y: e.pageY || e.clientY
-                        },
-                        headingText: this.series.name,
-                        maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-                            this.y + ' orders',
-                        width: 200
-                    });
-                }
-            }
-        },
-        marker: {
-            lineWidth: 1
-        }
-    }
-},
-
-series: [{
-    name: 'All orders',
-    lineWidth: 4,
-    marker: {
-        radius: 4
-    }
-}, {
-    name: 'New orders'
-}]
-});
-
-</script>
-
-
-
-
-
-
-
-<script>
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-});
-</script>
-
-<canvas id="myChart"></canvas>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [<?php echo $sumyesterdaysales; ?>, <?php echo $sumthisdayorders; ?>, <?php echo $sumallorders; ?>, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-</script>
-
-
-
-
-
-
-
 
 
 

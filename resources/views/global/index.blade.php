@@ -97,12 +97,6 @@
 
 hello
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container">
     <div class="row justify-content-center">
 
@@ -158,6 +152,12 @@ var myChart = new Chart(ctx, {
     }
 });
 </script>
+        </div>
+    </div>
+</div>
+
+</div>
+            </div>
         </div>
     </div>
 </div>
@@ -428,7 +428,9 @@ var myChart = new Chart(ctx, {
 @endif
 
 <br /><hr />                            
-<br /><hr />                            
+<br /><hr />                      
+
+
 
 @markdown
 
@@ -444,6 +446,21 @@ var myChart = new Chart(ctx, {
 
 ```
 @endmarkdown
+
+
+
+
+
+</div>
+    </div>
+</div>
+
+</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endif
                     @else

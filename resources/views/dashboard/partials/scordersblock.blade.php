@@ -1,7 +1,4 @@
-<div class="media">
-	<a class="pull-left" href="">
-	</a>
-	<div class="media-body">
+
 		@if ($thisdayorder->ordernumber)
 			<tbody style="font-size:12px">
 				<tr>
@@ -17,7 +14,5 @@
 				<!--{{ $sumthisdayorders }}-->          
 			</tbody>
 		@endif
-	</div>
-</div>
 
            

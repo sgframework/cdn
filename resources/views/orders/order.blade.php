@@ -147,6 +147,9 @@
                                     <?php $totalfree = 0; ?>
                                     <?php $totalprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
+                                    <?php $askedprice = 0; ?>
+                                    <?php $totaldiscount = 0; ?>
+                                    
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                     @if (Session::has('submitted'))
                                         <div class="alert alert-danger">{{ Session::get('submitted') }}</div>
@@ -154,9 +157,19 @@
                                     <table width="100%" class="table-responsive-sm" id="myTable">
                                         @foreach ($orderitems as $orderitem)
                                         <?php $totalqty += $orderitem->itemqty; ?>
-                                        <?php $totalfree += $orderitem->itemfree; ?>
+                                        <?php $totalfree += $orderitem->freeitem; ?>
                                         <?php $totalprice += $orderitem->itemprice; ?>
+
+                                        @if ($orderitem->askedprice == 0)
                                         <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                        @else
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
+                                        @endif
+
+                                        <?php $askedprice += $orderitem->askedprice  ?>
+                                        <?php $totaldiscount += $orderitem->itemqty * $orderitem->askedprice; ?>
+
+
                                             @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
                                         <tfoot>
@@ -165,13 +178,16 @@
                                                     <th style="text-align:center">{{ $totalqty }}</th>
                                                     <th style="text-align:center">{{ $totalfree }}</th>
                                                     <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
+                                                </tr>
                                                 </tr>
                                             <tr>
                                                 <th>Item# - Desc.</th>
                                                 <th style="text-align:center">Qty</th>
                                                 <th style="text-align:center">Free</th>
                                                 <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Asked Price</th>
                                                 <th style="text-align:center">Qty * Price</th>
                                                 <!--<th>Delete</th>-->
                                             </tr>
@@ -192,6 +208,7 @@
                                     <?php $totalfree = 0; ?>
                                     <?php $totalprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
+                                    <?php $askedprice = 0; ?>
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                     @if (Session::has('submitted'))
                                         <div class="alert alert-danger">{{ Session::get('submitted') }}</div>
@@ -202,6 +219,7 @@
                                         <?php $totalfree += $orderitem->itemfree; ?>
                                         <?php $totalprice += $orderitem->itemprice; ?>
                                         <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                        <?php $askedprice += $orderitem->askedprice  ?>
                                             @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
                                         <tfoot>
@@ -210,6 +228,7 @@
                                                     <th style="text-align:center">{{ $totalqty }}</th>
                                                     <th style="text-align:center">{{ $totalfree }}</th>
                                                     <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
                                                 </tr>
                                             <tr>
@@ -217,6 +236,7 @@
                                                 <th style="text-align:center">Qty</th>
                                                 <th style="text-align:center">Free</th>
                                                 <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Asked Price</th>
                                                 <th style="text-align:center">Qty * Price</th>
                                                 <!--<th>Delete</th>-->
                                             </tr>

@@ -17,10 +17,13 @@ class Order extends Model
         'status',
         'totalitems',
         'totalqty',
+        'totalfree',
+        'discount',
         'totalprice',
         'created_at',
         'updated_at',
-        'attachedpo'
+        'attachedpo',
+        'processedby'
     ];   
 
 
@@ -59,7 +62,6 @@ class Order extends Model
     	return $this->hasMany('cdn\Models\Order', 'staffid');
    	}
 
-    
 
     public function getOrderItemsById(User $name)
     {

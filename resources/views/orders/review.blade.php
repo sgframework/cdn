@@ -62,6 +62,7 @@
             <?php $totalfree = 0; ?>
             <?php $totalprice = 0; ?>
             <?php $totalqtyprice = 0; ?>
+            <?php $askedprice = 0; ?>
     <table  class="style31">
             <thead>
                 <th>Mat. Description(Optional)</th>
@@ -69,14 +70,22 @@
                 <th style="text-align:center">Qty</th>
                 <th style="text-align:center">Free</th>
                 <th style="text-align:center">Price</th>
+                <th style="text-align:center">Total Discount</th>
                 <th style="text-align:center">Qty * Price</th>
             </tr>
         </thead>
         @foreach ($reviewitems as $reviewitem)
         <?php $totalqty += $reviewitem->itemqty; ?>
-        <?php $totalfree += $reviewitem->itemfree; ?>
+        <?php $totalfree += $reviewitem->freeitem; ?>
         <?php $totalprice += $reviewitem->itemprice; ?>
+
+        <?php $askedprice += $reviewitem->itemqty * $reviewitem->askedprice; ?>
+        
+        @if ($reviewitem->askedprice == 0)
         <?php $totalqtyprice += $reviewitem->itemqty * $reviewitem->itemprice; ?>
+        @else
+        <?php $totalqtyprice += $reviewitem->itemqty * $reviewitem->askedprice; ?>
+        @endif
             @include('dashboard/partials/orderitemsreviewblock')
         @endforeach
         <tfoot>
@@ -86,7 +95,8 @@
                 <td style="text-align:center">{{ $totalqty }}</td>
                 <td style="text-align:center">{{ $totalfree }}</td>
                 <td style="text-align:center">{{ number_format($totalprice) }}.00 SAR</td>
-                <td style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</td>
+                <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
+                <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
             </tr>
         </tfoot>
     </table>
@@ -108,10 +118,12 @@
     <input hidden name="branchnumber" value="{{ $order->branchnumber }}">
     <input hidden name="branchname" value="{{ $order->branchname }}">
     <input hidden name="totalqty" value="{{ $totalqty }}">
-    <input hidden name="totalfree" value="{{ $totalfree }}">
     <input hidden name="totalprice" value="{{ $totalprice }}">
     <input hidden name="totalqtyprice" value="{{ $totalqtyprice }}">
     <input hidden name="totalitems" value="{{ $orderitems->count() - 1 }}">
+    <input hidden name="totalfree" value="{{ $totalfree }}">
+    <input hidden name="discount" value="{{ $askedprice }}">
+    
 <div style="padding-left:20px">
 <h2>Uplaod PO Attachment <span style="color:red">*</span></h2>
 <p>Allowed Formats:</p> <span><pre>JPG, JPEG, PNG, GIF and PDF</pre> </span>

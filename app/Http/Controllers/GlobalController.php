@@ -135,7 +135,7 @@ class GlobalController extends Controller
                 $sumsubmittedorders = $submittedorders->sum('totalprice');
                 $sumcompletedorders = $completedorders->sum('totalprice');
                 $users = User::all();
-
+/*
                 dump([ 
                     'Total Submitted Orders' => $submittedorders->count(),
                     'Total Completed Orders' => $completedorders->count(),
@@ -145,9 +145,10 @@ class GlobalController extends Controller
                     'All Sales Sum' => number_format($sumallorders) . '.00 SAR',
                     /*'Yesterdays Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
                     'Total Sales' => number_format($sumallorders) . '.00 SAR',
-                    'This Month All Users Total Sales' => number_format($sumthismonthorders) . '.00 SAR',*/
+                    'This Month All Users Total Sales' => number_format($sumthismonthorders) . '.00 SAR',
         
-                ]);
+                ]);*/
+
                 return view('global.index')
                         ->with('reviewingdorders', $reviewingdorders)
                         ->with('completedorders', $completedorders)

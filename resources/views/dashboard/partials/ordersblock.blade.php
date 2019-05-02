@@ -1,7 +1,4 @@
-<div class="media">
-	<a class="pull-left" href="">
-	</a>
-	<div class="media-body">
+
 		@if ($order->ordernumber)
 			<tbody style="font-size:12px">
 				<tr>
@@ -12,7 +9,4 @@
 				</tr>                                            
 			</tbody>
 		@endif
-	</div>
-</div>
-
-           
+     

@@ -76,6 +76,7 @@ Email: {{ Auth::user()->email }}
                                                     <th>Status</th>
                                                     <th>Created</th>
                                                     <th>Updated</th>
+                                                    <th style="text-align:center">Delete PO</th>
                                                 </tr>
                                             </thead>
                                             @foreach ($todaysjustcreatedorders as $todaysjustcreatedorder)
@@ -181,196 +182,6 @@ Email: {{ Auth::user()->email }}
 
 
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/data.js"></script>
-<script src="https://code.highcharts.com/modules/series-label.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
-
-<!-- Additional files for the Highslide popup effect -->
-<script src="https://www.highcharts.com/media/com_demo/js/highslide-full.min.js"></script>
-<script src="https://www.highcharts.com/media/com_demo/js/highslide.config.js" charset="utf-8"></script>
-<link rel="stylesheet" type="text/css" href="https://www.highcharts.com/media/com_demo/css/highslide.css" />
-                </div>  
-            </div>
-        </div>
-
-
-        <div style="padding-left:8px" class="row">
-
-        <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
-
-
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<script>
-Highcharts.chart('container', {
-
-chart: {
-    scrollablePlotArea: {
-        minWidth: 700
-    }
-},
-
-data: {
-    csvURL: '<?php echo asset('csv/analytics.csv'); ?>',
-    beforeParse: function (csv) {
-        return csv.replace(/\n\n/g, '\n');
-    }
-},
-
-title: {
-    text: 'Yearly Sales Report'
-},
-
-subtitle: {
-    text: 'Sales Stats'
-},
-
-xAxis: {
-    tickInterval: 7 * 24 * 3600 * 500, // one week
-    tickWidth: 0,
-    gridLineWidth: 1,
-    labels: {
-        align: 'left',
-        x: 3,
-        y: -3
-    }
-},
-
-yAxis: [{ // left y axis
-    title: {
-        text: null
-    },
-    labels: {
-        align: 'left',
-        x: 3,
-        y: 16,
-        format: '{value:.,0f}'
-    },
-    showFirstLabel: false
-}, { // right y axis
-    linkedTo: 0,
-    gridLineWidth: 0,
-    opposite: true,
-    title: {
-        text: null
-    },
-    labels: {
-        align: 'right',
-        x: -3,
-        y: 16,
-        format: '{value:.,0f}'
-    },
-    showFirstLabel: false
-}],
-
-legend: {
-    align: 'left',
-    verticalAlign: 'top',
-    borderWidth: 0
-},
-
-tooltip: {
-    shared: true,
-    crosshairs: true
-},
-
-plotOptions: {
-    series: {
-        cursor: 'pointer',
-        point: {
-            events: {
-                click: function (e) {
-                    hs.htmlExpand(null, {
-                        pageOrigin: {
-                            x: e.pageX || e.clientX,
-                            y: e.pageY || e.clientY
-                        },
-                        headingText: this.series.name,
-                        maincontentText: Highcharts.dateFormat('%A, %b %e, %Y', this.x) + ':<br/> ' +
-                            this.y + ' orders',
-                        width: 200
-                    });
-                }
-            }
-        },
-        marker: {
-            lineWidth: 1
-        }
-    }
-},
-
-series: [{
-    name: 'All orders',
-    lineWidth: 4,
-    marker: {
-        radius: 4
-    }
-}, {
-    name: 'New orders'
-}]
-});
-
-</script>
-
-
-
-
-
-
-
-<script>
-var myLineChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: options
-});
-</script>
-
-<canvas id="myChart"></canvas>
-<script>
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [<?php echo $sumyesterdaysales; ?>, <?php echo $sumthisdayorders; ?>, <?php echo $sumallorders; ?>, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    }
-});
-</script>
-
-
-
 @endauth
 @endif
 
@@ -380,10 +191,8 @@ var myChart = new Chart(ctx, {
 
 
 
-</div>
-</div>
-
-
+                </div>
+            </div>
         </div><br />
     </div>
 </div>

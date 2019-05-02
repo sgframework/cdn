@@ -83,7 +83,7 @@ class OrdersController extends Controller
             'itemprice' => $request['itemprice'],
             'urgent' => $request['urgent'],
             'orderstatus' => $request['orderstatus'],
-            'slug' => $request['slug']
+            'slug' => $request['slug'],
         ]);
         $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent')->orderBy('updated_at', 'desc')->paginate(10);
 
@@ -103,9 +103,11 @@ class OrdersController extends Controller
         }
         public function addOrder()
         {
-            $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
+            //$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(10);
             //$branches = Branch::select('branchname', 'branchnumber')->get();
+            $branch = Branch::select('branchname', 'branchnumber')->first();
             $currentuser = \Auth::user();
+            $lastorder = Order::select()->where('staffid', '=', $currentuser->idnumber)->orderBy('created_at', 'desc')->first();
             $branches_list = DB::table('branches')
             ->where('salesgroup', '=', $currentuser->idnumber)
             ->get();
@@ -113,7 +115,7 @@ class OrdersController extends Controller
             /*$branches_list1 = DB::table('branches')
             ->where('dc', '=', '24')
             ->get();*/
-            return view ('orders.add')->with('items', $items)->with('branches_list', $branches_list);
+            return view ('orders.add')->with('branch', $branch)->with('branches_list', $branches_list)->with('lastorder', $lastorder);
         }
         public function listOthiam()
         {
@@ -272,12 +274,12 @@ class OrdersController extends Controller
             $date1 = \Carbon\Carbon::yesterday()->subDays(1);
             $allorders = Order::where('created_at', '>=', $date1)->where('staffid', '=', $currentuser->idnumber)->get();
             $sumallorders = $allorders->sum('totalprice');
-            dump([ 
+            /*dump([ 
                 $currentuser->name => $idnumber,
                 'Todays Total Sales' => number_format($sumthisdayorders) . '.00 SAR',
                 'Yesterdays Total Sales' => number_format($sumyesterdaysales) . '.00 SAR',
                 'Total Sales' => number_format($sumallorders) . '.00 SAR'
-            ]);
+            ]);*/
 
             return view('dashboard.orders')
                     ->withOrder($orderid)
@@ -301,11 +303,22 @@ class OrdersController extends Controller
             // ** MAIN DUMP **//
             //dump($orderitems);
             // ** MAIN DUMP **//
+            $completedorders = Order::select()->where('staffid', '=', \Auth::user()->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+
             $branchname = Order::select('branchname')->where('slug', '=', $slug)->get();
             $branchnumber = Order::select('branchnumber')->where('slug', '=', $slug)->get();
             $status = Order::select('status')->where('slug', '=', $slug)->get();
             $items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
-            return view('orders.order')->withOrder($order)->with('status', $status)->with('items', $items)->with('branchnumber', $branchnumber)->with('branchname', $branchname)->with('orderitems', $orderitems)->with('orderitemslug', $orderitemslug)->with('submitted', 'Your order is in view mood only, you can`t make no changes !');
+            return view('orders.order')
+                    ->withOrder($order)
+                    ->with('status', $status)
+                    ->with('items', $items)
+                    ->with('branchnumber', $branchnumber)
+                    ->with('branchname', $branchname)
+                    ->with('orderitems', $orderitems)
+                    ->with('orderitemslug', $orderitemslug)
+                    ->with('completedorders', $completedorders)
+                    ->with('submitted', 'Your order is in view mood only, you can`t make no changes !');
         }
         public function editOrderNumber($slug)
         {
@@ -362,6 +375,7 @@ class OrdersController extends Controller
                 'itemprice' => 'max:20',
                 'totalqtyprice' => 'max:20',
                 'orderstatus' => 'max:255',
+                'askedprice' => 'max:20',
             ]);
             //$inputData = $request->all();
             //$orderitems = OrderItems::find($slug); 
@@ -401,12 +415,15 @@ class OrdersController extends Controller
             //dump(['Item Data', $belongitem]);
             //dump(['Item Price', $belongprice]);
             //dump($itemprice);
+
+            $askedprice = $request['askedprice'];
+
             OrderItems::create([
             'staffid' => $staffid,
             'staffname' => $staffname,
             'ponumber' => $ponumber,
-            'branchnumber' => $branchnumber,
-            'branchname' => $branchname,
+            /*'branchnumber' => $branchnumber,
+            'branchname' => $branchname,*/
             'itemnumber' => $itemnumber,
             'orderitems' => $orderitems,
             'itemqty' => $request['itemqty'],
@@ -415,6 +432,8 @@ class OrdersController extends Controller
             'totalqtyprice' => $totalqtyprice,
             'orderstatus' => 'Editing',
             'slug' => $slug,
+            'askedprice' =>  $askedprice
+
             ]);
             Order::where('slug', $slug)->update(['updated_at' => now(), 'status' => 'Editing']);
             //Response::json( $order );
@@ -432,6 +451,7 @@ class OrdersController extends Controller
         }
         public function reviewOrderItems(Request $request, $slug)
         {
+
             Order::where('slug', $slug)->update(['updated_at' => now(), 'status' => 'Reviewing']);
             $currentuser = \Auth::user();
             $status = Order::select('status')->where('slug', '=', $slug)->get();
@@ -444,13 +464,14 @@ class OrdersController extends Controller
             $staffid = \Auth::user()->idnumber;
             $staffname = \Auth::user()->name;
             $ordernumber = OrderItems::select('ordernumber')->where('staffid', '=', $currentuser->idnumber)->first();
-            $branchnumber = OrderItems::select('branchnumber')->where('slug', '=', $slug)->first();
-            $branchname = OrderItems::select('branchname')->where('slug', '=', $slug)->first();
+            $branchnumber = Order::select('branchnumber')->where('slug', '=', $slug)->first();
+            $branchname = Order::select('branchname')->where('slug', '=', $slug)->first();
             $table = OrderItems::all()->where('slug', '=', $slug);
-            $reviewitems = OrderItems::select()->where('slug', '=', $slug)->whereNotNull('ponumber')->orderBy('created_at', 'desc')->get();
+            $reviewitems = OrderItems::select()->where('slug', '=', $slug)->whereNull('branchnumber')->whereNotNull('ponumber')->orderBy('created_at', 'desc')->get();
             //dump($reviewitems);
             $orderitems =  OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
             $itemprice = Item::select()->where('itemnumber', '=', $orderitems)->get();
+            /*
             $prices = Item::notNull()->where(function($query) {
             $currentuser = \Auth::user();
             $slug = OrderItems::select('slug')->where('staffid', '=', $currentuser->idnumber)->get();
@@ -459,7 +480,8 @@ class OrdersController extends Controller
             $itemprice = Item::select('itemnumber')->where('itemnumber', '=', $orderitem)->get();
             return $query->where('itemnumber', 'LIKE', $orderitem);    
             });
-            $orderitems = OrderItems::where('slug', '=', $slug)->orderBy('created_at', 'desc')->get();
+            */
+            //$orderitems = OrderItems::where('slug', '=', $slug)->orderBy('created_at', 'desc')->get();
             $data = OrderItems::all();
             //dump($data);   
             //dump($prices);
@@ -545,11 +567,16 @@ class OrdersController extends Controller
                 'branchnumber' => 'max:255',
                 'totalqty' => 'max:255',
                 'totalfree' => 'max:255',
+                'discount' => 'max:255',
                 'totalprice' => 'max:255',
                 'totalqtyprice' => 'max:255'
             ]);
-            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'], 'totalprice' => $request['totalqtyprice'], 'updated_at' => now(), 'status' => 'Submitted']);
-            OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'branchnumber' => $request['branchnumber'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
+            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'],  'totalfree' => $request['totalfree'],  'discount' => $request['discount'], 'totalprice' => $request['totalqtyprice'], 'updated_at' => now(), 'status' => 'Submitted']);
+            OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
+            $currentuser = \Auth::user();
+            $allorders = Order::where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->get();
+            $sumallorders = $allorders->sum('totalprice');
+            User::where('idnumber', '=', $currentuser->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
             return redirect()->route('orders.add', '#Success!&create_new_order')->with('alert', 'Congratulations! Your order have been submitted successfully.');
         }
         public function removeOrderItem($slug, $itemnumber)

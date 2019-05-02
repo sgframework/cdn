@@ -18,6 +18,7 @@ class OrderItems extends Model
         'itemqty',
         'freeitem',
         'itemprice',
+        'askedprice',
         'orderstatus',
         'slug',
         'totalqty',

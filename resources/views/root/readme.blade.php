@@ -406,6 +406,34 @@ It will generate a CSV format file, which you can drag and drop into excel sheet
                         040 = MANAGER
                             041 = User
 
+
+
+-------------------
+
+```
+    PHP Code:
+        $suaccesslevel = User::select()->where('is_permission',  '=', '2')->get();
+        $adminsaccesslevel = User::select()->where('is_permission',  '=', '1')->get();
+        $usersaccesslevel = User::select()->where('is_permission',  '=', '0')->get();
+            /* Head Manager */
+            $hasanrabah = User::select()->where('id',  '=', '6')->get();
+                /* KA MANAGER */
+                $bashar =  User::select()->where('dc',  '=', '001010')->get();
+                    /* KA SUPERVISOR  CSZ */
+                    $firas = User::select()->where('dc',  '=', '001020')->get();
+                        $firasteam = User::select()->where('dc',  'like', '00102%')->get();
+                    /* KA SUPERVISOR  CSL */
+                    $hazem = User::select()->where('dc',  '=', '001030')->get();
+                        $hazemteam =  User::select()->where('dc',  'like', '00103%')->get();
+                    /* KA SUPERVISOR CTK */
+                    $awaden = User::select()->where('dc',  '=', '001040')->get();
+                        $awadenteam = User::select()->where('dc',  'like', '00104%')->get();
+                        /* WS MANAGER */ 
+                    $odeh = User::select()->where('dc',  '=', '002010')->get();
+                        $odehteam = User::select()->where('dc',  'like', '00201%')->get(); 
+
+```
+
 @endmarkdown
 
 <h3 id="orders-sorting"><a class="header-link" href="#orders-sorting"></a>Orders $_GLOBAL Sorting & Arrangement</h3>
@@ -677,23 +705,46 @@ Random important commands
 
 
         mysql> select * from users;
-        +----+-------------------------+------------------------+----------+-------------+---------------+
-        | id | name                    | email                  | idnumber | phonenumber | is_permission |
-        +----+-------------------------+------------------------+----------+-------------+---------------+
-        |  1 | Ahmed M. Sulaimani      | ads@sunbulahgroup.com  | 5303     |   562204816 |             2 |
-        |  2 | Anonymous 1001          | pin9.in9@gmail.com     | 5604     |   500100500 |             0 |
-        |  3 | Ahmed Al-Onazi          | aoz@sg.com             | 1231     |   590090033 |             0 |
-        |  4 | Mohammed Makki          | mzm@sunbulahgroup.com  | 1255     |   560004564 |             2 |
-        |  6 | Hasan Rabah             | hmr@sunbulahgroup.com  | 9090     |   544636421 |             2 |
-        |  7 | Ahmed Alonazi           | aai@sunbulahgroup.com  | 5298     |           0 |             0 |
-        |  8 | Micheal Lanes           | mel@sunbulahgroup.com  | 1275     |   500000000 |             0 |
-        |  9 | Abdalla Naser           | abr@sunbulahgroup.com  | 2409     |   552266786 |             0 |
-        | 10 | Mohammed Sayed          | med@sunbulahgroup.com  | 5275     |   568624977 |             0 |
-        | 11 | Fahed Dahasy            | fds@sunbulahgroup.com  | 2745     |   501003637 |             0 |
-        | 12 | 4401                    | 4401@sunbulahgroup.com | 4401     |   560004401 |             0 |
-        | 13 | 1171                    | 1171@sunbulahgroup.com | 1171     |   560001171 |             0 |
-        | 14 | Ahmed Medhat            | adk@sunbulahgroup.com  | 4688     |   563040670 |             0 |
-        +----+-------------------------+------------------------+----------+-------------+---------------+
+        +----+--------------------------------+---------------------------------+-------------+---------------+------------+--------+
+        | id | name                           | email                  idnumber | phonenumber | is_permission | totalgrand | dc     |
+        +----+--------------------------------+---------------------------------+-------------+---------------+------------+--------+
+        |  1 | Ahmed M. Sulaimani             | ads@sunbulahgroup.com  5303     |   562204816 |             2 |       0.00 | 000000 |
+        |  2 | ΓÇ¬Anonymous 1001ΓÇ¼ΓÇÅ        | pin9.in9@gmail.com     5604     |   500100500 |             0 |       0.00 | 0      |
+        |  3 | Ahmed Al-Onazi                 | aoz@sg.com             1231     |   590090033 |             0 |       0.00 | 000000 |
+        |  4 | Mohammed Makki                 | mzm@sunbulahgroup.com  1255     |   560004564 |             2 |       0.00 | 000000 |
+        |  6 | Hasan Rabah                    | hmr@sunbulahgroup.com  9090     |   544636421 |             2 |       0.00 | 000000 |
+        |  7 | Ahmed Alonazi                  | aai@sunbulahgroup.com  5298     |           0 |             0 |       0.00 | 000000 |
+        |  8 | Micheal Lanes                  | mel@sunbulahgroup.com  1275     |   593226762 |             0 |  126662.00 | 001021 |
+        |  9 | Abdalla Naser                  | abr@sunbulahgroup.com  2409     |   552266786 |             0 |       0.00 | 001023 |
+        | 10 | Mohammed Sayed                 | med@sunbulahgroup.com  5275     |   568624977 |             0 |  139754.00 | 001024 |
+        | 11 | Fahed Dahasy                   | fds@sunbulahgroup.com  2745     |   501003637 |             0 |       0.00 | 001022 |
+        | 12 | Hassan Fathi                   | hfk@sunbulahgroup.com  4401     |   592246630 |             0 |  237885.00 | 001042 |
+        | 13 | Samsudin                       | scn@sunbulahgroup.com  1171     |   507815622 |             0 |   77756.00 | 001033 |
+        | 14 | Ahmed Medhat                   | adk@sunbulahgroup.com  4688     |   563040670 |             0 |       0.00 | 001025 |
+        | 15 | Hashem                         | hmn@sunbulahgroup.com  3761     |   500427475 |             0 |  122232.00 | 001043 |
+        | 16 | Wail                           | wng@sunbulahgroup.com  2469     |             |               |            |        |            
+        | 17 | Noufal                         | nkp@sunbulahgroup.com  2076     |  2147483647 |             0 |       0.00 | 001031 |
+        | 18 | Ruben M.                       | ram@sunbulahgroup.com  1555     |  2147483647 |             0 |   21703.00 | 001032 |
+        | 19 | FIRAS / KA SUPERVISOR  CSZ     | foz@sunbulahgroup.com  0000     |   543997687 |             1 |       0.00 | 001020 |
+        | 20 | Hazem / KA SUPERVISOR  CSL     | hhz@sunbulahgroup.com  0000     |  2147483647 |             1 |       0.00 | 001030 |
+        | 21 | A. Shawky                      | asd@sunbulahgroup.com  1869     |   545892494 |             0 |   51612.00 | 001041 |
+        | 22 | M. Hassan                      | ahd@sunbulahgroup.com  4417     |   541064360 |             0 |       0.00 | 001044 |
+        | 23 | Odeh Hersh  / WS MANAGER       | oah@sunbulahgroup.com  0000     |   503667460 |             1 |       0.00 | 002010 |
+        | 24 | BASHAR AL DALAA  / KA MANAGER  | bad@sunbulahgroup.com  0000     |   542129330 |             1 |       0.00 | 001010 |
+        | 25 | M. Awaden  / KA SUPERVISOR CTK | mwd@sunbulahgroup.com  0000     |   558604371 |             1 |       0.00 | 001040 |
+        | 26 | Sultan Salman                  | ssl@sunbulahgroup.com  1621     |   556593688 |             0 |  251249.00 | 001113 |
+        | 27 | Osama M.R.                     | osa@sunbulahgroup.com  1141     |  2147483647 |             0 |    7122.00 | 001034 |
+        +----+--------------------------------+---------------------------------+-------------+---------------+------------+--------+
+        26 rows in set (0.00 sec)
+
+
+
+
+
+        mysql> ALTER TABLE orderitems ADD askedprice DECIMAL(18,2);
+        Query OK, 3946 rows affected (0.45 sec)
+        Records: 3946  Duplicates: 0  Warnings: 0
+
 @endmarkdown
 
 <h5 id="orders"><a class="header-link" href="#orders"></a>Orders By Status in DB</h5>
@@ -806,6 +857,21 @@ Random important commands
     $todaysorderitems = OrderItems::whereNotNull('orderitems')->whereDate('created_at', $today )->where('orderstatus', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
     
 ```
+
+@endmarkdown
+
+
+
+<h5 id="report-export"><a class="header-link" href="#report-export"></a>Reports export</h5>
+
+
+
+
+@markdown
+
+###### CSV exported format vs. HTML copy & paste format:
+
+![{{ asset('/images/assests/free.gif') }}]({{ asset('/images/assests/free.gif') }})
 
 @endmarkdown
 

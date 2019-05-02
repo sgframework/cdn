@@ -88,6 +88,11 @@ Route::get('/root/users/orders/all', [
 'as' => 'root.orders.all',
 ]);
 
+Route::get('/root/users/orders/stats', [
+    'uses' => '\cdn\Http\Controllers\RootController@getStats',
+'as' => 'root.stats.totals',
+]);
+
 Route::get('/root/readme', [
     'uses' => '\cdn\Http\Controllers\RootController@getReadMe',
 'as' => 'root.readme',
@@ -102,6 +107,10 @@ Route::post('/root/orders/{idnumber}/{slug}/success', [
 Route::get('/orders/order/{slug}/success', [
     'uses' => '\cdn\Http\Controllers\OrdersController@successOrder',
     'as' => 'orders.success']);
+
+Route::get('/root/orders/{idnumber}/submitted/to/completed', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@exportReport',
+    'as' => 'root.orderexport']);
 
 /* {{ route('root.tree') }} */
 
@@ -368,10 +377,14 @@ Route::post('/orders/order/{slug}/remove/{itemnumber}', [
     'uses' => '\cdn\Http\Controllers\OrdersController@removeOrderItem',
     'as' => 'orders.remove']);
 
-Route::post('/orders/order/{slug}/destroy/', [
+Route::post('/orders/order/{slug}/remove/{ponumber}', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@removeOrder',
+    'as' => 'orders.destroy']);
+
+/*Route::post('/orders/order/{slug}/destroy/', [
     'uses' => '\cdn\Http\Controllers\OrdersController@tableDestroy',
     'as' => 'orders.destroy']);
-    
+*/    
         
 Route::post('/orders/order/{slug}/insert', [
     'uses' => '\cdn\Http\Controllers\OrdersController@insertOrderItems',
@@ -430,6 +443,11 @@ Route::get('/search/pos', [
     'as' => 'search.pos'
 ]);
 
+
+Route::get('/root/search/orders', [
+    'uses' => '\cdn\Http\Controllers\SearchController@getOrder',
+    'as' => 'search.orders'
+]);
 
 
 Route::get('/submit-rtv', [
@@ -548,14 +566,12 @@ Route::get('/export-orderitems-csv' , function() {
     return Response::download($filename, 'orders.csv', $headers);
 });
 
-
-
 /* Export Todays Orders CSV */
-
 Route::get('/export-orders-csv/today' , function() {
-
     $today = date("Y-m-d", strtotime( '0 days' ) );	
-    $todaysorders = Order::whereDate('created_at', $today )->get();
+    $date = \Carbon\Carbon::today()->subDays(0);
+    $thisdayorders = Order::where('created_at', '>=', $date)->get();
+    $todaysorders = Order::whereDate('created_at', '=', $thisdayorders )->where('status', '=', 'Completed')->get();
     $sumalltodaysorders = $todaysorders->sum('totalprice');
     $filename = "orders.csv";
     $handle = fopen($filename, 'w+');
@@ -569,11 +585,8 @@ Route::get('/export-orders-csv/today' , function() {
         'Status',
         'SUM',
         'SUM' => number_format($sumalltodaysorders) . ' SAR',
-
     ));
-
-
-    foreach($todaysorders as $row) {
+    foreach($thisdayorders as $row) {
         fputcsv($handle,array(
             $row['staffname'],
             $row['ponumber'],
@@ -582,27 +595,17 @@ Route::get('/export-orders-csv/today' , function() {
             $row['totalqty'],
             number_format($row['totalprice']) . '.00',
             $row['status'],
-
     ));
-
-
     }
-
-
     fclose($handle);
-
     $headers = array(
         'Content-Type' => 'text/csv',
     );
-
-    return Response::download($filename, date("Y-m-d") . '-orders.csv', $headers);
+    return Response::download($filename, date("d-m-Y") . '-orders.csv', $headers);
 });
 
-
 /* Export All Todays Orders With Items CSV */
-
 Route::get('/export-orders-orderitems-csv/today' , function() {
-
     $today = date("Y-m-d", strtotime( '0 days' ) );	
     $yesterday = date("Y-m-d", strtotime( '1 days' ) );	
     //$todaysorders = Order::whereDate('created_at', $today )->get();
@@ -610,7 +613,6 @@ Route::get('/export-orders-orderitems-csv/today' , function() {
     $sumalltodaysorders = $todaysorderitems->sum('totalprice');
     $filename = "orders-orderitems-today.csv";
     $handle = fopen($filename, 'w+');
-
     fputcsv($handle, array(
         'By-ID',
         'PO#',
@@ -619,11 +621,7 @@ Route::get('/export-orders-orderitems-csv/today' , function() {
         'Total Qtys',
         'Item Price',
         'Total Price',
-
-
     ));
-
-
     foreach($todaysorderitems as $row) {
         fputcsv($handle,array(
             $row['staffname'] . '-' . $row['staffid'],
@@ -633,36 +631,23 @@ Route::get('/export-orders-orderitems-csv/today' , function() {
             $row['itemqty'],
             number_format($row['itemprice']) . '.00',
             $row['itemqty'] * $row['itemprice']
-
     ));
-
-
     }
-
-
     fclose($handle);
-
     $headers = array(
         'Content-Type' => 'text/csv',
     );
-
-    return Response::download($filename,  date("Y-m-d") . '-orders+items.csv', $headers);
+    return Response::download($filename,  date("d-m-Y") . '-orders+items.csv', $headers);
 });
-
-
 /* Export All Todays Orders With Items Copy & Paste => Excel */
-
 Route::get('/export-orders-orderitems-csv/excel' , function() {
-
     $today = date("Y-m-d", strtotime( '0 days' ) );	
     $todaysorders = Order::whereDate('created_at', $today )->get();
     $todaysorderitems = OrderItems::whereDate('created_at', $today )->get();
     $sumalltodaysorders = $todaysorders->sum('totalprice');
     $filename = "orders-orderitems-today.csv";
     $handle = fopen($filename, 'w+');
-    
     fputcsv($handle, array(
-
         'row identification', 
         'Distribution Channe',
         'PO#',
@@ -672,11 +657,7 @@ Route::get('/export-orders-orderitems-csv/excel' , function() {
         ' ',
         ' ',
         'Qty',
-
-
     ));
-
-
     foreach($todaysorderitems as $row) {
         fputcsv($handle,array(
             'H',
@@ -688,34 +669,71 @@ Route::get('/export-orders-orderitems-csv/excel' , function() {
             ' ',
             ' ',
             $row['itemqty'],
-
     ));
-
-
     }
-
     fclose($handle);
-
     $headers = array(
         'Content-Type' => 'text/csv',
     );
-
     return Response::download($filename,  date("Y-m-d") . '-orders+items.csv', $headers);
 });
 
 
 
+
+
+
+ # We will use this function to generate a CSV
+ Route::get('/export-orders-orderitems-csv/function', function() {
+    $filename = "orders-orderitems-today.csv";
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
+    function exportCSV($headings=false, $rows=false, $filename=false)
+ {
+     # Ensure that we have data to be able to export the CSV
+     if ((!empty($headings)) AND (!empty($rows)))
+     {
+         # modify the name somewhat
+         $name = ($filename !== false) ? $filename . ".csv" : "export.csv";
+
+         # Set the headers we need for this to work
+         header('Content-Type: text/csv; charset=utf-8');
+         header('Content-Disposition: attachment; filename=' . $name);
+
+         # Start the ouput
+         $output = fopen('php://output', 'w');
+
+         # Create the headers
+         fputcsv($output, $headings);
+
+         # Then loop through the rows
+         foreach($rows as $row)
+         {
+             # Add the rows to the body
+             fputcsv($output, $row);
+         }
+
+         # Exit to close the stream off
+         exit();
+     }
+
+     # Default to a failure
+     return false;
+    }
+ return Response::download($filename, 'submitted-' . date("Y-m-d") . '-orders+items.csv', $headers);
+});
+
+
+
 /* Export All Todays Submitted Orders With Items Copy & Paste => Excel -> Change to Completed*/
-
 Route::get('/export-orders-orderitems-csv/submitted/to/completed' , function() {
-
     $today = date("Y-m-d", strtotime( '0 days' ) );	
     $todaysorders = Order::whereDate('created_at', $today )->where('status', '=', 'Submitted' )->get();
-    $todaysorderitems = OrderItems::whereDate('created_at', $today )->where('orderstatus', '=', 'Submitted' )->get();
+    $todaysorderitems = OrderItems::whereDate('created_at', $today )->where('orderstatus', '=', 'Submitted' )->orderBy('created_at', 'asc')->get();
     $sumalltodaysorders = $todaysorders->sum('totalprice');
     $filename = "orders-orderitems-today.csv";
     $handle = fopen($filename, 'w+');
-    
     fputcsv($handle, array(
         'row identification', 
         'Distribution Channe',
@@ -726,42 +744,1057 @@ Route::get('/export-orders-orderitems-csv/submitted/to/completed' , function() {
         ' ',
         ' ',
         'Qty',
+        'asked price',
         'Free',
+    ));
+
+        foreach($todaysorderitems as $row) {
+            if ($row->sum('freeitem') > 0){
+                $todaysorderitems   .= "\n".trim(@$row['itemnumber'])."\n";
+                fputcsv($handle,
+                  array(       
+                    'H', '24', $row['ponumber'], ' ', $row['branchnumber'],
+                    $row['itemnumber'],
+                    ' ',
+                    ' ',
+                    $row['itemqty'],
+                    $row['itemprice'] - $row['askedprice'],
+                    $row['freeitem'],
+                    ));
+                    }else{
+                        $itemCode   .= "\n".trim(@$repairDetailData['ItemMaster']->Item_Code)."\n";
+                    fputcsv($handle,
+                    array(              
+                    'H',
+                    '24',
+                    $row['ponumber'],
+                    'with free items',           
+
+            ));
+        }
+
+    }
+    fclose($handle);
+    $headers = array(
+        'Content-Type' => 'text/csv',
+    );
 
 
+    $out = fopen('php://output', 'w');
+fclose($out);
+//dump($out);
+    
+
+   
+
+    $currentuser = \Auth::user();
+    $allorders = Order::where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->get();
+    $sumallorders = $allorders->sum('totalprice');
+    User::where('idnumber', '=', $currentuser->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+    Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+    OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+  
+    return Response::download($filename, 'submitted-' . date("Y-m-d") . '-orders+items.csv', $headers);
+});
+
+
+
+/* Export All Todays Submitted Orders With Items BY USER Copy & Paste => Excel -> Change to Completed*/
+Route::get('/export-orders-orderitems-csv/{idnumber}/submitted/to/completed' , function($idnumber) {
+    $today = date("Y-m-d", strtotime( '0 days' ) );	
+    $todaysorders = Order::whereDate('created_at', $today )->where('staffid', '=', $idnumber)->where('status', '=', 'Submitted' )->get();
+    $todaysorderitems = OrderItems::whereDate('created_at', $today )->where('staffid', '=', $idnumber)->where('orderstatus', '=', 'Submitted' )->orderBy('created_at', 'asc');
+    $header =  OrderItems::whereDate('created_at', $today )->where('staffid', '=', $idnumber)->where('orderstatus', '=', 'Submitted' )->whereNotNull('ordernumber')->orderBy('created_at', 'asc')->get();
+    $body = OrderItems::whereDate('created_at', $today )->where('staffid', '=', $idnumber)->where('orderstatus', '=', 'Submitted' )->whereNull('ordernumber')->orderBy('created_at', 'asc')->get();
+    $user = User::all();    
+    $firas = $user->where('email', '=', 'foz@sunbulahgroup.com')->first();
+    $hazim = $user->where('email', '=', 'hhz@sunbulahgroup.com')->first();
+    $awaden = $user->where('email', '=', 'mwd@sunbulahgroup.com')->first();
+    
+    
+    $michael = $user->where('idnumber', '=', '1275')->first();
+    $countmichaelorders = Order::where('staffid', '=', $michael->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
+    $countmichaelfp = OrderItems::where('staffid', '=', $michael->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $mohammedsayed = $user->where('idnumber', '=', '5275')->first();
+    $countmohammedsayedorders = Order::where('staffid', '=', $mohammedsayed->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
+    $countmohammedsayedfp = OrderItems::where('staffid', '=', $mohammedsayed->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $fahaddahasy = $user->where('idnumber', '=', '2745')->first();
+    $countfahaddahasyorders = OrderItems::where('staffid', '=', $fahaddahasy->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countfahaddahasyfp = OrderItems::where('staffid', '=', $fahaddahasy->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $abdullahnaser = $user->where('idnumber', '=', '2409')->first();
+    $countabdullahnaserorders = OrderItems::where('staffid', '=', $abdullahnaser->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countabdullahnaserfp = OrderItems::where('staffid', '=', $abdullahnaser->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $hassanfathi = $user->where('idnumber', '=', '4401')->first();
+    $counthassanfathiorders = OrderItems::where('staffid', '=', $hassanfathi->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $counthassanfathifp = OrderItems::where('staffid', '=', $hassanfathi->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $samsudin = $user->where('idnumber', '=', '1171')->first();
+    $countsamsudinorders = OrderItems::where('staffid', '=', $samsudin->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countsamsudinfp = OrderItems::where('staffid', '=', $samsudin->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $ahmedmedhat = $user->where('idnumber', '=', '4688')->first();
+    $countahmedmedhatorders = OrderItems::where('staffid', '=', $ahmedmedhat->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countahmedmedhatfp = OrderItems::where('staffid', '=', $ahmedmedhat->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $hashem = $user->where('idnumber', '=', '3761')->first();
+    $counthashemorders = OrderItems::where('staffid', '=', $hashem->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $counthashemfp = OrderItems::where('staffid', '=', $hashem->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $wail = $user->where('idnumber', '=', '2469')->first();
+    $countwailorders = OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countwailfp = OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $noufal = $user->where('idnumber', '=', '2076')->first();
+    $countnoufalorders = OrderItems::where('staffid', '=', $noufal->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countnoufalfp = OrderItems::where('staffid', '=', $noufal->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $ruben = $user->where('idnumber', '=', '1555')->first();
+    $countrubenorders = OrderItems::where('staffid', '=', $ruben->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countrubenfp = OrderItems::where('staffid', '=', $ruben->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $osama = $user->where('idnumber', '=', '1141')->first();
+    $countosamaorders = OrderItems::where('staffid', '=', $osama->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countosamafp = OrderItems::where('staffid', '=', $osama->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $ahmedshawqy = $user->where('idnumber', '=', '1869')->first();
+    $countahmedshawqyorders = OrderItems::where('staffid', '=', $ahmedshawqy->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countahmedshawqyfp = OrderItems::where('staffid', '=', $ahmedshawqy->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    $medhathassan = $user->where('idnumber', '=', '4417')->first();
+    $countmedhathassanorders = OrderItems::where('staffid', '=', $medhathassan->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
+    $countmedhathassanfp = OrderItems::where('staffid', '=', $medhathassan->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
+    
+    
+
+
+        /** QASSIM TREE */
+
+        /** Suneer */
+        $suneer = User::select()->where('idnumber', '=', '466')->first();
+        $countsuneerorders = Order::where('staffid', '=', $suneer->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
+        $countsuneerfp = OrderItems::where('staffid', '=', $suneer->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
+
+        /** Fahad Hussein -> fahadhussein */
+        $fahadhussein = User::select()->where('idnumber', '=', '2508')->first();
+        $countfahadhusseinorders = Order::where('staffid', '=', $fahadhussein->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
+        $countfahadhusseinfp = OrderItems::where('staffid', '=', $fahadhussein->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
+
+        /** Sultan Salman */
+        $sultansalman = User::select()->where('idnumber', '=', '1621')->first();
+        $countsultansalmanorders = Order::where('staffid', '=', $sultansalman->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
+        $countsultansalmanfp = OrderItems::where('staffid', '=', $sultansalman->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
+
+        /** Medhat */
+        $medhat = User::select()->where('idnumber', '=', '4241')->first();
+        $countmedhatorders = Order::where('staffid', '=', $medhat->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
+        $countmedhatfp = OrderItems::where('staffid', '=', $medhat->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
+
+
+
+    /** Michael Lanes DATA */
+    if ($idnumber == $michael->idnumber) {
+    $sumalltodaysorders = $todaysorders->sum('totalprice');
+    $filename = "orders-orderitems-today.csv";
+    $handle = fopen($filename, 'w+');
+    fputcsv($handle, array(
+        'row identification', 
+        'Distribution Channe',
+        'PO#',
+        ' ',
+        'Customer#',
+        'Item#',
+        ' ',
+        ' ',
+        'Qty',
+        'asked price',
+        'Free',
 
     ));
 
-
-    foreach($todaysorderitems as $row) {
+    foreach($countmichaelfp as $row) {
         fputcsv($handle,array(
             'H',
             '24',
             $row['ponumber'],
             ' ',
             $row['branchnumber'],
+
+            
             $row['itemnumber'],
             ' ',
             ' ',
             $row['itemqty'],
+            $row['itemprice'] - $row['askedprice'],
             $row['freeitem'],
-
     ));
-
-
     }
-
     fclose($handle);
-
     $headers = array(
         'Content-Type' => 'text/csv',
     );
 
-    Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed']);
-    OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+    $allorders = Order::where('staffid', '=', $michael->idnumber)->where('status', '=', 'Completed')->get();
+    $sumallorders = $allorders->sum('totalprice');
+    User::where('idnumber', '=', $michael->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+    Order::where('staffid', '=', $michael->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+    OrderItems::where('staffid', '=', $michael->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+ /** Mohammed Sayed Orders */
+    } elseif ($idnumber == $mohammedsayed->idnumber) {
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+            'row identification', 
+            'Distribution Channe',
+            'PO#',
+            ' ',
+            'Customer#',
+            'Item#',
+            ' ',
+            ' ',
+            'Qty',
+            'asked price',
+            'Free',
+        ));
     
-    return Response::download($filename, 'submitted-' . date("Y-m-d") . '-orders+items.csv', $headers);
+        foreach($countmohammedsayedfp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+        fclose($handle);
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+        $allorders = Order::where('staffid', '=', $mohammedsayed->idnumber)->where('status', '=', 'Completed')->get();
+        $sumallorders = $allorders->sum('totalprice');
+        User::where('idnumber', '=', $mohammedsayed->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+        Order::where('staffid', '=', $mohammedsayed->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+        OrderItems::where('staffid', '=', $mohammedsayed->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+    }
+                /** Fahad Dahasy Orders */
+    elseif($idnumber == $fahaddahasy->idnumber) {
+       $sumalltodaysorders = $todaysorders->sum('totalprice');
+       $filename = "orders-orderitems-today.csv";
+       $handle = fopen($filename, 'w+');
+       fputcsv($handle, array(
+        'row identification', 
+        'Distribution Channe',
+        'PO#',
+        ' ',
+        'Customer#',
+        'Item#',
+        ' ',
+        ' ',
+        'Qty',
+        'asked price',
+        'Free',
+       ));
+   
+       foreach($countfahaddahasyfp as $row) {
+           fputcsv($handle,array(
+               'H',
+               '24',
+               $row['ponumber'],
+               ' ',
+               $row['branchnumber'],
+   
+               
+               $row['itemnumber'],
+               ' ',
+               ' ',
+               $row['itemqty'],
+               $row['itemprice'] - $row['askedprice'],
+               $row['freeitem'],
+       ));
+       }
+        fclose($handle);
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+    
+        $allorders = Order::where('staffid', '=', $fahaddahasy->idnumber)->where('status', '=', 'Completed')->get();
+        $sumallorders = $allorders->sum('totalprice');
+        User::where('idnumber', '=', $fahaddahasy->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+        Order::where('staffid', '=', $fahaddahasy->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+        OrderItems::where('staffid', '=', $fahaddahasy->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+    }
+
+        /** Abdullah Nasser Orders */
+        
+        elseif($idnumber == $abdullahnaser->idnumber) {
+
+            $sumalltodaysorders = $todaysorders->sum('totalprice');
+            $filename = "orders-orderitems-today.csv";
+            $handle = fopen($filename, 'w+');
+            fputcsv($handle, array(
+             'row identification', 
+             'Distribution Channe',
+             'PO#',
+             ' ',
+             'Customer#',
+             'Item#',
+             ' ',
+             ' ',
+             'Qty',
+             'asked price',
+             'Free',
+            ));
+        
+            foreach($countabdullahnaserfp as $row) {
+                fputcsv($handle,array(
+                    'H',
+                    '24',
+                    $row['ponumber'],
+                    ' ',
+                    $row['branchnumber'],
+        
+                    
+                    $row['itemnumber'],
+                    ' ',
+                    ' ',
+                    $row['itemqty'],
+                    $row['itemprice'] - $row['askedprice'],
+                    $row['freeitem'],
+            ));
+            }
+             fclose($handle);
+             $headers = array(
+                 'Content-Type' => 'text/csv',
+             );
+         
+             $allorders = Order::where('staffid', '=', $abdullahnaser->idnumber)->where('status', '=', 'Completed')->get();
+             $sumallorders = $allorders->sum('totalprice');
+             User::where('idnumber', '=', $abdullahnaser->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+             Order::where('staffid', '=', $abdullahnaser->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+             OrderItems::where('staffid', '=', $abdullahnaser->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+         }
+     
+        /** Ahmed Medhat Orders */
+    elseif ($idnumber == $ahmedmedhat->idnumber) {
+       $sumalltodaysorders = $todaysorders->sum('totalprice');
+       $filename = "orders-orderitems-today.csv";
+       $handle = fopen($filename, 'w+');
+       fputcsv($handle, array(
+        'row identification', 
+        'Distribution Channe',
+        'PO#',
+        ' ',
+        'Customer#',
+        'Item#',
+        ' ',
+        ' ',
+        'Qty',
+        'asked price',
+        'Free',
+       ));
+   
+       foreach($countahmedmedhatfp as $row) {
+           fputcsv($handle,array(
+               'H',
+               '24',
+               $row['ponumber'],
+               ' ',
+               $row['branchnumber'],
+   
+               
+               $row['itemnumber'],
+               ' ',
+               ' ',
+               $row['itemqty'],
+               $row['itemprice'] - $row['askedprice'],
+               $row['freeitem'],
+       ));
+       }
+
+        fclose($handle);
+        $headers = array(
+            'Content-Type' => 'text/csv',
+        );
+    
+        $allorders = Order::where('staffid', '=', $ahmedmedhat->idnumber)->where('status', '=', 'Completed')->get();
+        $sumallorders = $allorders->sum('totalprice');
+        User::where('idnumber', '=', $ahmedmedhat->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+        Order::where('staffid', '=', $ahmedmedhat->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+        OrderItems::where('staffid', '=', $ahmedmedhat->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+        
+    }  
+    /** Wail Orders */
+    
+    elseif($idnumber == $wail->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($countwailfp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $wail->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $wail->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $wail->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+     
+     /** END OF FIRAS TEAM DATA */
+     
+          /** SATRT OF HAZIM TEAM DATA */
+
+         /** Noufal Orders */
+    
+    elseif($idnumber == $noufal->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($countnoufalfp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $noufal->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $noufal->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $noufal->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $noufal->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+     
+     
+         /** Ruben M. Orders */
+    
+    elseif($idnumber == $ruben->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($countrubenfp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $ruben->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $ruben->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $ruben->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $ruben->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+     
+          
+         /** Samsudin Orders */
+    
+    elseif($idnumber == $samsudin->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($countsamsudinfp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $samsudin->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $samsudin->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $samsudin->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $samsudin->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+               
+         /** Osama M.R. Orders */
+    
+    elseif($idnumber == $osama->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($countosamafp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $osama->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $osama->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $osama->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $osama->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+
+          /** END OF HAZIM TEAM DATA */
+     
+          /** SATRT OF AWADEN TEAM DATA */
+
+     
+              /** A. Shawky Orders */
+    
+    elseif($idnumber == $ahmedshawqy->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($countahmedshawqyfp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $ahmedshawqy->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $ahmedshawqy->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $ahmedshawqy->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $ahmedshawqy->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+          
+              /** Hassan Fathi Orders */
+    
+    elseif($idnumber == $hassanfathi->idnumber) {
+
+        $sumalltodaysorders = $todaysorders->sum('totalprice');
+        $filename = "orders-orderitems-today.csv";
+        $handle = fopen($filename, 'w+');
+        fputcsv($handle, array(
+         'row identification', 
+         'Distribution Channe',
+         'PO#',
+         ' ',
+         'Customer#',
+         'Item#',
+         ' ',
+         ' ',
+         'Qty',
+         'asked price',
+         'Free',
+        ));
+    
+        foreach($counthassanfathifp as $row) {
+            fputcsv($handle,array(
+                'H',
+                '24',
+                $row['ponumber'],
+                ' ',
+                $row['branchnumber'],
+    
+                
+                $row['itemnumber'],
+                ' ',
+                ' ',
+                $row['itemqty'],
+                $row['itemprice'] - $row['askedprice'],
+                $row['freeitem'],
+        ));
+        }
+         fclose($handle);
+         $headers = array(
+             'Content-Type' => 'text/csv',
+         );
+     
+         $allorders = Order::where('staffid', '=', $hassanfathi->idnumber)->where('status', '=', 'Completed')->get();
+         $sumallorders = $allorders->sum('totalprice');
+         User::where('idnumber', '=', $hassanfathi->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+         Order::where('staffid', '=', $hassanfathi->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+         OrderItems::where('staffid', '=', $hassanfathi->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+     }
+        
+            /** @Hashem Orders */
+
+            elseif($idnumber == $hashem->idnumber) {
+
+            $sumalltodaysorders = $todaysorders->sum('totalprice');
+            $filename = "orders-orderitems-today.csv";
+            $handle = fopen($filename, 'w+');
+            fputcsv($handle, array(
+                'row identification', 
+                'Distribution Channe',
+                'PO#',
+                ' ',
+                'Customer#',
+                'Item#',
+                ' ',
+                ' ',
+                'Qty',
+                'asked price',
+                'Free',
+            ));
+        
+            foreach($counthashemfp as $row) {
+                fputcsv($handle,array(
+                    'H',
+                    '24',
+                    $row['ponumber'],
+                    ' ',
+                    $row['branchnumber'],
+        
+                    
+                    $row['itemnumber'],
+                    ' ',
+                    ' ',
+                    $row['itemqty'],
+                    $row['itemprice'] - $row['askedprice'],
+                    $row['freeitem'],
+            ));
+            }
+                fclose($handle);
+                $headers = array(
+                    'Content-Type' => 'text/csv',
+                );
+            
+                $allorders = Order::where('staffid', '=', $hashem->idnumber)->where('status', '=', 'Completed')->get();
+                $sumallorders = $allorders->sum('totalprice');
+                User::where('idnumber', '=', $hashem->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+                Order::where('staffid', '=', $hashem->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+                OrderItems::where('staffid', '=', $hashem->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+            }
+            
+        /** @M. Hassan Orders */
+
+        elseif($idnumber == $medhathassan->idnumber) {
+
+            $sumalltodaysorders = $todaysorders->sum('totalprice');
+            $filename = "orders-orderitems-today.csv";
+            $handle = fopen($filename, 'w+');
+            fputcsv($handle, array(
+                'row identification', 
+                'Distribution Channe',
+                'PO#',
+                ' ',
+                'Customer#',
+                'Item#',
+                ' ',
+                ' ',
+                'Qty',
+                'asked price',
+                'Free',
+            ));
+        
+            foreach($countmedhathassanfp as $row) {
+                fputcsv($handle,array(
+                    'H',
+                    '24',
+                    $row['ponumber'],
+                    ' ',
+                    $row['branchnumber'],
+        
+                    
+                    $row['itemnumber'],
+                    ' ',
+                    ' ',
+                    $row['itemqty'],
+                    $row['itemprice'] - $row['askedprice'],
+                    $row['freeitem'],
+            ));
+            }
+                fclose($handle);
+                $headers = array(
+                    'Content-Type' => 'text/csv',
+                );
+            
+                $allorders = Order::where('staffid', '=', $medhathassan->idnumber)->where('status', '=', 'Completed')->get();
+                $sumallorders = $allorders->sum('totalprice');
+                User::where('idnumber', '=', $medhathassan->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+                Order::where('staffid', '=', $medhathassan->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+                OrderItems::where('staffid', '=', $medhathassan->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+            }
+    
+
+            
+            /** END RUH START QAS */
+        /** @Suneer Orders */
+
+        elseif($idnumber == $suneer->idnumber) {
+
+            $sumalltodaysorders = $todaysorders->sum('totalprice');
+            $filename = "orders-orderitems-today.csv";
+            $handle = fopen($filename, 'w+');
+            fputcsv($handle, array(
+                'row identification', 
+                'Distribution Channe',
+                'PO#',
+                ' ',
+                'Customer#',
+                'Item#',
+                ' ',
+                ' ',
+                'Qty',
+                'asked price',
+                'Free',
+            ));
+        
+            foreach($countsuneerfp as $row) {
+                fputcsv($handle,array(
+                    'H',
+                    '24',
+                    $row['ponumber'],
+                    ' ',
+                    $row['branchnumber'],
+        
+                    
+                    $row['itemnumber'],
+                    ' ',
+                    ' ',
+                    $row['itemqty'],
+                    $row['itemprice'] - $row['askedprice'],
+                    $row['freeitem'],
+            ));
+            }
+                fclose($handle);
+                $headers = array(
+                    'Content-Type' => 'text/csv',
+                );
+            
+                $allorders = Order::where('staffid', '=', $suneer->idnumber)->where('status', '=', 'Completed')->get();
+                $sumallorders = $allorders->sum('totalprice');
+                User::where('idnumber', '=', $suneer->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+                Order::where('staffid', '=', $suneer->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+                OrderItems::where('staffid', '=', $suneer->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+            }
+    
+             /** @Fahad Hussein Orders -> fahadhussein */
+
+        elseif($idnumber == $fahadhussein->idnumber) {
+
+            $sumalltodaysorders = $todaysorders->sum('totalprice');
+            $filename = "orders-orderitems-today.csv";
+            $handle = fopen($filename, 'w+');
+            fputcsv($handle, array(
+                'row identification', 
+                'Distribution Channe',
+                'PO#',
+                ' ',
+                'Customer#',
+                'Item#',
+                ' ',
+                ' ',
+                'Qty',
+                'asked price',
+                'Free',
+            ));
+        
+            foreach($countfahadhusseinfp as $row) {
+                fputcsv($handle,array(
+                    'H',
+                    '24',
+                    $row['ponumber'],
+                    ' ',
+                    $row['branchnumber'],
+        
+                    
+                    $row['itemnumber'],
+                    ' ',
+                    ' ',
+                    $row['itemqty'],
+                    $row['itemprice'] - $row['askedprice'],
+                    $row['freeitem'],
+            ));
+            }
+                fclose($handle);
+                $headers = array(
+                    'Content-Type' => 'text/csv',
+                );
+            
+                $allorders = Order::where('staffid', '=', $fahadhussein->idnumber)->where('status', '=', 'Completed')->get();
+                $sumallorders = $allorders->sum('totalprice');
+                User::where('idnumber', '=', $fahadhussein->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+                Order::where('staffid', '=', $fahadhussein->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+                OrderItems::where('staffid', '=', $fahadhussein->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+            }
+    
+    
+             /** @Sultan Salman Orders */
+
+             elseif($idnumber == $sultansalman->idnumber) {
+
+                $sumalltodaysorders = $todaysorders->sum('totalprice');
+                $filename = "orders-orderitems-today.csv";
+                $handle = fopen($filename, 'w+');
+                fputcsv($handle, array(
+                    'row identification', 
+                    'Distribution Channe',
+                    'PO#',
+                    ' ',
+                    'Customer#',
+                    'Item#',
+                    ' ',
+                    ' ',
+                    'Qty',
+                    'asked price',
+                    'Free',
+                ));
+            
+                foreach($countsultansalmanfp as $row) {
+                    fputcsv($handle,array(
+                        'H',
+                        '24',
+                        $row['ponumber'],
+                        ' ',
+                        $row['branchnumber'],
+            
+                        
+                        $row['itemnumber'],
+                        ' ',
+                        ' ',
+                        $row['itemqty'],
+                        $row['itemprice'] - $row['askedprice'],
+                        $row['freeitem'],
+                ));
+                }
+                    fclose($handle);
+                    $headers = array(
+                        'Content-Type' => 'text/csv',
+                    );
+                
+                    $allorders = Order::where('staffid', '=', $sultansalman->idnumber)->where('status', '=', 'Completed')->get();
+                    $sumallorders = $allorders->sum('totalprice');
+                    User::where('idnumber', '=', $sultansalman->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+                    Order::where('staffid', '=', $sultansalman->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+                    OrderItems::where('staffid', '=', $sultansalman->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+                }
+        
+                /** @Medhat Orders */
+
+             elseif($idnumber == $medhat->idnumber) {
+
+                $sumalltodaysorders = $todaysorders->sum('totalprice');
+                $filename = "orders-orderitems-today.csv";
+                $handle = fopen($filename, 'w+');
+                fputcsv($handle, array(
+                    'row identification', 
+                    'Distribution Channe',
+                    'PO#',
+                    ' ',
+                    'Customer#',
+                    'Item#',
+                    ' ',
+                    ' ',
+                    'Qty',
+                    'asked price',
+                    'Free',
+                ));
+            
+                foreach($countmedhatfp as $row) {
+                    fputcsv($handle,array(
+                        'H',
+                        '24',
+                        $row['ponumber'],
+                        ' ',
+                        $row['branchnumber'],
+            
+                        
+                        $row['itemnumber'],
+                        ' ',
+                        ' ',
+                        $row['itemqty'],
+                        $row['itemprice'] - $row['askedprice'],
+                        $row['freeitem'],
+                ));
+                }
+                    fclose($handle);
+                    $headers = array(
+                        'Content-Type' => 'text/csv',
+                    );
+                
+                    $allorders = Order::where('staffid', '=', $medhat->idnumber)->where('status', '=', 'Completed')->get();
+                    $sumallorders = $allorders->sum('totalprice');
+                    User::where('idnumber', '=', $medhat->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+                    Order::where('staffid', '=', $medhat->idnumber)->where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
+                    OrderItems::where('staffid', '=', $medhat->idnumber)->where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+                }
+        
+     else {
+            exit();
+    }
+
+    return Response::download($filename,  $idnumber . '-submitted-' .date("Y-m-d") . '-orders+items.csv', $headers);
+
 });
+
 
 /*
 Route::get('user/{id}', function ($id) {
@@ -771,19 +1804,16 @@ Route::get('user/{id}', function ($id) {
 
 /** Export Report By UserId */
 Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
-
     //$currentuser = \Auth::user()->idnumber;
-
     $today = date("Y-m-d", strtotime( '0 days' ) );	
-    $todaysorders = Order::whereDate('created_at', $today )->where('status', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
-    $todaysorderitems = OrderItems::whereNotNull('orderitems')->whereDate('created_at', $today )->where('orderstatus', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
+    $todaysorders = Order::whereDate('created_at', $today )->where('status', '=', 'Completed' )->where('staffid', '=', $idnumber)->orderBy('created_at', 'asc')->get();
+    $todaysorderitems = OrderItems::whereNotNull('orderitems')->whereDate('created_at', $today )->where('orderstatus', '=', 'Completed' )->where('staffid', '=', $idnumber)->orderBy('created_at', 'asc')->get();
     $totalurgent = $todaysorders->where('urgent', '=', 'on')->count();
     $totalregular = $todaysorders->where('urgent', '=', NULL)->count();
     $totalitems = $todaysorders->sum('totalitems');
     $totalqtys = $todaysorders->sum('totalqty');
     $totalpos = $todaysorders->count('ponumber');
     $allorders = Order::where('status', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
-
     $sumalltodaysorders = $todaysorders->sum('totalprice');
     $sumallusergrand = $allorders->sum('totalprice');
     $filename = "orders-orderitems-today.csv";
@@ -797,12 +1827,7 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
         'Total Qtys',
         'Total Sales',
         'Total Grand'
-
-
-
     ));
-    
-    
     fputcsv($handle, array(
         \Auth::user()->name . '#' .\Auth::user()->idnumber,
         $today,
@@ -812,38 +1837,21 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
         $totalqtys,
         number_format($sumalltodaysorders),
         number_format($sumallusergrand)
-
-
-
     ));
-    
-
-
-
     /** Empty Cells */ 
     fputcsv($handle, array(
         '',
         '',
         '',
         '',
-
-
-    ));
-    
-    
+    ));    
     fputcsv($handle, array(
         '',
         '',
         '',
         '',
-
-
-
-
     ));
-    
     /** End Empte Cells */
-
     fputcsv($handle, array(
         'PO#',
         'Customer#',
@@ -852,15 +1860,9 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
         'Total Sales',
         'Currency',
         'Completed',
-
-
-
     ));
-
-
     foreach($todaysorders as $row) {
         fputcsv($handle,array(
-
             $row['ponumber'],
             $row['branchname'],
             $row['totalitems'],
@@ -868,38 +1870,22 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
             number_format($row['totalprice']),
             ' SAR',
             $row['updated_at']->format("d/m/y g:iA"),
-
     ));
-
-
     }
-
-
         /** Empty Cells */ 
         fputcsv($handle, array(
             '',
             '',
             '',
             '',
-    
-    
         ));
-        
-        
         fputcsv($handle, array(
             '',
             '',
             '',
             '',
-    
-    
-    
-    
         ));
-        
         /** End Empte Cells */
-
-
     fputcsv($handle, array(
         'PO#',
         'Customer',
@@ -907,7 +1893,6 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
         'Qty',
         'Price',
     ));
-
     foreach($todaysorderitems as $row) {
         fputcsv($handle,array(
             $row['ponumber'],
@@ -917,16 +1902,11 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
             number_format($row['itemprice']),
     ));
     }
-
-
-
     fclose($handle);
-
     $headers = array(
         'Content-Type' => 'text/csv',
     );
-
-    /*Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed']);
+    /*Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
     OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
     */
     return Response::download($filename, $today . '-' . $idnumber . '-completed-orders-report.csv', $headers);
@@ -943,7 +1923,7 @@ Route::get('/export-orders-csv/{idnumber}/completed' , function($idnumber) {
 
 
 
-
+/* -----------------------------CSV-END--------------------------------------------------XML-START----------------------------------- */
 
 
 
@@ -970,13 +1950,9 @@ Route::get('/export-orders-csv/submitted/to/completed/now' , function() {
             ' ',
             ' ',
             'Qty',
-            'Free',
-    
-    
-    
-        ));
-    
-    
+            'Free',    
+            'Asked Price',
+        ));    
         foreach($todaysorderitems as $row) {
             fputcsv($handle,array(
                 'H',
@@ -989,30 +1965,24 @@ Route::get('/export-orders-csv/submitted/to/completed/now' , function() {
                 ' ',
                 $row['itemqty'],
                 $row['freeitem'],
-    
-        ));
-    
-    
+                $row['askedprice'],
+
+        ));    
         }
-    
         fclose($handle);
-    
         $headers = array(
             'Content-Type' => 'text/csv',
         );
-    
-        Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed']);
-        OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
-        
+        $orders = Order::where('status', '=', 'Submitted');
+        $orders->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber, 'processedby' => \Auth::user()->idnumber]);
+        $orderitems = OrderItems::where('orderstatus', '=', 'Submitted');
+        $orderitems->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
+        $michaelorders = $orders->where('staffid', '=', '1275')->get();
         return Response::download($filename, 'submitted-' . date("Y-m-d") . '-orders+items.csv', $headers);
     });
 
-
-
-
-    /** Export Report By Just Submited Order by User */
+/** Export Report By Just Submited Order by User */
 Route::get('/export-orders-csv/submitted/to/completed/{idnumber}/all' , function($idnumber) {
-    
     $allorders = Order::where('status', '=', 'Completed' )->where('staffid', '=', $idnumber)->get();
     $today = date("Y-m-d", strtotime( '0 days' ) );	
     $todaysorders = Order::whereDate('created_at', $today )->where('status', '=', 'Submitted' )->get();
@@ -1032,12 +2002,7 @@ Route::get('/export-orders-csv/submitted/to/completed/{idnumber}/all' , function
         ' ',
         ' ',
         'Qty',
-
-
-
     ));
-
-
     foreach($todaysorderitems as $row) {
         fputcsv($handle,array(
             'H',
@@ -1049,27 +2014,20 @@ Route::get('/export-orders-csv/submitted/to/completed/{idnumber}/all' , function
             ' ',
             ' ',
             $row['itemqty'],
-
     ));
-
-
     }
-
     fclose($handle);
-
     $headers = array(
         'Content-Type' => 'text/csv',
     );
-
-    Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed']);
+    $currentuser = \Auth::user();
+    $allorders = Order::where('staffid', '=', $currentuser->$idnumber)->where('status', '=', 'Completed')->get();
+    $sumallorders = $allorders->sum('totalprice');
+    User::where('idnumber', '=', $currentuser->$idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+    Order::where('status', '=', 'Submitted')->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber, 'processedby' => \Auth::user()->idnumber]);
     OrderItems::where('orderstatus', '=', 'Submitted')->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
-    
     return Response::download($filename, 'submitted-' . date("Y-m-d") . '-orders+items.csv', $headers);
 });
-
-
-
-
 
 /* EXPORT CSV REPORTS */
 

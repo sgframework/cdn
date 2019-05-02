@@ -1,7 +1,4 @@
-<div class="media">
-	<a class="pull-left" href="">
-	</a>
-	<div class="media-body">
+
 		@if ($todaysreviewingorder->ordernumber)
 			<tbody style="font-size:12px">
 				<tr>
@@ -13,11 +10,10 @@
 					<td class="{{ strtolower($todaysreviewingorder->status) }}">{{ $todaysreviewingorder->status }}</td>
 					<td>{{ $todaysreviewingorder->created_at->diffForHumans() }}</td>
 					<td>{{ $todaysreviewingorder->updated_at->diffForHumans() }}</td>
+					<!--<td style=";background-color:black;color:white;text-align:center"><span><form action="{{ route('orders.destroy', ['slug' => $todaysreviewingorder->slug, 'ponumber' => $todaysreviewingorder->ponumber]) }}" method="POST">@csrf<input class="btn btn-danger" type="submit" value="&#x2716;" style=" outline: none;padding-top: 0px;padding-bottom: 0px;border: 1px solid white;padding: 1px 1px 1px 1px;font-size: 7px;border-radius:30%"></form></span></td>-->
 					<!--<td><pre><a style= "" href="/orders/order/{{ $todaysreviewingorder->slug }}">{{ $todaysreviewingorder->slug }}</a></pre></td>-->
 				</tr>                            
 			</tbody>
 		@endif
-	</div>
-</div>
 
            

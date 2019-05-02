@@ -67,5 +67,30 @@ class SearchController extends Controller
 	}
 
 
-
+public function getOrder(Request $request)
+{
+	$query = $request->input('query');
+    	
+	if (!$query) {
+		return redirect()->route('search.orders')->with('alert', 'Nothing Found !');
+	}
+	
+	$pos = Order::where(DB::raw("CONCAT(ponumber, '', 'branchnumber')"), 'LIKE', "%{$query}%")
+	->orWhere('staffname', 'LIKE', "%{$query}%")
+	->orWhere('staffid', 'LIKE', "%{$query}%")
+	->orWhere('branchnumber', 'LIKE', "%{$query}%")
+	->orWhere('branchname', 'LIKE', "%{$query}%")
+	->orWhere('ponumber', 'LIKE', "%{$query}%")
+	->orWhere('slug', 'LIKE', "%{$query}%")
+	->orWhere('created_at', 'LIKE', "%{$query}%")
+	->orWhere('processedby', 'created_at', 'LIKE', "%{$query}%")
+	->orWhere('status', 'LIKE', "%{$query}%")
+	->get();
+	$poitems = OrderItems::where('slug', 'LIKE', "%{$query}%")
+	->orWhere('ponumber', 'LIKE', "%{$query}%")
+	->get();
+	
+	
+	return view('search.orders')->with('pos', $pos)->with('poitems', $poitems);
+}
 }

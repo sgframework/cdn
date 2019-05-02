@@ -72,7 +72,7 @@
                                             @endif
                                             <form class="form-inline" action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
                                                     @csrf
-                                                <input  placeholder="Select Item" width="60%" name="itemnumber" class="form-control1" list="{{ $item->itemnumber }}-{{ $item->itemname }}" autofocus>
+                                                <input  placeholder="Select Item" style="" name="itemnumber" class="form-control1" list="{{ $item->itemnumber }}-{{ $item->itemname }}" autofocus>
                                                 <input  hidden name="itemname" class="form-control" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
                                                     <datalist id="{{ $item->itemnumber }}-{{ $item->itemname }}" class="">
                                                         @foreach($items as $item)
@@ -80,18 +80,24 @@
                                                         @endforeach 
                                                     </datalist>                   
                                                 <input width="10%" class="form-control2" type="number" name="itemqty" placeholder="Qty." />
-                                                <input width="10%" class="form-control2" value="0" type="number" name="freeitem" placeholder="Free" />
+                                                <input width="10%" class="form-control2" value="Free" type="number" name="freeitem" placeholder="Free" />
                                                 <input hidden id="price" width="20%" class="form-control2" type="number" name="itemprice" placeholder="Price" />
+                                                <input id="askedprice" width="10%" class="form-control2" type="number" name="askedprice" placeholder="Price" />
                                                 @if ( $order->status == 'Submitted')
                                                         <p>Can't make edits on submitted or completed orders.</p>
                                                     @elseif ( $order->status == 'Completed' )
                                                     <p>Can't make edits on submitted or completed orders.</p>
                                                     @elseif ( $order->status == 'Reviewing' )
                                                     @elseif ( $order->status == 'Editing' )
-                                                    <input type="submit" value="Insert &darr;" style="color:red" class="form-control2" />
+                                                    <div style="padding-left:20px">
+                                                        <input type="submit" value="Insert &darr;" style="background-color:black;color:white;padding: 2px 8px 2px 8px;font-size: 12px" class="form-control" />
+                                                    </div>
                                                     @elseif ( $order->status == 'JustCreated' )
-                                                    <input type="submit" value="Insert &darr;" style="color:red" class="form-control2" />
+                                                    <div style="padding-left:20px">
+                                                        <input type="submit" value="Insert &darr;" style="background-color:black;color:white;padding: 2px 8px 2px 8px;font-size: 12px" class="form-control" />
+                                                    </div>
                                                     @else
+                                                
                                                 @endif
 
                                     @if (!$orderitems->count())
@@ -102,18 +108,26 @@
                                     <?php $totalfree = 0; ?>
                                     <?php $totalprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
+                                    <?php $askedprice = 0; ?>
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                                 <table width="100%" class="table-responsive-sm" id="myTable">
                                                     @foreach ($orderitems as $orderitem)
                                                     <?php $totalqty += $orderitem->itemqty; ?>
-                                                    <?php $totalfree += $orderitem->itemfree; ?>
+                                                    <?php $totalfree += $orderitem->freeitem; ?>
                                                     <?php $totalprice += $orderitem->itemprice; ?>
+                                                    @if ($orderitem->askedprice == 0)
                                                     <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                                    @else
+                                                    <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
+                                                    @endif
+                                                    <?php $askedprice += $orderitem->itemqty * $orderitem->askedprice; ?>
                                                     <input hidden width="20%" value="{{ $totalqtyprice }}" class="form-control2" type="number" name="totalqtyprice" />
+                                                    <input hidden width="20%" value="{{ $askedprice }}" class="form-control2" type="number" name="askedprice" />
                                                     </form>
                                                         @include('dashboard/partials/orderitemsblock')
                                                         
                                                     @endforeach	
+                                                    <span style="color:black" class="badge badge-success">{{ ($orderitem->itemprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty) }}</span>
 
                                             <script>
                                                 $(document).ready(function(){
@@ -128,19 +142,36 @@
                                                                 <th style="text-align:center">{{ $totalqty }}</th>
                                                                 <th style="text-align:center">{{ $totalfree }}</th>
                                                                 <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                                <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                                 <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
+                                                                <th style="text-align:center;background-color:black;color:white" ></th>
                                                             </tr>
                                                         <tr>
                                                             <th>Item# - Desc.</th>
                                                             <th style="text-align:center">Qty</th>
                                                             <th style="text-align:center">Free</th>
                                                             <th style="text-align:center">Price</th>
+                                                            <th style="text-align:center">Asked Price</th>                                                       
                                                             <th style="text-align:center">Qty * Price</th>                                                       
-                                                            <th style="text-align:center">rm</th>
+                                                            <th style="text-align:center;background-color:black;color:white">rm</th>
                                                             <!--<th>Delete</th>-->
                                                         </tr>
                                                     </tfoot>
                                                 </table>
+                                                @if ($totalfree == 0)
+                                                <br />
+                                                <span style="float:right" class="badge badge-info">No Free Cases</span>
+                                                @else
+                                                <br />
+                                                <span style="float:right;color:black" class="badge badge-success">Total Of {{ $totalfree }} Free Cases</span>
+                                                    @endif
+                                                @if ($askedprice == 0)
+                                                <br />
+                                                <span style="float:right" class="badge badge-secondary">No Discount</span>
+                                                @else
+                                                <br />
+                                                <span style="float:right" class="badge badge-danger">Total Discount {{ number_format($askedprice) }}.00 SAR</span>
+                                                    @endif
                                                 @endif
                                               <br />
                                               @if ( $order->status == 'Submitted')
@@ -169,12 +200,12 @@
                 @if (Session::has('alert'))
                 <br />
                 <div padding-top="20px"></div>
-                    <div class="alert alert-success">{{ Session::get('alert') }}</div>
+                    <div class="alert alert-success"><i class="fas fa-check"></i> {{ Session::get('alert') }}</div>
                 @endif
                 @if (Session::has('warning'))
                 <br />
                 <div padding-top="20px"></div>
-                    <div class="alert alert-warning">{{ Session::get('warning') }}</div>
+                    <div class="badge badge-success"><i class="fas fa-check"></i> {{ Session::get('warning') }}</div>
                 @endif
                 <br />
                     </div>
