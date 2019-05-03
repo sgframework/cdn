@@ -82,7 +82,7 @@
                     <label hidden for="staffid">ID#</label>
                         <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
                     </label>
-                        <input class="form-control" width="20px" type="text" id="ponumber" placeholder="PO#" name="ponumber">&nbsp;&nbsp;&nbsp;
+                        <input class="form-control" width="20px" type="text" id="ponumber" value="{{ Request::old('ponumber') ?: ++ $lastorder->ponumber }}"  placeholder="PO#" name="ponumber" required>&nbsp;&nbsp;&nbsp;
                                 
           
 @if (!$branches_list)
@@ -97,7 +97,7 @@
                                 </select>&nbsp;&nbsp;&nbsp;-->
 
 
-                                <input name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                                <input autofocus name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
                                                     @foreach($branches_list as $branch)

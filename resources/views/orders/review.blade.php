@@ -25,6 +25,13 @@
 
 
 
+@if ( $order->urgent == 'on' )
+
+<img src="{{ asset('images/assests/urgent.png') }}" width="220px" height="120px" />
+
+@else
+
+@endif
 
 
 <table class="">
@@ -58,11 +65,23 @@
         </tbody>
     </table>           <br />
 @endif
+
+
+
+
+
+
+
+
+
             <?php $totalqty = 0; ?>
             <?php $totalfree = 0; ?>
             <?php $totalprice = 0; ?>
             <?php $totalqtyprice = 0; ?>
             <?php $askedprice = 0; ?>
+            <?php $totaldiscount = 0; ?>
+            <?php $totaloriginal = 0; ?>
+            
     <table  class="style31">
             <thead>
                 <th>Mat. Description(Optional)</th>
@@ -86,6 +105,20 @@
         @else
         <?php $totalqtyprice += $reviewitem->itemqty * $reviewitem->askedprice; ?>
         @endif
+
+
+
+        
+        @if ($reviewitem->askedprice == 0)
+        <?php $totaldiscount += "0"; ?>
+
+        @else
+        <?php $totaldiscount -= ($reviewitem->itemprice * $reviewitem->itemqty) - ($reviewitem->askedprice * $reviewitem->itemqty); ?>
+
+
+
+        @endif
+        <?php $totaloriginal += $reviewitem->itemprice * $reviewitem->itemqty; ?>
             @include('dashboard/partials/orderitemsreviewblock')
         @endforeach
         <tfoot>
@@ -95,11 +128,42 @@
                 <td style="text-align:center">{{ $totalqty }}</td>
                 <td style="text-align:center">{{ $totalfree }}</td>
                 <td style="text-align:center">{{ number_format($totalprice) }}.00 SAR</td>
-                <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
+                <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
                 <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
             </tr>
         </tfoot>
     </table>
+
+
+
+
+        @if ($totalfree == 0)
+        <br />
+        <span style="float:right" class="badge badge-info">No Free Cases</span>
+        @else
+        <br />
+        <div style="font-size:10px">
+
+        <span style="float:right;color:black" class="badge badge-success">Total Of {{ $totalfree }} Free Cases</span>
+        </div>
+        @endif
+        @if ($askedprice == 0)
+        <br />
+        <span style="float:right" class="badge badge-secondary">No Discount</span>
+        @else
+        <br />
+        <div style="font-size:10px">
+
+        <span style="float:right" class="badge badge-light">Original Total price {{ number_format($totaloriginal) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;        <br />
+        <span style="float:right" class="badge badge-info">Total Discount {{ number_format($totaldiscount) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;        <br />
+        <span style="float:right" class="badge badge-danger">Total price {{ number_format($totalqtyprice) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;        <br />
+
+
+
+        </div>
+            @endif
+
+
 </div>
 <br />
 
@@ -122,7 +186,12 @@
     <input hidden name="totalqtyprice" value="{{ $totalqtyprice }}">
     <input hidden name="totalitems" value="{{ $orderitems->count() - 1 }}">
     <input hidden name="totalfree" value="{{ $totalfree }}">
-    <input hidden name="discount" value="{{ $askedprice }}">
+    @if ( $totaldiscount == '0' )
+    <input hidden name="discount" value="0.00">
+    @else
+    <input hidden name="discount" value="{{ $totaldiscount }}">
+    @endif
+    <input hidden name="totaloriginal" value="{{ $totaloriginal }}">
     
 <div style="padding-left:20px">
 <h2>Uplaod PO Attachment <span style="color:red">*</span></h2>
@@ -152,8 +221,11 @@
 </div>
 </div>
 
-    <center><embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="300" height="400" alt="pdf" /></center>
+@if($order->attachedpo == null)
 
+@else
+    <center><embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="300" height="400" alt="pdf" /></center>
+@endif
 
 <br />
 

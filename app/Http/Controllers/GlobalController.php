@@ -131,7 +131,12 @@ class GlobalController extends Controller
                 $currentusername = $currentuser->name;
                 $currentuseridnumber = \Auth::user()->select('idnumber')->where('idnumber', '=', $currentuser->idnumber)->first();
                 $submittedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Submitted')->whereNotNull('ponumber')->orderBy('updated_at', 'asc')->groupBy('slug')->get();
-                $completedorders = Order::select()->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+                
+                $date = \Carbon\Carbon::today()->subDays(0);
+                $thisdayorders = Order::where('created_at', '>=', $date)->where('staffid', '=', \Auth::user()->idnumber)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+                $completedorders = $thisdayorders
+                ->where('status', '=', 'Completed');
+
                 $sumsubmittedorders = $submittedorders->sum('totalprice');
                 $sumcompletedorders = $completedorders->sum('totalprice');
                 $users = User::all();

@@ -2,7 +2,7 @@
 input.remove {
 	padding:0;
 		padding-top:0;
-		padding-botto:0;
+		padding-bottom:0;
 
 width: 2px;
 height:2px;
@@ -17,20 +17,31 @@ height:2px;
 				<td>{{ $orderitem->orderitems }}</td>
 				<td style="text-align:center">{{ $orderitem->itemqty }}</td>
 				<td style="text-align:center">{{ $orderitem->freeitem }}</td>
-				<td style="text-align:center">{{ number_format($orderitem->itemprice) }}.00 SAR</td>
 				@if ($orderitem->askedprice >= $orderitem->itemprice)
+				<td style="text-align:center">{{ number_format($orderitem->itemprice) }}.00 SAR</td>
 				<td style="text-align:center;color:red">0.00 SAR</td>
+				@elseif ($orderitem->askedprice == 0)
+				<td style="text-align:center">{{ number_format($orderitem->itemprice) }}.00 SAR </td>
+				<td style="text-align:center">{{ number_format($orderitem->askedprice) }}.00 SAR</td>
+				
 				@elseif ($orderitem->askedprice < $orderitem->itemprice)
+				<td style="text-align:center;color:green">{{ number_format($orderitem->itemprice) }}.00 SAR  <span style="" class="badge completed">{{ - number_format($orderitem->itemprice - $orderitem->askedprice) }}.00</span></td>
 				<td style="text-align:center;color:green">{{ number_format($orderitem->askedprice) }}.00 SAR</td>
+
 				@else
-				<td style="text-align:center">0.00 SAR</td>
-				@endif
-				@if ($orderitem->askedprice == 0)
+				<td style="text-align:center">{{ number_format($orderitem->itemprice) }}.00 SAR </td>
+				<td style="text-align:center">{{ number_format($orderitem->askedprice) }}.00 SAR</td>
+								@endif
+
+
+				@if ($orderitem->askedprice >= $orderitem->itemprice)
+
 				<td style="text-align:center">{{ number_format($orderitem->itemqty * $orderitem->itemprice) }}.00 SAR</td>
-				@elseif ($orderitem->askedprice == $orderitem->itemprice)
+				@elseif ($orderitem->askedprice == 0)
 				<td style="text-align:center">{{ number_format($orderitem->itemqty * $orderitem->itemprice) }}.00 SAR</td>
-				@else
-				<td style="text-align:center;color:green">{{ number_format($orderitem->itemqty * $orderitem->askedprice) }}.00 SAR <span style="color:black" class="badge badge-success">{{ $orderitem->itemprice - $orderitem->askedprice }}</span></td>
+				@elseif ($orderitem->askedprice < $orderitem->itemprice)
+
+				<td style="text-align:center"><span style="" class="badge badge-light">{{ number_format($orderitem->itemqty * $orderitem->itemprice) }}.00</span> <span style="" class="badge completed">-{{ number_format(($orderitem->itemqty * $orderitem->itemprice) - ($orderitem->itemqty * $orderitem->askedprice)) }}.00</span> <span  class="badge badge-danger"> {{ number_format($orderitem->itemqty * $orderitem->askedprice) }}.00 SAR </span></td>
 				@endif
 				
 				@if ( $orderitem->orderstatus == 'Submitted')

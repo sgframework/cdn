@@ -319,19 +319,28 @@ var myChart = new Chart(ctx, {
                     @endif
                         <p>You have no submited orders yet!</p>
                     @else
-
+                    
+                    <?php $totalitems = 0; ?>
                     <?php $totalqty = 0; ?>
                     <?php $totalfree = 0; ?>
                     <?php $totalprice = 0; ?>
+                    <?php $totalqtyprice = 0; ?>
+                    <?php $askedprice = 0; ?>
+                    <?php $totaldiscount = 0; ?>
+                    <?php $totaloriginal = 0; ?>
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
                                         <!--<th>Order#</th>-->
                                         <th>PO#</th>
                                         <th>Branch#Name</th>
+                                        <th>Urgent</th>
                                         <th style="text-align:center">Tot. Items</th>
                                         <th style="text-align:center">Tot. Qtys</th>
-                                        <th style="text-align:center">Tot. Price</th>
+                                        <th style="text-align:center">Free</th>
+                                        <th style="text-align:center">Original Price</th>
+                                        <th style="text-align:center">Total Discount</th>
+                                        <th style="text-align:center">Total Price</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -345,23 +354,50 @@ var myChart = new Chart(ctx, {
                                             <!--<td>{{ $processedorder->slug }}</td>-->
                                             <td>{{ $processedorder->ponumber }}</td>
                                             <td>{{ $processedorder->branchname }}</td>
+                                            @if ( $processedorder->urgent == 'on' )
+                                            <strong><td style="text-align:center;padding-left:2px;padding-right:2px" class="badge badge-danger">URGENT</td></strong>
+                                            @else
+                                            <strong><td style="text-align:center;padding-left:2px;padding-right:2px" class="badge badge-dark">Regular</td></strong>
+                                            @endif
                                             <td style="text-align:center">{{ $processedorder->totalitems }}</td>
                                             <td style="text-align:center">{{ $processedorder->totalqty }}</td>
-                                            <td style="text-align:center">{{ number_format($processedorder->totalprice) }} SAR</td>
+                                            <td style="text-align:center">{{ $processedorder->totalfree }}</td>
+                                            <td style="text-align:center">{{ number_format($processedorder->totaloriginal) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($processedorder->discount) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($processedorder->totalprice) }}.00 SAR</td>
                                             <td class="{{ strtolower($processedorder->status) }}">{{ $processedorder->status }} {{ $processedorder->updated_at->format('d/m/y g:iA') }}</td>
-                                            <?php $totalqty += $processedorder->totalitems; ?>
-                                            <?php $totalfree += $processedorder->totalqty; ?>
+                                            <?php $totalitems += $processedorder->totalitems; ?>
+                                            <?php $totalqty += $processedorder->totalqty; ?>
+                                            <?php $totalfree += $processedorder->totalfree; ?>
                                             <?php $totalprice += $processedorder->totalprice; ?>
+                                            <?php $totalprice += $processedorder->itemprice; ?>
+                                            <?php $askedprice += $processedorder->itemqty * $processedorder->askedprice; ?>
+                                            @if ($processedorder->discount == 0)
+                                            <?php $totalqtyprice += $processedorder->itemqty * $processedorder->itemprice; ?>
+                                            @else
+                                            <?php $totalqtyprice += $processedorder->itemqty * $processedorder->askedprice; ?>
+                                            @endif
+                                            @if ($processedorder->discount == 0)
+                                            <?php $totaldiscount += "0"; ?>
+                                            @else
+                                            <?php $totaldiscount += $processedorder->discount ; ?>
+                                            @endif
                                         </tr>	
                                     </tbody>
+                                    <?php $totaloriginal += $processedorder->totaloriginal ; ?>
+
                                         @endforeach	
                                         <tfoot>
                                             <tr>
                                                 <th style="font-size:14px;text-align:right"><strong>Tot</strong></th>
                                                 <th style="font-size:14px;text-align:left;padding-left:0;"><strong>als</strong></th>
+                                                <td></td>
+                                                <td style="font-size:14px;text-align:center"><strong>{{ $totalitems }}</strong></td>
                                                 <td style="font-size:14px;text-align:center"><strong>{{ $totalqty }}</strong></td>
                                                 <td style="font-size:14px;text-align:center"><strong>{{ $totalfree }}</strong></td>
-                                                <td style="font-size:14px;text-align:center"><strong>{{ number_format($totalprice) }}.00 SAR</strong></td>
+                                                <th style="text-align:center">{{ number_format($totaloriginal) }}.00 SAR</th>
+                                                <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
+                                                <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
                                             </tr>
                                         </tfoot>
                                     </div>
@@ -375,61 +411,99 @@ var myChart = new Chart(ctx, {
 
 @endmarkdown
                             @if (!$completedorders->count())
-                                <p>You have no completed orders.</p>
-                            @else
-                            <?php $totalqty = 0; ?>
-                            <?php $totalfree = 0; ?>
-                            <?php $totalprice = 0; ?>
+                    <span id="submitted"></span>
+                    @if (Session::has('alert'))
+                    <div class="alert alert-success">{{ Session::get('alert') }}</div>
+                        <a href="{{ route('orders.add') }}">+ Create New Order</a>
+                    @endif
+                        <p>You have no submited orders yet!</p>
+                    @else
+                    
+                    <?php $totalitems = 0; ?>
+                    <?php $totalqty = 0; ?>
+                    <?php $totalfree = 0; ?>
+                    <?php $totalprice = 0; ?>
+                    <?php $totalqtyprice = 0; ?>
+                    <?php $askedprice = 0; ?>
+                    <?php $totaldiscount = 0; ?>
+                    <?php $totaloriginal = 0; ?>
                             <table class="table-responsive-sm processed" id="myTable">
                                 <thead style="font-size:12px">
                                     <tr>
                                         <!--<th>Order#</th>-->
                                         <th>PO#</th>
                                         <th>Branch#Name</th>
+                                        <th>Urgent</th>
                                         <th style="text-align:center">Tot. Items</th>
                                         <th style="text-align:center">Tot. Qtys</th>
-                                        <th style="text-align:center">Tot. Price</th>
+                                        <th style="text-align:center">Free</th>
+                                        <th style="text-align:center">Original Price</th>
+                                        <th style="text-align:center">Total Discount</th>
+                                        <th style="text-align:center">Total Price</th>
                                         <th>Status</th>
-                                        <!--<th>Updated</th>-->
                                     </tr>
                                 </thead>
                                 <div class="media">
                                 <a class="pull-left" href="">
                                 </a>
                                 <div class="media-body">
-                                        @foreach ($thisdaycompletedorders as $thisdaycompletedorder)
-                                        <tbody style="font-size:12px">
-                                    <tr>
-                                        <!--<td>{{ $thisdaycompletedorder->slug }}</td>-->
-                                        <td>{{ $thisdaycompletedorder->ponumber }}</td>
-                                        <td>{{ $thisdaycompletedorder->branchname }}</td>
-                                        <td style="text-align:center">{{ $thisdaycompletedorder->totalitems }}</td>
-                                        <td style="text-align:center">{{ $thisdaycompletedorder->totalqty }}</td>
-                                        <td style="text-align:center">{{ number_format($thisdaycompletedorder->totalprice) }} SAR</td>
-                                        <td class="{{ strtolower($thisdaycompletedorder->status) }}">{{ $thisdaycompletedorder->status }} {{ $thisdaycompletedorder->updated_at->format('d/m/y g:iA') }}</td>
-                                        <?php $totalqty += $thisdaycompletedorder->totalitems; ?>
-                                        <?php $totalfree += $thisdaycompletedorder->totalqty; ?>
-                                        <?php $totalprice += $thisdaycompletedorder->totalprice; ?>
-                                    </tr>	
-                                        </tbody>
+                                        @foreach ($completedorders as $completedorder)
+                                    <tbody style="font-size:12px">
+                                        <tr>
+                                            <!--<td>{{ $completedorder->slug }}</td>-->
+                                            <td>{{ $completedorder->ponumber }}</td>
+                                            <td>{{ $completedorder->branchname }}</td>
+                                            @if ( $completedorder->urgent == 'on' )
+                                            <strong><td style="text-align:center;padding-left:2px;padding-right:2px" class="badge badge-danger">URGENT</td></strong>
+                                            @else
+                                            <strong><td style="text-align:center;padding-left:2px;padding-right:2px" class="badge badge-dark">Regular</td></strong>
+                                            @endif
+                                            <td style="text-align:center">{{ $completedorder->totalitems }}</td>
+                                            <td style="text-align:center">{{ $completedorder->totalqty }}</td>
+                                            <td style="text-align:center">{{ $completedorder->totalfree }}</td>
+                                            <td style="text-align:center">{{ number_format($completedorder->totaloriginal) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedorder->discount) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedorder->totalprice) }}.00 SAR</td>
+                                            <td class="{{ strtolower($completedorder->status) }}">{{ $completedorder->status }} {{ $completedorder->updated_at->format('d/m/y g:iA') }}</td>
+                                            <?php $totalitems += $completedorder->totalitems; ?>
+                                            <?php $totalqty += $completedorder->totalqty; ?>
+                                            <?php $totalfree += $completedorder->totalfree; ?>
+                                            <?php $totalprice += $completedorder->totalprice; ?>
+                                            <?php $totalprice += $completedorder->itemprice; ?>
+                                            <?php $askedprice += $completedorder->itemqty * $completedorder->askedprice; ?>
+                                            @if ($completedorder->discount == 0)
+                                            <?php $totalqtyprice += $completedorder->itemqty * $completedorder->itemprice; ?>
+                                            @else
+                                            <?php $totalqtyprice += $completedorder->itemqty * $completedorder->askedprice; ?>
+                                            @endif
+                                            @if ($completedorder->discount == 0)
+                                            <?php $totaldiscount += "0"; ?>
+                                            @else
+                                            <?php $totaldiscount += $completedorder->discount ; ?>
+                                            @endif
+                                        </tr>	
+                                    </tbody>
+                                    <?php $totaloriginal += $completedorder->totaloriginal ; ?>
+
                                         @endforeach	
                                         <tfoot>
                                             <tr>
                                                 <th style="font-size:14px;text-align:right"><strong>Tot</strong></th>
                                                 <th style="font-size:14px;text-align:left;padding-left:0;"><strong>als</strong></th>
+                                                <td></td>
+                                                <td style="font-size:14px;text-align:center"><strong>{{ $totalitems }}</strong></td>
                                                 <td style="font-size:14px;text-align:center"><strong>{{ $totalqty }}</strong></td>
                                                 <td style="font-size:14px;text-align:center"><strong>{{ $totalfree }}</strong></td>
-                                                <td style="font-size:14px;text-align:center"><strong>{{ number_format($totalprice) }}.00 SAR</b></td>
+                                                <th style="text-align:center">{{ number_format($totaloriginal) }}.00 SAR</th>
+                                                <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
+                                                <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
                                             </tr>
                                         </tfoot>
+                                    </div>
                                 </div>
-                            </div>
-                        </table>
+                            </table>
 @endif
-
-<br /><hr />                            
-<br /><hr />                      
-
+<br /><hr />          
 
 
 @markdown

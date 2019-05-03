@@ -28,6 +28,7 @@ class CreateOrdersTable extends Migration
             $table->integer('totalitems')->nullable();
             $table->integer('totalqty')->nullable();
             $table->integer('totalfree')->nullable();
+            $table->decimal('totaloriginal'), 18, 2)->nullable(); 
             $table->decimal('discount'), 18, 2)->nullable(); 
             $table->decimal('totalprice', 18, 2)->nullable(); 
             $table->string('attachedpo')->nullable();        

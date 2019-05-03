@@ -95,45 +95,93 @@ Email: {{ Auth::user()->email }}
                                         <!--<div class="alert alert-success">{{ Session::get('alert') }}</div>-->
                                         @endif
 
+                    
+                                        <?php $totalitems = 0; ?>
                                         <?php $totalqty = 0; ?>
                                         <?php $totalfree = 0; ?>
                                         <?php $totalprice = 0; ?>
                                         <?php $totalqtyprice = 0; ?>
-                                            <table id="myTable">
-                                                    <thead>
+                                        <?php $askedprice = 0; ?>
+                                        <?php $totaldiscount = 0; ?>
+                                        <?php $totaloriginal = 0; ?>
+                                        <?php $itemprice = 0; ?>
+                                        
+                                                <table class="table-responsive-sm processed" id="myTable">
+                                                    <thead style="font-size:10px">
                                                         <tr>
+                                                            <!--<th>Order#</th>-->
                                                             <th>PO#</th>
-                                                            <th>Branch#</th>
-                                                            <th style="text-align:center">Items Count</th>
-                                                            <th style="text-align:center">Qtys.</th>
-                                                            <th style="text-align:center">Tot. Price</th>
-                                                            <th style="text-align:center">Submitted/Completed@</th>
+                                                            <th>Branch#Name</th>
+                                                            <th>Urgent</th>
+                                                            <th style="text-align:center">Tot. Items</th>
+                                                            <th style="text-align:center">Tot. Qtys</th>
+                                                            <th style="text-align:center">Free</th>
+                                                            <th style="text-align:center">Original Price</th>
+                                                            <th style="text-align:center">Total Discount</th>
+                                                            <th style="text-align:center">Total Price</th>
+                                                            <th>Status</th>
                                                         </tr>
                                                     </thead>
                                                 @foreach ($todayssubmittedorders as $todayssubmittedorder)
                                                     @include('dashboard/partials/todayssubmittedordersblock')
+                                                    <?php $totalitems += $todayssubmittedorder->totalitems; ?>
+                                                    <?php $totalqty += $todayssubmittedorder->totalqty; ?>
+                                                    <?php $totalfree += $todayssubmittedorder->totalfree; ?>
+                                                    <?php $totalprice += $todayssubmittedorder->totalprice; ?>
+                                                    <?php $itemprice += $todayssubmittedorder->itemprice; ?>
+                                                    <?php $askedprice += $todayssubmittedorder->itemqty * $todayssubmittedorder->askedprice; ?>
+                                                    @if ($todayssubmittedorder->discount == 0)
+                                                    <?php $totalqtyprice += $todayssubmittedorder->itemqty * $todayssubmittedorder->itemprice; ?>
+                                                    @else
+                                                    <?php $totalqtyprice += $todayssubmittedorder->itemqty * $todayssubmittedorder->askedprice; ?>
+                                                    @endif
+                                                    @if ($todayssubmittedorder->discount == 0)
+                                                    <?php $totaldiscount += "0"; ?>
+                                                    @else
+                                                    <?php $totaldiscount += $todayssubmittedorder->discount ; ?>
+                                                    @endif
+                                                <?php $totaloriginal += $todayssubmittedorder->totaloriginal ; ?>
                                                 @endforeach	
                                                 @foreach ($todayscompletedorders as $todayscompletedorder)
                                                     @include('dashboard/partials/todayscompletedordersblock')
+                                                    <?php $totalitems += $todayscompletedorder->totalitems; ?>
+                                                    <?php $totalqty += $todayscompletedorder->totalqty; ?>
+                                                    <?php $totalfree += $todayscompletedorder->totalfree; ?>
+                                                    <?php $totalprice += $todayscompletedorder->totalprice; ?>
+                                                    <?php $itemprice += $todayscompletedorder->itemprice; ?>
+                                                    <?php $askedprice += $todayscompletedorder->itemqty * $todayscompletedorder->askedprice; ?>
+                                                    @if ($todayscompletedorder->discount == 0)
+                                                    <?php $totalqtyprice += $todayscompletedorder->itemqty * $todayscompletedorder->itemprice; ?>
+                                                    @else
+                                                    <?php $totalqtyprice += $todayscompletedorder->itemqty * $todayscompletedorder->askedprice; ?>
+                                                    @endif
+                                                    @if ($todayscompletedorder->discount == 0)
+                                                    <?php $totaldiscount += "0"; ?>
+                                                    @else
+                                                    <?php $totaldiscount += $todayscompletedorder->discount ; ?>
+                                                    @endif
+                                                <?php $totaloriginal += $todayscompletedorder->totaloriginal ; ?>
                                                 @endforeach	
                                                 <tfoot>
                                                     <tr>
-                                                        <th style="text-align:center"></th>
-                                                        <td style="text-align:center"><b>Totals</b></td>
-                                                        <th style="text-align:center">{{ $sumthisdayfreeorders }}</th>
-                                                        <th style="text-align:center">{{ $sumthisdayordersqty }}</th>
+                                                        <th style="font-size:10px;text-align:right"></th>
+                                                        <th style="text-align:center"><b>Totals</b></th>
+                                                        <th></th>
+                                                        <th style="font-size:14px;text-align:center">{{ $totalitems }}</th>
+                                                        <th style="font-size:14px;text-align:center">{{ $totalqty }}</th>
+                                                        <th style="font-size:14px;text-align:center">{{ $totalfree }}</th>
+                                                        <th style="text-align:center">{{ number_format($totaloriginal) }}.00 SAR</th>
+                                                        <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
                                                         <th style="text-align:center">{{ number_format($sumthisdayorders) }}.00 SAR</th>
                                                     </tr>
                                                 </tfoot>
                                             </table>               
-                                            </div>
                                         </div>
-                                        <a href="#back-top" class="go-top"><i style="font-size: 22px; top: -26px;" class="glyphicon glyphicon-circle-arrow-up"></i></a>
-                                <b><p style="padding-left:45px"></p></b>
-                                <div class="col-md-2">
-                                </div>
-
-                                
+                                    </div>
+                                <a href="#back-top" class="go-top"><i style="font-size: 22px; top: -26px;" class="glyphicon glyphicon-circle-arrow-up"></i></a>
+                            <b><p style="padding-left:45px"></p></b>
+                            <div class="col-md-2">
+                            </div>                              
 @markdown
 
 ## Sales By Customer

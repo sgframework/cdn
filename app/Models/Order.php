@@ -23,7 +23,9 @@ class Order extends Model
         'created_at',
         'updated_at',
         'attachedpo',
-        'processedby'
+        'processedby',
+        'totaloriginal'
+        
     ];   
 
 

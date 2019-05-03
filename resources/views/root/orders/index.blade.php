@@ -101,339 +101,45 @@
             //
             //
             // endShow -->
+                    <a href="{{ url('/root/users/orders/all') }}">&larr; Back to all orders</a>
 
 
+                    <div style="float:right">
+                                            @if ( $belongordernumber->urgent == 'on' )
+                                            <img src="{{ asset('images/assests/urgent-flat.png') }}" width="220px" height="120px" />
+                                            @else
+                                            <strong><h3 style="text-align:center;padding-left:2px;padding-right:2px" class="badge badge-dark">Regular</h3></strong>
+                                            @endif
+
+                        </div>
+
+                        @if ( $order->status == "Completed")
 
 
-
-
-
-
-
-
-
-
-
-
-            <a href="{{ url('/root/users/orders/all') }}">&larr; Back to all orders</a>
-
-            @if ( $order->status == "Completed")
-
-
-
-
-            
-                <div style="padding-top:20p"></div>
-                <div class="badge badge-dark"><i class="fas fa-times"></i> <span style="color:green;background-color:black"> Completed!</span> This order is completed, CONNOT be modefied. {{ Session::get('completed') }}
-                </div>
-            <br />
-<table class="table-responsive-sm processed" id="myTable">
-                    
-
-                    <div class="media">
-                    <a class="pull-left" href="">
-                    </a>
-                    <div class="media-body">
-                            <thead style="font-size:12px">
-                        <tr>
-                            <th>By#ID</th>
-                            <th>Order#</th>
-                            <th>PO#</th>
-                            <th>BranchName#Number</th>
-                            <th>Total Items</th>
-                            <th>Total Qtys</th>
-                            <th>Total Price</th>
-                            <th>Created@</th>
-                            <th>Submitted@</th>
-                        </tr>
-
-                        
-                    </thead>
-                            <tbody style="font-size:12px">
-                            <tr>
-                                <td>{{ $belongordernumber->staffname }}#{{ $belongstaffid->staffid }}</td>
-                                <td>{{ $belongordernumber->ordernumber }}</td>
-                                <td>{{ $belongordernumber->ponumber }}</td>
-                                <td>{{ $belongbranch->branchname }}</td>
-                                <td>{{ $belongordernumber->totalitems }}</td>
-                                <td>{{ $belongordernumber->totalqty }}</td>
-                                <td>{{ number_format($belongordernumber->totalprice) }}.00 SAR</td>
-                                <td>{{ $belongcreateddate->created_at->format('d/m/y g:ia') }}</td>
-                                <td>{{ $belongcreateddate->updated_at->format('d/m/y g:ia') }}</td>
-                            </tr>	
-                            </tbody>
-</table>
-
-        <table class="table-responsive-sm processed"> 
-                                <thead style="font-size:12px">
-                                    <tr>
-                                        <th>Mat. Description</th>
-                                        <th>material code</th>
-                                        <th style="text-align:center">Qty.</th>
-                                        <th style="text-align:center">ZTTO</th>
-                                        <th style="text-align:center">Asked Price</th>                                      
-                                        <th style="text-align:center">Total Discount</th>                                      
-                                        <th style="text-align:center">Net Price</th>
-                                        <th style="text-align:center">Net Value</th>
-                                        <!--<th>Qty * Price</th>-->
-                                        <th>Completed</th>
-                                    </tr>
-                                </thead>
-                                <?php $totalqty = 0; ?>
-                                <?php $totalfree = 0; ?>
-                                <?php $totaldiscount = 0; ?>
-                                <?php $totalprice = 0; ?>
-                                <?php $totalqtyprice = 0; ?>
-                                @foreach ($completedprofiles as $completedprofile)
-                                <?php $totaldiscount += number_format($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemprice * $completedprofile->itemqty); ?>
-                                        <tbody style="font-size:12px">
-                                        <tr>
-                                        <td>{{ $completedprofile->orderitems }}</td>
-                                        <td style="text-align:center">{{ $completedprofile->itemnumber }}</td>
-                                        <td style="text-align:center">{{ $completedprofile->itemqty }}</td>
-                                        <td style="text-align:center">{{ $completedprofile->freeitem }}</td>
-                                        <td style="text-align:center">{{ number_format($completedprofile->askedprice) }}.00 SAR</td>
-
-                                        @if ( $completedprofile->askedprice == 0 )
-<td>0</td>
-                                        @else
-                                        
-                                        <td style="text-align:center">{{ number_format($completedprofile->askedprice * $completedprofile->itemqty) - number_format($completedprofile->itemprice * $completedprofile->itemqty) }}.00 SAR</td>
-                                        @endif
-                                        <td style="text-align:center">{{ number_format($completedprofile->itemprice) }}.00 SAR</td>
-                                        @if ( $completedprofile->askedprice == 0 )
-                                        <td style="text-align:center">{{ number_format($completedprofile->itemprice *  $completedprofile->itemqty)  }}.00 SAR</td>
-                                        @else
-                                        <td style="text-align:center">{{ number_format($completedprofile->askedprice *  $completedprofile->itemqty)  }}.00 SAR</td>
-                                        @endif
-                                        <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemprice }} SAR</td>-->
-                                        <!--<td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->slug }}</a></td>-->
-                                        <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->format('d/m/y g:ia') }}</a></td>
-                                        </tr>	
-                                        </tbody>
-                                        @endforeach	
-                                            <?php $totalqty += $belongordernumber->itemqty; ?>
-                                            <?php $totalfree += $completedprofile->freeitem; ?>
-                                            <?php $totalprice += $completedprofile->itemprice; ?>
-                                            <?php $totalqtyprice += $belongordernumber->totalqty + $belongordernumber->totalprice; ?>
-                                        <tfoot>
-                                            <tr>
-                                                <th style="text-align:center">Totals</th>
-                                                <th></th>
-                                                <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
-                                                <th style="text-align:center">{{ $totalfree }}</th>
-                                                <th style="text-align:center"></th>
-                                                <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
-                                                <th style="text-align:center"></th>
-                                                <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
-                                                <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
-                                                <th></th>
-                                            </tr>
-
-                                        </tfoot>
-
-                        </table>
-                
-                @if (Session::has('completed'))
-                        <div class="alert alert-danger"><i class="fas fa-times"></i> 'completed', 'This order is completed, CONNOT be modefied. {{ Session::get('completed') }}</div>
-                @endif
-
-
-@markdown
-
-#### * **Copy & paste to excelsheet.**
-
-@endmarkdown
-                        <table class="table-responsive-sm processed" id="myTable">
-            
-                        
-                        
-                        <!--
-                            row identification
-                            Distribution Channe
-                            PO Number
-                            sold/ship
-                            material code
-                            Mat. Description(Optional)
-                        	Request delivery Date
-                            Qty
-                            Price
-                            ZTTO
-                            Batch
-                            L Price
-                            Promo Price
-                            Mat. Description(Optional)
-                            Customer name	
-                            S/m 
-                            -->
-
-
-                        <tr>
-                        <td style="text-align:center">H</td>
-                        <td style="text-align:center">24</td>
-
-                            <td style="text-align:center">{{ $belongordernumber->ponumber }}</td>
-                            <td></td>
-                            <td style="text-align:center">{{ $belongordernumber->branchnumber }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tbody style="font-size:12px">
-
-                        <tr>
-
-
-                        @foreach ($completedprofiles as $profile)
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="text-align:center">{{ $profile->itemnumber }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="text-align:center">{{ $profile->itemqty }}</td>
-                                        @if ($profile->askedprice == 0)
-                                         
-                                        @else
-                                        <td style="color:green;text-align:center">{{ $profile->itemprice - $profile->askedprice }}</td>
-                                        @endif
-                                        @if ( $profile->freeitem == 0 )
-                                        
-                                        @else
-                                        <tr style="color:red">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="color:red;text-align:center">{{ $profile->itemnumber }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="color:red;text-align:center">{{ $profile->freeitem }}</td>
-                                        <td></td>
-                                        <td style="color:red;text-align:center">X</td>
-                                    </tr>	
-                                        
-                                        @endif
-                                    </tr>
-
-
-                                        @endforeach	
-
-
-                                        </tbody>
-                    </table>
-                    <br />
-                
-
-
-                    </div>
-                                </div>
-                                </div>
-                                </div>
-            @else
-<br />
-
-@markdown
-
-#### * **Copy & paste to excelsheet.**
-
-@endmarkdown
-                        <table class="table-responsive-sm processed" id="myTable">
-                        
-                        <tr>
-                        <td style="text-align:center">H</td>
-                        <td style="text-align:center">24</td>
-
-                            <td style="text-align:center">{{ $belongordernumber->ponumber }}</td>
-                            <td></td>
-                            <td style="text-align:center">{{ $belongordernumber->branchnumber }}</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tbody style="font-size:12px">
-
-                        <tr>
-
-                        @foreach ($profiles as $profile)
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="text-align:center">{{ $profile->itemnumber }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="text-align:center">{{ $profile->itemqty }}</td>
-                                        @if ($profile->askedprice == 0)
-                                         
-                                        @else
-                                        <td style="color:green;text-align:center">{{ $profile->itemprice - $profile->askedprice }}</td>
-                                        @endif
-                                        @if ( $profile->freeitem == 0 )
-                                        
-                                        @else
-                                        <tr style="color:red">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="color:red;text-align:center">{{ $profile->itemnumber }}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="color:red;text-align:center">{{ $profile->freeitem }}</td>
-                                        <td></td>
-                                        <td style="color:red;text-align:center">X</td>
-                                    </tr>	
-                                        
-                                        @endif
-                                    </tr>
-
-
-                                        @endforeach	
-
-
-                                        </tbody>
-                    </table>
-                    <br />
-                    
-                    <form action="{{ route('orders.complete', ['staffid' => $order->staffid, 'orderId' => $order->slug]) }}" method="POST">
-                                @csrf
-                            <input style="color:white" width="20px" value="Complete Order" type="submit" class="btn btn-primary" />
-                        </form>
-<br />
-
-
-<embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="420" height="300" alt="pdf" />
-<img  width="420" height="300" src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" />
-
-<br />
-
+                        </div>
+                            <div style="padding-top:20p"></div>
+                                <div class="badge badge-dark"><i class="fas fa-times"></i> <span style="color:green;background-color:black"> Completed!</span> This order is completed, CONNOT be modefied. {{ Session::get('completed') }}
+                            </div>
+                            <br />
                             <table class="table-responsive-sm processed" id="myTable">
-                    
-
                                 <div class="media">
-                                <a class="pull-left" href="">
-                                </a>
-                                <div class="media-body">
-                                        <thead style="font-size:12px">
-                                    <tr>
-                                        <th>By#ID</th>
-                                        <th>Order#</th>
-                                        <th>PO#</th>
-                                        <th>BranchName#Number</th>
-                                        <th>Total Items</th>
-                                        <th>Total Qtys</th>
-                                        <th>Total Price</th>
-                                        <th>Created@</th>
-                                        <th>Submitted@</th>
-                                    </tr>
-
-                                    
-                                </thead>
-                                        <tbody style="font-size:12px">
+                                    <a class="pull-left" href="">
+                                    </a>
+                                    <div class="media-body">
+                                    <thead style="font-size:12px">
+                                        <tr>
+                                            <th>By#ID</th>
+                                            <th>Order#</th>
+                                            <th>PO#</th>
+                                            <th>BranchName#Number</th>
+                                            <th>Total Items</th>
+                                            <th>Total Qtys</th>
+                                            <th>Total Price</th>
+                                            <th>Created@</th>
+                                            <th>Submitted@</th>
+                                        </tr>                                        
+                                    </thead>
+                                    <tbody style="font-size:12px">
                                         <tr>
                                             <td>{{ $belongordernumber->staffname }}#{{ $belongstaffid->staffid }}</td>
                                             <td>{{ $belongordernumber->ordernumber }}</td>
@@ -445,19 +151,278 @@
                                             <td>{{ $belongcreateddate->created_at->format('d/m/y g:ia') }}</td>
                                             <td>{{ $belongcreateddate->updated_at->format('d/m/y g:ia') }}</td>
                                         </tr>	
-                                        </tbody>
-        </table>
-        <table class="table-responsive-sm processed"> 
+                                    </tbody>
+                                </table>
+                                <table class="table-responsive-sm processed"> 
+                                    <thead style="font-size:12px">
+                                        <tr>
+                                            <th>Mat. Description</th>
+                                            <th>material code</th>
+                                            <th style="text-align:center">Qty.</th>
+                                            <th style="text-align:center">ZTTO</th>
+                                            <th style="text-align:center">Asked Price</th>                                      
+                                            <th style="text-align:center">Net Price</th>
+                                            <th style="text-align:center">Original Net Value</th>
+                                            <th style="text-align:center">Total Discount</th>                                      
+                                            <th style="text-align:center">Net Value</th>
+                                            <!--<th>Qty * Price</th>-->
+                                            <th>Completed</th>
+                                        </tr>
+                                    </thead>
+                                    <?php $totalitems = 0; ?>
+                                    <?php $totalqty = 0; ?>
+                                    <?php $totalfree = 0; ?>
+                                    <?php $totalprice = 0; ?>
+                                    <?php $totalqtyprice = 0; ?>
+                                    <?php $askedprice = 0; ?>
+                                    <?php $totaldiscount = 0; ?>
+                                    <?php $totaloriginal = 0; ?>
+                                    @foreach ($completedprofiles as $completedprofile)
+                                    <?php $totaldiscount += ($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemprice * $completedprofile->itemqty); ?>
+                                    <tbody style="font-size:12px">
+                                        <tr>
+                                            <td>{{ $completedprofile->orderitems }}</td>
+                                            <td style="text-align:center">{{ $completedprofile->itemnumber }}</td>
+                                            <td style="text-align:center">{{ $completedprofile->itemqty }}</td>
+                                            <td style="text-align:center">{{ $completedprofile->freeitem }}</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->askedprice) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemprice) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemprice * $completedprofile->itemqty) }}.00 SAR</td>
+                                            @if ( $completedprofile->askedprice == 0 )
+                                            <td style="text-align:center">0.00 SAR</td>
+                                            @else
+                                            <td style="text-align:center">{{ number_format(($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemprice * $completedprofile->itemqty)) }}.00 SAR</td>
+                                            @endif
+
+                                            @if ( $completedprofile->askedprice == 0 )
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemprice *  $completedprofile->itemqty)  }}.00 SAR</td>
+                                            @else
+                                            <td style="text-align:center">{{ number_format($completedprofile->askedprice *  $completedprofile->itemqty)  }}.00 SAR</td>
+                                            @endif
+
+                                            <?php $totalitems += $completedprofile->totalitems; ?>
+                                            <?php $totalqty += $belongordernumber->totalqty; ?>
+                                            <?php $totalfree += $belongordernumber->totalfree; ?>
+                                            <?php $totalprice += $completedprofile->totalprice; ?>
+                                            @if ($completedprofile->discount == 0)
+                                            <?php $totalqtyprice += $completedprofile->itemqty * $completedprofile->itemprice; ?>
+                                            @else
+                                            <?php $totalqtyprice += $completedprofile->itemqty * $completedprofile->askedprice; ?>
+                                            @endif
+                                            <?php $totalprice += $completedprofile->itemprice; ?>
+                                            <?php $askedprice += $completedprofile->itemqty * $completedprofile->askedprice; ?>
+                                            @if ($completedprofile->discount == 0)
+                                            <?php $totaldiscount += "0"; ?>
+                                            @else
+                                            <?php $totaldiscount += $completedprofile->discount ; ?>
+                                            @endif
+                                            <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemprice }} SAR</td>-->
+                                            <!--<td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->slug }}</a></td>-->
+                                            <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->format('d/m/y g:ia') }}</a></td>
+                                        </tr>
+                                    </tbody>
+                                            @endforeach	
+                                    <tfoot>
+                                        <tr>
+                                            <th style="text-align:center">Totals</th>
+                                            <th></th>
+                                            <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
+                                            <th style="text-align:center">{{ $totalfree }}</th>
+                                            <th></th>
+                                            <th style="text-align:center"></th>
+                                            <th style="text-align:center">{{ number_format($belongordernumber->totaloriginal) }}.00 SAR</th>
+                                            @if ( $belongordernumber->discount == 0 )
+                                            <th style="text-align:center">0.00 SAR</th>
+                                            @else
+
+                                            <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
+                                            @endif
+                                            <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
+                                            <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>                
+                @if (Session::has('completed'))
+                        <div class="alert alert-danger"><i class="fas fa-times"></i> 'completed', 'This order is completed, CONNOT be modefied. {{ Session::get('completed') }}</div>
+                @endif
+@markdown
+
+#### * **Copy & paste to excelsheet.**
+
+@endmarkdown
+                            <table class="table-responsive-sm processed" id="myTable">
+                                    <tr>
+                                        <td style="text-align:center">H</td>
+                                        <td style="text-align:center">24</td>
+                                        <td style="text-align:center">{{ $belongordernumber->ponumber }}</td>
+                                        <td></td>
+                                        <td style="text-align:center">{{ $belongordernumber->branchnumber }}</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                <tbody style="font-size:12px">
+                                    <tr>
+                            @foreach ($completedprofiles as $profile)
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="text-align:center">{{ $profile->itemnumber }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="text-align:center">{{ $profile->itemqty }}</td>
+                                        @if ($profile->askedprice == 0)
+                                            
+                                        @else
+                                        <td style="color:green;text-align:center">{{ $profile->itemprice - $profile->askedprice }}</td>
+                                        @endif
+                                        @if ( $profile->freeitem == 0 )
+                                            
+                                        @else
+                                        <tr style="color:red">
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="color:red;text-align:center">{{ $profile->itemnumber }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="color:red;text-align:center">{{ $profile->freeitem }}</td>
+                                            <td></td>
+                                            <td style="color:red;text-align:center">X</td>
+                                        </tr>
+                                        @endif
+                                    </tr>
+                                    @endforeach	
+                                </tbody>
+                            </table>
+                            <br />
+                        </div>
+                    </div>                              
+@if ( $order->attachedpo == null )
+
+@else
+                <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="420" height="300" alt="pdf" />
+                <img  width="420" height="300" src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" />
+@endif
+            </div>
+        </div>
+@else
+<br />
+
+@markdown
+
+#### * **Copy & paste to excelsheet.**
+
+@endmarkdown
+
+
+                        <table class="table-responsive-sm processed" id="myTable">
+                                <tr>
+                                    <td style="text-align:center">H</td>
+                                    <td style="text-align:center">24</td>
+                                    <td style="text-align:center">{{ $belongordernumber->ponumber }}</td>
+                                    <td></td>
+                                    <td style="text-align:center">{{ $belongordernumber->branchnumber }}</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            <tbody style="font-size:12px">
+                                <tr>
+                                @foreach ($profiles as $profile)
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center">{{ $profile->itemnumber }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="text-align:center">{{ $profile->itemqty }}</td>
+                                    @if ($profile->askedprice == 0)
+                                        
+                                    @else
+                                    <td style="color:green;text-align:center">{{ $profile->itemprice - $profile->askedprice }}</td>
+                                    @endif
+                                    @if ( $profile->freeitem == 0 )
+                                    
+                                    @else
+                                    <tr style="color:red">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="color:red;text-align:center">{{ $profile->itemnumber }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td style="color:red;text-align:center">{{ $profile->freeitem }}</td>
+                                        <td></td>
+                                        <td style="color:red;text-align:center">X</td>
+                                    </tr>	        
+                                    @endif
+                                </tr>
+                                    @endforeach	
+                            </tbody>
+                        </table>
+                    <br />
+                    <form action="{{ route('orders.complete', ['staffid' => $order->staffid, 'orderId' => $order->slug]) }}" method="POST">
+                        @csrf
+                        <input style="color:white" width="20px" value="Complete Order" type="submit" class="btn btn-primary" />
+                    </form>
+                    <br />
+    @if ( $order->attachedpo == null )
+
+    @else
+        <embed src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" width="420" height="300" alt="pdf" />
+        <img  width="420" height="300" src="{{ asset('attachments/pos') }}/{{ $order->slug }}-{{ $order->attachedpo }}" />
+    @endif
+        <br />
+                        <table class="table-responsive-sm processed" id="myTable">
+                            <div class="media">
+                                <a class="pull-left" href="">
+                                </a>
+                                <div class="media-body">
+                                <thead style="font-size:12px">
+                                    <tr>
+                                        <th>By#ID</th>
+                                        <th>Order#</th>
+                                        <th>PO#</th>
+                                        <th>BranchName#Number</th>
+                                        <th>Total Items</th>
+                                        <th>Total Qtys</th>
+                                        <th>Total Price</th>
+                                        <th>Created@</th>
+                                        <th>Submitted@</th>
+                                    </tr>                                   
+                                </thead>
+                                <tbody style="font-size:12px">
+                                    <tr>
+                                        <td>{{ $belongordernumber->staffname }}#{{ $belongstaffid->staffid }}</td>
+                                        <td>{{ $belongordernumber->ordernumber }}</td>
+                                        <td>{{ $belongordernumber->ponumber }}</td>
+                                        <td>{{ $belongbranch->branchname }}</td>
+                                        <td>{{ $belongordernumber->totalitems }}</td>
+                                        <td>{{ $belongordernumber->totalqty }}</td>
+                                        <td>{{ number_format($belongordernumber->totalprice) }}.00 SAR</td>
+                                        <td>{{ $belongcreateddate->created_at->format('d/m/y g:ia') }}</td>
+                                        <td>{{ $belongcreateddate->updated_at->format('d/m/y g:ia') }}</td>
+                                    </tr>	
+                                </tbody>
+                            </table>
+                            <table class="table-responsive-sm processed"> 
                                 <thead style="font-size:12px">
                                     <tr>
                                         <th>Mat. Description</th>
                                         <th>material code</th>
                                         <th>Qty.</th>
                                         <th>ZTTO</th>
-                                        <th>Item Price</th>
-                                        <th style="text-align:center">Total Discount</th>
+                                        <th>Item Price/Tot. Original</th>
+                                        <th style="text-align:center">Asked Price/Total Discount</th>
                                         <th>Total Price</th>
-                                        
                                         <!--<th>Qty * Price</th>-->
                                         <th>Submitted@</th>
                                     </tr>
@@ -471,69 +436,51 @@
                                 <?php $totalqty += $profile->itemqty; ?>
                                 <?php $totalfree += $profile->freeitem; ?>
                                 <?php $totalprice += $profile->itemprice; ?>
-
                                 <?php $askedprice += $profile->itemqty * $profile->askedprice; ?>
-                                
                                 @if ($profile->askedprice == 0)
                                 <?php $totalqtyprice += $profile->itemqty * $profile->itemprice; ?>
                                 @else
                                 <?php $totalqtyprice += $profile->itemqty * $profile->askedprice; ?>
                                 @endif
-                                        <tbody style="font-size:12px">
-                                        <tr>
+                                <tbody style="font-size:12px">
+                                    <tr>
                                         <td>{{ $profile->orderitems }}</td>
                                         <td style="text-align:center">{{ $profile->itemnumber }}</td>
                                         <td style="text-align:center">{{ $profile->itemqty }}</td>
                                         <td style="text-align:center">{{ $profile->freeitem }}</td>
                                         <td style="text-align:center">{{ number_format($profile->itemprice) }}.00 SAR</td>
                                         <td style="text-align:center">{{ number_format($profile->askedprice) }}.00 SAR</td>
-
                                         @if ($profile->askedprice == 0)
                                         <td style="text-align:center">{{ number_format($profile->itemqty * $profile->itemprice) }}.00 SAR</td>
                                         @else
                                         <td style="text-align:center">{{ number_format($profile->itemqty * $profile->askedprice) }}.00 SAR</td>
                                         @endif
-
                                         <!--<td style="text-align:center">{{ $profile->itemqty * $profile->itemprice }} SAR</td>-->
                                         <!--<td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->slug }}</a></td>-->
                                         <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->updated_at->format('d/m/y g:ia') }}</a></td>
-                                        </tr>	
-                                        </tbody>
+                                    </tr>	
+                                </tbody>
                                         @endforeach	
-
-                                            <?php $askedprice += $profile->itemqty * $profile->askedprice; ?>
-                                        <tfoot>
-                                            <tr>
-                                                <th style="text-align:center">Totals</th>
-                                                <th></th>
-                                                <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
-                                                <th style="text-align:center">{{ $totalfree }}</th>
-                                                <th style="text-align:center">{{ number_format($belongordernumber->itemprice) }}.00 SAR</th>
-                                                <th style="text-align:center">{{ number_format($belongordernumber->discount) }}.00 SAR</th>
-                                                <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
-                                                <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
-                                                <th></th>
-                                            </tr>
-
-                                        </tfoot>
-
-                                </div>
+                                <?php $askedprice += $profile->itemqty * $profile->askedprice; ?>
+                                <tfoot>
+                                    <tr>
+                                        <th style="text-align:center">Totals</th>
+                                        <th></th>
+                                        <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
+                                        <th style="text-align:center">{{ $totalfree }}</th>
+                                        <th style="text-align:center">{{ number_format($belongordernumber->totaloriginal) }}.00 SAR</th>
+                                        <th style="text-align:center">{{ number_format($belongordernumber->discount) }}.00 SAR</th>
+                                        <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
+                                        <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                             </div>
-                        </table>
-                        
-                        <br />
-
-
-<br /><br />
-
-
-
-<br />
-<br /><hr />                                     
-
-
-@endif
-
+                        </div>
+                    </table>
+                    <br />
+                    <br /><hr />                                     
+                    @endif
 
                     @else
             <!-- If user loggedOut show below content until endShow part -->          

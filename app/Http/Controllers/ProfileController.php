@@ -15,7 +15,10 @@ class ProfileController extends Controller
 {
     public function getProfile($idnumber)
     {
-		$currentuser = \Auth::user();
+
+				$currentuser = \Auth::user();
+
+		$slug = OrderItems::select('slug')->where('staffid', '=', $currentuser->idnumber)->get();   $currentuser = \Auth::user();
 		$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(2);
     $branches = Branch::select('branchname', 'branchnumber')->orderBy('updated_at', 'desc')->paginate(10);
 		$orders = Order::select()->where('staffid', '=', $currentuser->idnumber)->orderBy('created_at', 'desc')->paginate(14);
@@ -25,6 +28,9 @@ class ProfileController extends Controller
 		$reviewingorderscount = Order::select('status')->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Reviewing');
 		$submittedorderscount = Order::select('status')->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Submitted');
 		$completedorderscount = Order::select('status')->where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed');
+		$belongordernumber = Order::where('staffid', '=', $idnumber)->where('slug', '=', $slug)->first();
+                    
+
 		//$ordersbydate = Order::orderBy('created_at', 'ASC')->get();
 		/* Todays Orders*/
 		$date = \Carbon\Carbon::today()->subDays(0);
@@ -41,7 +47,8 @@ class ProfileController extends Controller
 		->where('status', '=', 'Completed');
 			//dump($todayssubmittedorders);	
 		$sumthisdayorders = $thisdayorders->sum('totalprice');
-		$sumthisdayfreeorders = $thisdayorders->sum('totalitems');
+		$sumthisdayorderitems = $thisdayorders->sum('totalitems');
+		$sumthisdayfreeorders = $thisdayorders->sum('totalfree');
 		$sumthisdayordersqty = $thisdayorders->sum('totalqty');
 		$today = date("Y-m-d", strtotime( '0 days' ) );	
 		/* Yesterdays Orders*/
@@ -88,6 +95,10 @@ class ProfileController extends Controller
 				->with('branches_list', $branches_list)
 				->with('orderscount', $orderscount)
 				->with('orderitems', $orderitems)
+				->with('belongordernumber', $belongordernumber)
+				->with('slug', $slug)
+				
+				
 				->with('orders', $orders)
 				->with('items', $items)
 				->with('branches', $branches)

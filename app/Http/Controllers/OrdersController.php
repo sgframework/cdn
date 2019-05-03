@@ -569,10 +569,11 @@ class OrdersController extends Controller
                 'totalfree' => 'max:255',
                 'discount' => 'max:255',
                 'totalprice' => 'max:255',
-                'totalqtyprice' => 'max:255'
+                'totalqtyprice' => 'max:255',
+                'totaloriginal' => 'max:255'
             ]);
-            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'],  'totalfree' => $request['totalfree'],  'discount' => $request['discount'], 'totalprice' => $request['totalqtyprice'], 'updated_at' => now(), 'status' => 'Submitted']);
-            OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
+            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'],  'totalfree' => $request['totalfree'],  'discount' => $request['discount'], 'totalprice' => $request['totalqtyprice'],  'totaloriginal' => $request['totaloriginal'], 'updated_at' => now(), 'status' => 'Submitted']);
+            OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'totalprice' => $request['totalqtyprice'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
             $currentuser = \Auth::user();
             $allorders = Order::where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->get();
             $sumallorders = $allorders->sum('totalprice');
