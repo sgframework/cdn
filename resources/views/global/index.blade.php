@@ -186,7 +186,9 @@ var myChart = new Chart(ctx, {
             // endShow -->
 
 
-
+            @if (Session::has('message'))
+                <div class="alert alert-success">{{ Session::get('message') }}</div>
+            @endif
 
 @markdown
 
@@ -441,6 +443,7 @@ var myChart = new Chart(ctx, {
                                         <th style="text-align:center">Total Discount</th>
                                         <th style="text-align:center">Total Price</th>
                                         <th>Status</th>
+                                        <th>Processed By</th>
                                     </tr>
                                 </thead>
                                 <div class="media">
@@ -465,6 +468,7 @@ var myChart = new Chart(ctx, {
                                             <td style="text-align:center">{{ number_format($completedorder->discount) }}.00 SAR</td>
                                             <td style="text-align:center">{{ number_format($completedorder->totalprice) }}.00 SAR</td>
                                             <td class="{{ strtolower($completedorder->status) }}">{{ $completedorder->status }} {{ $completedorder->updated_at->format('d/m/y g:iA') }}</td>
+                                            <td class="{{ strtolower($completedorder->status) }}">{{ cdn\User::where('idnumber', '=', $completedorder->processedby)->first('name') }}</td>
                                             <?php $totalitems += $completedorder->totalitems; ?>
                                             <?php $totalqty += $completedorder->totalqty; ?>
                                             <?php $totalfree += $completedorder->totalfree; ?>

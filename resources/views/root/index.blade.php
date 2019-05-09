@@ -77,16 +77,8 @@
 
 
     <header class="header">
-    <form class="form-inline input" role="search" action="{{ route('search.items') }}">
-            <div class="form-group">
-                <input type="text" name="query" class="form-control" placeholder="Search Products"><span><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>Query</button></span>
-            </div>
-        </form>
-        <form class="form-inline input" role="search" action="{{ route('search.branches') }}">
-            <div class="form-group">
-                <input type="text" name="query" class="form-control" placeholder="Search Branches"><span><button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i>Query</button></span>
-            </div>
-        </form>
+
+
     </header>
     <!--<div class="col-md-12">
     <span style="float:left"><a class="btn btn-primary" href="{{ route('items.add') }}">+ Add Product</a></span>  &nbsp; &nbsp; &nbsp; <span style="float:center"><a class="btn btn-primary" href="{{ route('items.index') }}">List Products</a></span> &nbsp; &nbsp; &nbsp; <span style="float:right"><a class="btn btn-primary" href="/submit-rtv">Submit a RTV Request &rarr;</a></span><br /><hr />
@@ -246,14 +238,15 @@
                     <div id="management" class="w3-container w3-hide">
                     <div style="padding-top:15px; text-align:center">
 
-                    <a href=""><i class="fas fa-database"></i> <span>Manage DB</span></a>&nbsp;&nbsp;
+                    <a href="/mail"><i class="fas fa-envelope"></i> <span>Mail</span></a>&nbsp;&nbsp;
+                    <a href="{{route('root.mysql')}}"><i class="fas fa-database"></i> <span>Manage DB</span></a>&nbsp;&nbsp;
+                    <a href="{{ route('root.stats.totals') }}"><i class="far fa-chart-bar"></i> <span>Comprehensive Statistics</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-user-cog"></i> <span>Manage Users</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-lock"></i> <span>Manage Access Level</span></a>&nbsp;&nbsp;
-                    <a href=""><i class="fas fa-envelope"></i> <span>Manage Mail</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-random"></i> <span>Manage Routes</span></a>&nbsp;&nbsp;
                     <a href=""><i class="fas fa-exclamation-triangle"></i> <span>Manage Notifications</span></a>&nbsp;&nbsp;
                     <a href="{{ route('root.tree') }}"><i class="fas fa-info fa-fw"></i> <span>Tree</span></a>&nbsp;&nbsp;
-                    <a href="http://ipool.remotewebaccess.com/root/readme#manual"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual</a></span>
+                    <a href="/root/readme#manual"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual</a></span>
             </div>
         </div>
                 <script>

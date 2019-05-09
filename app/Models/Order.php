@@ -89,6 +89,10 @@ class Order extends Model
 	{
 		return $this->belongsTo('cdn\User', 'idnumber');
     }
+    public function customer()
+	{
+		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');
+    }
     
     public function branchname()
 	{

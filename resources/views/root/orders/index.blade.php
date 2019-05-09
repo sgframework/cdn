@@ -161,7 +161,8 @@
                                             <th style="text-align:center">Qty.</th>
                                             <th style="text-align:center">ZTTO</th>
                                             <th style="text-align:center">Asked Price</th>                                      
-                                            <th style="text-align:center">Net Price</th>
+                                            <th style="text-align:center">Old Net Price</th>
+                                            <th style="text-align:center">New Net Price</th>
                                             <th style="text-align:center">Original Net Value</th>
                                             <th style="text-align:center">Total Discount</th>                                      
                                             <th style="text-align:center">Net Value</th>
@@ -173,12 +174,16 @@
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
                                     <?php $totalprice = 0; ?>
+                                    <?php $oldprice = 0; ?>
+                                    <?php $newprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
                                     <?php $askedprice = 0; ?>
                                     <?php $totaldiscount = 0; ?>
                                     <?php $totaloriginal = 0; ?>
+                                    <?php $oldoriginal = 0; ?>
+                                    <?php $neworiginal = 0; ?>
                                     @foreach ($completedprofiles as $completedprofile)
-                                    <?php $totaldiscount += ($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemprice * $completedprofile->itemqty); ?>
+                                    <?php $totaldiscount += ($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemnewprice * $completedprofile->itemqty); ?>
                                     <tbody style="font-size:12px">
                                         <tr>
                                             <td>{{ $completedprofile->orderitems }}</td>
@@ -186,16 +191,17 @@
                                             <td style="text-align:center">{{ $completedprofile->itemqty }}</td>
                                             <td style="text-align:center">{{ $completedprofile->freeitem }}</td>
                                             <td style="text-align:center">{{ number_format($completedprofile->askedprice) }}.00 SAR</td>
-                                            <td style="text-align:center">{{ number_format($completedprofile->itemprice) }}.00 SAR</td>
-                                            <td style="text-align:center">{{ number_format($completedprofile->itemprice * $completedprofile->itemqty) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemoldprice) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemnewprice) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemnewprice * $completedprofile->itemqty) }}.00 SAR</td>
                                             @if ( $completedprofile->askedprice == 0 )
                                             <td style="text-align:center">0.00 SAR</td>
                                             @else
-                                            <td style="text-align:center">{{ number_format(($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemprice * $completedprofile->itemqty)) }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format(($completedprofile->askedprice * $completedprofile->itemqty) - ($completedprofile->itemnewprice * $completedprofile->itemqty)) }}.00 SAR</td>
                                             @endif
 
                                             @if ( $completedprofile->askedprice == 0 )
-                                            <td style="text-align:center">{{ number_format($completedprofile->itemprice *  $completedprofile->itemqty)  }}.00 SAR</td>
+                                            <td style="text-align:center">{{ number_format($completedprofile->itemnewprice *  $completedprofile->itemqty)  }}.00 SAR</td>
                                             @else
                                             <td style="text-align:center">{{ number_format($completedprofile->askedprice *  $completedprofile->itemqty)  }}.00 SAR</td>
                                             @endif
@@ -204,19 +210,21 @@
                                             <?php $totalqty += $belongordernumber->totalqty; ?>
                                             <?php $totalfree += $belongordernumber->totalfree; ?>
                                             <?php $totalprice += $completedprofile->totalprice; ?>
+                                            <?php $oldoriginal += $completedprofile->itemqty *  $completedprofile->itemoldprice; ?>
                                             @if ($completedprofile->discount == 0)
-                                            <?php $totalqtyprice += $completedprofile->itemqty * $completedprofile->itemprice; ?>
+                                            <?php $totalqtyprice += $completedprofile->itemqty * $completedprofile->itemnewprice; ?>
                                             @else
                                             <?php $totalqtyprice += $completedprofile->itemqty * $completedprofile->askedprice; ?>
                                             @endif
-                                            <?php $totalprice += $completedprofile->itemprice; ?>
+                                            <?php $oldprice += $completedprofile->itemoldprice; ?>
+                                            <?php $newprice += $completedprofile->itemnewprice; ?>
                                             <?php $askedprice += $completedprofile->itemqty * $completedprofile->askedprice; ?>
                                             @if ($completedprofile->discount == 0)
                                             <?php $totaldiscount += "0"; ?>
                                             @else
                                             <?php $totaldiscount += $completedprofile->discount ; ?>
                                             @endif
-                                            <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemprice }} SAR</td>-->
+                                            <!--<td style="text-align:center">{{ $completedprofile->itemqty * $completedprofile->itemnewprice }} SAR</td>-->
                                             <!--<td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->slug }}</a></td>-->
                                             <td><a style= "float:center" href="/orders/order/{{ $completedprofile->slug }}">{{ $completedprofile->updated_at->format('d/m/y g:ia') }}</a></td>
                                         </tr>
@@ -229,14 +237,16 @@
                                             <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
                                             <th style="text-align:center">{{ $totalfree }}</th>
                                             <th></th>
+                                            <th style="text-align:center">{{ number_format($oldoriginal) }}.00 SAR</th>
+                                        <th style="text-align:center">{{ number_format($belongordernumber->totaloriginal) }}.00 SAR</th>
                                             <th style="text-align:center"></th>
-                                            <th style="text-align:center">{{ number_format($belongordernumber->totaloriginal) }}.00 SAR</th>
                                             @if ( $belongordernumber->discount == 0 )
                                             <th style="text-align:center">0.00 SAR</th>
                                             @else
 
                                             <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
                                             @endif
+                                            
                                             <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>
                                             <!--<td style="text-align:center">{{ $totalqtyprice }} SAR</td>-->
                                             <th></th>
@@ -276,7 +286,7 @@
                                         @if ($profile->askedprice == 0)
                                             
                                         @else
-                                        <td style="color:green;text-align:center">{{ $profile->itemprice - $profile->askedprice }}</td>
+                                        <td style="color:green;text-align:center">{{ $profile->itemnewprice - $profile->askedprice }}</td>
                                         @endif
                                         @if ( $profile->freeitem == 0 )
                                             
@@ -345,7 +355,7 @@
                                     @if ($profile->askedprice == 0)
                                         
                                     @else
-                                    <td style="color:green;text-align:center">{{ $profile->itemprice - $profile->askedprice }}</td>
+                                    <td style="color:green;text-align:center">{{ $profile->itemnewprice - $profile->askedprice }}</td>
                                     @endif
                                     @if ( $profile->freeitem == 0 )
                                     
@@ -420,7 +430,8 @@
                                         <th>material code</th>
                                         <th>Qty.</th>
                                         <th>ZTTO</th>
-                                        <th>Item Price/Tot. Original</th>
+                                        <th>Old Item Price/Tot. Original</th>
+                                        <th>New Item Price/Tot. Original</th>
                                         <th style="text-align:center">Asked Price/Total Discount</th>
                                         <th>Total Price</th>
                                         <!--<th>Qty * Price</th>-->
@@ -429,16 +440,20 @@
                                 </thead>
                                 <?php $totalqty = 0; ?>
                                 <?php $totalfree = 0; ?>
-                                <?php $totalprice = 0; ?>
+                                <?php $oldprice = 0; ?>
+                                <?php $newprice = 0; ?>
                                 <?php $totalqtyprice = 0; ?>
                                 <?php $askedprice = 0; ?>
+                                <?php $oldoriginal = 0; ?>
                                 @foreach ($profiles as $profile)
                                 <?php $totalqty += $profile->itemqty; ?>
                                 <?php $totalfree += $profile->freeitem; ?>
-                                <?php $totalprice += $profile->itemprice; ?>
+                                <?php $oldprice += $profile->itemoldprice; ?>
+                                <?php $newprice += $profile->itemnewprice; ?>
                                 <?php $askedprice += $profile->itemqty * $profile->askedprice; ?>
+                                <?php $oldoriginal += $profile->itemqty * $profile->itemoldprice; ?>
                                 @if ($profile->askedprice == 0)
-                                <?php $totalqtyprice += $profile->itemqty * $profile->itemprice; ?>
+                                <?php $totalqtyprice += $profile->itemqty * $profile->itemnewprice; ?>
                                 @else
                                 <?php $totalqtyprice += $profile->itemqty * $profile->askedprice; ?>
                                 @endif
@@ -448,14 +463,15 @@
                                         <td style="text-align:center">{{ $profile->itemnumber }}</td>
                                         <td style="text-align:center">{{ $profile->itemqty }}</td>
                                         <td style="text-align:center">{{ $profile->freeitem }}</td>
-                                        <td style="text-align:center">{{ number_format($profile->itemprice) }}.00 SAR</td>
+                                        <td style="text-align:center">{{ number_format($profile->itemoldprice) }}.00 SAR</td>
+                                        <td style="text-align:center">{{ number_format($profile->itemnewprice) }}.00 SAR</td>
                                         <td style="text-align:center">{{ number_format($profile->askedprice) }}.00 SAR</td>
                                         @if ($profile->askedprice == 0)
-                                        <td style="text-align:center">{{ number_format($profile->itemqty * $profile->itemprice) }}.00 SAR</td>
+                                        <td style="text-align:center">{{ number_format($profile->itemqty * $profile->itemnewprice) }}.00 SAR</td>
                                         @else
                                         <td style="text-align:center">{{ number_format($profile->itemqty * $profile->askedprice) }}.00 SAR</td>
                                         @endif
-                                        <!--<td style="text-align:center">{{ $profile->itemqty * $profile->itemprice }} SAR</td>-->
+                                        <!--<td style="text-align:center">{{ $profile->itemqty * $profile->itemnewprice }} SAR</td>-->
                                         <!--<td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->slug }}</a></td>-->
                                         <td><a style= "float:center" href="/orders/order/{{ $profile->slug }}">{{ $profile->updated_at->format('d/m/y g:ia') }}</a></td>
                                     </tr>	
@@ -468,6 +484,7 @@
                                         <th></th>
                                         <th style="text-align:center">{{ $belongordernumber->totalqty }}</th>
                                         <th style="text-align:center">{{ $totalfree }}</th>
+                                        <th style="text-align:center">{{ number_format($oldoriginal) }}.00 SAR</th>
                                         <th style="text-align:center">{{ number_format($belongordernumber->totaloriginal) }}.00 SAR</th>
                                         <th style="text-align:center">{{ number_format($belongordernumber->discount) }}.00 SAR</th>
                                         <th style="text-align:center">{{ number_format($belongordernumber->totalprice) }}.00 SAR</th>

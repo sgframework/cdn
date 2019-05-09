@@ -20,7 +20,7 @@ class LinkController extends Controller
 		
 		if($validator->fails())
 		 {
-			return Redirect::action('home')->withInput()->withErrors($validator);	 
+			return Redirect::action('global.index')->withInput()->withErrors($validator);	 
 		 } else {
 		 	$url = Input::get('url');
 		 	$code = null;

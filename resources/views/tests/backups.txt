@@ -450,11 +450,11 @@ class OrdersController extends Controller
            $order = Order::notReply()->find($orderid);
            
            if (!$order) {
-               return redirect()->route('home');
+               return redirect()->route('global.index');
            }
            
                    if (!Auth::user()->isFriendsWith($status->user) && Auth::user()->id !== $status->user->idnumber) {
-               return redirect()->route('home');
+               return redirect()->route('global.index');
            }
            
                $item = Order::create([

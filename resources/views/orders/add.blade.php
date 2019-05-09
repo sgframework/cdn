@@ -19,6 +19,25 @@
             //
             //
             // endShow -->
+
+
+            <!--
+
+
+    <form method='post' action="{{ route('promo.order') }}" enctype='multipart/form-data' >
+       @csrf
+       <input type='file' name='file' >
+       <input type='submit' name='submit' value='Import'>
+    </form>
+
+
+                -->
+
+
+@if (Session::has('deleted'))
+<div class="alert alert-success"><i class="fas fa-check"></i> {{ Session::get('deleted') }}</div>
+@endif
+
 @markdown
 ## Create a new order form ##
 
@@ -48,13 +67,28 @@
 <div class="alert alert-success">{{ Session::get('alert') }}</div>
 @endif
 
+
+
+@markdown
+
+```
+
+    User PO Sequence: {{ $sequence }}0 - {{ $sequence }}999999
+
+```
+
+
+@endmarkdown
+
 @if (!$lastorder)
 
 @else
 
+<div id="Success!"></div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <span>Last created order: </span>
-<span class="badge badge-dark">{{ $lastorder->ponumber }}</span> <span class="badge badge-dark"> {{ $lastorder->branchname }}</span>
+<span class="badge badge-dark"><a style= "" href="/orders/order/{{ $lastorder->slug }}">{{ $lastorder->ponumber }}</a></span> <span class="badge badge-dark"> {{ $lastorder->branchname }}</span>
     @if( $lastorder->urgent === 'on' )
     <span class="badge badge-danger">URGENT</span> 
     @else
@@ -67,10 +101,28 @@
     @endif
 @endif
 
+<script type="text/javascript">  
+function movetoNext(current, nextFieldID) {  
+if (current.value.length >= current.maxLength) {  
+document.getElementById(nextFieldID).focus();  
+}  
+}  
+</script>  
+
+
+<script>
+
+document.addpo.ponumber.focus();
+
+</script>
+
+<body onload='if(!document.addpo.ponumber.my_no_focus){document.addpo.ponumber.focus();}' >
+
+
                             @if($errors->any())
                             <span style="font-size:9px;color:red">* <h4>{{$errors->first()}}</h4>
                             </span>@endif
-                <form class="form-inline" method="POST" action="{{ route('orders.insert.step1') }}">
+                <form class="form-inline" name="addpo" method="POST" action="{{ route('orders.insert.step1') }}">
                 @csrf
                     <label hidden style="padding-left:20px" for="staffname">Name:</label>
                         <input hidden class="form-control" type="text" class="input" name="staffname" value="{{ Auth::user()->name }}" />
@@ -82,8 +134,8 @@
                     <label hidden for="staffid">ID#</label>
                         <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
                     </label>
-                        <input class="form-control" width="20px" type="text" id="ponumber" value="{{ Request::old('ponumber') ?: ++ $lastorder->ponumber }}"  placeholder="PO#" name="ponumber" required>&nbsp;&nbsp;&nbsp;
-                                
+
+                        <input autofocus="true" onkeydown="this.my_no_focus = true;" id="first" size="20" onkeyup="movetoNext(this, 'second')" maxlength="14" class="form-control" width="20px" type="text" value="{{ Request::old('ponumber') ?: ++ $lastorder->ponumber }}"  placeholder="PO#" name="ponumber" required>&nbsp;&nbsp;&nbsp;
           
 @if (!$branches_list)
 
@@ -97,7 +149,7 @@
                                 </select>&nbsp;&nbsp;&nbsp;-->
 
 
-                                <input autofocus name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                                <input  id="second" size="16" onkeyup="movetoNext(this, 'third')" maxlength="50" name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                                 <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
                                                     @foreach($branches_list as $branch)
@@ -152,8 +204,8 @@ $(document).ready(function(){
 </script>
 
                             <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
-                        <span style="color:red">&nbsp;&nbsp;&nbsp; Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
-                    <div style="float:right; padding-left:4px">&nbsp;&nbsp;&nbsp;<input style="padding:5px 20px;background-color:#227dc7" class="btn btn-primary" value="Next" type="submit" /></div>
+                        <span style="color:red">&nbsp;&nbsp;&nbsp; Urgent</span>&nbsp;&nbsp;&nbsp;<input  id="third" type="checkbox" name="urgent">
+                    <div style="float:right; padding-left:4px">&nbsp;&nbsp;&nbsp;<input accesskey="a" style="padding:5px 20px;background-color:#227dc7" class="btn btn-primary" value="Next" type="submit" /></div>
                 </form>
                                 <script>
                                     $(document).ready(function(){

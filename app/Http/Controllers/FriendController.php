@@ -19,11 +19,11 @@ class FriendController extends Controller
     {
     	$user = User::where('username', $username)->first();
     	if (!$user) {
-    		return redirect()->route('home')->with('info', 'That user could not be found!');
+    		return redirect()->route('global.index')->with('info', 'That user could not be found!');
     	}
     	
     	if (Auth::user()->id === $user->id) {
-	    	return redirect()->route('home');
+	    	return redirect()->route('global.index');
     	}
     	
     	if (Auth::user()->hasFriendRequestsPending($user) || $user->hasFriendRequestsPending(Auth::user())) {
@@ -50,11 +50,11 @@ class FriendController extends Controller
     {
     	$user = User::where('username', $username)->first();
     	if (!$user) {
-    		return redirect()->route('home')->with('info', 'That user could not be found!');
+    		return redirect()->route('global.index')->with('info', 'That user could not be found!');
     	}
     	
     	if (!Auth::user()->hasFriendRequestsReceived($user)) {
-    		return redirect()->route('home');
+    		return redirect()->route('global.index');
     	}
     	
     	Auth::user()->acceptFriendRequest($user);

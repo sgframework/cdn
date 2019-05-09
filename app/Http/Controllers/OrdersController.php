@@ -5,6 +5,7 @@ use cdn\Models\Branch;
 use cdn\Models\Order;
 use cdn\Models\OrderItems;
 use cdn\Models\Item;
+use cdn\Models\Itemv2;
 use cdn\Mail\OrderSubmitted;
 use cdn\User;
 use DB;
@@ -108,6 +109,7 @@ class OrdersController extends Controller
             $branch = Branch::select('branchname', 'branchnumber')->first();
             $currentuser = \Auth::user();
             $lastorder = Order::select()->where('staffid', '=', $currentuser->idnumber)->orderBy('created_at', 'desc')->first();
+            $sequence = $currentuser->dc;
             $branches_list = DB::table('branches')
             ->where('salesgroup', '=', $currentuser->idnumber)
             ->get();
@@ -115,7 +117,7 @@ class OrdersController extends Controller
             /*$branches_list1 = DB::table('branches')
             ->where('dc', '=', '24')
             ->get();*/
-            return view ('orders.add')->with('branch', $branch)->with('branches_list', $branches_list)->with('lastorder', $lastorder);
+            return view ('orders.add')->with('branch', $branch)->with('sequence', $sequence)->with('branches_list', $branches_list)->with('lastorder', $lastorder);
         }
         public function listOthiam()
         {
@@ -207,7 +209,7 @@ class OrdersController extends Controller
             $slug = Session::get('ordernumber') . "-" . Session::get('ponumber');
             $order = Order::where('slug', '=', $slug)->first(); 
             //dump($order);
-            return view ('orders.partials.step2')->with('items', $items)->with('branches', $branches);
+            return view ('orders.partials.step2')->with('order', $order)->with('items', $items)->with('branches', $branches);
         }
         public function insertOrderStep2(Request $request)
         {      
@@ -225,11 +227,11 @@ class OrdersController extends Controller
             $order = Order::notReply()->find($orderid);
            
            if (!$order) {
-               return redirect()->route('home');
+               return redirect()->route('global.index');
            }
            
                    if (!Auth::user()->isFriendsWith($status->user) && Auth::user()->id !== $status->user->idnumber) {
-               return redirect()->route('home');
+               return redirect()->route('global.index');
            }
             $item = Order::create([
                 'body' => $request->input("order-{$orderid}"),
@@ -372,7 +374,8 @@ class OrdersController extends Controller
                 'itemnumber' => 'required|max:255',
                 'itemqty' => 'required|max:20',
                 'freeitem' => 'max:20',
-                'itemprice' => 'max:20',
+                'itemoldprice' => 'max:20',
+                'itemnewprice' => 'max:20',
                 'totalqtyprice' => 'max:20',
                 'orderstatus' => 'max:255',
                 'askedprice' => 'max:20',
@@ -395,22 +398,26 @@ class OrdersController extends Controller
             $branchname = Order::select('branchname')->where('slug', '=', $slug)->get();
             $ponumber = Order::select('ponumber')->where('slug', '=', $slug)->get();
             //$itemnumber = Item::select('itemnumber')->where('itemnumber', '=', $request['itemnumber'])->get();
-            $items = Item::all();
+            $items = Itemv2::all();
             $reviewitems = OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
             //$itemprice = Item::select('itemprice')->where('itemnumber', '=', $request['itemnumber'])->get();
             $belongstaffid = Order::where('slug', '=', $slug)->first();
             //dump(['By', $belongstaffid->staffname, 'ID', $belongstaffid->staffid]);
-            $belongbranch = Order::where('slug', '=', $slug)->first();
+            $belongbranch = Order::select('branchname')->where('slug', '=', $slug)->first();
+            
+            $othaimorpanda = $belongbranch->where('', 'LIKE', 'Othaim')->orWhere('', 'LIKE', 'Panda');
+            $allnewpricelist = 
             //dump(['Branch#Name', $belongbranch->branchname]);
             $orderitemslist = OrderItems::select('itemnumber')->where('slug', '=', $slug)->orderBy('created_at', 'desc')->whereNotNull('itemnumber')->first();
             $orderitemnumber = $orderitemslist;
             //dump(['Order Item#', $orderitemnumber]);
-            $items = Item::select()->whereNotNull('itemname')->orderBy('itemname', 'asc')->get();
             $belongorderitems = OrderItems::where('orderitems', '=', $items)->get();
-            $belongitem = Item::where('itemnumber', '=', $request['itemnumber'])->whereNotNull('itemnumber')->first();
-            $belongprice = $belongitem->itemprice;
+            $belongitem = Itemv2::where('itemnumber', '=', $request['itemnumber'])->whereNotNull('itemnumber')->first();
+
+            $belongoldprice = $belongitem->itemoldprice;
+            $belongnewprice = $belongitem->itemnewprice;
             //$totalqtyprice = $belongitem->itemprice * $request['itemqty'];
-            $totalqtyprice = $belongitem->itemprice * $request['itemqty'];
+            $totalqtyprice = $belongitem->itemnewprice * $request['itemqty'];
             //dump(['Order Name', $belongorderitems]);
             //dump(['Item Data', $belongitem]);
             //dump(['Item Price', $belongprice]);
@@ -428,7 +435,8 @@ class OrdersController extends Controller
             'orderitems' => $orderitems,
             'itemqty' => $request['itemqty'],
             'freeitem' => $request['freeitem'],
-            'itemprice' => $belongprice,
+            'itemoldprice' => $belongoldprice,
+            'itemnewprice' => $belongnewprice,
             'totalqtyprice' => $totalqtyprice,
             'orderstatus' => 'Editing',
             'slug' => $slug,
@@ -470,7 +478,7 @@ class OrdersController extends Controller
             $reviewitems = OrderItems::select()->where('slug', '=', $slug)->whereNull('branchnumber')->whereNotNull('ponumber')->orderBy('created_at', 'desc')->get();
             //dump($reviewitems);
             $orderitems =  OrderItems::select('itemnumber')->where('slug', '=', $slug)->get();
-            $itemprice = Item::select()->where('itemnumber', '=', $orderitems)->get();
+            $itemprice = Itemv2::select()->where('itemnumber', '=', $orderitems)->get();
             /*
             $prices = Item::notNull()->where(function($query) {
             $currentuser = \Auth::user();
@@ -558,6 +566,104 @@ class OrdersController extends Controller
                 }
             }
         }
+
+
+        public function promoOrder(Request $request)
+        {
+            
+            if ($request->input('submit') != null ){
+
+                $file = $request->file('file');
+        
+                // File Details 
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension();
+                $tempPath = $file->getRealPath();
+                $fileSize = $file->getSize();
+                $mimeType = $file->getMimeType();
+        
+                // Valid File Extensions
+                $valid_extension = array("csv");
+        
+                // 2MB in Bytes
+                $maxFileSize = 2097152; 
+        
+                // Check file extension
+                if(in_array(strtolower($extension),$valid_extension)){
+        
+                // Check file size
+                if($fileSize <= $maxFileSize){
+        
+                    // File upload location
+                    $location = 'attachments/promo_orders';
+        
+                    // Upload file
+
+                    $file->move($location,$filename);
+        
+                    // Import CSV to Database
+                    $filepath = public_path($location."/".$filename);
+        
+                    // Reading file
+                    $file = fopen($filepath,"r");
+        
+                    $importData_arr = array();
+
+
+
+                    
+                    $i = 0;
+        
+                    while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+                    $num = count($filedata );
+                    
+                    // Skip first row (Remove below comment if you want to skip the first row)
+                    if($i == 0){
+                        $i++;
+                        continue; 
+                    }
+                    for ($c=0; $c < $num; $c++) {
+                        $importData_arr[$i][] = $filedata [$c];
+                    }
+                    $i++;
+                    }
+                    fclose($file);
+        
+                    // Insert to MySQL database
+
+
+                    foreach($importData_arr as $importData){
+        
+                    $insertData = array(
+                        "ponumber"=>$importData[1],        
+                        "branchnumber"=>$importData[2],
+                        "branchname"=>$importData[3],
+                        "itemnumber"=> $importData[4],
+                        "itemqty"=> $importData[5],
+                        "itemprice"=> $importData[6],
+                        'updated_at'=> now(),
+
+                        
+                    );
+                    OrderItems::insert($insertData);
+        
+                    }
+        
+                    Session::flash('message','Import Successful.');
+                }else{
+                    Session::flash('message','File too large. File must be less than 2MB.');
+                }
+        
+                }else{
+                Session::flash('message','Invalid File Extension.');
+                }
+        
+            }
+        
+            // Redirect to index
+            return redirect()->route('global.index')->with('message', 'Your promo orders have been uploaded succesfully.');
+            }
+        
         public function submitOrder(Request $request, $slug)
         {
             $this->validate($request, [
@@ -578,7 +684,7 @@ class OrdersController extends Controller
             $allorders = Order::where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->get();
             $sumallorders = $allorders->sum('totalprice');
             User::where('idnumber', '=', $currentuser->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
-            return redirect()->route('orders.add', '#Success!&create_new_order')->with('alert', 'Congratulations! Your order have been submitted successfully.');
+            return redirect()->route('orders.add', '#Success!')->with('alert', 'Congratulations! Your order have been submitted successfully.');
         }
         public function removeOrderItem($slug, $itemnumber)
         {   
@@ -591,6 +697,28 @@ class OrdersController extends Controller
             $delitemnumber  = OrderItems::select($slug)->where('slug', '=', $slug);
             $delitemnumber->delete();            
             return redirect()->back()->with('danger', 'Table Flushed Successfully.');
+        }
+        public function updatePo(Request $request, $slug)
+        {
+            $this->validate($request, [
+                'ponumber' => 'max:255'
+
+            ]);
+            Order::where('slug', $slug)->update([ 'ponumber' => $request['ponumber'], 'updated_at' => now(), 'status' => 'Editing']);
+            OrderItems::where('slug', $slug)->update([ 'ponumber' => $request['ponumber'], 'updated_at' => now(), 'orderstatus' => 'Editing']);
+            return redirect()->back()->with('success', 'Your Po# has been changed successfully.');
+
+        }
+        public function deletePo($slug)
+        {
+            $deleteorder  = Order::where('slug', '=', $slug);
+            $deleteprderitems  = OrderItems::where('slug', '=', $slug);
+            $deleteorder->delete();     
+            $deleteprderitems->delete();     
+
+            return redirect()->route('orders.add')->with('deleted', 'Your Po# has been deleted successfully.');
+
+
         }
         public function successOrder($slug) 
         {

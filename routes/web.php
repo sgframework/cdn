@@ -48,7 +48,7 @@ Route::get('test1', function(){
 
 
 
-//Route::get('home', ['as'=>'home','uses'=>'HomeController@index']);
+//Route::get('global.index', ['as'=>'global.index','uses'=>'HomeController@index']);
 
 
 Route::group(['middleware' => 'is-admin'], function () {     
@@ -97,6 +97,20 @@ Route::get('/root/readme', [
     'uses' => '\cdn\Http\Controllers\RootController@getReadMe',
 'as' => 'root.readme',
 ]);
+
+
+/** /root/mysql/sgdb0 */
+Route::get('/root/mysql/sgdb0', [
+    'uses' => '\cdn\Http\Controllers\RootController@getDB',
+'as' => 'root.mysql',
+]);
+
+/** /root/mysql/sgdb0 */
+Route::post('/root/mysql/sgdb0/post', [
+    'uses' => '\cdn\Http\Controllers\RootController@postCommand',
+'as' => 'root.mysql.post',
+]);
+
 
 
 /** Orders Routes */
@@ -260,7 +274,7 @@ Route::get('/signout', [
 
 */
 
-//Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('global.index');
 //Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 //Route::get('/process', 'ProcessController@index')->name('process');
 //Route::get('/items', 'ItemsController@index')->name('items');
@@ -324,6 +338,11 @@ Route::get('/order/add', [
 
 ]);
 
+Route::post('/promo/mass/upload', [
+'uses' => '\cdn\Http\Controllers\OrdersController@promoOrder',
+'as' => 'promo.order'
+]);
+
 Route::get('/order/add/urgent', [
     'uses' => '\cdn\Http\Controllers\OrdersController@addUrgentOrder',
 'as' => 'orders.urgent',
@@ -362,7 +381,6 @@ Route::post('/order/insert/step2', [
 
 
 
-
 Route::get('/orders/order/{slug}', [
     'uses' => '\cdn\Http\Controllers\OrdersController@getOrderNumber',
     'as' => 'orders.order'])/*->where('slug', '[\d\-]+')*/;
@@ -377,6 +395,14 @@ Route::post('/orders/order/{slug}/remove/{itemnumber}', [
     'uses' => '\cdn\Http\Controllers\OrdersController@removeOrderItem',
     'as' => 'orders.remove']);
 
+Route::post('/orders/order/{slug}/change', [
+    'uses' => '\cdn\Http\Controllers\OrdersController@updatePo',
+    'as' => 'update.po']);
+
+Route::post('/orders/order/{slug}/delete', [
+'uses' => '\cdn\Http\Controllers\OrdersController@deletePo',
+'as' => 'delete.po']);
+    
 Route::post('/orders/order/{slug}/remove/{ponumber}', [
     'uses' => '\cdn\Http\Controllers\OrdersController@removeOrder',
     'as' => 'orders.destroy']);

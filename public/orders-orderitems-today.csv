@@ -1,6 +1,12 @@
-"row identification","Distribution Channe",PO#," ",Customer#,Item#," "," ",Qty,"asked price",Free
-H,24,test5," ",302965,," "," ",,0,
-H,24,test5," ",,40011718," "," ",10,65,
-H,24,test6," ",304024,," "," ",,0,
-H,24,test6," ",,40250012," "," ",10,215,
-H,24,test6," ",,50360912," "," ",10,200,
+"Orders of",Date,"Total PO`s","Urgent # Regular","Total Items","Total Qtys","Total Sales","Total Grand"
+"A. Shawky#1869",2019-05-09,1,"0 # 1",3,14,"1,158","38,345"
+,,,
+,,,
+PO#,Customer#,"Total Items","Total Qtys","Total Sales",Currency,Completed
+"19015129 021","303639-Saudi HypermarketsCo(LLC)-IRQAH",3,14,"1,158"," SAR","09/05/19 5:14PM"
+,,,
+,,,
+PO#,Customer,Items,Qty,Price
+"19015129 021","303639-Saudi HypermarketsCo(LLC)-IRQAH","40011718 - 10'S WALIMA PUFF PASTRY (18X400G)",2,0
+"19015129 021","303639-Saudi HypermarketsCo(LLC)-IRQAH","40042018 - KONAFAH DOUGH (12X500 G)",10,0
+"19015129 021","303639-Saudi HypermarketsCo(LLC)-IRQAH","40071118 - EGG SPRING ROLL PASTRY (24X345G)",2,0

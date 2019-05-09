@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')    
+
+<meta http-equiv="refresh" content="1;url=/orders/order/{{ (Session::has('slug') ? Session::get('slug') : '' ) }}/edit">
 <div class="container">
     <div class="row justify-content-center">
     @if ($errors->has('alert'))
@@ -28,7 +30,7 @@
             </style>
                 <div class="table-responsive">
                 @if (Session::has('info'))
-                    <div class="alert alert-info">{{ Session::get('info') }}</div>
+                    <div class="alert alert-success"><i class="fas fa-check"></i> {{ Session::get('info') }}</div>
                     @endif
 
                     <table class="table table-striped table-sm">
@@ -119,6 +121,16 @@ Order# {{ (Session::has('ordernumber') ? Session::get('ordernumber') : '' ) }} =
 
 
                     @endif
+
+
+
+@if ( $order->urgent == 'on' )
+
+<img src="{{ asset('images/assests/urgent.png') }}" width="220px" height="120px" />
+
+@else
+@endif
+
             <!-- If user loggedOut show below content until endShow part -->            
 
             

@@ -73,11 +73,13 @@
                                     <?php $totalitems = 0; ?>
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
-                                    <?php $totalprice = 0; ?>
+                                    <?php $oldprice = 0; ?>
+                                    <?php $newprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
                                     <?php $askedprice = 0; ?>
                                     <?php $totaldiscount = 0; ?>
                                     <?php $totaloriginal = 0; ?>
+                                    <?php $itemprice = 0; ?>
                                     
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                     @if (Session::has('submitted'))
@@ -87,10 +89,10 @@
                                         @foreach ($orderitems as $orderitem)
                                         <?php $totalqty += $orderitem->itemqty; ?>
                                         <?php $totalfree += $orderitem->freeitem; ?>
-                                        <?php $totalprice += $orderitem->itemprice; ?>
-
+                                        <?php $oldprice += $orderitem->itemoldprice; ?>
+                                        <?php $newprice += $orderitem->itemnewprice; ?>
                                         @if ($orderitem->askedprice == 0)
-                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemnewprice; ?>
                                         @else
                                         <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
                                         @endif
@@ -100,12 +102,12 @@
                                         <?php $totaldiscount += "0"; ?>
 
                                         @else
-                                        <?php $totaldiscount -= ($orderitem->itemprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
+                                        <?php $totaldiscount -= ($orderitem->itemnewprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
 
 
 
                                         @endif
-                                        <?php $totaloriginal += $orderitem->itemprice * $orderitem->itemqty; ?>
+                                        <?php $totaloriginal += $orderitem->itemnewprice * $orderitem->itemqty; ?>
 
                                             @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
@@ -114,7 +116,8 @@
                                                     <td><b>Total</b></td>
                                                     <th style="text-align:center">{{ $totalqty }}</th>
                                                     <th style="text-align:center">{{ $totalfree }}</th>
-                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($oldprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($newprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
                                                 </tr>
@@ -123,7 +126,8 @@
                                                 <th>Item# - Desc.</th>
                                                 <th style="text-align:center">Qty</th>
                                                 <th style="text-align:center">Free</th>
-                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Old Price</th>
+                                                <th style="text-align:center">New Price</th>
                                                 <th style="text-align:center">Asked Price</th>
                                                 <th style="text-align:center">Qty * Price</th>
                                                 <!--<th>Delete</th>-->
@@ -159,11 +163,13 @@
                                     <?php $totalitems = 0; ?>
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
-                                    <?php $totalprice = 0; ?>
+                                    <?php $oldprice = 0; ?>
+                                    <?php $newprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
                                     <?php $askedprice = 0; ?>
                                     <?php $totaldiscount = 0; ?>
                                     <?php $totaloriginal = 0; ?>
+                                    <?php $itemprice = 0; ?>
                                     
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                     @if (Session::has('submitted'))
@@ -173,10 +179,10 @@
                                         @foreach ($orderitems as $orderitem)
                                         <?php $totalqty += $orderitem->itemqty; ?>
                                         <?php $totalfree += $orderitem->freeitem; ?>
-                                        <?php $totalprice += $orderitem->itemprice; ?>
-
+                                        <?php $oldprice += $orderitem->itemoldprice; ?>
+                                        <?php $newprice += $orderitem->itemnewprice; ?>
                                         @if ($orderitem->askedprice == 0)
-                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemnewprice; ?>
                                         @else
                                         <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
                                         @endif
@@ -186,12 +192,12 @@
                                         <?php $totaldiscount += "0"; ?>
 
                                         @else
-                                        <?php $totaldiscount -= ($orderitem->itemprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
+                                        <?php $totaldiscount -= ($orderitem->itemnewprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
 
 
 
                                         @endif
-                                        <?php $totaloriginal += $orderitem->itemprice * $orderitem->itemqty; ?>
+                                        <?php $totaloriginal += $orderitem->itemnewprice * $orderitem->itemqty; ?>
                                             @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
                                         <tfoot>
@@ -199,7 +205,8 @@
                                                     <td><b>Total</b></td>
                                                     <th style="text-align:center">{{ $totalqty }}</th>
                                                     <th style="text-align:center">{{ $totalfree }}</th>
-                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($oldprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($newprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
                                                 </tr>
@@ -208,7 +215,8 @@
                                                 <th>Item# - Desc.</th>
                                                 <th style="text-align:center">Qty</th>
                                                 <th style="text-align:center">Free</th>
-                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Old Price</th>
+                                                <th style="text-align:center">New Price</th>
                                                 <th style="text-align:center">Asked Price</th>
                                                 <th style="text-align:center">Qty * Price</th>
                                                 <!--<th>Delete</th>-->
@@ -245,11 +253,13 @@
                                     <?php $totalitems = 0; ?>
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
-                                    <?php $totalprice = 0; ?>
+                                    <?php $oldprice = 0; ?>
+                                    <?php $newprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
                                     <?php $askedprice = 0; ?>
                                     <?php $totaldiscount = 0; ?>
                                     <?php $totaloriginal = 0; ?>
+                                    <?php $itemprice = 0; ?>
                                     
                                     <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                     @if (Session::has('submitted'))
@@ -259,10 +269,10 @@
                                         @foreach ($orderitems as $orderitem)
                                         <?php $totalqty += $orderitem->itemqty; ?>
                                         <?php $totalfree += $orderitem->freeitem; ?>
-                                        <?php $totalprice += $orderitem->itemprice; ?>
-
+                                        <?php $oldprice += $orderitem->itemoldprice; ?>
+                                        <?php $newprice += $orderitem->itemnewprice; ?>
                                         @if ($orderitem->askedprice == 0)
-                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemnewprice; ?>
                                         @else
                                         <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
                                         @endif
@@ -272,12 +282,12 @@
                                         <?php $totaldiscount += "0"; ?>
 
                                         @else
-                                        <?php $totaldiscount -= ($orderitem->itemprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
+                                        <?php $totaldiscount -= ($orderitem->itemnewprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
 
 
 
                                         @endif
-                                        <?php $totaloriginal += $orderitem->itemprice * $orderitem->itemqty; ?>
+                                        <?php $totaloriginal += $orderitem->itemnewprice * $orderitem->itemqty; ?>
                                             @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
                                         <tfoot>
@@ -285,7 +295,8 @@
                                                     <td><b>Total</b></td>
                                                     <th style="text-align:center">{{ $totalqty }}</th>
                                                     <th style="text-align:center">{{ $totalfree }}</th>
-                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($oldprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($newprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
                                                 </tr>
@@ -294,7 +305,8 @@
                                                 <th>Item# - Desc.</th>
                                                 <th style="text-align:center">Qty</th>
                                                 <th style="text-align:center">Free</th>
-                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Old Price</th>
+                                                <th style="text-align:center">New Price</th>
                                                 <th style="text-align:center">Asked Price</th>
                                                 <th style="text-align:center">Qty * Price</th>
                                                 <!--<th>Delete</th>-->
@@ -334,10 +346,10 @@
                         @if (!$orderitems->count())
                                         <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
                                     @else
-                                    <?php $totalitems = 0; ?>
                                     <?php $totalqty = 0; ?>
                                     <?php $totalfree = 0; ?>
-                                    <?php $totalprice = 0; ?>
+                                    <?php $oldprice = 0; ?>
+                                    <?php $newprice = 0; ?>
                                     <?php $totalqtyprice = 0; ?>
                                     <?php $askedprice = 0; ?>
                                     <?php $totaldiscount = 0; ?>
@@ -353,7 +365,8 @@
                                                 <th>Item# - Desc.</th>
                                                 <th style="text-align:center">Qty</th>
                                                 <th style="text-align:center">Free</th>
-                                                <th style="text-align:center">Price</th>
+                                                <th style="text-align:center">Old Price</th>
+                                                <th style="text-align:center">New Price</th>
                                                 <th style="text-align:center">Total Discount</th>
                                                 <th style="text-align:center">Total Price</th>
                                                 <!--<th>Delete</th>-->
@@ -362,10 +375,11 @@
                                         @foreach ($orderitems as $orderitem)
                                         <?php $totalqty += $orderitem->itemqty; ?>
                                         <?php $totalfree += $orderitem->freeitem; ?>
-                                        <?php $totalprice += $orderitem->itemprice; ?>
+                                        <?php $oldprice += $orderitem->itemoldprice; ?>
+                                        <?php $newprice += $orderitem->itemnewprice; ?>
 
                                         @if ($orderitem->askedprice == 0)
-                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemprice; ?>
+                                        <?php $totalqtyprice += $orderitem->itemqty * $orderitem->itemnewprice; ?>
                                         @else
                                         <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
                                         @endif
@@ -375,12 +389,12 @@
                                         <?php $totaldiscount += "0"; ?>
 
                                         @else
-                                        <?php $totaldiscount -= ($orderitem->itemprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
+                                        <?php $totaldiscount -= ($orderitem->itemnewprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
 
 
 
                                         @endif
-                                        <?php $totaloriginal += $orderitem->itemprice * $orderitem->itemqty; ?>
+                                        <?php $totaloriginal += $orderitem->itemnewprice * $orderitem->itemqty; ?>
                                         @include('dashboard/partials/orderitemsblock')
                                         @endforeach	
                                         <tfoot>
@@ -388,7 +402,8 @@
                                                     <td><b>Total</b></td>
                                                     <th style="text-align:center">{{ $totalqty }}</th>
                                                     <th style="text-align:center">{{ $totalfree }}</th>
-                                                    <th style="text-align:center">{{ number_format($totalprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($oldprice) }}.00 SAR</th>
+                                                    <th style="text-align:center">{{ number_format($newprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($askedprice) }}.00 SAR</th>
                                                     <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
                                                 </tr>

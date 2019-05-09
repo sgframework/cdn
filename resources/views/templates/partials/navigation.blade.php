@@ -48,7 +48,7 @@ span.logo {
     </style>
     
     <nav class="nav navbar-default dark" role="navigation" style="background-color:rgb(0, 0, 0);">
-        <div id="logo"><a class="navbar-brand" href="{{ route('home') }}"><p class="logo">M . o . B </p><p class="logo">   MenOfBusiness<span class="logo">|</span></p></a></div>
+        <div id="logo"><a class="navbar-brand" href="{{ route('global.index') }}"><p class="logo">M . o . B </p><p class="logo">   MenOfBusiness<span class="logo">|</span></p></a></div>
         <label for="drop" class="toggle"><i class="glyphicon glyphicon-menu-hamburger right"></i></label>
         <input type="checkbox" id="drop" />
             <ul class="menu">

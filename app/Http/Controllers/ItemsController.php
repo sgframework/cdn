@@ -2,6 +2,7 @@
 
 namespace cdn\Http\Controllers;
 use cdn\Models\Item;
+use cdn\Models\Itemv2;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;

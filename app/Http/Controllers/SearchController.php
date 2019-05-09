@@ -4,6 +4,7 @@ namespace cdn\Http\Controllers;
 
 use DB;
 use cdn\Models\Item;
+use cdn\Models\Itemv2;
 use cdn\Models\Branch;
 use cdn\Models\Order;
 use cdn\Models\OrderItems;

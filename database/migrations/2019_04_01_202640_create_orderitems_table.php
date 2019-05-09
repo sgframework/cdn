@@ -27,16 +27,17 @@ class CreateOrderitemsTable extends Migration
             $table->integer('itemqty')->nullable();
             $table->integer('freeitem')->nullable();
             $table->decimal('itemprice', 18, 2)->nullable();
-            $table->decimal('askedprice', 18, 2)->nullable();         
-            $table->decimal('totalprice', 18, 2)->nullable();         
             $table->string('orderstatus')->default('Editing')->nullable();
             $table->string('slug');
             $table->integer('totalqty')->nullable();
             $table->integer('totalfree')->nullable();  
             $table->decimal('totalprice', 18, 2)->nullable();         
             $table->decimal('totalqtyprice', 18, 2)->nullable();         
-            $table->index(['ponumber', 'branchnumber', 'itemnumber']);
             $table->timestamps();
+            $table->decimal('askedprice', 18, 2)->nullable();         
+            $table->decimal('itemoldprice', 18, 2)->nullable();
+            $table->decimal('itemnewprice', 18, 2)->nullable();
+            $table->index(['ponumber', 'branchnumber', 'itemnumber']);
         });
 
         //[0] - JustCreated, [1] - Editing, [2] - Reviewing, [3] - Submitted, [4] - Completed
@@ -44,6 +45,7 @@ class CreateOrderitemsTable extends Migration
 
 
     }
+
 
     /**
      * Reverse the migrations.

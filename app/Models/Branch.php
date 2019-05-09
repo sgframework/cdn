@@ -16,6 +16,12 @@ class Branch extends Model
 	{
 		return $this->belongsTo('cdn\User', 'id');
 	}
+
+	public function customer()
+	{
+		return $this->belongsTo('cdn\Models\Order', 'branchnumber');
+	}
+	
     public function branch()
 	{
 		return $this->belongsTo('cdn\Models\Branch', 'branchnumber');

@@ -1,6 +1,8 @@
 <?php
 namespace cdn\Http\Controllers;
 use cdn\User;
+use cdn\Models\Item;
+use cdn\Models\Itemv2;
 use cdn\Models\Branch;
 use DB;
 use Illuminate\Support\Facades\Hash;

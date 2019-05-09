@@ -18,7 +18,8 @@
 
     <!--JUST ENABLED-->
     
-    
+    <script src="https://code.jquery.com/jquery-1.7.2.js"></script>
+
     <!--JUST ENABLED-->
 
 
@@ -110,7 +111,7 @@
             </div>
           </li>
           <li class="nav-item">
-          <div style="padding-left:80px">
+          <div style="padding-left:40px">
           
           <a class="nav-link" href="{{ route('logout') }}" 
                                        onclick="event.preventDefault();

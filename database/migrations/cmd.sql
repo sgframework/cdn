@@ -26,6 +26,17 @@ ALTER TABLE orders
   ADD processedby VARCHAR(255) DEFAULT NULL;
 
 
+ALTER TABLE orders
+  ADD totaloriginal DECIMAL(18,2);
+
+ALTER TABLE orderitems
+  ADD itemoldprice DECIMAL(18,2);
+ALTER TABLE orderitems
+  ADD itemnewprice DECIMAL(18,2);
+            $table->decimal('itemoldprice', 18, 2)->nullable();
+            $table->decimal('itemnewprice', 18, 2)->nullable();
+
+
               $table->integer('')->nullable();
 
 
@@ -436,6 +447,92 @@ DELETE FROM orderitems WHERE ponumber="test39";
 DELETE FROM orders WHERE ponumber="test40";
 DELETE FROM orderitems WHERE ponumber="test40";
 
+
+DELETE FROM orders WHERE status="JustCreated";
+DELETE FROM orderitems WHERE orderstatus="JustCreated";
+
+
+DELETE FROM orders WHERE status="Editing";
+DELETE FROM orderitems WHERE orderstatus="Editing";
+
+
+DELETE FROM orders WHERE status="Reviewing";
+DELETE FROM orderitems WHERE orderstatus="Reviewing";
+
+
+
+
+
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%PANDA%';
+
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%Othaim%';
+
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%Tamimi%';
+
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%Carrefour%';
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%Danub%';
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%Lulu%';
+
+SELECT branchname, logo
+FROM branches
+WHERE `branchname` LIKE '%Carrefour%';
+
+            danub.png
+            lulu.png
+
+carrefour.jpg
+
+/* SET LOGOS */
+UPDATE branches SET logo="panda.png" WHERE `branchname` LIKE '%PANDA%';
+UPDATE branches SET logo="othaim.png" WHERE `branchname` LIKE '%Othaim%';
+UPDATE branches SET logo="tamimi.jpg" WHERE `branchname` LIKE '%Tamimi%';
+UPDATE branches SET logo="carrefour.jpg" WHERE `branchname` LIKE '%PANDA%';
+UPDATE branches SET logo="danub.png" WHERE `branchname` LIKE '%Danube%';
+UPDATE branches SET logo="lulu.png" WHERE `branchname` LIKE '%Lulu%';
+UPDATE branches SET logo="panda.png" WHERE `branchname` LIKE '%PANDA%';
+UPDATE branches SET logo="panda.png" WHERE `branchname` LIKE '%PANDA%';
+
+
+DELETE FROM orders WHERE ponumber="070519 00028";
+DELETE FROM orderitems WHERE ponumber="070519 00028";
+DELETE FROM orders WHERE ponumber="070519 00029";
+DELETE FROM orderitems WHERE ponumber="070519 00029";
+
+
+
+070519 00028
+070519 00029
+
+
+020519 440
+
+020519 441
+
+
+
+
+59003112	KERRYGOLD RED CHEDDAR CHEESE (4X5 KG)	880
+59003212	KERRYGOLD WHITE CHEDDAR CHEESE (4X5 KG)	880
+
+
 DELETE FROM orders WHERE ponumber="19013828";
 DELETE FROM orderitems WHERE ponumber="19013828";
 
@@ -493,49 +590,90 @@ DELETE FROM orders WHERE ponumber="123123";
 DELETE FROM orderitems WHERE ponumber="123123";
 
 
+DELETE FROM orders WHERE ponumber="050519 0020";
+DELETE FROM orderitems WHERE ponumber="050519 0020";
+
+
+
+
+050519 0020
+
+
 11659851 f1
 11659851 f
 40842498
 23232323
 
 
-DELETE FROM orders WHERE status="JustCreated";
-DELETE FROM orderitems WHERE orderstatus="JustCreated";
-
-
 /* Items Updates */
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54000010", "KETTLE SEA SALT 45GX50", "77");
 
+
+
+
+
+
+
+
+
+
+
+
+
+54000010	KETTLE SEA SALT 45GX50	77	77
+54000110	KETTLE SALT & VINEGAR 45G*50	77	77
+54000210	KETTLE HONEY MUSTARD 45GX50	77	77
+54000410	KETTLE SEA SALT 170G*12	64	64
+54000510	KETTLE SALT&VINEGAR 170G*12	64	64
+54000610	KETTLE HONEY MUSTARD 170G*12	64	64
+54001210	BUFFIES PEANUTS 30GX50	57	57
+54001310	BUFFIES PEANUTS 65GX24	55	55
 
 
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302803", "PANDA #34", "2508", "24", "CENQ");
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54000110", "KETTLE SALT & VINEGAR 45G*50", "77");
 
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54000210", "KETTLE HONEY MUSTARD 45GX50", "77");
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54000010", "KETTLE SEA SALT 45GX50", "77", "77");
 
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54000410", "KETTLE SEA SALT 170G*12", "64");
+50076012	SUNB ASIAN PARATHA (12X400G)	54
 
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54000510", "KETTLE SALT&VINEGAR 170G*12", "64");
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("50076012", "SUNB ASIAN PARATHA (12X400G)", "54", "54");
 
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54000610", "KETTLE HONEY MUSTARD 170G*12", "64");
+INSERT INTO items (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("50076012", "SUNB ASIAN PARATHA (12X400G)", "54", "54");
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54001210", "BUFFIES PEANUTS 30GX50", "57");
 
-INSERT INTO items (itemnumber, itemname, itemprice) Values
- ("54001310", "BUFFIES PEANUTS 65GX24", "58");
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54000110", "KETTLE SALT & VINEGAR 45G*50", "77", "77");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54000210", "KETTLE HONEY MUSTARD 45GX50", "77", "77");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54000410", "KETTLE SEA SALT 170G*12", "64", "64");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54000510", "KETTLE SALT&VINEGAR 170G*12", "64", "64");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54000610", "KETTLE HONEY MUSTARD 170G*12", "64", "64");
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54001210", "BUFFIES PEANUTS 30GX50", "57", "57");
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("54001310", "BUFFIES PEANUTS 65GX24", "58", "58");
 
 
 
@@ -626,6 +764,21 @@ WHERE id="24";
 UPDATE users
 SET is_permission = "1"
 WHERE id="19";
+
+
+
+UPDATE orders set status="Submitted"
+WHERE ponumber="010519 2222";
+
+UPDATE orders set status="Submitted"
+WHERE ponumber="010519 2223";
+
+
+UPDATE orderitems set orderstatus="Submitted"
+WHERE ponumber="010519 2222";
+
+UPDATE orderitems set orderstatus="Submitted"
+WHERE ponumber="010519 2223";
 
 
 

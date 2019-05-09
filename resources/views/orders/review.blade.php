@@ -76,7 +76,8 @@
 
             <?php $totalqty = 0; ?>
             <?php $totalfree = 0; ?>
-            <?php $totalprice = 0; ?>
+            <?php $oldprice = 0; ?>
+            <?php $newprice = 0; ?>
             <?php $totalqtyprice = 0; ?>
             <?php $askedprice = 0; ?>
             <?php $totaldiscount = 0; ?>
@@ -88,7 +89,8 @@
                 <th style="text-align:center">Material Code</th>
                 <th style="text-align:center">Qty</th>
                 <th style="text-align:center">Free</th>
-                <th style="text-align:center">Price</th>
+                <th style="text-align:center">Old Price</th>
+                <th style="text-align:center">New Price</th>
                 <th style="text-align:center">Total Discount</th>
                 <th style="text-align:center">Qty * Price</th>
             </tr>
@@ -96,12 +98,13 @@
         @foreach ($reviewitems as $reviewitem)
         <?php $totalqty += $reviewitem->itemqty; ?>
         <?php $totalfree += $reviewitem->freeitem; ?>
-        <?php $totalprice += $reviewitem->itemprice; ?>
+        <?php $oldprice += $reviewitem->itemoldprice; ?>
+        <?php $newprice += $reviewitem->itemnewprice; ?>
 
         <?php $askedprice += $reviewitem->itemqty * $reviewitem->askedprice; ?>
         
         @if ($reviewitem->askedprice == 0)
-        <?php $totalqtyprice += $reviewitem->itemqty * $reviewitem->itemprice; ?>
+        <?php $totalqtyprice += $reviewitem->itemqty * $reviewitem->itemnewprice; ?>
         @else
         <?php $totalqtyprice += $reviewitem->itemqty * $reviewitem->askedprice; ?>
         @endif
@@ -113,12 +116,12 @@
         <?php $totaldiscount += "0"; ?>
 
         @else
-        <?php $totaldiscount -= ($reviewitem->itemprice * $reviewitem->itemqty) - ($reviewitem->askedprice * $reviewitem->itemqty); ?>
+        <?php $totaldiscount -= ($reviewitem->itemnewprice * $reviewitem->itemqty) - ($reviewitem->askedprice * $reviewitem->itemqty); ?>
 
 
 
         @endif
-        <?php $totaloriginal += $reviewitem->itemprice * $reviewitem->itemqty; ?>
+        <?php $totaloriginal += $reviewitem->itemnewprice * $reviewitem->itemqty; ?>
             @include('dashboard/partials/orderitemsreviewblock')
         @endforeach
         <tfoot>
@@ -127,7 +130,8 @@
                 <th></th>
                 <td style="text-align:center">{{ $totalqty }}</td>
                 <td style="text-align:center">{{ $totalfree }}</td>
-                <td style="text-align:center">{{ number_format($totalprice) }}.00 SAR</td>
+                <td style="text-align:center">{{ number_format($oldprice) }}.00 SAR</td>
+                <td style="text-align:center">{{ number_format($newprice) }}.00 SAR</td>
                 <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
                 <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
             </tr>
@@ -182,7 +186,8 @@
     <input hidden name="branchnumber" value="{{ $order->branchnumber }}">
     <input hidden name="branchname" value="{{ $order->branchname }}">
     <input hidden name="totalqty" value="{{ $totalqty }}">
-    <input hidden name="totalprice" value="{{ $totalprice }}">
+    <input hidden name="oldprice" value="{{ $oldprice }}">
+    <input hidden name="newprice" value="{{ $newprice }}">
     <input hidden name="totalqtyprice" value="{{ $totalqtyprice }}">
     <input hidden name="totalitems" value="{{ $orderitems->count() - 1 }}">
     <input hidden name="totalfree" value="{{ $totalfree }}">
@@ -198,7 +203,7 @@
 <p>Allowed Formats:</p> <span><pre>JPG, JPEG, PNG, GIF and PDF</pre> </span>
 </div>
 <div style="float:right;padding-right:20px">
-    <button style="font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit"> Submit </button>
+    <button accesskey="a" style="font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit"> Submit </button>
 </div>
     </form>
     <form enctype="multipart/form-data" action="{{ route('orders.attachpo', ['orderId' => $order->slug]) }}" method="POST">
@@ -211,7 +216,7 @@
                 <br />
     @endif
             <input type="file" name="fileToUpload" id="fileToUpload"><br /><br />
-            <input style="background-color:red;color:white" class="btn btn-info" type="submit" value="Upload PO" name="submit">
+            <input accesskey="l" style="background-color:red;color:white" class="btn btn-info" type="submit" value="Upload PO" name="submit">
             <input type="hidden" name="_token" value="{{ Session::token() }}">
     </form>  
     <br /><br />
