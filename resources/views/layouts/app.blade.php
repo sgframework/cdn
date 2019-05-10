@@ -46,7 +46,17 @@
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!--<link href="{{ asset('css/stylesheet.css') }}" rel="stylesheet">-->
-    
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
+    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jush.js') }}" defer></script>
+
+
+
+
+
+
+
     <!--<link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">-->
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">

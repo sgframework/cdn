@@ -900,9 +900,207 @@ Random important commands
 
 ![{{ asset('/images/assests/free.gif') }}]({{ asset('/images/assests/free.gif') }})
 
+GitHub supports emoji!
+:+1: :sparkles: :camel: :tada:
+:rocket: :metal: :octocat: 
+
+[x] this is a complete item
+- [ ] this is an incomplete item
+- [x] @mentions, #refs, [links](),
+**formatting**, and <del>tags</del>
+supported
+- [x] list syntax required (any
+unordered or ordered list
+supported)
+
+
+```javascript
+function test() {
+ console.log("look ma’, no spaces");
+}
+```
+
+
 @endmarkdown
 
 
+
+<h3 id="new-features"><a class="header-link" href="#new-features"></a>Newly integrated features and services.</h3>
+    <article class="markdown-body">
+@markdown
+
+* Orders creation 
+
+        - Create a new order.  +++++++++ || urgent, Attach PO, free, discount, serializing PO sequence, change/delete PO, ⌘ Hotkeys, cursor autofocus->need to be improved furthermore ||
+        @icn-camera
+        - New & Old prices list. ++ -only new prices list integrated.
+        - Mini market prices list. 'under_development'
+        - Create a new RTV order. + -missing skus 'under_development'
+        - Create a new Wohlesale order 'under_development'
+        - Create a new FS order. 'under_development'
+
+* Reviewing orders
+
+        - Review orders 'CreatedBy, OrderItems, Totals, Attached PO'
+
+* Home
+        
+        - Superadmins view. 'under_development'
+            -- Only numbers and charts are displayed.
+        - Supervisors view. 'under_development'
+            -- Only numbers and charts are displayed.         
+        - Members view.
+            -- Today's orders statuses and workflow.
+                --- JustCreated
+                --- Editing
+                --- Reviewing
+                --- Submitted
+                --- Completed
+
+* Orders processing 'Data_Entry'
+
+        - Review orders 'CreatedBy, OrderItems, Totals, Attached PO, Timestamps'
+        - Exporting orders by user in csv format ready to upload to SAP with a little modifications sometimes whenever free or discount occurred.
+        - Stats by indivisual member.
+        - Processed by overall progress, totals and averages.
+        - 
+
+* Stats
+
+        - Stats by month, year quarters, and year.
+        - Stats by team and individual team member.
+        - Stats by division/department -> 'under_development'
+        - Stats by coustomer of each member -> 'under_development'
+        - Best preformance member of the month.
+        - Best member sales of current day.
+        - Best team sales of current day.
+
+* Superadmins Dashboard
+
+        - Processed by overall preformance & and averages -> 'under_development'
+        - All teams overall preformance & and averages -> 'under_development'
+        - Charts & Comprehensive Statistics.
+        
+* Supervisors Dashboard
+
+        - All teams overall preformance & and averages -> 'under_development'
+        - Charts & Comprehensive Statistics.
+        - 
+
+* Members Dashboard
+    
+        - Member's overall preformance & averages.
+        - Teamates overall preformance & averages -> 'under_development'
+        - Team totals & averages -> 'under_development'
+        - Charts & Comprehensive Statistics.
+
+* Search Engine
+
+
+    ### Search Terms:
+
+    - By Staff Name or ID
+
+            +---------------+---------+
+            | staffname     | staffid |
+            +---------------+---------+
+            | Micheal Lanes |    1275 |
+            +---------------+---------+
+
+    - 2019-04-20 by date search format or time 11:22:07
+
+            +---------------------+
+            | created_at          |
+            +---------------------+
+            | 2019-04-20 11:22:07 |
+            +---------------------+
+
+    - Processed by:  5303 | 
+
+            +-------------+
+            | processedby |
+            +-------------+
+            | 5303        |
+            +-------------+
+
+    - Any part of a slug: randomly generated 8 digits number starts with 00008 or 00007 combined with PO number seperated by hyphin "-" with no spaces in between. 
+
+            +----------------------+
+            | slug                 |
+            +----------------------+
+            | 00008439484-11639587 |
+            +----------------------+
+
+
+    - By Customer name or number
+
+            +------------------------------------------+
+            | branchname                               |
+            +------------------------------------------+
+            | 302863-Danube Co. Limited - 125 Panorama |
+            +------------------------------------------+
+
+    - By Order status
+
+            +-------------+
+            | status      |
+            +-------------+
+            | Completed   |
+            +-------------+
+            | Submitted   |
+            +-------------+
+            | Reviewing   |
+            +-------------+
+            | Editing     |
+            +-------------+
+            | JustCreated |
+            +-------------+
+
+* Archiving & orders history
+
+        - Orders older than two days will be archived, still accessable. But hidden from front, dashboard and stats views to avoid confusion N' load faster.
+        - 
+
+@endmarkdown
+    </article>
+
+<h3 id="tree"><a class="header-link" href="#tree"></a>Tree</h3>
+
+<article class="markdown-body">
+
+@markdown
+
+* HOME Page => 'is_permission, 0|1|2'
+
+        - Browse Products->Search Products
+        - Browse Customers->Search Customers
+        - New Order
+            -- order creation confirmation --old session flushed and new one created--> auto redirect to "http://localhost/orders/order/00008608670-test1/edit" after 1 second.
+                --- Insert New Items --auto focus next input, Alt+l = InsertItem _ Alt+a = Submit-->redirect to order review page.
+                    ---- Attach Original PO proceed with Hotkey Alt+a = Submit-->redirect to - New Order page.
+            ** Tables **
+                _  [0] -> 'Just Created' => [editable]
+                _  [1] -> 'Editing' => [editable]
+                _  [2] -> 'Reviewing' => [editable]
+                _  [3] -> 'Submitted/Processing' => [not_editable]
+                _  [4] -> 'Completed' => [not_editable]
+            ** Charts **
+                __ under_development 10000$ 
+
+* Dashboard => 'is_permission, 0|1|2'
+
+        - Edit Profile -> name, email, phone, photo.
+            ** Tables **
+                _ JustCeated, Edititng and Reviewing orders are listed here. ↓ -> without calculated totals
+                _ Submitted and Completed orders are listed here. ↓ -> with calculated totals
+            ** Charts **
+                __ under_development 10000$ 
+
+    
+
+
+@endmarkdown
+    </article>
 <h3 id="prices-list"><a class="header-link" href="#prices-list"></a>Prices List</h3>
 
 <article class="markdown-body">
@@ -1514,6 +1712,8 @@ Random important commands
         |    591 |   56060109 | SUNBULAH SHREDDED MOZZARELLA (12X500G)    |       209.00 |       209.00 |    NULL |  NULL |    NULL | NULL | NULL | NULL      | NULL    | NULL       | NULL       |
         +--------+------------+-------------------------------------------+--------------+--------------+---------+-------+---------+------+------+-----------+---------+------------+------------+
 
+        
+
 
 @endmarkdown
 
@@ -1522,6 +1722,20 @@ Random important commands
 
 
 
+
+<h3 id="customers-list"><a class="header-link" href="#prices-list"></a>Customers List</h3>
+    <article class="markdown-body">
+@markdown
+
+
+<i class="em em-some-emoji"></i>
+<i class="fa fa-gear fa-spin fa-2x" style="color: firebrick"></i>
+
+
+@endmarkdown
+    </article>
+
+    
 
 
 

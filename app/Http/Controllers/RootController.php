@@ -5196,6 +5196,21 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         return view('root.readme')->with('links', $links)->with('users', $users);
     }
 
+    public function getRM()
+    {
+        $users = User::all();
+        $links = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+
+        return view('root.md.index')->with('links', $links)->with('users', $users);
+    }
+    public function getRMindex()
+    {
+        $users = User::all();
+        $links = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+
+        return view('root.md.readme')->with('links', $links)->with('users', $users);
+    }
+    
     public function getDB()
     {
         return view('root.mysql');

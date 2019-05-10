@@ -1,0 +1,50 @@
+<?php
+declare(strict_types=1);
+/*
+ * This file is part of Alt Three Emoji.
+ *
+ * (c) Alt Three Services Limited
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | GitHub Token
+    |--------------------------------------------------------------------------
+    |
+    | Here you may get us to use your personal github access token to increase
+    | your rate limit while contacting GitHub's API.
+    |
+    */
+    'token' => env('e842e0f99d84271ab4eaf89d8e0357c0f52e616d', null),
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Connection
+    |--------------------------------------------------------------------------
+    |
+    | Here you may tell us what cache connection to use. To use the default,
+    | set this to null.
+    |
+    */
+    'connection' => null,
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Key
+    |--------------------------------------------------------------------------
+    |
+    | Here you may tell us what cache key to use for storing the emoji map.
+    |
+    */
+    'key' => 'emoji',
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Life
+    |--------------------------------------------------------------------------
+    |
+    | Here you may tell us how long in minutes to cache the emoji map.
+    |
+    */
+    'life' => 10080,
+];

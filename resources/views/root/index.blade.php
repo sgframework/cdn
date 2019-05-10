@@ -10,7 +10,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- Styles -->
-        <style>
+        <!--<style>
             html, body {
                 background-color: #fff;
                 color: #636b6f;
@@ -59,7 +59,7 @@
             .m-b-md {
                 margin-bottom: 30px;
             }
-        </style>
+        </style>-->
     </head>
 <div class="container">
     <div class="row justify-content-center">
@@ -233,6 +233,7 @@
                 }
                 </script>
             </div>
+
         <div class="card">
                 <button onclick="fun('management')" class="w3-btn w3-block w3-black w3-left-align"><i class="fas fa-cogs"></i> Management</button>
                     <div id="management" class="w3-container w3-hide">

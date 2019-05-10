@@ -162,6 +162,8 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Unicodeveloper\Emoji\EmojiServiceProvider::class,
+        ChristofferOK\LaravelEmojiOne\LaravelEmojiOneServiceProvider::class,
 
 
 
@@ -230,7 +232,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Item' => cdn\Models\Item::class,
-
+        'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
+        'LaravelEmojiOne' => ChristofferOK\LaravelEmojiOne\LaravelEmojiOneFacade::class,
 
 
     ],

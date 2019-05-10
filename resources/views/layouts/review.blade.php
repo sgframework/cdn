@@ -19,19 +19,21 @@
 
 
 
-
         <!--JUST ENABLED-->
         <script src="{{ asset('js/bootstrap.js') }}" defer></script>
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+        <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
+        <script src="{{ asset('js/jush.js') }}" defer></script>
+        <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
 
         
     <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/github-markdown.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/pilcrow.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/hljs-github.min.css') }}"/>
-
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
         <!--JUST ENABLED-->
 
 

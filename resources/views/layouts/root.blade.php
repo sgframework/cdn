@@ -13,12 +13,16 @@
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
+    <script src="{{ asset('js/jush.js') }}" defer></script>
 
 
 
     <!--JUST ENABLED-->
     
     <script src="https://code.jquery.com/jquery-1.7.2.js"></script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
 
     <!--JUST ENABLED-->
 
@@ -166,6 +170,7 @@
             @yield('content')
         </main>
     </div>
+
 </body>
 <hr>
 <footer class="footer">

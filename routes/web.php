@@ -99,6 +99,16 @@ Route::get('/root/readme', [
 ]);
 
 
+Route::get('/root/readme-v0.02', [
+    'uses' => '\cdn\Http\Controllers\RootController@getRM',
+'as' => 'root.md',
+]);
+
+Route::get('/root/readme-v0.03', [
+    'uses' => '\cdn\Http\Controllers\RootController@getRMindex',
+'as' => 'root.md.index',
+]);
+
 /** /root/mysql/sgdb0 */
 Route::get('/root/mysql/sgdb0', [
     'uses' => '\cdn\Http\Controllers\RootController@getDB',
