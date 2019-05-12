@@ -23,14 +23,17 @@
                     <table id="myTable">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Product</th>
-                            <th>Material</th>
-                            <th>Price</th>
-                            <th>SKU</th>
-                            <th>Plant</th>
-                            <th>InStock</th>
-                            <th>Type</th>
+                            <th style="padding-left:14px;font-size:10px">ID</th>
+                            <th style="padding-left:14px;font-size:10px">#</th>
+                            <th style="padding-left:14px;font-size:10px">Product</th>
+                            <th style="padding-left:14px;font-size:10px">Material</th>
+                            <th style="padding-left:14px;font-size:10px">Old Price</th>
+                            <th style="padding-left:14px;font-size:10px">New Price</th>
+                            <th style="padding-left:14px;font-size:10px">Mini Market Price</th>
+                            <th style="padding-left:14px;font-size:10px">SKU</th>
+                            <th style="padding-left:14px;font-size:10px">Plant</th>
+                            <th style="padding-left:14px;font-size:10px">InStock</th>
+                            <th style="padding-left:14px;font-size:10px">Type</th>
                         </tr>
                     </thead>
                         @foreach ($items as $item)

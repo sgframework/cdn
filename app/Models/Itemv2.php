@@ -100,8 +100,8 @@ class Itemv2 extends Model
     	//	return "{$this->itemprice} {$this->itemprice}";
     	//}
     	
-    	if ($this->itemprice) {
-    		return $this->itemprice;
+    	if ($this->itemnewprice) {
+    		return $this->itemnewprice;
     	}
     	return null;
     }

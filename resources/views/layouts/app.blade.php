@@ -13,11 +13,10 @@
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
-
-
-
     <!--JUST ENABLED-->
-    
+    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/toastr.js') }}" defer></script>
+
     
     <!--JUST ENABLED-->
 
@@ -27,21 +26,12 @@
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         -->
     <!--JUST DISABLED-->
-
-
-
-
-
-    
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
-
-            <!-- Fonts -->
+    <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <!-- Styles -->
-    
+    <!-- Styles -->    
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
@@ -50,13 +40,6 @@
     <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
     <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
     <script src="{{ asset('js/jush.js') }}" defer></script>
-
-
-
-
-
-
-
     <!--<link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">-->
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -87,8 +70,6 @@
     <!-- Add to Homescreen -->
 </head>
 <body>
-
-
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
@@ -119,10 +100,8 @@
                     <a class="nav-link" href="">Middle</a>
                     </span>-->
                     <ul class="navbar-nav ml-auto">
-
                         <!-- Authentication Links -->
                         @guest
-
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
@@ -134,40 +113,40 @@
                         @else
                     <ul class="navbar-nav mr-auto">
                         <span class="nav-item">
-                            <a class="nav-link" href="{{ route('items.index') }}">Browse Products</a>
+                            <a class="nav-link" href="{{ route('items.index') }}"><i class="fa fa-list-alt"></i> Browse Items</a>
                         </span>
                         <span class="nav-item">
-                            <a class="nav-link" href="{{ route('branches.index') }}">Browse Branches</a>
+                            <a class="nav-link" href="{{ route('branches.index') }}"><i class="far fa-id-card"></i> Browse Customers</a>
                         </span>
-
                         <!--<span class="nav-item">
                             <a class="nav-link" href="{{ route('orders.urgent') }}">New Urgent Order</a>
                         </span>-->
                             @if ( Auth::user()->is_permission == '0')                        
                         <span class="nav-item">
-                            <a class="nav-link" href="{{ route('orders.add') }}">New Order</a>
+                            <a class="nav-link" accesskey="n" href="{{ route('orders.add') }}"> <i class="fa fa-plus-circle"></i> New Order</a>
                         </span>
                         <span class="nav-item">
-                            <a class="nav-link" href="{{ route('dashboard.index', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                            <a class="nav-link" href="{{ route('dashboard.index', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                         </span>
                             @elseif ( Auth::user()->is_permission == '1')
                             <span class="nav-item">
-                                <a class="nav-link" href="{{ route('dashboard.manager', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                                <a class="nav-link" href="{{ route('dashboard.manager', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                             </span>
-
                             @elseif ( Auth::user()->is_permission == '2')
                             <span class="nav-item">
-                                <a class="nav-link" href="{{ route('dashboard.admin', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-dashboard"></i>Dashboard</a>
+                                <a class="nav-link" href="{{ route('dashboard.admin', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                             </span>
-
                             @endif    
                         </span>  
+                        <li class="nav-item">
+                            <a class="nav-link" href="/root/readme-v0.03"><i class="fas fa-info fa-fw"></i> Docs </a>
+                        </li>
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
+                            <i class="fas fa-user"></i> {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
                                 </a></a>
                                 <div class="dropdown dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-menu dropdown-menu-right" href="{{ route('logout') }}" 
@@ -191,7 +170,6 @@
                                     <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
                                     <a href=""><i class="fas fa-cogs"></i> Settings</a>
                                 </div>-->
-
                             </li>
                         @endguest
                     </ul>
@@ -199,9 +177,16 @@
             </div>
         </nav>
         <main class="py-4">
+            @if(Session::has('toasts'))
+                @foreach(Session::get('toasts') as $toast)
+                    <div class="alert alert-{{ $toast['level'] }}">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    {{ $toast['message'] }}
+                    </div>
+                @endforeach
+            @endif
             @yield('content')
         </main>
-    </div>
 </body>
 <hr>
 <footer class="footer">

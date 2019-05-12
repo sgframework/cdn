@@ -1,10 +1,20 @@
-@extends('layouts.app')
+@extends('layouts.root')
 
 @section('content')    
 
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+
+
+
+
+        @if ( Auth::user()->is_permission == '0')
+        <div style="padding-top:200px;padding-bottom:200px">
+            <h3 class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+        </div>
+
+        @else
             <div class="card">
                 
 
@@ -388,4 +398,7 @@ var myChart = new Chart(ctx, {
         </div><br />
     </div>
 </div>
+
+@endif
+
 @endsection

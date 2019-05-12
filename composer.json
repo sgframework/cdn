@@ -14,10 +14,12 @@
         "emojione/assets": "^4.5",
         "fideloper/proxy": "^4.0",
         "graham-campbell/markdown": "^10.3",
+        "grimthorr/laravel-toast": "^1.1",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "maatwebsite/excel": "^3.1",
-        "unicodeveloper/laravel-emoji": "1.0.*"
+        "unicodeveloper/laravel-emoji": "1.0.*",
+        "yoeunes/toastr": "^1.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

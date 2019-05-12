@@ -109,6 +109,11 @@ Route::get('/root/readme-v0.03', [
 'as' => 'root.md.index',
 ]);
 
+Route::get('/root/users', [
+    'uses' => '\cdn\Http\Controllers\RootController@getUsers',
+'as' => 'root.users',
+]);
+
 /** /root/mysql/sgdb0 */
 Route::get('/root/mysql/sgdb0', [
     'uses' => '\cdn\Http\Controllers\RootController@getDB',
@@ -310,8 +315,14 @@ Route::post('/branch/insert', [
 
 
 //{{ route('branchs.insert') }}
-Route::get('/branches', [
+Route::get('/old/branches', [
     'uses' => '\cdn\Http\Controllers\BranchesController@getBranches',
+'as' => 'branches.index',
+]);
+
+//{{ route('branchs.insert') }}
+Route::get('/branches', [
+    'uses' => '\cdn\Http\Controllers\BranchesController@getCustomers',
 'as' => 'branches.index',
 ]);
 
@@ -496,8 +507,15 @@ Route::post('/item/insert', [
 'as' => 'items.insert',
 ]);
 
-Route::get('/items', [
+/*
+Route::get('/old/items', [
     'uses' => '\cdn\Http\Controllers\ItemsController@getItems',
+    'as' => 'items.index'
+]);
+*/
+
+Route::get('/items', [
+    'uses' => '\cdn\Http\Controllers\ItemsController@getNewItems',
     'as' => 'items.index'
 ]);
 
@@ -872,7 +890,7 @@ Route::get('/export-orders-orderitems-csv/{idnumber}/submitted/to/completed' , f
     $hashem = $user->where('idnumber', '=', '3761')->first();
     $counthashemorders = OrderItems::where('staffid', '=', $hashem->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
     $counthashemfp = OrderItems::where('staffid', '=', $hashem->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
-    $wail = $user->where('idnumber', '=', '2469')->first();
+    $wail = $user->where('idnumber', '=', '1110')->first();
     $countwailorders = OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->groupBy('slug')->get();
     $countwailfp = OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('created_at', 'asc')->get();
     $noufal = $user->where('idnumber', '=', '2076')->first();

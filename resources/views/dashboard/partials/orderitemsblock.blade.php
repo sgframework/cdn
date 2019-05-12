@@ -55,7 +55,7 @@ height:2px;
 				@elseif ( $orderitem->orderstatus == 'Reviewing' )
 
 				@elseif ( $orderitem->orderstatus == 'Editing' )
-				<td style=";background-color:black;color:white;text-align:center"><span><form action="{{ route('orders.remove', ['slug' => $orderitem->slug, 'itemnumber' => $orderitem->itemnumber]) }}" method="POST">@csrf<input class="btn btn-danger" type="submit" value="&#x2716;" style=" outline: none;padding-top: 0px;padding-bottom: 0px;border: 1px solid white;padding: 1px 1px 1px 1px;font-size: 7px;border-radius:30%"></form></span></td>
+				<td style="text-align:center"><span><form action="{{ route('orders.remove', ['slug' => $orderitem->slug, 'itemnumber' => $orderitem->itemnumber]) }}" method="POST">@csrf<center><input  class="close" aria-label="Close"  value="&#x2716;" style=" outline: none;padding-top: 0px;background-color:red;color:white;padding-right: 0px;text-align:center;border: 1px solid white;padding: 4px 4px 4px 4px;font-size: 10px;border-radius:30%" type="submit"></center></form></span></td>
 				@else
 
 				@endif

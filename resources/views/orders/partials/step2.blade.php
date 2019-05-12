@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')    
 
-<meta http-equiv="refresh" content="1;url=/orders/order/{{ (Session::has('slug') ? Session::get('slug') : '' ) }}/edit">
+<meta http-equiv="refresh" content="0.1;url=/orders/order/{{ (Session::has('slug') ? Session::get('slug') : '' ) }}/edit">
 <div class="container">
     <div class="row justify-content-center">
     @if ($errors->has('alert'))

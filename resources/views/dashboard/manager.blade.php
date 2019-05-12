@@ -5,6 +5,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+        @if ( Auth::user()->is_permission == '0')
+        <div style="padding-top:200px;padding-bottom:200px">
+            <h3 class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+        </div>
+
+        @else
             <div class="card">
                 
 
@@ -64,6 +70,9 @@ Email: {{ Auth::user()->email }}
 
 
 
+
+<div class="row">
+
 @markdown
 
 ### Sales by Team Members 
@@ -71,27 +80,13 @@ Email: {{ Auth::user()->email }}
 @endmarkdown
 
 
-
-
-
-
-<div class="row">
-
-
-
       
 <!-- Firas Team --> 
 
-<div class="col-md-4" >
+<div class="col-md-12" >
       <!-- FIRAS SECTION -->
-      <div class="my-3 p-3 bg-white rounded box-shadow">
-        <strong><h3 class="border-bottom border-gray pb-2 mb-0">Firas Team</h3></strong>
-        <div class="newspaper media text-muted pt-3">
-          <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $firas->photo }}" data-holder-rendered="true">
-          <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-          <strong><h5 class="border-bottom border-gray pb-2 mb-0"> <strong class="d-block text-gray-dark">{{ $firas->name }} <span class="badge badge-danger">SUPERVISOR</span></strong></h5></strong>
-          </p>
-        </div>
+
+      
         <!-- MICHAEL LANES SECTION -->
         <div class="media text-muted pt-3">
         <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $michael->photo }}" data-holder-rendered="true">
@@ -314,50 +309,6 @@ Email: {{ Auth::user()->email }}
         <br />
         @endif
         
-        <!-- Wail SECTION -->
-        <div class="media text-muted pt-3">
-        <img data-src="holder.js/32x32?theme=thumb&amp;bg=007bff&amp;fg=007bff&amp;size=1" alt="32x32" class="mr-2 rounded" style="width: 32px; height: 32px;" src="{{ asset('images/uploads/avatars') }}/{{ $wail->photo }}" data-holder-rendered="true">
-          <p class="media-body pb-3 mb-0 small lh-125">
-            <strong class="d-block text-gray-dark"><span>@</span>{{ $wail->name }}</strong><span class="badge badge-primary">Key Account Saleman</span>
-            <a style="padding-left:0;padding-top:0;padding-bottom:0;padding-right:0;color:black;width: 8rem;border-radius:50%" href="{{ url('/export-orders-orderitems-csv') }}/{{ $wail->idnumber }}/submitted/to/completed" class=""><h3 class="badge badge-info">{{ $countwailorders->count() }}</h3></a>
-         </p>
-          </div>
-          @if($countwailorders->count() == 0)
-          @else
-          <div class="media text-muted pt-3">
-          <table id="myTable">
-                <thead>
-                    <tr>
-                        <th>PO#</th>
-                        <th>customer</th>
-                        <th style="color:red">F</th>
-                        <th style="color:green">Discount</th>
-                    </tr>
-                </thead>
-                @foreach($countwailorders as $countwailorder)
-                <tbody>
-                    <tr>
-                    <td><a style= "float:center" href="/root/orders/{{ $countwailorder->staffid }}/{{ $countwailorder->slug }}">{{ $countwailorder->ponumber }}</a></td>
-                    <td>{{ $countwailorder->branchname }}</td>
-                    @if ($countwailorder->totalfree == 0)
-                    <td></td>
-
-                    @else
-                    <td style="color:red">{{ $countwailorder->totalfree }}</td>
-                    @endif
-                    @if  ($countwailorder->discount == 0)
-                    <td></td>
-
-                    @else
-                    <td style="color:green">{{ $countwailorder->discount }}</td>
-                    @endif    
-                </tr>
-            </tbody> 
-                @endforeach
-        </table>
-    </div>
-    <br />
-            @endif
 
 
         </div>
@@ -380,7 +331,6 @@ Email: {{ Auth::user()->email }}
 <div class="" style="padding-top:14px;padding-bottom:8px">
 
                                
-<span style="font-size:10px"><img style="border-radius:50%" width="40px" height="40px" src="{{ asset('images/uploads/avatars') }}/{{ $member->photo }}" /> <b>{{ $member->name }} #{{ $member->idnumber }}</b> | <i class="fa fa-phone"></i> <tel href="0{{ $member->phonenumber }}">0{{ $member->phonenumber }}</tel> |<i class="fa fa-money"></i> <b>Total Sales: {{ number_format($member->totalgrand) }} SAR</b> </span>
     
 </div>   
 
@@ -613,4 +563,5 @@ Email: {{ Auth::user()->email }}
         </div><br />
     </div>
 </div>
+@endif
 @endsection

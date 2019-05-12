@@ -1,3 +1,8 @@
+value="&#x2716;" class="btn btn-danger" style=" outline: none;padding-top: 0px;padding-bottom: 0px;border: 1px solid white;padding: 1px 1px 1px 1px;font-size: 7px;border-radius:30%
+
+
+        
+        
         {{ ($sumftaop + $sumhtaop + $sumataop + $sumqtaop) / count($sumftaop + $sumhtaop + $sumataop + $sumqtaop) }}
 
         $findstaffdata = 

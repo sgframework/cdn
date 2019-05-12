@@ -10,14 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <!-- Styles -->
         <style>
-            html, body {
-                background-color: #fff;
-                color: #aaa;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+
             .full-height {
                 height: 100vh;
             }
@@ -73,7 +66,7 @@
 
     @if ( Auth::user()->is_permission == '0')
     <div style="padding-top:200px;padding-bottom:200px">
-    <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+    <h3 class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
         </div>
 
         @else

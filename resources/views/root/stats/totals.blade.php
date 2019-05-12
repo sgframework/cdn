@@ -7,7 +7,7 @@
 
     @if ( Auth::user()->is_permission == '0')
     <div style="padding-top:200px;padding-bottom:200px">
-    <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+    <h3 class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
         </div>
 
         @else
@@ -2650,10 +2650,6 @@ function between(x, min, max) {
 
 
 
-<br />
-<br />
-
-
 
 
 
@@ -3582,7 +3578,7 @@ function between(x, min, max) {
                     <br />
                     <div class="col-md-12">
 
-                    <center><span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $totalofoi / $totalofo }}</strong> items per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoq }}</strong> cases per PO</span>
+                    <center><span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $totalofoi == 0 ? 0.1 : $totalofoi / $totalofo }}</strong> items per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoq }}</strong> cases per PO</span>
                     | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageof }}</strong> free cases per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ number_format($averageod) }}.00 SAR</strong> total discount per PO</span></center>
                     </div>
                     <br />
@@ -3632,7 +3628,7 @@ function between(x, min, max) {
                     <br />
                     <div class="col-md-12">
 
-                    <center><span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $totalofyoi / $totalofyo }}</strong> items per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoyq }}</strong> cases per PO</span>
+                    <center><span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{  $totalofyo == 0 ? 0.1 : $totalofyoi / $totalofyo }}</strong> items per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoyq }}</strong> cases per PO</span>
                     | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoyf }}</strong> free cases per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ number_format($averageoyd) }}.00 SAR</strong> total discount per PO</span></center>
                     </div>
                     <br />
@@ -3679,7 +3675,7 @@ function between(x, min, max) {
                     <br />
                     <div class="col-md-12">
 
-                    <center><span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $totalofteamoi / $totalofteamo }}</strong> items per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoteamq }}</strong> cases per PO</span>
+                    <center><span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $totalofteamo == 0 ? 0.1 : $totalofteamoi / $totalofteamo }}</strong> items per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoteamq }}</strong> cases per PO</span>
                     | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ $averageoteamf }}</strong> free cases per PO</span> | <span class="alert completed" style="padding-left:8px;padding-top:8px;font-size:9px" >Average of <strong>{{ number_format($averageoteamd) }}.00 SAR</strong> total discount per PO</span></center>
                     </div>
                     <br />
@@ -3980,71 +3976,35 @@ function between(x, min, max) {
 
 <br />
 <hr />
+<span><i class="fas fa-tags"></i></span> 
+<form class="inline-form" action="{{ url('/root/readme-v0.03#search_engine') }}" method="GET">
+    <input type="submit" value="Search Engine" class="btn btn-dark" />
+</form>
 
-@markdown
+<form class="inline-form" action="{{ url('/root/readme-v0.03#date-time-formats') }}" method="GET">
+    <input type="submit" value="Date & Time" class="btn btn-dark" />
+</form>
+<form class="inline-form" action="{{ url('/root/readme-v0.03#dev-timeline') }}" method="GET">
+    <input type="submit" value="Development Progress" class="btn btn-dark" />
+</form>
+<form class="inline-form" action="{{ url('/root/readme-v0.03#orders-_global-sorting--arrangement') }}" method="GET">
+    <input type="submit" value="Sorting" class="btn btn-dark" />
+</form>
+<form class="inline-form" action="{{ url('/root/readme-v0.03#permissions') }}" method="GET">
+    <input type="submit" value="Permessions" class="btn btn-dark" />
+</form>
+<form class="inline-form" action="{{ url('/root/readme-v0.03#sql') }}" method="GET">
+    <input type="submit" value="SQL" class="btn btn-dark" />
+</form>
+<form class="inline-form" action="{{ url('/root/readme-v0.03#banner') }}" method="GET">
+    <input type="submit" value="Banner" class="btn btn-dark" />
+</form>
+<form class="inline-form" action="{{ url('/root/users#users') }}" method="GET">
+    <input type="submit" value="Users" class="btn btn-dark" />
+</form>
+</div>
 
-### Search Terms:
-
-- By Staff Name or ID
-
-        +---------------+---------+
-        | staffname     | staffid |
-        +---------------+---------+
-        | Micheal Lanes |    1275 |
-        +---------------+---------+
-
-- 2019-04-20 by date search format or time 11:22:07
-
-        +---------------------+
-        | created_at          |
-        +---------------------+
-        | 2019-04-20 11:22:07 |
-        +---------------------+
-
-- Processed by:  5303 | 
-
-        +-------------+
-        | processedby |
-        +-------------+
-        | 5303        |
-        +-------------+
-
-- Any part of a slug: randomly generated 8 digits number starts with 00008 or 00007 combined with PO number seperated by hyphin - 
-
-        +----------------------+
-        | slug                 |
-        +----------------------+
-        | 00008439484-11639587 |
-        +----------------------+
-
-
-- By Customer name or number
-
-        +------------------------------------------+
-        | branchname                               |
-        +------------------------------------------+
-        | 302863-Danube Co. Limited - 125 Panorama |
-        +------------------------------------------+
-
-- By Order status
-
-        +-------------+
-        | status      |
-        +-------------+
-        | Completed   |
-        +-------------+
-        | Submitted   |
-        +-------------+
-        | Reviewing   |
-        +-------------+
-        | Editing     |
-        +-------------+
-        | JustCreated |
-        +-------------+
-
-
-@endmarkdown
-
+</div>
 
 
 @endauth

@@ -1,19 +1,12 @@
-<div class="media">
-	<a class="pull-left" href="">
-	</a>
-	<div class="media-body">
-	@if ($branch->branchname)
-        <tbody>
-            <tr>
-                <td><img class="media-object" alt="{{ $branch->logo }}" src="{{ asset('/images/assests') }}/{{ $branch->logo }}" style="width:40px; height:40px; float:left; border-radius:50%; margin-right:25px;"></td>
-                <td><strong><span style="" class="media-heading">{{ $branch->branchname }}<a href=""><!----></a></span></strong></td>
-                <td><span style="padding-left:30px;font-size:14px; color: gray;">{{ $branch->branchnumber }}</span></td>
-                <td><span style="padding-left:30px;font-size:14px; color: gray;">{{ $branch->salesgroup }}</span></td>
-                <td><span style="padding-left:30px;font-size:14px; color: gray;">{{ $branch->dc }}</span></td>
-                <td><span style="padding-left:30px;font-size:14px; color: gray;">{{ $branch->office }}</span></td>
-            </tr>
-        </tbody>
-				
-		@endif
-	</div>
-</div>	
+@if ($branch->branchname)
+    <tbody>
+        <tr>
+            <td style="text-align:center;"><img class="media-object" alt="{{ $branch->logo }}" src="{{ asset('/images/assests') }}/{{ $branch->logo }}" style="width:15px; height:15px; border-radius:50%"></td>
+            <td style="padding-left:14px;">{{ $branch->branchname }}</td>
+            <td style="padding-left:14px;">{{ $branch->branchnumber }}</td>
+            <td style="padding-left:14px;">{{ $branch->salesgroup }}</td>
+            <td style="padding-left:14px;">{{ $branch->dc }}</td>
+            <td style="padding-left:14px;">{{ $branch->office }}</td>
+        </tr>
+    </tbody>
+@endif

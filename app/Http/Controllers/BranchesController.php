@@ -75,4 +75,19 @@ class BranchesController extends Controller
                         ->get();
         return view('orders.add')->with('branches_list', $branches_list);
     }
+
+
+    public function getCustomers()
+    {
+        $branches = Branch::select()->orderBy('salesgroup', 'asc')->paginate(600);       
+        return view('branches.index')->with('branches', $branches);
+    }
+
+
+
+
+
+
+
+
 }

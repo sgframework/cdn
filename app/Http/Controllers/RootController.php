@@ -348,7 +348,7 @@ class RootController extends Controller
         $hashem = User::select()->where('idnumber', '=', '3761')->first();
         $counthashemorders = Order::where('staffid', '=', $hashem->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
         $counthashemfp = OrderItems::where('staffid', '=', $hashem->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
-        $wail = User::select()->where('idnumber', '=', '2469')->first();
+        $wail = User::select()->where('idnumber', '=', '1110')->first();
         $countwailorders = Order::where('staffid', '=', $wail->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
         $countwailfp = OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
         $noufal = User::select()->where('idnumber', '=', '2076')->first();
@@ -939,7 +939,7 @@ class RootController extends Controller
         $abdullahnaser = User::select()->where('idnumber', '=', '2409')->first();
         $ahmedmedhat = User::select()->where('idnumber', '=', '4688')->first();
 
-        $wail = User::select()->where('idnumber', '=', '2469')->first();
+        $wail = User::select()->where('idnumber', '=', '1110')->first();
         $countwailorders = Order::where('staffid', '=', $wail->idnumber)->where('status', '=', 'Submitted')->orderBy('created_at', 'asc')->groupBy('slug')->get();
         $countwailfp = OrderItems::where('staffid', '=', $wail->idnumber)->where('orderstatus', '=', 'Submitted')->orderBy('ponumber', 'asc')->get();
         $firasteamorderitems = OrderItems::where('staffid', '=', $michael->idnumber)
@@ -4153,7 +4153,43 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
 
 
 
-
+                ->with('hazim', $hazim)
+                ->with('htto', $htto)
+                ->with('counthtto', $counthtto)
+                ->with('sumhttoi', $sumhttoi)
+                ->with('sumhttoq', $sumhttoq)
+                ->with('sumhttof', $sumhttof)
+                ->with('sumhttod', $sumhttod)
+                ->with('sumhttop', $sumhttop)
+                ->with('htyo', $htyo)
+                ->with('counthtyo', $counthtyo)
+                ->with('sumhtyoi', $sumhtyoi)
+                ->with('sumhtyoq', $sumhtyoq)
+                ->with('sumhtyof', $sumhtyof)
+                ->with('sumhtyod', $sumhtyod)
+                ->with('sumhtyop', $sumhtyop)
+                ->with('htbyo', $htbyo)
+                ->with('counthtbyo', $counthtbyo)
+                ->with('sumhtbyoi', $sumhtbyoi)
+                ->with('sumhtbyoq', $sumhtbyoq)
+                ->with('sumhtbyof', $sumhtbyof)
+                ->with('sumhtbyod', $sumhtbyod)
+                ->with('sumhtbyop', $sumhtbyop)
+                ->with('htbtdo', $htbtdo)
+                ->with('counthtbtdo', $counthtbtdo)
+                ->with('sumhtbtdoi', $sumhtbtdoi)
+                ->with('sumhtbtdoq', $sumhtbtdoq)
+                ->with('sumhtbtdof', $sumhtbtdof)
+                ->with('sumhtbtdod', $sumhtbtdod)
+                ->with('sumhtbtdop', $sumhtbtdop)
+                ->with('htao', $htao)
+                ->with('counthtao', $counthtao)
+                ->with('sumhtaoi', $sumhtaoi)
+                ->with('sumhtaoq', $sumhtaoq)
+                ->with('sumhtaof', $sumhtaof)
+                ->with('sumhtaod', $sumhtaod)
+                ->with('sumhtaop', $sumhtaop)
+                
 
 
                 
@@ -4325,6 +4361,43 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
 
 
 
+                ->with('awaden', $awaden)
+                ->with('atto', $atto)
+                ->with('countatto', $countatto)
+                ->with('sumattoi', $sumattoi)
+                ->with('sumattoq', $sumattoq)
+                ->with('sumattof', $sumattof)
+                ->with('sumattod', $sumattod)
+                ->with('sumattop', $sumattop)
+                ->with('atyo', $atyo)
+                ->with('countatyo', $countatyo)
+                ->with('sumatyoi', $sumatyoi)
+                ->with('sumatyoq', $sumatyoq)
+                ->with('sumatyof', $sumatyof)
+                ->with('sumatyod', $sumatyod)
+                ->with('sumatyop', $sumatyop)
+                ->with('atbyo', $atbyo)
+                ->with('countatbyo', $countatbyo)
+                ->with('sumatbyoi', $sumatbyoi)
+                ->with('sumatbyoq', $sumatbyoq)
+                ->with('sumatbyof', $sumatbyof)
+                ->with('sumatbyod', $sumatbyod)
+                ->with('sumatbyop', $sumatbyop)
+                ->with('atbtdo', $atbtdo)
+                ->with('countatbtdo', $countatbtdo)
+                ->with('sumatbtdoi', $sumatbtdoi)
+                ->with('sumatbtdoq', $sumatbtdoq)
+                ->with('sumatbtdof', $sumatbtdof)
+                ->with('sumatbtdod', $sumatbtdod)
+                ->with('sumatbtdop', $sumatbtdop)
+                ->with('atao', $atao)
+                ->with('countatao', $countatao)
+                ->with('sumataoi', $sumataoi)
+                ->with('sumataoq', $sumataoq)
+                ->with('sumataof', $sumataof)
+                ->with('sumataod', $sumataod)
+                ->with('sumataop', $sumataop)
+                
   
                 
                 ->with('ahmedshawqy', $ahmedshawqy)
@@ -4546,81 +4619,8 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
 
                 
 
-                ->with('hazim', $hazim)
-                ->with('htto', $htto)
-                ->with('counthtto', $counthtto)
-                ->with('sumhttoi', $sumhttoi)
-                ->with('sumhttoq', $sumhttoq)
-                ->with('sumhttof', $sumhttof)
-                ->with('sumhttod', $sumhttod)
-                ->with('sumhttop', $sumhttop)
-                ->with('htyo', $htyo)
-                ->with('counthtyo', $counthtyo)
-                ->with('sumhtyoi', $sumhtyoi)
-                ->with('sumhtyoq', $sumhtyoq)
-                ->with('sumhtyof', $sumhtyof)
-                ->with('sumhtyod', $sumhtyod)
-                ->with('sumhtyop', $sumhtyop)
-                ->with('htbyo', $htbyo)
-                ->with('counthtbyo', $counthtbyo)
-                ->with('sumhtbyoi', $sumhtbyoi)
-                ->with('sumhtbyoq', $sumhtbyoq)
-                ->with('sumhtbyof', $sumhtbyof)
-                ->with('sumhtbyod', $sumhtbyod)
-                ->with('sumhtbyop', $sumhtbyop)
-                ->with('htbtdo', $htbtdo)
-                ->with('counthtbtdo', $counthtbtdo)
-                ->with('sumhtbtdoi', $sumhtbtdoi)
-                ->with('sumhtbtdoq', $sumhtbtdoq)
-                ->with('sumhtbtdof', $sumhtbtdof)
-                ->with('sumhtbtdod', $sumhtbtdod)
-                ->with('sumhtbtdop', $sumhtbtdop)
-                ->with('htao', $htao)
-                ->with('counthtao', $counthtao)
-                ->with('sumhtaoi', $sumhtaoi)
-                ->with('sumhtaoq', $sumhtaoq)
-                ->with('sumhtaof', $sumhtaof)
-                ->with('sumhtaod', $sumhtaod)
-                ->with('sumhtaop', $sumhtaop)
                 
 
-                ->with('awaden', $awaden)
-                ->with('atto', $atto)
-                ->with('countatto', $countatto)
-                ->with('sumattoi', $sumattoi)
-                ->with('sumattoq', $sumattoq)
-                ->with('sumattof', $sumattof)
-                ->with('sumattod', $sumattod)
-                ->with('sumattop', $sumattop)
-                ->with('atyo', $atyo)
-                ->with('countatyo', $countatyo)
-                ->with('sumatyoi', $sumatyoi)
-                ->with('sumatyoq', $sumatyoq)
-                ->with('sumatyof', $sumatyof)
-                ->with('sumatyod', $sumatyod)
-                ->with('sumatyop', $sumatyop)
-                ->with('atbyo', $atbyo)
-                ->with('countatbyo', $countatbyo)
-                ->with('sumatbyoi', $sumatbyoi)
-                ->with('sumatbyoq', $sumatbyoq)
-                ->with('sumatbyof', $sumatbyof)
-                ->with('sumatbyod', $sumatbyod)
-                ->with('sumatbyop', $sumatbyop)
-                ->with('atbtdo', $atbtdo)
-                ->with('countatbtdo', $countatbtdo)
-                ->with('sumatbtdoi', $sumatbtdoi)
-                ->with('sumatbtdoq', $sumatbtdoq)
-                ->with('sumatbtdof', $sumatbtdof)
-                ->with('sumatbtdod', $sumatbtdod)
-                ->with('sumatbtdop', $sumatbtdop)
-                ->with('atao', $atao)
-                ->with('countatao', $countatao)
-                ->with('sumataoi', $sumataoi)
-                ->with('sumataoq', $sumataoq)
-                ->with('sumataof', $sumataof)
-                ->with('sumataod', $sumataod)
-                ->with('sumataop', $sumataop)
-                
                 ->with('wail', $wail)
 
                 ->with('suneer', $suneer)
@@ -5178,6 +5178,13 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         
     }
 
+
+    public function getUsers()
+    {
+        $users = User::all();
+        return view('root.users')->with('users', $users);
+    }
+
     
 
     public function getTree()
@@ -5186,6 +5193,16 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         $links = Order::select()->where('status', '=', 'Completed')->orderBy('created_at', 'asc')->get();
         return view('root.tree')->with('links', $links)->with('users', $users);
     }    
+
+    public function notify()
+    {
+    $notification = array(
+        'message' => 'I am a successful message!', 
+        'alert-type' => 'success'
+    );
+        
+        return Redirect::to('/')->with($notification);
+    }
 
 
     public function getReadMe()

@@ -1,48 +1,34 @@
 @extends('layouts.app')
-
 @section('content')    
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12 ml-sm-12 col-lg-12">
-
             <div class="card">
                 <div style="font-size:20px" class="card-header"><b>Edit Order# {{ $order->ordernumber }}</b>
-                
                 @if ( $order->urgent == 'on' )
-
                 <img  style="float:right" src="{{ asset('images/assests/urgent-flat.png') }}" width="120px" height="40px" />
-
                 @else
-
                 @endif
                 </div>
-
-
                     <div class="card-body">
-
                     <a href="{{ url('/orders/order/' . $order->slug) }}">&larr; Go Back To Order Overview</a>
-
-
-
-<hr />
+                <hr />
                     <i class="fas fa-plus"><span class="h5"> Insert New Items</span></i>
-
-                    <div style="float:right">
-                    <div class="row">
-            <form style="display: contents" class="form-inline" action="{{ route('update.po', ['slug' => $order->slug]) }}" method="POST">
-                @csrf
-                <input type="text" name="ponumber" class="form-control1" value="{{ $order->ponumber }}">
-                <input class="form-control"  style="background-color:gray;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="change">
-            </form>
+                        <div style="float:right">
+                            <div class="row">
+                            <form style="display: contents" class="form-inline" action="{{ route('update.po', ['slug' => $order->slug]) }}" method="POST">
+                                @csrf
+                                <input type="text" name="ponumber" class="form-control1" value="{{ $order->ponumber }}">
+                                <input class="form-control"  style="width: 20%;background-color:gray;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="change">
+                            </form>
             
-            <form class="form-inline" action="{{ route('delete.po', ['slug' => $order->slug]) }}" method="POST">
-                @csrf
-                <input class="form-control" style="background-color:red;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="Delete PO">
-            </form>
-            
-            </div>
-            </div>
-                        <span style="color:red">
+                            <form class="form-inline" action="{{ route('delete.po', ['slug' => $order->slug]) }}" method="POST">
+                                @csrf
+                                <input class="form-control" style="background-color:red;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="Delete PO">
+                            </form>
+                            </div>
+                        </div>
+                    <span style="color:red">
 @markdown
 
 ##### You are now editing PO# **{{ $order->ponumber }}**
@@ -50,30 +36,17 @@
 ---------------------------------------
 
 @endmarkdown
-                        </span>
-
-
-
-
-
-
-
-
+                    </span>
                   <!-- Page, "data-page" contains page name -->
                         @if (Session::has('success'))
                                 <br />
                                 <div padding-top="20px"></div>
                                     <div class="badge badge-success"><i class="fas fa-check"></i> {{ Session::get('success') }}</div>
                                 @endif
-<br />
-
+                        <br />
                         <div class="content-block">
                             <main role="main" class="">
                                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-
-
-
-
                                         <div class="table-responsive">
                                             <table width="100%" id="myTable" class="table-dark table-responsive-sm dark">
                                                 <thead style="font-size:12px">
@@ -114,8 +87,6 @@
                                         </form>-->
                                         <!--<center><button class="btn btn-default" onclick="myFunction()">ADD <i class="fas fa-plus"></i></button></center><br />-->
                                    
-
-
 <script type="text/javascript">  
 function movetoNext(current, nextFieldID) {  
 if (current.value.length >= current.maxLength) {  
@@ -123,19 +94,11 @@ document.getElementById(nextFieldID).focus();
 }  
 }  
 </script>  
-
-
 <script>
-
 document.myform.itemnumber.focus();
-
 </script>
-
 <body onload='if(!document.myform.itemnumber.my_no_focus){document.myform.itemnumber.focus();}' >
-
-                                        <div class="table-responsive">
-
-                                            
+                                        <div class="table-responsive">                                           
                                             @if($errors->any())
                                             <br />
                                             <div padding-top="20px"></div>
@@ -151,7 +114,7 @@ document.myform.itemnumber.focus();
                                                         <option name="itemnumber" value="{{ $item->itemnumber }} - {{ $item->itemname }}"></option>
                                                         @endforeach 
                                                     </datalist>                   
-                                                <input id="second" size="3" onkeyup="movetoNext(this, 'third')" maxlength="2"  width="10%" class="form-control2" type="text" name="itemqty" placeholder="Qty." />
+                                                <input id="second" size="3" onkeyup="movetoNext(this, 'third')" maxlength="4"  width="10%" class="form-control2" type="text" name="itemqty" placeholder="Qty." />
                                                 <input  maxlength="3" id="third" size="3"  onkeyup="movetoNext(this, 'fourth')" width="10%" class="form-control2" type="text" name="freeitem" placeholder="Free" />
                                                 <input hidden id="old-price" width="20%" class="form-control2" type="number" name="itemoldprice" placeholder="Price" />
                                                 <input hidden id="new-price" width="20%" class="form-control2" type="number" name="itemnewprice" placeholder="Price" />
@@ -243,7 +206,7 @@ document.myform.itemnumber.focus();
 
                                                                 <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
                                                                 <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
-                                                                <th style="text-align:center;background-color:black;color:white" ></th>
+                                                                <th style="text-align:center" ></th>
                                                             </tr>
                                                         <tr>
                                                             <th>Item# - Desc.</th>
@@ -253,7 +216,7 @@ document.myform.itemnumber.focus();
                                                             <th style="text-align:center">New Price</th>
                                                             <th style="text-align:center">Total Discount</th>                                                       
                                                             <th style="text-align:center">Qty * Price</th>                                                       
-                                                            <th style="text-align:center;background-color:black;color:white">rm</th>
+                                                            <th style="text-align:center">rm</th>
                                                             <!--<th>Delete</th>-->
                                                         </tr>
                                                     </tfoot>

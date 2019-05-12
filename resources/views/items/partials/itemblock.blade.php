@@ -1,22 +1,17 @@
-<div class="media">
-	<a class="pull-left" href="">
-	
-	</a>
-	<div class="media-body">
 	@if ($item->itemname)
 	<tbody>
 		<tr>
-		<td><img class="media-object" alt="{{ $item->getItem() }}" src="{{ asset('image/sgimg.png') }}" style="width:40px; height:40px; float:left; border-radius:50%; margin-right:25px;"></td>
-		<td><h6 class="media-heading">{{ $item->itemname }}<a href=""><!----></a> <span style="display:block;font-size:12px; color: gray;"></span></h6></td>
-		<td>{{ $item->itemnumber }}</td>
-		<td>{{ $item->getItemPrice() }} SR</td>
-		<td>{{ $item->itemsku }}</td>
-		<td>{{ $item->plant }}</td>
-		<td>{{ $item->instock }}</td>
-		<td>{{ $item->type }}</td>
-		<td>{{ $item->itempic }}</td>
+			<td style="text-align:center;">{{ $item->itemid }}</td>
+			<td style="text-align:center;"><img class="media-object" alt="{{ $item->getItem() }}" src="{{ asset('image/sgimg.png') }}" style="width:15px; height:15px; border-radius:50%"></td>
+			<td style="padding-left:14px">{{ $item->itemname }}</td>
+			<td style="padding-left:14px">{{ $item->itemnumber }}</td>
+			<td style="padding-left:14px">{{ $item->itemoldprice }} SR</td>
+			<td style="padding-left:14px">{{ $item->getItemPrice() }} SR</td>
+			<td style="padding-left:14px">{{ $item->itemsku }}</td>
+			<td style="padding-left:14px">{{ $item->plant }}</td>
+			<td style="padding-left:14px">{{ $item->instock }}</td>
+			<td style="padding-left:14px">{{ $item->type }}</td>
+			<td style="padding-left:14px">{{ $item->itempic }}</td>
     </tr>
   </tbody>
 	@endif
-	</div>
-</div>

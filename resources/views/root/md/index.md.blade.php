@@ -1,5 +1,5 @@
 <link href="{{ asset('css/assets/css/github-markdown.css') }}" rel="stylesheet">
-
+    
 <img src="https://github.com/RickStrahl/MarkdownMonster/raw/master/Art/MarkdownMonster_Icon_128.png" align="right" style="height: 64px"/>
 
 # Welcome to Markdown Monster

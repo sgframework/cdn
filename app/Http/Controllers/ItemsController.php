@@ -75,9 +75,18 @@ class ItemsController extends Controller
     }
     	
 
+        /*
         public function getItems(Request $request)
         {
             $items = Item::select()->orderBy('itemnumber', 'asc')->paginate(600);
+            //dump($items);
+
+            return view('items.index')->with('items', $items);
+        }
+        */
+        public function getNewItems()
+        {
+            $items = Itemv2::select()->orderBy('itemnumber', 'asc')->paginate(600);
             //dump($items);
 
             return view('items.index')->with('items', $items);

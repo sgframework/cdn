@@ -164,6 +164,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Unicodeveloper\Emoji\EmojiServiceProvider::class,
         ChristofferOK\LaravelEmojiOne\LaravelEmojiOneServiceProvider::class,
+        Yoeunes\Toastr\ToastrServiceProvider::class,
+        Grimthorr\LaravelToast\ServiceProvider::class,
 
 
 
@@ -234,7 +236,7 @@ return [
         'Item' => cdn\Models\Item::class,
         'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
         'LaravelEmojiOne' => ChristofferOK\LaravelEmojiOne\LaravelEmojiOneFacade::class,
-
+        'Toast' => Grimthorr\LaravelToast\Facade::class,
 
     ],
 

@@ -11,26 +11,35 @@
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
     <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
-    <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
-    <script src="{{ asset('js/jush.js') }}" defer></script>
+    
+            <script src="{{ asset('js/prism.js') }}" defer></script>
 
-
-
+    
     <!--JUST ENABLED-->
     
     <script src="https://code.jquery.com/jquery-1.7.2.js"></script>
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/pilcrow.css') }}">
+    <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/hljs-github.min.css') }}"/>
     <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
-
+    
+    
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    
     <!--JUST ENABLED-->
-
-
+    
+    <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
+    
     <!--JUST DISABLED-->
-        <!--
-          <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <!--
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/github-markdown.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+            <script src="{{ asset('js/jush.js') }}" defer></script>
+    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
 
+        
         -->
     <!--JUST DISABLED-->
 
@@ -64,66 +73,111 @@
     <meta name="apple-mobile-web-app-title" content="SG Portal">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <link rel="icon" href="{{ asset('image/sgimg.png') }}">
-    <!-- Add to Homescreen -->
-    <!--<link rel="stylesheet" type="text/css" href="https://ipool.remotewebaccess.com/wp-content/public/addtohomescreen.css">-->
-    <!--<script src="https://ipool.remotewebaccess.com/wp-content/public/addtohomescreen.js"></script>-->
-    <!--<script>
-    addToHomescreen.removeSession();
-    instance.clearSession();
-    addToHomescreen();
-    addToHomescreen({
-        detectHomescreen: true
-    });
-    var a = addToHomescreen({
-        onAdd: function () {
-            alert('Welcome SunbulahGroup Framework, employees portal.');
-        }
-    });
-    </script>-->
-    <!-- Add to Homescreen -->
+
+    
+    <style>
+
+
+#navbar {
+  overflow: hidden;
+  padding: 40px 5px;
+  transition: 0.4s;
+  position: fixed;
+  width: 100%;
+
+  top: 0;
+  z-index: 20;
+}
+
+#navbar a {
+  float: left;
+  text-align: left;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 10px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+#navbar #logo {
+  font-size: 18px;
+  font-weight: bold;
+  transition: 0.4s;
+}
+
+#navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#navbar a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+#navbar-right {
+  float: right;
+}
+
+
+  #navbar a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  #navbar-right {
+    float: none;
+  }
+}
+</style>
 </head>
 <body>
-
-<div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+<div id="navbar">
+        <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-                    <a class="navbar-brand" href="{{ url('/root') }}">
+                    <a style="font-size:12px" class="navbar-brand" href="{{ url('/root') }}" id="logo">
                     <img width="22px" height="22px" src="{{ asset('image/sgimg.png') }}" />
                     {{ config('app.name', 'SunbulahGroup') }} Admins Portal
                 </a>
-                
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
+                <div class="collapse navbar-collapse"  id="navbar-right">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a class="nav-link" href="/root/users/orders/all"><i class="fas fa-random"></i> WorkFlow </a>
           </li>
           <li class="nav-item">
-          <a class="nav-link" href="{{ route('dashboard.index', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="/root/users/orders/stats"><i class="far fa-chart-bar"></i> Stats </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/root/readme-v0.03"><i class="fas fa-info fa-fw"></i> Docs </a>
+          </li>
+            @if ( Auth::user()->is_permission == '1')
+            <span class="nav-item">
+                <a class="nav-link" href="{{ route('dashboard.manager', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </span>
+            @elseif ( Auth::user()->is_permission == '2')
+            <span class="nav-item">
+                <a class="nav-link" href="{{ route('dashboard.admin', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </span>
+            @endif    
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-filter"></i> Browse</a>
             <div class="dropdown-menu" aria-labelledby="dropdown01">
-            <a class="dropdown-item" href="#"><i class="fas fa-users"></i> Users</a>
-            <a class="dropdown-item" href="#"><i class="fa fa-list-alt"></i> Items</a>
-              <a class="dropdown-item" href="#"><i class="far fa-id-card"></i> Customers</a>
+            <a class="dropdown-item" href="/root/users"><i class="fas fa-users"></i> Users</a>
+            <a class="dropdown-item" href="{{ route('items.index') }}"><i class="fa fa-list-alt"></i> Items</a>
+              <a class="dropdown-item" href="{{ route('branches.index') }}"><i class="far fa-id-card"></i> Customers</a>
               <a class="dropdown-item" href="#"><i class="fas fa-dollar-sign"></i> Orders</a>
             </div>
           </li>
-          <li class="nav-item">
-          <div style="padding-left:40px">
-          
-          <a class="nav-link" href="{{ route('logout') }}" 
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">{{ \Auth::user()->name }}
-                                        {{ __('Logout') }} <i class="fas fa-sign-out-alt"></i>
-                                    </a>
+          <!--<li class="nav-item">
+            <div style="padding-left:20px">
+                <a id="logout" class="nav-link" style="font-size:12px" href="{{ route('logout') }}" 
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">{{ \Auth::user()->name }}
+                    {{ __('Logout') }} <i class="fas fa-sign-out-alt"></i>
+                </a>
             </div>
-          </li>
+          </li>-->
         </ul>
         <form class="form-inline my-2 my-lg-0 " role="search" action="{{ route('search.orders') }}">
           <input class="form-control my-2 my-sm-0 mr-sm-2" name="query" type="text" placeholder="Search" aria-label="Search">
@@ -131,46 +185,57 @@
         </form>
       </div>
     </nav>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                            <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
-                                </a></a>
-                                <div class="dropdown dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-menu dropdown-menu-right" href="{{ route('logout') }}" 
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }} <i class="fas fa-sign-out-alt"></i>
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="">
-                                        @csrf
-                                    </form>                                </div>
+<script>
+// When the user scrolls down 80px from the top of the document, resize the navbar's padding and the logo's font size
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    document.getElementById("navbar").style.padding = "10px 5px";
+    document.getElementById("logo").style.fontSize = "10px";
+    document.getElementById("logout").style.fontSize = "10px";
 
-                                    </div>
-            </div>                               <!--<div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Dashboard</a>
-                                </div>
-                                    <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Dashboard</a>
-                                </div>
-                                    <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Queries</a>
-                                </div>
-                                    <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Settings</a>
-                                </div>-->
+  } else {
+    document.getElementById("navbar").style.padding = "12px 6px";
+    document.getElementById("logo").style.fontSize = "12px";
+    document.getElementById("logout").style.fontSize = "12px";
+  }
+}
+</script>
 
-                            </li>
-                    </ul>
+                           <!-- Right Side Of Navbar -->
+                            </div>
+                        </div>
+                    </div>  
                 </div>
             </div>
         </nav>
+        <div style="padding-bottom:80px"></div>
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+<script>
+  @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type', 'info') }}";
+    switch(type){
+        case 'info':
+            toastr.info("{{ Session::get('message') }}");
+            break;
+        
+        case 'warning':
+            toastr.warning("{{ Session::get('message') }}");
+            break;
 
+        case 'success':
+            toastr.success("{{ Session::get('message') }}");
+            break;
+
+        case 'error':
+            toastr.error("{{ Session::get('message') }}");
+            break;
+    }
+  @endif
+</script>
 </body>
 <hr>
 <footer class="footer">

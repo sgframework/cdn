@@ -29,12 +29,12 @@
                   <table id="myTable">
                       <thead>
                           <tr>
-                              <th>#</th>
-                              <th>Branch Name</th>
-                              <th>Branch Number</th>
-                              <th>Sales Group</th>
-                              <th>Dist. Channel</th>
-                              <th>Office</th>
+                              <th style="text-align:center;font-size:10px">#</th>
+                              <th style="padding-left:14px;font-size:10px">Branch Name</th>
+                              <th style="padding-left:14px;font-size:10px">Branch Number</th>
+                              <th style="padding-left:14px;font-size:10px">Sales Group</th>
+                              <th style="padding-left:14px;font-size:10px">Dist. Channel</th>
+                              <th style="padding-left:14px;font-size:10px">Office</th>
                           </tr>
                       </thead>
                         @foreach ($branches as $branch)

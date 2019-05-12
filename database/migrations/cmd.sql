@@ -645,8 +645,8 @@ INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
  ("50076012", "SUNB ASIAN PARATHA (12X400G)", "54", "54");
 
 
-INSERT INTO items (itemnumber, itemname, itemoldprice, itemnewprice) Values
- ("50076012", "SUNB ASIAN PARATHA (12X400G)", "54", "54");
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("50076012", "SUNB ASIAN PARATHA (12X400G)", "54");
 
 
 
@@ -765,6 +765,85 @@ UPDATE users
 SET is_permission = "1"
 WHERE id="19";
 
+select * from users;
+
+UPDATE users
+SET dc = "001020"
+WHERE id="19";
+
+UPDATE users
+SET idnumber = "1020"
+WHERE id="19";
+
+UPDATE users
+SET idnumber = "1030"
+WHERE id="20";
+
+
+
+
+
+
+
+
+UPDATE users
+SET idnumber = "1040"
+WHERE id="25";
+
+
+UPDATE users
+SET idnumber = "1110"
+WHERE id="28";
+
+UPDATE users
+SET dc = "001110"
+WHERE id="28";
+
+
+
+UPDATE users
+SET idnumber = "1110"
+WHERE id="28";
+
+UPDATE users
+SET dc = "1030"
+WHERE id="28";
+
+
+
+UPDATE users
+SET dc = "001111"
+WHERE id="29";
+
+
+
+UPDATE users
+SET idnumber = "1110"
+WHERE id="28";
+
+
+UPDATE users
+SET dc = "1030"
+WHERE id="28";
+
+
+
+UPDATE users
+SET idnumber = "1110"
+WHERE id="28";
+
+
+UPDATE users
+SET dc = "1030"
+WHERE id="28";
+
+
+
+                        -> WAEL GHAZI / KA SUPERVISOR Qaseem 001110
+                            -> Suneer 001111
+                            -> Fahad Hussein 001112
+                            -> Sultan Salman 001113
+                            -> Medhat 001114
 
 
 UPDATE orders set status="Submitted"
