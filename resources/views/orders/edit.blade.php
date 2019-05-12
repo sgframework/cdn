@@ -16,16 +16,15 @@
                     <i class="fas fa-plus"><span class="h5"> Insert New Items</span></i>
                         <div style="float:right">
                             <div class="row">
-                            <form style="display: contents" class="form-inline" action="{{ route('update.po', ['slug' => $order->slug]) }}" method="POST">
-                                @csrf
-                                <input type="text" name="ponumber" class="form-control1" value="{{ $order->ponumber }}">
-                                <input class="form-control"  style="width: 20%;background-color:gray;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="change">
-                            </form>
-            
-                            <form class="form-inline" action="{{ route('delete.po', ['slug' => $order->slug]) }}" method="POST">
-                                @csrf
-                                <input class="form-control" style="background-color:red;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="Delete PO">
-                            </form>
+                                <form style="display: contents" class="form-inline" action="{{ route('update.po', ['slug' => $order->slug]) }}" method="POST">
+                                    @csrf
+                                    <input type="text" name="ponumber" class="form-control1" value="{{ $order->ponumber }}">
+                                    <input class="form-control"  style="width: 20%;background-color:gray;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="change">
+                                </form>
+                                <form class="form-inline" action="{{ route('delete.po', ['slug' => $order->slug]) }}" method="POST">
+                                    @csrf
+                                    <input class="form-control" style="background-color:red;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="Delete PO">
+                                </form>
                             </div>
                         </div>
                     <span style="color:red">
@@ -59,23 +58,18 @@
                                                         <th>Last Updated</th>
                                                     </tr>
                                                 </thead>
-                                                <div class="media">
-                                                <a class="pull-left" href="">
-                                                </a>
-                                                <div class="media-body">
-                                                    @if ($order->ordernumber)
-                                                    <tbody style="font-size:10px">
-                                                        <tr>
-                                                            <td>{{ $order->ordernumber }}</td>
-                                                            <td>{{ $order->ponumber }} </td>
-
-                                                            <td>{{ $order->staffid }}</td>
-                                                            <td>{{ $order->branchname }}</td>
-                                                            <td class="{{ strtolower($order->status) }}">{{ $order->status }}</td>
-                                                            <td>{{ $order->updated_at->diffForHumans() }}</td>
-                                                        </tr>	
-                                                    </tbody>
-                                                    @endif
+                                                @if ($order->ordernumber)
+                                                <tbody style="font-size:10px">
+                                                    <tr>
+                                                        <td>{{ $order->ordernumber }}</td>
+                                                        <td>{{ $order->ponumber }} </td>
+                                                        <td>{{ $order->staffid }}</td>
+                                                        <td>{{ $order->branchname }}</td>
+                                                        <td class="{{ strtolower($order->status) }}">{{ $order->status }}</td>
+                                                        <td>{{ $order->updated_at->diffForHumans() }}</td>
+                                                    </tr>	
+                                                </tbody>
+                                                @endif
                                             </table>
                                         <!--<form action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
                                             @csrf
@@ -87,38 +81,37 @@
                                         </form>-->
                                         <!--<center><button class="btn btn-default" onclick="myFunction()">ADD <i class="fas fa-plus"></i></button></center><br />-->
                                    
-<script type="text/javascript">  
-function movetoNext(current, nextFieldID) {  
-if (current.value.length >= current.maxLength) {  
-document.getElementById(nextFieldID).focus();  
-}  
-}  
-</script>  
-<script>
-document.myform.itemnumber.focus();
-</script>
-<body onload='if(!document.myform.itemnumber.my_no_focus){document.myform.itemnumber.focus();}' >
+                                <script type="text/javascript">  
+                                    function movetoNext(current, nextFieldID) {  
+                                    if (current.value.length >= current.maxLength) {  
+                                    document.getElementById(nextFieldID).focus();  
+                                        }  
+                                    }  
+                                </script>  
+                                <script>
+                                    document.myform.itemnumber.focus();
+                                </script>
+                                <body onload='if(!document.myform.itemnumber.my_no_focus){document.myform.itemnumber.focus();}' >
                                         <div class="table-responsive">                                           
                                             @if($errors->any())
                                             <br />
                                             <div padding-top="20px"></div>
                                                 <div class="alert alert-danger">{{ $errors->first() }}</div>
                                             @endif
-                                            <form name='myform' class="form-inline" action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
+                                                <form name='myform' class="form-inline" action="{{ route('orders.insert', ['orderId' => $order->slug]) }}" method="POST">
                                                     @csrf
-
-                                                <input autocomplete="on" onkeydown="this.my_no_focus = true;" id="first" size="20" onkeyup="movetoNext(this, 'second')" maxlength="50" autofocus="true" placeholder="Select Item" style="" name="itemnumber" class="form-control1" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
-                                                <input  hidden name="itemname" class="form-control" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
-                                                    <datalist id="{{ $item->itemnumber }}-{{ $item->itemname }}" class="">
-                                                        @foreach($items as $item)
-                                                        <option name="itemnumber" value="{{ $item->itemnumber }} - {{ $item->itemname }}"></option>
-                                                        @endforeach 
-                                                    </datalist>                   
-                                                <input id="second" size="3" onkeyup="movetoNext(this, 'third')" maxlength="4"  width="10%" class="form-control2" type="text" name="itemqty" placeholder="Qty." />
-                                                <input  maxlength="3" id="third" size="3"  onkeyup="movetoNext(this, 'fourth')" width="10%" class="form-control2" type="text" name="freeitem" placeholder="Free" />
-                                                <input hidden id="old-price" width="20%" class="form-control2" type="number" name="itemoldprice" placeholder="Price" />
-                                                <input hidden id="new-price" width="20%" class="form-control2" type="number" name="itemnewprice" placeholder="Price" />
-                                                <input  maxlength="3"  id="fourth" size="3" maxlength="3"  width="10%" class="form-control2" type="text" name="askedprice" placeholder="Price" />
+                                                    <input autocomplete="on" onkeydown="this.my_no_focus = true;" id="first" size="20" onkeyup="movetoNext(this, 'second')" maxlength="50" autofocus="true" placeholder="Select Item" style="" name="itemnumber" class="form-control1" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
+                                                    <input  hidden name="itemname" class="form-control" list="{{ $item->itemnumber }}-{{ $item->itemname }}">
+                                                        <datalist id="{{ $item->itemnumber }}-{{ $item->itemname }}" class="">
+                                                            @foreach($items as $item)
+                                                            <option name="itemnumber" value="{{ $item->itemnumber }} - {{ $item->itemname }}"></option>
+                                                            @endforeach 
+                                                        </datalist>                   
+                                                    <input id="second" size="3" onkeyup="movetoNext(this, 'third')" maxlength="4"  width="10%" class="form-control2" type="text" name="itemqty" placeholder="Qty." />
+                                                    <input  maxlength="3" id="third" size="3"  onkeyup="movetoNext(this, 'fourth')" width="10%" class="form-control2" type="text" name="freeitem" placeholder="Free" />
+                                                    <input hidden id="old-price" width="20%" class="form-control2" type="number" name="itemoldprice" placeholder="Price" />
+                                                    <input hidden id="new-price" width="20%" class="form-control2" type="number" name="itemnewprice" placeholder="Price" />
+                                                    <input  maxlength="3"  id="fourth" size="3" maxlength="3"  width="10%" class="form-control2" type="text" name="askedprice" placeholder="Price" />
                                                 @if ( $order->status == 'Submitted')
                                                         <p>Can't make edits on submitted or completed orders.</p>
                                                     @elseif ( $order->status == 'Completed' )
@@ -134,21 +127,20 @@ document.myform.itemnumber.focus();
                                                     </div>
                                                     @else
                                                 
-                                                @endif
-
-                                    @if (!$orderitems->count())
-                                        <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
-                                    @else
-                                    </div>
-                                    <?php $totalqty = 0; ?>
-                                    <?php $totalfree = 0; ?>
-                                    <?php $oldprice = 0; ?>
-                                    <?php $newprice = 0; ?>
-                                    <?php $totalqtyprice = 0; ?>
-                                    <?php $askedprice = 0; ?>
-                                    <?php $totaldiscount = 0; ?>
-                                    <?php $totaloriginal = 0; ?>
-                                    <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
+                                                    @endif
+                                            @if (!$orderitems->count())
+                                                <p>No results found, sorry</p> <span>&larr; <a href="/">Back</a></span><span style="float:right"></span><hr />
+                                            @else
+                                            </div>
+                                            <?php $totalqty = 0; ?>
+                                            <?php $totalfree = 0; ?>
+                                            <?php $oldprice = 0; ?>
+                                            <?php $newprice = 0; ?>
+                                            <?php $totalqtyprice = 0; ?>
+                                            <?php $askedprice = 0; ?>
+                                            <?php $totaldiscount = 0; ?>
+                                            <?php $totaloriginal = 0; ?>
+                                            <div style="padding-left:8px;padding-top:8px" class="col-sm-12">
                                                 <table width="100%" class="table-responsive-sm" id="myTable">
                                                     @foreach ($orderitems as $orderitem)
                                                     <?php $totalqty += $orderitem->itemqty; ?>
@@ -160,54 +152,41 @@ document.myform.itemnumber.focus();
                                                     @else
                                                     <?php $totalqtyprice += $orderitem->itemqty * $orderitem->askedprice; ?>
                                                     @endif
-
                                                     @if ($orderitem->askedprice == 0)
                                                     <?php $askedprice += "0"; ?>
-
                                                     @else
                                                     <?php $askedprice +=  $orderitem->itemqty * $orderitem->askedprice; ?>
-
-
-
                                                     @endif
-
                                                     @if ($orderitem->askedprice == 0)
                                                     <?php $totaldiscount += "0"; ?>
-
                                                     @else
                                                     <?php $totaldiscount -= ($orderitem->itemnewprice * $orderitem->itemqty) - ($orderitem->askedprice * $orderitem->itemqty); ?>
-
-
-
                                                     @endif
                                                     <?php $totaloriginal += $orderitem->itemnewprice * $orderitem->itemqty; ?>
                                                     <input hidden width="20%" value="{{ $totalqtyprice }}" class="form-control2" type="number" name="totalqtyprice" />
                                                     <input hidden width="20%" value="{{ $askedprice }}" class="form-control2" type="number" name="askedprice" />
-                                                    </form>
+                                                </form>
                                                         @include('dashboard/partials/orderitemsblock')
-                                                        
-
-                                                    @endforeach	
-
-                                            <script>
-                                                $(document).ready(function(){
-                                                $("input").click(function(){
-                                                        $(this).next().show();
+                                                    @endforeach
+                                                <script>
+                                                    $(document).ready(function(){
+                                                    $("input").click(function(){
+                                                            $(this).next().show();
+                                                        });
                                                     });
-                                                });
-                                            </script>
+                                                </script>
                                                     <tfoot>
-                                                            <tr>
-                                                                <td><b>Total</b></td>
-                                                                <th style="text-align:center">{{ $totalqty }}</th>
-                                                                <th style="text-align:center">{{ $totalfree }}</th>
-                                                                <th style="text-align:center">{{ number_format($oldprice) }}.00 SAR</th>
-                                                                <th style="text-align:center">{{ number_format($newprice) }}.00 SAR</th>
+                                                        <tr>
+                                                            <td><b>Total</b></td>
+                                                            <th style="text-align:center">{{ $totalqty }}</th>
+                                                            <th style="text-align:center">{{ $totalfree }}</th>
+                                                            <th style="text-align:center">{{ number_format($oldprice) }}.00 SAR</th>
+                                                            <th style="text-align:center">{{ number_format($newprice) }}.00 SAR</th>
 
-                                                                <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
-                                                                <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
-                                                                <th style="text-align:center" ></th>
-                                                            </tr>
+                                                            <th style="text-align:center">{{ number_format($totaldiscount) }}.00 SAR</th>
+                                                            <th style="text-align:center">{{ number_format($totalqtyprice) }}.00 SAR</th>
+                                                            <th style="text-align:center" ></th>
+                                                        </tr>
                                                         <tr>
                                                             <th>Item# - Desc.</th>
                                                             <th style="text-align:center">Qty</th>
@@ -217,7 +196,6 @@ document.myform.itemnumber.focus();
                                                             <th style="text-align:center">Total Discount</th>                                                       
                                                             <th style="text-align:center">Qty * Price</th>                                                       
                                                             <th style="text-align:center">rm</th>
-                                                            <!--<th>Delete</th>-->
                                                         </tr>
                                                     </tfoot>
                                                 </table>
@@ -233,7 +211,6 @@ document.myform.itemnumber.focus();
                                                     <span style="float:right" class="badge badge-secondary">No Discount</span>
                                                     @else
                                                     <br />
-
                                                     <span style="float:right" class="badge badge-danger">Total price {{ number_format($totalqtyprice) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span style="float:right" class="badge completed">Total Discount {{ number_format($totaldiscount) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     <span style="float:right" class="badge badge-light">Original Total price {{ number_format($totaloriginal) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -274,27 +251,20 @@ document.myform.itemnumber.focus();
                                     </div>						
                                 </div>  
                             </div>
-                    @if ($errors->has('alert'))
-                        <span class="help-block">{{ $errors->first('alert') }}</span>
-                    @endif
-                @if (Session::has('alert'))
-                <br />
-                <div padding-top="20px"></div>
-                    <div class="alert alert-success"><i class="fas fa-check"></i> {{ Session::get('alert') }}</div>
-                @endif
-                @if (Session::has('warning'))
-                <br />
-                <div padding-top="20px"></div>
-                    <div class="badge badge-success"><i class="fas fa-check"></i> {{ Session::get('warning') }}</div>
-                @endif
-                <br />
-
-
-
-
-
-
-
+                        @if ($errors->has('alert'))
+                            <span class="help-block">{{ $errors->first('alert') }}</span>
+                        @endif
+                        @if (Session::has('alert'))
+                        <br />
+                        <div padding-top="20px"></div>
+                            <div class="alert alert-success"><i class="fas fa-check"></i> {{ Session::get('alert') }}</div>
+                        @endif
+                        @if (Session::has('warning'))
+                        <br />
+                        <div padding-top="20px"></div>
+                            <div class="badge badge-success"><i class="fas fa-check"></i> {{ Session::get('warning') }}</div>
+                        @endif
+                        <br />
                     </div>
                 </div>     
             </div>

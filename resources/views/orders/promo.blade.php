@@ -1,19 +1,14 @@
-
 @extends('layouts.app')
 @section('content')    
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-
             <div class="card">
             @if (Route::has('login'))
                     @auth
-            <!--<div class="top-left">
-	<a href="{{ url('/') }}">SunbulahGroup</a>
-	</div>-->
-    <div class="top-right links">
-        <div class="card-header"><b>+Create New Order</b></div>
-            <div class="card-body">
+                <div class="top-right links">
+                    <div class="card-header"><b>+Create New Order</b></div>
+                        <div class="card-body">
             <!-- If user loggedIn show below content until endShow part 
             //
             //
@@ -22,15 +17,12 @@
 @markdown
 ## Upload promo order in mass ``` CSV ``` ##
 
-
 #### Steps Overview ####
 
 + Step One
     - Insert PO Number and Branch Number, can't be empty.
 + Step Two
     - Insert items for that same entered PO Number.
-
-
 
 ### Step 1 ###
 
@@ -40,7 +32,6 @@
 
 ##### **{{ Auth::user()->name }}#&nbsp;{{ Auth::user()->idnumber }}**
 
-
 @endmarkdown
 
 <span id="submittedd"></span>
@@ -49,57 +40,33 @@
 @endif
 
 
-
-
-
-
-
-
-
-
-<form method='post' action="{{ route('promo.order') }}" enctype='multipart/form-data' >
+    <form method='post' action="{{ route('promo.order') }}" enctype='multipart/form-data' >
        {{ csrf_field() }}
        <input type='file' name='file' >
        <input type='submit' name='submit' value='Import'>
-     </form>
+    </form>
+        @if (!$lastorder)
 
-
-
-
-@if (!$lastorder)
-
-@else
-
-
-
-
-
-
-
-
-
-
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<span>Last created order: </span>
-<span class="badge badge-dark">{{ $lastorder->ponumber }}</span> <span class="badge badge-dark"> {{ $lastorder->branchname }}</span>
-    @if( $lastorder->urgent === 'on' )
-    <span class="badge badge-danger">URGENT</span> 
-    @else
-    <span class="badge badge-secondary">REGULAR</span> 
-    @endif
-    @if( $lastorder->status === 'Submitted' )
-    <span class="badge submitted">{{ number_format($lastorder->totalprice) }}.00 SAR</span> 
-    @elseif( $lastorder->status === 'Completed' )
-    <span class="badge completed">{{ number_format($lastorder->totalprice) }}.00 SAR</span> 
-    @endif
-@endif
-
-
-                            @if($errors->any())
-                            <span style="font-size:9px;color:red">* <h4>{{$errors->first()}}</h4>
-                            </span>@endif
+        @else
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <span>Last created order: </span>
+        <span class="badge badge-dark">{{ $lastorder->ponumber }}</span> <span class="badge badge-dark"> {{ $lastorder->branchname }}</span>
+            @if( $lastorder->urgent === 'on' )
+            <span class="badge badge-danger">URGENT</span> 
+            @else
+            <span class="badge badge-secondary">REGULAR</span> 
+            @endif
+            @if( $lastorder->status === 'Submitted' )
+            <span class="badge submitted">{{ number_format($lastorder->totalprice) }}.00 SAR</span> 
+            @elseif( $lastorder->status === 'Completed' )
+            <span class="badge completed">{{ number_format($lastorder->totalprice) }}.00 SAR</span> 
+            @endif
+        @endif
+            @if($errors->any())
+                <span style="font-size:9px;color:red">
+                    * <h4>{{$errors->first()}}</h4>
+                </span>
+            @endif
                 <form class="form-inline" method="POST" action="{{ route('orders.insert.step1') }}">
                 @csrf
                     <label hidden style="padding-left:20px" for="staffname">Name:</label>
@@ -107,134 +74,104 @@
                     </label>
                     <!--<input hidden class="form-control" type="text" class="input" name="branchname" value="" />-->
 
-                    <input hidden class="form-control" type="text" class="input" name="created_at" value="{{ $timestamp = now() }}" />&nbsp;&nbsp;&nbsp;
-                    <input hidden class="form-control" type="number" class="input" name="ordernumber" value="0000{{ mt_rand(7000000, 8888000) }}" />&nbsp;&nbsp;&nbsp;
+                        <input hidden class="form-control" type="text" class="input" name="created_at" value="{{ $timestamp = now() }}" />&nbsp;&nbsp;&nbsp;
+                        <input hidden class="form-control" type="number" class="input" name="ordernumber" value="0000{{ mt_rand(7000000, 8888000) }}" />&nbsp;&nbsp;&nbsp;
                     <label hidden for="staffid">ID#</label>
                         <input hidden class="form-control" type="number" class="input" name="staffid" value="{{ Auth::user()->idnumber }}" />&nbsp;&nbsp;&nbsp;
                     </label>
-
                         <input class="form-control" width="20px" type="text" id="ponumber" value="{{ Request::old('ponumber') ?: ++ $lastorder->ponumber }}"  placeholder="PO#" name="ponumber" required>&nbsp;&nbsp;&nbsp;
           
 @if (!$branches_list)
 
 @else                                
-
-                                <!--<select name="branchnumber" id="branchnumber" class="form-control dynamic" data-dependent="branchnumber">
-                                    <option value="empty">Select Branch</option>
+                        <input autofocus name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                        <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                        <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
                                             @foreach($branches_list as $branch)
-                                            <option value="{{ $branch->branchnumber }}-{{ $branch->branchname }}">&nbsp;{{ $branch->branchnumber }}&nbsp;{{ $branch->branchname }}</option>
-                                            @endforeach      
-                                </select>&nbsp;&nbsp;&nbsp;-->
-
-
-                                <input autofocus name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
-                                <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
-                                <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
-                                                    @foreach($branches_list as $branch)
-                                                    <option name="branchname" value="{{ $branch->branchnumber }}-{{ $branch->branchname }}"></option>
-                                                    @endforeach 
-                                        </datalist>
-                                        @endif
-
-                                <script>
-
-$(document).ready(function(){
-    load_json_data('branches_list')
-    function load_json_data(id, parent_id)
-    {
-        var php_code = '';
-        $.getJSON('requst.json', function(data){
-            $.each(data, function(key, value){
-                if(id == 'branchname')
-                {
-                    if(value.parent_id  == '0')
-                    {
-                        php_code += '<option value="'+value.id+'">'+value.name+'</option>';
-                    }
-                }
-                else
-                {
-                    if(value.parent_id == parent_id)
-                    {
-                        php_code += '<option value="'+value.id+'">'+value.name+'</option>';
-                    }
-
-                }
-            });
-            $('#'+id).php(php_code);
-        });
-    }
-
-    $(document).on(change, '#branchname', function(){
-        var branch_name = $(this).val();
-        if(branch_name != '')
-        {
-            load_json_data('branchnumber', branch_name);
-        }
-        else
-        {
-            $('#branchnumber').php('<option value="">-- Select an option --</option>');
-        }
-    });
-    
-});
-
-</script>
-
+                                            <option name="branchname" value="{{ $branch->branchnumber }}-{{ $branch->branchname }}"></option>
+                                            @endforeach 
+                                </datalist>
+                                @endif
+                        <script>
+                            $(document).ready(function(){
+                                load_json_data('branches_list')
+                                function load_json_data(id, parent_id)
+                                {
+                                    var php_code = '';
+                                    $.getJSON('requst.json', function(data){
+                                        $.each(data, function(key, value){
+                                            if(id == 'branchname')
+                                            {
+                                                if(value.parent_id  == '0')
+                                                {
+                                                    php_code += '<option value="'+value.id+'">'+value.name+'</option>';
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if(value.parent_id == parent_id)
+                                                {
+                                                    php_code += '<option value="'+value.id+'">'+value.name+'</option>';
+                                                }
+                                            }
+                                        });
+                                        $('#'+id).php(php_code);
+                                    });
+                                }
+                                $(document).on(change, '#branchname', function(){
+                                    var branch_name = $(this).val();
+                                    if(branch_name != '')
+                                    {
+                                        load_json_data('branchnumber', branch_name);
+                                    }
+                                    else
+                                    {
+                                        $('#branchnumber').php('<option value="">-- Select an option --</option>');
+                                    }
+                                });
+                            });
+                        </script>
                             <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
                         <span style="color:red">&nbsp;&nbsp;&nbsp; Urgent</span>&nbsp;&nbsp;&nbsp;<input id="urgent" type="checkbox" name="urgent">
                     <div style="float:right; padding-left:4px">&nbsp;&nbsp;&nbsp;<input style="padding:5px 20px;background-color:#227dc7" class="btn btn-primary" value="Next" type="submit" /></div>
                 </form>
-                                <script>
-                                    $(document).ready(function(){
-                                    $("input").click(function(){
-                                            $(this).next().show();
-                                            
-                                        });
+                        <script>
+                            $(document).ready(function(){
+                            $("input").click(function(){
+                                    $(this).next().show();
+                                    
+                                });
 
-                                    });
-                                </script>
-                
-                <br /><hr />
-
-<script>
-
-$(document).ready(function(){
-
-    $('.dynamic').change(function(){
-        if($(this).val() != '')
-        {
-            var select = $(this).attr("id");
-            var value = $(this).val();
-            var dependent = $(this).data('dependent');
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url:{{ route('orders.insert.step1') }}
-                method:"POST";
-                data:{select:select, value:value, _token:_token, dependent:dependent},
-                success:function(result)
-                {
-                    $('#'+dependent).php(result);
-                }
-            })
-        }
-    });
-});
-
-</script>
-
-
-
-
-
-
-
-
-
+                            });
+                        </script>
+                        <br /><hr />
+                        <script>
+                        $(document).ready(function(){
+                            $('.dynamic').change(function(){
+                                if($(this).val() != '')
+                                {
+                                    var select = $(this).attr("id");
+                                    var value = $(this).val();
+                                    var dependent = $(this).data('dependent');
+                                    var _token = $('input[name="_token"]').val();
+                                    $.ajax({
+                                        url:{{ route('orders.insert.step1') }}
+                                        method:"POST";
+                                        data:{select:select, value:value, _token:_token, dependent:dependent},
+                                        success:function(result)
+                                        {
+                                            $('#'+dependent).php(result);
+                                        }
+                                    })
+                                }
+                            });
+                        });
+                        </script>
 @markdown
 `You can see full documentation` [here][docs].
 
-[docs]: http://ipool.remotewebaccess.com/root/readme#manual
+[docs]: {{ url('/root/readme#manual') }}
+
 @endmarkdown
                 <pre style="float:right">{{ now() }}</pre>
                         @else

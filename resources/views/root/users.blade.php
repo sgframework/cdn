@@ -10,38 +10,32 @@
         <img src="{{ asset('images/assests/sgimg.png') }}" align="right" style="height: 64px"/>
         <h2 id="users"><a class="header-link" href="#users"></a><i class="fa fa-users" aria-hidden="true"></i> All Users</h2>
         <script src="https://gist.github.com/sgframework/777536b600117a959c7acfac64bbeab1.js"></script>
-
-
-
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>ID#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone#</th>
-            <th>Access Level</th>
-            <th>DC.</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($users as $user)
-        <tr>
-            <td><img style="border-radius:50%" width="80px" height="50px" src="{{ asset('/images/uploads/avatars')}}/{{ $user->photo }}" /></td>
-            <td>{{ $user->idnumber }}</td>
-            <td>{{ $user->name }}</td>
-            <td>{{ $user->email }}</td>
-            <td>+966{{ $user->phonenumber }}</td>
-            <td>{{ $user->is_permission }}</td>
-            <td>{{ $user->dc }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-
-
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>ID#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone#</th>
+                        <th>Access Level</th>
+                        <th>DC.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($users as $user)
+                    <tr>
+                        <td><img style="border-radius:50%" width="80px" height="50px" src="{{ asset('/images/uploads/avatars')}}/{{ $user->photo }}" /></td>
+                        <td>{{ $user->idnumber }}</td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>+966{{ $user->phonenumber }}</td>
+                        <td>{{ $user->is_permission }}</td>
+                        <td>{{ $user->dc }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
 <pre><code class="language-sql">     
 mysql> select * from users;
 +----+-----------------------------------+-----------------------+-------------------+----------+-------------+--------------+---------------+------------+--------+
@@ -80,26 +74,4 @@ mysql> select * from users;
 
 </code></pre>
 </article>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @endsection

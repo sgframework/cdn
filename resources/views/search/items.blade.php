@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.root')
 @section('content')
 <style>
 .form-inline {  
@@ -52,24 +52,23 @@
 			@if (!$items->count())
 				<p>No results found, sorry</p>
       @else
-      <table id="myTable">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Product</th>
-                            <th>Material</th>
-                            <th>Price</th>
-                            <th>SKU</th>
-                            <th>Plant</th>
-                            <th>InStock</th>
-                            <th>Type</th>
-                        </tr>
-                    </thead>
-
-				@foreach ($items as $item)
-					@include('items/partials/itemblock')
-				@endforeach			
-        </table>			
+        <table id="myTable">
+                      <thead>
+                          <tr>
+                              <th>#</th>
+                              <th>Product</th>
+                              <th>Material</th>
+                              <th>Price</th>
+                              <th>SKU</th>
+                              <th>Plant</th>
+                              <th>InStock</th>
+                              <th>Type</th>
+                          </tr>
+                      </thead>
+          @foreach ($items as $item)
+            @include('items/partials/itemblock')
+          @endforeach			
+          </table>			
                     @endif
                     </div>  
                 </div>
@@ -77,5 +76,4 @@
         </div><br /><hr />
     </div>
 </div>
-
-	@stop
+@stop

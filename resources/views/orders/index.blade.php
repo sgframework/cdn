@@ -38,9 +38,9 @@
                                                         <th>Updated</th>
                                                     </tr>
                                                 </thead>
-                                                        @foreach ($orders as $order)
-                                                            @include('orders/partials/orderblock')
-                                                        @endforeach	
+                                                    @foreach ($orders as $order)
+                                                        @include('orders/partials/orderblock')
+                                                    @endforeach	
                                             </table>
                                         </div>					
                                                     @endif
@@ -54,14 +54,13 @@
 ---------------------------------------
 
 @endmarkdown
-<button type="button" class="btn btn-default" aria-label="Left Align">
-  <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
-</button>
+                            <button type="button" class="btn btn-default" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                            </button>
 
-<button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
-</button>
-
+                            <button type="button" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
+                            </button>
                             <div class="table-responsive">
                                 <table class="table table-striped table-sm">
                                     <thead>
@@ -111,9 +110,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../../dist/js/bootstrap.min.js"></script>
-    <!-- Icons -->
     <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
