@@ -250,62 +250,6 @@ Route::post('/profile/imgupdate', [
 
 
 
-
-/*
-* Authintication
-
-
-Route::get('/signup', [
-    'uses' => '\App\Http\Controllers\AuthController@getSignup',
-    'as' => 'auth.signup',
-    'middleware' => ['guest'],
-]);
-
-
-Route::post('/signup', [
-    'uses' => '\App\Http\Controllers\AuthController@postSignup',
-    'middleware' => ['guest'],
-]);
-
-
-
-Route::get('/signin', [
-    'uses' => '\App\Http\Controllers\AuthController@getSignin',
-    'as' => 'auth.signin',
-    'middleware' => ['guest'],
-]);
-
-
-Route::post('/signin', [
-    'uses' => '\App\Http\Controllers\AuthController@postSignin',
-    'middleware' => ['guest'],
-]);
-
-Route::get('/signout', [
-    'uses' => '\App\Http\Controllers\AuthController@getSignout',
-    'as' => 'auth.signout'
-]);
-
-
-*/
-
-//Route::get('/home', 'HomeController@index')->name('global.index');
-//Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-//Route::get('/process', 'ProcessController@index')->name('process');
-//Route::get('/items', 'ItemsController@index')->name('items');
-//Route::get('/add-item', 'ItemsController@add')->name('add');
-//Route::post('/post-item', 'ItemsController@post')->name('post');
-//Route::get('/submit-rtv', 'RtvController@index')->name('rtv');
-
-
-//{{ route('dashboard.index') }}
-
-/*Route::get('/dashboard', [
-    'uses' => '\cdn\Http\Controllers\ProfileController@getProfile',
-'as' => 'dashboard.index',
-]);
-
-*/
 //{{ route('branches.index') }}
 
 Route::post('/branch/insert', [
