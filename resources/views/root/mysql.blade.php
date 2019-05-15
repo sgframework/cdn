@@ -5,7 +5,7 @@
         <div class="col-md-12 ml-sm-12 col-lg-12">
             @if ( Auth::user()->is_permission == '0')
             <div style="padding-top:200px;padding-bottom:200px">
-                <span style="font-size:16px" class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</span>
+                <span style="font-size:16px" class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry! <a href="/">&larr; Go Back Home</a></span>
             </div>
             @else
             @auth

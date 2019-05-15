@@ -10,6 +10,7 @@ use cdn\Models\Item;
 use cdn\Models\Order;
 use cdn\Models\OrderItems;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 
 //2147483647
@@ -87,6 +88,39 @@ class ProfileController extends Controller
 		$branches_list = DB::table('branches')
 		->where('salesgroup', '=', $currentuser->idnumber)
 		->get();
+
+		$firstcustomer =  
+		DB::table('branches')->select('branchnumber')
+		->where('salesgroup', '=', $currentuser->idnumber)
+		->get();
+
+
+		$orderscustomernumber = Order::select('branchnumber')->where('staffid', '=', $idnumber)->orderBy('updated_at', 'asc')->get();
+		
+
+
+
+		$orders = Order::select()->where('staffid', '=', $idnumber)->orderBy('updated_at', 'asc')->first();
+		$customers = Branch::select()->orderBy('updated_at', 'asc')->first();
+
+		$relation = $orders->where('ponumber', '=', 'test0')->first('branchnumber');
+		$relatedcustomer = $customers;
+		$relatedcustomer =  $customers->where('branchnumber', '=', $customers->branchnumber)->get();
+		$relatedorder =  $orders->where('branchnumber', '=', $orderscustomernumber)->get();
+		
+		$customerorders =  $customers->where('branchnumber', '=', $customers->branchnumber)->get();
+		$customerbysalegroup =  $orders->where('branchnumber', '=', $firstcustomer);
+		
+		$combined = $orderscustomernumber;
+
+			
+
+		$sumallcustomerorders = $relatedorder->sum('totalprice');
+
+
+
+		//dump($sumallcustomerorders);
+
 		return view('dashboard.index')
 				->withOrder($order)
 				->with('justcreatedorderscount', $justcreatedorderscount)
@@ -99,6 +133,7 @@ class ProfileController extends Controller
 				->with('orderitems', $orderitems)
 				->with('belongordernumber', $belongordernumber)
 				->with('slug', $slug)
+				->with('relatedorder', $relatedorder)
 				
 				
 				->with('orders', $orders)
@@ -2911,7 +2946,7 @@ class ProfileController extends Controller
     	]);
     	
     	Auth::user()->update([
-			'photo' => $request->input('photo'),
+			'photo' => Hash::make($request->input('photo')),
 
     	]);
     	

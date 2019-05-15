@@ -3,7 +3,7 @@
 
 @if ( Auth::user()->is_permission == '0')
         <div style="padding-top:200px;padding-bottom:200px">
-            <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+            <h3 class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3> <a href="/">&larr; Go Back Home</a>
         </div>
            @else
         @auth
@@ -16,83 +16,114 @@
 
 ----------
 
+```bash
+
     C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan route:list
-    +--------+----------+-----------------------------------------+-----------------------+------------------------------------------------------------------------+------------------------------+
-    | Domain | Method   | URI                                     | Name                  | Action                                                                 | Middleware                   |
-    +--------+----------+-----------------------------------------+-----------------------+------------------------------------------------------------------------+------------------------------+
-    |        | GET|HEAD | /                                       | global.index          | cdn\Http\Controllers\GlobalController@getIndex                         | web,auth                     |
-    |        | GET|HEAD | admins                                  | admins                | cdn\Http\Controllers\HomeController@admins                             | web,is-admin,auth            |
-    |        | GET|HEAD | alert                                   |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | api/dashboard/orders/{slug}             |                       | Closure                                                                | api                          |
-    |        | GET|HEAD | api/order/{ordernumber}                 |                       | Closure                                                                | api                          |
-    |        | GET|HEAD | api/orders/user/{slug}                  |                       | Closure                                                                | api                          |
-    |        | GET|HEAD | api/test                                |                       | Closure                                                                | api                          |
-    |        | GET|HEAD | api/user                                |                       | Closure                                                                | api,auth:api                 |
-    |        | GET|HEAD | branch/add                              | branches.add          | cdn\Http\Controllers\BranchesController@addBranch                      | web,auth                     |
-    |        | POST     | branch/insert                           | branches.insert       | cdn\Http\Controllers\BranchesController@InsertBranches                 | web,auth                     |
-    |        | GET|HEAD | branches                                | branches.index        | cdn\Http\Controllers\BranchesController@getBranches                    | web,auth                     |
-    |        | GET|HEAD | email/resend                            | verification.resend   | cdn\Http\Controllers\Auth\VerificationController@resend                | web,auth,throttle:6,1        |
-    |        | GET|HEAD | email/verify                            | verification.notice   | cdn\Http\Controllers\Auth\VerificationController@show                  | web,auth                     |
-    |        | GET|HEAD | email/verify/{id}                       | verification.verify   | cdn\Http\Controllers\Auth\VerificationController@verify                | web,auth,signed,throttle:6,1 |
-    |        | GET|HEAD | export-orderitems-csv                   |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | export-orders-csv                       |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | export-orders-csv/today                 |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | export-orders-orderitems-csv/today      |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | item/add                                | items.add             | cdn\Http\Controllers\ItemsController@addItem                           | web,auth                     |
-    |        | POST     | item/insert                             | items.insert          | cdn\Http\Controllers\ItemsController@InsertItems                       | web,auth                     |
-    |        | GET|HEAD | items                                   | items.index           | cdn\Http\Controllers\ItemsController@getItems                          | web,auth                     |
-    |        | POST     | login                                   |                       | cdn\Http\Controllers\Auth\LoginController@login                        | web,guest                    |
-    |        | GET|HEAD | login                                   | login                 | cdn\Http\Controllers\Auth\LoginController@showLoginForm                | web,guest                    |
-    |        | POST     | logout                                  | logout                | cdn\Http\Controllers\Auth\LoginController@logout                       | web                          |
-    |        | GET|HEAD | mail                                    | tests.email           | cdn\Http\Controllers\RootController@getMail                            | web,auth                     |
-    |        | GET|HEAD | md                                      | tests.markdown        | cdn\Http\Controllers\RootController@getMd                              | web,auth                     |
-    |        | GET|HEAD | order/add                               | orders.add            | cdn\Http\Controllers\OrdersController@addOrder                         | web,auth                     |
-    |        | GET|HEAD | order/add/step1                         | orders.partials.step1 | cdn\Http\Controllers\OrdersController@addOrderStep1                    | web,auth                     |
-    |        | GET|HEAD | order/add/step2                         | orders.partials.step2 | cdn\Http\Controllers\OrdersController@addOrderStep2                    | web,auth                     |
-    |        | GET|HEAD | order/add/urgent                        | orders.urgent         | cdn\Http\Controllers\OrdersController@addUrgentOrder                   | web,auth                     |
-    |        | POST     | order/insert/step1                      | orders.insert.step1   | cdn\Http\Controllers\OrdersController@insertOrderStep1                 | web,auth                     |
-    |        | POST     | order/insert/step2                      |                       | cdn\Http\Controllers\OrdersController@insertOrderStep2                 | web,auth                     |
-    |        | GET|HEAD | orders                                  | orders.index          | cdn\Http\Controllers\OrdersController@getOrders                        | web,auth                     |
-    |        | GET|HEAD | orders/order/{slug}                     | orders.order          | cdn\Http\Controllers\OrdersController@getOrderNumber                   | web,auth                     |
-    |        | POST     | orders/order/{slug}/attachpo            | orders.attachpo       | cdn\Http\Controllers\OrdersController@attachPo                         | web,auth                     |
-    |        | POST     | orders/order/{slug}/backedit            | orders.backedit       | cdn\Http\Controllers\OrdersController@backEditOrderItems               | web,auth                     |
-    |        | POST     | orders/order/{slug}/destroy             | orders.destroy        | cdn\Http\Controllers\OrdersController@tableDestroy                     | web,auth                     |
-    |        | GET|HEAD | orders/order/{slug}/edit                | orders.edit           | cdn\Http\Controllers\OrdersController@editOrderNumber                  | web,auth                     |
-    |        | POST     | orders/order/{slug}/insert              | orders.insert         | cdn\Http\Controllers\OrdersController@insertOrderItems                 | web,auth                     |
-    |        | POST     | orders/order/{slug}/remove/{itemnumber} | orders.remove         | cdn\Http\Controllers\OrdersController@removeOrderItem                  | web,auth                     |
-    |        | GET|HEAD | orders/order/{slug}/review              | orders.review         | cdn\Http\Controllers\OrdersController@reviewOrderItems                 | web,auth                     |
-    |        | POST     | orders/order/{slug}/submit              | orders.submit         | cdn\Http\Controllers\OrdersController@submitOrder                      | web,auth                     |
-    |        | GET|HEAD | orders/order/{slug}/success             | orders.success        | cdn\Http\Controllers\OrdersController@successOrder                     | web,auth                     |
-    |        | POST     | password/email                          | password.email        | cdn\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web,guest                    |
-    |        | GET|HEAD | password/reset                          | password.request      | cdn\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web,guest                    |
-    |        | POST     | password/reset                          | password.update       | cdn\Http\Controllers\Auth\ResetPasswordController@reset                | web,guest                    |
-    |        | GET|HEAD | password/reset/{token}                  | password.reset        | cdn\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web,guest                    |
-    |        | POST     | profile/edit                            | profile.edit          | cdn\Http\Controllers\ProfileController@profileEdit                     | web                          |
-    |        | GET|HEAD | profile/edit                            | profile.get           | cdn\Http\Controllers\ProfileController@getEdit                         | web                          |
-    |        | POST     | profile/imgupdate                       | photo.edit            | cdn\Http\Controllers\UploadController@photoEdit                        | web                          |
-    |        | POST     | register                                |                       | cdn\Http\Controllers\Auth\RegisterController@register                  | web,guest                    |
-    |        | GET|HEAD | register                                | register              | cdn\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web,guest                    |
-    |        | GET|HEAD | root                                    | root.index            | cdn\Http\Controllers\RootController@getIndex                           | web,auth                     |
-    |        | GET|HEAD | root/orders/{idnumber}                  | root.user.orders      | cdn\Http\Controllers\RootController@getOrdersByUserId                  | web,auth                     |
-    |        | GET|HEAD | root/orders/{idnumber}/{slug}           | root.userorder.orders | cdn\Http\Controllers\RootController@getOrdersByIdAndSlug               | web,auth                     |
-    |        | POST     | root/orders/{idnumber}/{slug}/success   | orders.complete       | cdn\Http\Controllers\RootController@completeOrder                      | web,auth                     |
-    |        | GET|HEAD | root/tree --> YOU ARE HERE !            | root.tree             | cdn\Http\Controllers\RootController@getTree                            | web,auth                     |
-    |        | GET|HEAD | root/users/orders/all                   | root.orders.all       | cdn\Http\Controllers\RootController@getAllOrders                       | web,auth                     |
-    |        | GET|HEAD | search/branches                         | search.branches       | cdn\Http\Controllers\SearchController@getBranches                      | web                          |
-    |        | GET|HEAD | search/items                            | search.items          | cdn\Http\Controllers\SearchController@getItems                         | web                          |
-    |        | GET|HEAD | submit-rtv                              | rtv.index             | cdn\Http\Controllers\RtvController@getIndex                            | web,auth                     |
-    |        | GET|HEAD | test0                                   |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | test1                                   |                       | Closure                                                                | web                          |
-    |        | GET|HEAD | tests                                   | tests.index           | cdn\Http\Controllers\RootController@getTest                            | web,auth                     |
-    |        | GET|HEAD | tests-csv                               | tests.index           | cdn\Http\Controllers\RootController@getCsv                             | web,auth                     |
-    |        | GET|HEAD | tests/othaim                            | tests.othaim          | cdn\Http\Controllers\OrdersController@listOthiam                       | web,auth                     |
-    |        | GET|HEAD | tests/review                            | orders.review         | cdn\Http\Controllers\RootController@getReview                          | web,auth                     |
-    |        | GET|HEAD | user/{id}                               | dashboard.index       | cdn\Http\Controllers\ProfileController@getProfile                      | web                          |
-    |        | GET|HEAD | user/{id}/orders                        | dashboard.orders      | cdn\Http\Controllers\OrdersController@getOrdersbyUser                  | web,auth                     |
-    |        | GET|HEAD | user/{id}/orders/archive                | dashboard.archive     | cdn\Http\Controllers\ProfileController@getArchive                      | web                          |
-    +--------+----------+-----------------------------------------+-----------------------+------------------------------------------------------------------------+------------------------------+
+    +--------+----------+----------------------------------------------------------------+-----------------------+------------------------------------------------------------------------+------------------------------+
+    | Domain | Method   | URI                                                            | Name                  | Action                                                                 | Middleware                   |
+    +--------+----------+----------------------------------------------------------------+-----------------------+------------------------------------------------------------------------+------------------------------+
+    |        | GET|HEAD | /                                                              | global.index          | cdn\Http\Controllers\GlobalController@getIndex                         | web,auth                     |
+    |        | GET|HEAD | admin/{id}                                                     | dashboard.admin       | cdn\Http\Controllers\ProfileController@getAdmin                        | web                          |
+    |        | GET|HEAD | admins                                                         | admins                | cdn\Http\Controllers\HomeController@admins                             | web,is-admin,auth            |
+    |        | GET|HEAD | alert                                                          |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | api/dashboard/orders/{slug}                                    |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/echo/xml                                                   |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/echo/xml/{ordernumber}                                     |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/export-orders-csv/{idnumber}/completed                     |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/order/{ordernumber}                                        |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/orderitems/{ordernumber}                                   |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/orders/user/{slug}                                         |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/test                                                       |                       | Closure                                                                | api                          |
+    |        | GET|HEAD | api/user                                                       |                       | Closure                                                                | api,auth:api                 |
+    |        | GET|HEAD | branch/add                                                     | branches.add          | cdn\Http\Controllers\BranchesController@addBranch                      | web,auth                     |
+    |        | POST     | branch/insert                                                  | branches.insert       | cdn\Http\Controllers\BranchesController@InsertBranches                 | web,auth                     |
+    |        | GET|HEAD | branches                                                       | branches.index        | cdn\Http\Controllers\BranchesController@getCustomers                   | web,auth                     |
+    |        | GET|HEAD | email/resend                                                   | verification.resend   | cdn\Http\Controllers\Auth\VerificationController@resend                | web,auth,throttle:6,1        |
+    |        | GET|HEAD | email/verify                                                   | verification.notice   | cdn\Http\Controllers\Auth\VerificationController@show                  | web,auth                     |
+    |        | GET|HEAD | email/verify/{id}                                              | verification.verify   | cdn\Http\Controllers\Auth\VerificationController@verify                | web,auth,signed,throttle:6,1 |
+    |        | GET|HEAD | export-orderitems-csv                                          |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-csv                                              |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-csv/submitted/to/completed/now                   |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-csv/submitted/to/completed/{idnumber}/all        |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-csv/today                                        |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-csv/{idnumber}/completed                         |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-orderitems-csv/excel                             |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-orderitems-csv/function                          |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-orderitems-csv/submitted/to/completed            |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-orderitems-csv/today                             |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-orderitems-csv/{idnumber}/submitted/to/completed |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | export-orders-orderitems-xml                                   |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | item/add                                                       | items.add             | cdn\Http\Controllers\ItemsController@addItem                           | web,auth                     |
+    |        | POST     | item/insert                                                    | items.insert          | cdn\Http\Controllers\ItemsController@InsertItems                       | web,auth                     |
+    |        | GET|HEAD | items                                                          | items.index           | cdn\Http\Controllers\ItemsController@getNewItems                       | web,auth                     |
+    |        | POST     | login                                                          |                       | cdn\Http\Controllers\Auth\LoginController@login                        | web,guest                    |
+    |        | GET|HEAD | login                                                          | login                 | cdn\Http\Controllers\Auth\LoginController@showLoginForm                | web,guest                    |
+    |        | POST     | logout                                                         | logout                | cdn\Http\Controllers\Auth\LoginController@logout                       | web                          |
+    |        | GET|HEAD | mail                                                           | tests.email           | cdn\Http\Controllers\RootController@getMail                            | web,auth                     |
+    |        | GET|HEAD | manager                                                        | global.manager        | cdn\Http\Controllers\GlobalController@getManager                       | web,auth                     |
+    |        | GET|HEAD | manager/{id}                                                   | dashboard.manager     | cdn\Http\Controllers\ProfileController@getManager                      | web                          |
+    |        | GET|HEAD | md                                                             | tests.markdown        | cdn\Http\Controllers\RootController@getMd                              | web,auth                     |
+    |        | GET|HEAD | old/branches                                                   | branches.index        | cdn\Http\Controllers\BranchesController@getBranches                    | web,auth                     |
+    |        | GET|HEAD | order/add                                                      | orders.add            | cdn\Http\Controllers\OrdersController@addOrder                         | web,auth                     |
+    |        | GET|HEAD | order/add/step1                                                | orders.partials.step1 | cdn\Http\Controllers\OrdersController@addOrderStep1                    | web,auth                     |
+    |        | GET|HEAD | order/add/step2                                                | orders.partials.step2 | cdn\Http\Controllers\OrdersController@addOrderStep2                    | web,auth                     |
+    |        | GET|HEAD | order/add/urgent                                               | orders.urgent         | cdn\Http\Controllers\OrdersController@addUrgentOrder                   | web,auth                     |
+    |        | POST     | order/insert/step1                                             | orders.insert.step1   | cdn\Http\Controllers\OrdersController@insertOrderStep1                 | web,auth                     |
+    |        | POST     | order/insert/step2                                             |                       | cdn\Http\Controllers\OrdersController@insertOrderStep2                 | web,auth                     |
+    |        | GET|HEAD | orders                                                         | orders.index          | cdn\Http\Controllers\OrdersController@getOrders                        | web,auth                     |
+    |        | GET|HEAD | orders/order/{slug}                                            | orders.order          | cdn\Http\Controllers\OrdersController@getOrderNumber                   | web,auth                     |
+    |        | POST     | orders/order/{slug}/attachpo                                   | orders.attachpo       | cdn\Http\Controllers\OrdersController@attachPo                         | web,auth                     |
+    |        | POST     | orders/order/{slug}/backedit                                   | orders.backedit       | cdn\Http\Controllers\OrdersController@backEditOrderItems               | web,auth                     |
+    |        | POST     | orders/order/{slug}/change                                     | update.po             | cdn\Http\Controllers\OrdersController@updatePo                         | web,auth                     |
+    |        | POST     | orders/order/{slug}/delete                                     | delete.po             | cdn\Http\Controllers\OrdersController@deletePo                         | web,auth                     |
+    |        | GET|HEAD | orders/order/{slug}/edit                                       | orders.edit           | cdn\Http\Controllers\OrdersController@editOrderNumber                  | web,auth                     |
+    |        | POST     | orders/order/{slug}/insert                                     | orders.insert         | cdn\Http\Controllers\OrdersController@insertOrderItems                 | web,auth                     |
+    |        | POST     | orders/order/{slug}/remove/{itemnumber}                        | orders.remove         | cdn\Http\Controllers\OrdersController@removeOrderItem                  | web,auth                     |
+    |        | POST     | orders/order/{slug}/remove/{ponumber}                          | orders.destroy        | cdn\Http\Controllers\OrdersController@removeOrder                      | web,auth                     |
+    |        | GET|HEAD | orders/order/{slug}/review                                     | orders.review         | cdn\Http\Controllers\OrdersController@reviewOrderItems                 | web,auth                     |
+    |        | POST     | orders/order/{slug}/submit                                     | orders.submit         | cdn\Http\Controllers\OrdersController@submitOrder                      | web,auth                     |
+    |        | GET|HEAD | orders/order/{slug}/success                                    | orders.success        | cdn\Http\Controllers\OrdersController@successOrder                     | web,auth                     |
+    |        | POST     | password/email                                                 | password.email        | cdn\Http\Controllers\Auth\ForgotPasswordController@sendResetLinkEmail  | web,guest                    |
+    |        | POST     | password/reset                                                 | password.update       | cdn\Http\Controllers\Auth\ResetPasswordController@reset                | web,guest                    |
+    |        | GET|HEAD | password/reset                                                 | password.request      | cdn\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm | web,guest                    |
+    |        | GET|HEAD | password/reset/{token}                                         | password.reset        | cdn\Http\Controllers\Auth\ResetPasswordController@showResetForm        | web,guest                    |
+    |        | POST     | profile/edit                                                   | profile.edit          | cdn\Http\Controllers\ProfileController@profileEdit                     | web                          |
+    |        | GET|HEAD | profile/edit                                                   | profile.get           | cdn\Http\Controllers\ProfileController@getEdit                         | web                          |
+    |        | POST     | profile/imgupdate                                              | photo.edit            | cdn\Http\Controllers\UploadController@photoEdit                        | web                          |
+    |        | POST     | promo/mass/upload                                              | promo.order           | cdn\Http\Controllers\OrdersController@promoOrder                       | web,auth                     |
+    |        | GET|HEAD | register                                                       | register              | cdn\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web,guest                    |
+    |        | POST     | register                                                       |                       | cdn\Http\Controllers\Auth\RegisterController@register                  | web,guest                    |
+    |        | GET|HEAD | root                                                           | root.index            | cdn\Http\Controllers\RootController@getIndex                           | web,auth                     |
+    |        | GET|HEAD | root/mysql/sgdb0                                               | root.mysql            | cdn\Http\Controllers\RootController@getDB                              | web,auth                     |
+    |        | POST     | root/mysql/sgdb0/post                                          | root.mysql.post       | cdn\Http\Controllers\RootController@postCommand                        | web,auth                     |
+    |        | GET|HEAD | root/orders/{idnumber}                                         | root.user.orders      | cdn\Http\Controllers\RootController@getOrdersByUserId                  | web,auth                     |
+    |        | GET|HEAD | root/orders/{idnumber}/submitted/to/completed                  | root.orderexport      | cdn\Http\Controllers\OrdersController@exportReport                     | web,auth                     |
+    |        | GET|HEAD | root/orders/{idnumber}/{slug}                                  | root.userorder.orders | cdn\Http\Controllers\RootController@getOrdersByIdAndSlug               | web,auth                     |
+    |        | POST     | root/orders/{idnumber}/{slug}/success                          | orders.complete       | cdn\Http\Controllers\RootController@completeOrder                      | web,auth                     |
+    |        | GET|HEAD | root/readme                                                    | root.readme           | cdn\Http\Controllers\RootController@getReadMe                          | web,auth                     |
+    |        | GET|HEAD | root/readme-v0.02                                              | root.md               | cdn\Http\Controllers\RootController@getRM                              | web,auth                     |
+    |        | GET|HEAD | root/readme-v0.03                                              | root.md.index         | cdn\Http\Controllers\RootController@getRMindex                         | web,auth                     |
+    |        | GET|HEAD | root/search/orders                                             | search.orders         | cdn\Http\Controllers\SearchController@getOrder                         | web                          |
+    |        | GET|HEAD | root/tree                                                      | root.tree             | cdn\Http\Controllers\RootController@getTree                            | web,auth                     |
+    |        | GET|HEAD | root/users                                                     | root.users            | cdn\Http\Controllers\RootController@getUsers                           | web,auth                     |
+    |        | GET|HEAD | root/users/orders/all                                          | root.orders.all       | cdn\Http\Controllers\RootController@getAllOrders                       | web,auth                     |
+    |        | GET|HEAD | root/users/orders/stats                                        | root.stats.totals     | cdn\Http\Controllers\RootController@getStats                           | web,auth                     |
+    |        | GET|HEAD | search/branches                                                | search.branches       | cdn\Http\Controllers\SearchController@getBranches                      | web                          |
+    |        | GET|HEAD | search/items                                                   | search.items          | cdn\Http\Controllers\SearchController@getItems                         | web                          |
+    |        | GET|HEAD | search/pos                                                     | search.pos            | cdn\Http\Controllers\SearchController@getPos                           | web                          |
+    |        | GET|HEAD | submit-rtv                                                     | rtv.index             | cdn\Http\Controllers\RtvController@getIndex                            | web,auth                     |
+    |        | GET|HEAD | test0                                                          |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | test1                                                          |                       | Closure                                                                | web                          |
+    |        | GET|HEAD | tests                                                          | tests.index           | cdn\Http\Controllers\RootController@getTest                            | web,auth                     |
+    |        | GET|HEAD | tests-csv                                                      | tests.index           | cdn\Http\Controllers\RootController@getCsv                             | web,auth                     |
+    |        | GET|HEAD | tests/othaim                                                   | tests.othaim          | cdn\Http\Controllers\OrdersController@listOthiam                       | web,auth                     |
+    |        | GET|HEAD | tests/review                                                   | orders.review         | cdn\Http\Controllers\RootController@getReview                          | web,auth                     |
+    |        | GET|HEAD | user/{id}                                                      | dashboard.index       | cdn\Http\Controllers\ProfileController@getProfile                      | web                          |
+    |        | GET|HEAD | user/{id}/orders                                               | dashboard.orders      | cdn\Http\Controllers\OrdersController@getOrdersbyUser                  | web,auth                     |
+    |        | GET|HEAD | user/{id}/orders/archive                                       | dashboard.archive     | cdn\Http\Controllers\ProfileController@getArchive                      | web                          |
+    +--------+----------+----------------------------------------------------------------+-----------------------+------------------------------------------------------------------------+------------------------------+
 
-
+```
 
 ---------------------
 

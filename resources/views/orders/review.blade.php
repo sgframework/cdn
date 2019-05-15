@@ -115,7 +115,7 @@
             @endif
             <input hidden name="totaloriginal" value="{{ $totaloriginal }}">
             <div style="float:right;padding-right:20px">
-                <button accesskey="a" style="font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit"> Submit </button>
+                <button accesskey="a" style="width:200px;font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit">  <kbd style="font-size:10px">⌘  Alt + a</kbd> <br /> Submit </button>
             </div>
             <main class="py-4 hljs">
             <div class="row">

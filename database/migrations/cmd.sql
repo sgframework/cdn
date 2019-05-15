@@ -616,6 +616,58 @@ DELETE FROM orderitems WHERE ponumber="050519 0020";
 
 
 
+55100015	SUMI HAPPY MIX KIDS (20X200G)	150	150
+55100115	SUMI FRUIT JELLY DOUBLE TASTE (32X175G)	213	213
+55100818	SUMI MIX BON PARTY MIX KIDS (16X300G)	182	182
+55101015	SUMI MONSTER (22X90G)	83	83
+55101115	SUMI COLA (22X90G)	83	83
+55101315	SUMI SOUR WORMS (22X90G)	83	83
+55101515	SUMI FRUIT JELLY (32X175G)	195	195
+55101618	SUMI MEGA TATTOO (28x74g)	128	128
+
+
+
+
+
+
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55100015", "	SUMI HAPPY MIX KIDS (20X200G)", "150", "150");
+
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55100115", "SUMI FRUIT JELLY DOUBLE TASTE (32X175G)", "213", "213");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55100818", "SUMI MIX BON PARTY MIX KIDS (16X300G)", "182", "182");
+
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55101015", "SUMI MONSTER (22X90G)", "83", "83");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55101115", "SUMI COLA (22X90G", "83", "83");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55101315", "SUMI SOUR WORMS (22X90G)", "83", "83");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55101515", "SUMI FRUIT JELLY (32X175G)", "195", "195");
+
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("55101618", "SUMI MEGA TATTOO (28x74g", "128", "128");
+
+
+
+
 
 
 
@@ -631,6 +683,12 @@ DELETE FROM orderitems WHERE ponumber="050519 0020";
 
 
 INSERT INTO branches (branchnumber, branchname, salesgroup, dc, office) Values ("302803", "PANDA #34", "2508", "24", "CENQ");
+
+
+
+
+
+
 
 
 
@@ -782,9 +840,41 @@ WHERE id="20";
 
 
 
+                        -> WAEL GHAZI / KA SUPERVISOR Qaseem 001110
+                            -> Suneer 001111
+                            -> Fahad Hussein 001112
+                            -> Sultan Salman 001113
+                            -> Medhat 001114
+
+CTB	Suneer	msn@sunbulahgroup.com	466	554946096
+CTP	Fahad Hussein	ffh@sunbulahgroup.com	2508	556593688
+CTQ	Sultan Salman	ssl@sunbulahgroup.com	1621	556593688
+CVZ	Medhat	mem@sunbulahgroup.com	4241	553984873
 
 
 
+
+UPDATE users
+SET dc = "001112"
+WHERE id="30";
+
+UPDATE users
+SET dc = "001114"
+WHERE id="31";
+
+
+UPDATE users
+SET idnumber = "2508"
+WHERE id="30";
+
+UPDATE users
+SET idnumber = "4241"
+WHERE id="31";
+
+
+UPDATE users
+SET idnumber = "1621"
+WHERE id="26";
 
 UPDATE users
 SET idnumber = "1040"
@@ -806,7 +896,7 @@ SET idnumber = "1110"
 WHERE id="28";
 
 UPDATE users
-SET dc = "1030"
+SET dc = "001110"
 WHERE id="28";
 
 
@@ -818,32 +908,20 @@ WHERE id="29";
 
 
 UPDATE users
-SET idnumber = "1110"
-WHERE id="28";
+SET idnumber = "001112"
+WHERE id="30";
 
 
 UPDATE users
-SET dc = "1030"
-WHERE id="28";
+SET dc = "001113"
+WHERE id="26";
 
 
 
 UPDATE users
-SET idnumber = "1110"
-WHERE id="28";
+SET idnumber = "001114"
+WHERE id="31";
 
-
-UPDATE users
-SET dc = "1030"
-WHERE id="28";
-
-
-
-                        -> WAEL GHAZI / KA SUPERVISOR Qaseem 001110
-                            -> Suneer 001111
-                            -> Fahad Hussein 001112
-                            -> Sultan Salman 001113
-                            -> Medhat 001114
 
 
 UPDATE orders set status="Submitted"

@@ -66,7 +66,8 @@
 
     @if ( Auth::user()->is_permission == '0')
     <div style="padding-top:200px;padding-bottom:200px">
-    <h3 class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3>
+    <a href="/">&larr; Go Back Home <i class="fas fa-home"></i></a>
+<h3 class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> You don't have the right permissions to view this content, sorry!</h3> 
         </div>
 
         @else

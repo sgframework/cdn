@@ -123,7 +123,7 @@
                         </span>-->
                             @if ( Auth::user()->is_permission == '0')                        
                         <span class="nav-item">
-                            <a class="nav-link" accesskey="n" href="{{ route('orders.add') }}"> <i class="fa fa-plus-circle"></i> New Order</a>
+                            <a class="nav-link" accesskey="n" href="{{ route('orders.add') }}"> <i class="fa fa-plus-circle"></i> New Order <span style="font-size:10px"><kbd>⌘  Alt+n</kbd></span></a>
                         </span>
                         <span class="nav-item">
                             <a class="nav-link" href="{{ route('dashboard.index', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>

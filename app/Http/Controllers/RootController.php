@@ -4,18 +4,20 @@ namespace cdn\Http\Controllers;
 
 use Session;
 
+use Artisan;
 use cdn\Models\Branch;
 use cdn\Models\Order;
 use cdn\Models\OrderItems;
 use cdn\Models\Item;
 use cdn\Models\Itemv2;
 use cdn\Models\Root;
+use cdn\Charts\orders;
 use DB;
 use Auth;
 use Mail;
 use cdn\User;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\Cache;
 
 use Illuminate\Http\Request;
 
@@ -535,7 +537,7 @@ class RootController extends Controller
 
 
 		/* All Orders*/
-		$date1 = \Carbon\Carbon::today()->subDays();
+		$date1 = \Carbon\Carbon::today()->subDays(0);
 		//$allorders = Order::where('created_at', '>=', $today)->get();
 		//$sumallorders = $allorders->sum('totalprice');
         //$completedorders =  OrderItems::select()->where('orderstatus', '=', 'Completed')->whereNotNull('itemprice')->groupBy('staffid')->get();
@@ -2278,7 +2280,7 @@ class RootController extends Controller
         $thismonthorders = Order::whereDate('created_at', $thismonth )->get();
         $sumthismonthorders = $thismonthorders->sum('totalprice');
 		/* All Orders*/
-		$date1 = \Carbon\Carbon::today()->subDays();
+		$date1 = \Carbon\Carbon::today()->subDays(0);
 		//$allorders = Order::where('created_at', '>=', $today)->get();
 		//$sumallorders = $allorders->sum('totalprice');
         //$completedorders =  OrderItems::select()->where('orderstatus', '=', 'Completed')->whereNotNull('itemprice')->groupBy('staffid')->get();
@@ -3815,6 +3817,9 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
 
     */
 
+
+
+
         //dump($sumajuneop);
         return view('root.stats.totals')
                 ->withOrder($order)
@@ -5225,7 +5230,35 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         $users = User::all();
         $links = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
 
-        return view('root.md.readme')->with('links', $links)->with('users', $users);
+        $orders = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->first();
+        $customers = Branch::select()->orderBy('updated_at', 'asc')->first();
+
+        $relation = $orders->where('ponumber', '=', 'test0')->first('branchnumber');
+        $relatedcustomer = $customers;
+        $relatedcustomer =  $customers->where('branchnumber', '=', $customers->branchnumber)->get();
+        $relatedorder =  $orders->where('branchnumber', '=', $orders->branchnumber)->get();
+        
+        $customerorders =  $customers->where('branchnumber', '=', $customers->branchnumber)->get();
+        $customerbysalegroup =  $orders->where('staffid', '=', \Auth::user()->idnumber)->where('branchnumber', '=', $orders->branchnumber)->get();
+        
+        $store = Cache::store('redis')->put('bar', 'baz', 600); // 10 Minutes
+
+        $value = Cache::rememberForever('users', function () {
+            return DB::table('users')->get();
+        });
+
+        $sumallcustomerorders = $relatedorder->sum('totalprice');
+
+        $exitCode = Artisan::call('command:orders');
+        $outputt = Artisan::output();
+
+        dump($store);
+        dump($value);
+            return view('root.md.readme')
+            ->with('exitCode', $exitCode)
+            ->with('outputt', $outputt)
+            ->with('links', $links)
+            ->with('users', $users);
     }
     
     public function getDB()

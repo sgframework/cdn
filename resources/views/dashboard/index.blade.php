@@ -200,7 +200,7 @@ Email: {{ Auth::user()->email }}
                                                             <td>{{ $branch->salesgroup }}</td>
                                                             <td>{{ $branch->dc }}</td>
                                                             <td>{{ $branch->office }}</td>
-                                                            <td>N/A .00 SAR</td>
+                                                            <td>{{ $relatedorder->where('branchnumber', '=', $branch->branchnumber)->sum('totalprice') }}.00 SAR</td>
                                                         </tr>
                                                     </tbody>
                                                 @endforeach	
@@ -210,7 +210,7 @@ Email: {{ Auth::user()->email }}
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td>N/A .00 SAR</td>
+                                                            <td>{{ number_format($relatedorder->sum('totalprice')) }}.00 SAR</td>
                                                         </tr>
                                                     </tfoot>
                                             </table>  

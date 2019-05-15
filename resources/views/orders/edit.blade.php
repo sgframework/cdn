@@ -119,11 +119,11 @@
                                                     @elseif ( $order->status == 'Reviewing' )
                                                     @elseif ( $order->status == 'Editing' )
                                                     <div style="padding-left:20px">
-                                                        <input type="submit" accesskey="l" tabindex="5" value="Insert &darr;" style="background-color:black;color:white;padding: 2px 8px 2px 8px;font-size: 12px" class="form-control" />
+                                                        <input type="submit" accesskey="q" tabindex="5" value="Insert &darr;" style="background-color:black;color:white;padding: 2px 8px 2px 8px;font-size: 12px" class="form-control" />
                                                     </div>
                                                     @elseif ( $order->status == 'JustCreated' )
                                                     <div style="padding-left:20px">
-                                                        <input type="submit" accesskey="l" tabindex="5" value="Insert &darr;" style="background-color:black;color:white;padding: 2px 8px 2px 8px;font-size: 12px" class="form-control" />
+                                                        <input type="submit" accesskey="q" tabindex="5" value="Insert &darr;" style="background-color:black;color:white;padding: 2px 8px 2px 8px;font-size: 12px" class="form-control" />
                                                     </div>
                                                     @else
                                                 
@@ -216,20 +216,11 @@
                                                     <span style="float:right" class="badge badge-light">Original Total price {{ number_format($totaloriginal) }}.00 SAR</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     @endif
                                                 @endif
-
-<div style="float:left">
-@markdown
-
-&#8984; Hotkeys : 
-
-```
-
-        Alt + l => Insert item.
-        Alt + a => Proceed reviewing order.
-
-```
-@endmarkdown
-</div>
+                                                <div style="float:left">
+                                                    <h5>&#8984; Hotkeys : </h5>
+                                                        <span style="font-size:10px"><kbd>⌘  Alt + q</kbd> => Insert item.</span> 
+                                                        <span style="font-size:10px"><kbd>⌘  Alt + a</kbd> => Proceed reviewing order.</span> 
+                                                </div>
                                               @if ( $order->status == 'Submitted')
                                               <div class="alert alert-danger"><i class="fas fa-exclamation-triangle"></i> Can't make edits on submitted or completed orders.</div>
                                               @elseif ( $order->status == 'Completed' )

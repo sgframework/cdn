@@ -28,6 +28,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
     
+
+    
     <!--JUST ENABLED-->
     
     <link rel="stylesheet" href="{{ asset('css/prism.css') }}">

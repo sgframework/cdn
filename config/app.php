@@ -26,8 +26,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
-
+    'env' => env('APP_ENV', 'development'),
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
@@ -166,6 +165,7 @@ return [
         ChristofferOK\LaravelEmojiOne\LaravelEmojiOneServiceProvider::class,
         Yoeunes\Toastr\ToastrServiceProvider::class,
         Grimthorr\LaravelToast\ServiceProvider::class,
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
 
 
 
@@ -237,6 +237,7 @@ return [
         'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
         'LaravelEmojiOne' => ChristofferOK\LaravelEmojiOne\LaravelEmojiOneFacade::class,
         'Toast' => Grimthorr\LaravelToast\Facade::class,
+        'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
 
     ],
 

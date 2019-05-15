@@ -151,7 +151,7 @@
                         </script>
                         <input hidden class="form-control" type="text" class="form-control" name="slug" value="api" />
                         <span style="color:red">&nbsp;&nbsp;&nbsp; Urgent</span>&nbsp;&nbsp;&nbsp;<input  id="third" type="checkbox" name="urgent">
-                    <div style="float:right; padding-left:4px">&nbsp;&nbsp;&nbsp;<input accesskey="a" style="padding:5px 20px;background-color:#227dc7" class="btn btn-primary" value="Next" type="submit" /></div>
+                    <div style="float:right; padding-left:4px">&nbsp;&nbsp; <span style="font-size:10px"><kbd>⌘  Alt+a</kbd></span> &nbsp;&nbsp;<input accesskey="a" style="padding:5px 20px;background-color:#227dc7" class="btn btn-primary" value="Next" type="submit" /></div>
                 </form>
                         <script>
                             $(document).ready(function(){
