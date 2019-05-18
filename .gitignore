@@ -3,17 +3,17 @@
 /public/storage
 /storage/*.key
 /vendor
+/public/attachments
+/public/image
+/public/images
+/public/orders
+/public/reports
+/public/uploads
+/public/share
 .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-public/attachments
-public/image
-public/images
-public/orders
 
-public/reports
-public/uploads
-public/share
