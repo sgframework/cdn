@@ -18,16 +18,40 @@
                             <div class="row">
                                 <form style="display: contents" class="form-inline" action="{{ route('update.po', ['slug' => $order->slug]) }}" method="POST">
                                     @csrf
-                                    <input type="text" name="ponumber" class="form-control1" value="{{ $order->ponumber }}">
-                                    <input class="form-control"  style="width: 20%;background-color:gray;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="change">
+                                    <input size="30" width="20px" type="text" name="ponumber" class="form-control" value="{{ $order->ponumber }}">
+                                    <button style="font-size: 12px;" type="submit" class="btn btn-info">
+                                        Change
+                                    </button>
                                 </form>
-                                <form class="form-inline" action="{{ route('delete.po', ['slug' => $order->slug]) }}" method="POST">
-                                    @csrf
-                                    <input class="form-control" style="background-color:red;color:white;padding: 2px 8px 2px 8px;font-size: 12px" type="submit" value="Delete PO">
-                                </form>
+                                    <button style="font-size: 12px;" type="button" class="btn btn-danger" data-toggle="modal" data-target="#delPO">
+                                    Delete PO
+                                    </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="delPO" tabindex="-1" role="dialog" aria-labelledby="delPOLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="delPOLabel">Delete PO Confirmation</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this po ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <form action="{{ route('delete.po', ['slug' => $order->slug]) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger">Yes</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    <span style="color:red">
+                    </div>
+                <span style="color:red">
 @markdown
 
 ##### You are now editing PO# **{{ $order->ponumber }}**

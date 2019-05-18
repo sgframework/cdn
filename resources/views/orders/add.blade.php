@@ -102,7 +102,7 @@
                         <input autofocus="true" onkeydown="this.my_no_focus = true;" id="first" size="20" onkeyup="movetoNext(this, 'second')" maxlength="14" class="form-control" width="20px" type="text" value="{{ Request::old('ponumber') ?: ++ $lastorder->ponumber }}"  placeholder="PO#" name="ponumber" required>&nbsp;&nbsp;&nbsp;
                         @if (!$branches_list)
                         @else                                
-                        <input  id="second" size="16" onkeyup="movetoNext(this, 'third')" maxlength="50" name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
+                        <input  id="second" size="38" onkeyup="movetoNext(this, 'third')" maxlength="50" name="branchnumber" class="form-control1" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                         <input hidden name="branchname" class="form-control" list="{{ $branch->branchnumber }}-{{ $branch->branchname }}">
                             <datalist id="{{ $branch->branchnumber }}-{{ $branch->branchname }}" class="">
                                 @foreach($branches_list as $branch)

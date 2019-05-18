@@ -5252,11 +5252,16 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         $exitCode = Artisan::call('command:orders');
         $outputt = Artisan::output();
 
-        dump($store);
-        dump($value);
+        $routes = Artisan::call('route:list');
+        $routeslist = Artisan::output();
+        $routes = Artisan::call('route:list');
+        $routeslist = Artisan::output();
+        //dump($store);
+        //dump($routeslist);
             return view('root.md.readme')
             ->with('exitCode', $exitCode)
             ->with('outputt', $outputt)
+            ->with('routeslist', $routeslist)
             ->with('links', $links)
             ->with('users', $users);
     }

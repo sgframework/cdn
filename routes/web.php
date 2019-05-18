@@ -4,6 +4,7 @@ use cdn\User;
 use cdn\Models\Order;
 use cdn\Models\OrderItems;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -472,10 +473,57 @@ Route::get('/item/add', [
 
 
 
+Route::get('/zip', function () {
 
 
 
 
+$zip = new ZipArchive();
+$filename = "./attachments/pos/slug.zip";
+
+if ($zip->open($filename, ZipArchive::CREATE)!==TRUE) {
+    exit("cannot open <$filename>\n");
+}
+
+$zip->addFromString("testfilephp.csv" , "#1 This is a test string added as testfilephp.csv.\n" . now());
+$zip->addFromString("testfilephp2.csv" , "#2 This is a test string added as testfilephp2.csv.\n" . now());
+$zip->addFile("attachments/pos/q6.pdf","po/slug.pdf");
+$zip->addFile("attachments/pos/q6.pdf","po0/slug1.pdf");
+echo "numfiles: " . $zip->numFiles . "\n";
+echo "status:" . $zip->status . "\n";
+$zip->close();
+}
+);
+
+
+
+
+
+
+
+
+Route::get('/zip/po', function () {
+
+
+
+$za = new ZipArchive();
+
+$za->open('./attachments/pos/slug.zip');
+dump($za);
+dump($za);
+echo "<pre>numFiles: " . $za->numFiles . "</pre>\n";
+echo "<pre>status: " . $za->status  . "</pre>\n";
+echo "<pre>statusSys: " . $za->statusSys . "</pre>\n";
+echo "<pre>filename: " . $za->filename . "</pre>\n";
+echo "<pre>comment: " . $za->comment . "</pre>\n";
+
+for ($i=0; $i<$za->numFiles;$i++) {
+    echo "index: $i\n";
+    dump($za->statIndex($i));
+}
+echo "numFile:" . $za->numFiles . "\n";
+
+});
 
 /*
 * Alert-Test
@@ -1972,7 +2020,7 @@ Route::get('/export-orders-csv/submitted/to/completed/now' , function() {
             'Content-Type' => 'text/csv',
         );
         $orders = Order::where('status', '=', 'Submitted');
-        $orders->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber, 'processedby' => \Auth::user()->idnumber]);
+        $orders->update(['updated_at' => now(), 'status' => 'Completed', 'processedby' => \Auth::user()->idnumber]);
         $orderitems = OrderItems::where('orderstatus', '=', 'Submitted');
         $orderitems->update(['updated_at' => now(), 'orderstatus' => 'Completed']);
         $michaelorders = $orders->where('staffid', '=', '1275')->get();

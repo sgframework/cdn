@@ -8,6 +8,7 @@ use cdn\Models\Item;
 use cdn\Models\Itemv2;
 use cdn\Mail\OrderSubmitted;
 use cdn\User;
+use ZipArchive;
 use DB;
 use Mail;
 use Illuminate\Support\Facades\Hash;
@@ -518,12 +519,21 @@ class OrdersController extends Controller
         }
         public function attachPo(Request $request, $slug)
         {
-            $target_dir = "../public/attachments/pos/";
-            $target_file = $target_dir . $slug . '-' .  basename($_FILES["fileToUpload"]["name"]);
+            $idnumber = Order::where('slug', '=', $slug)->first();
+
+            $target_dir = "attachments/pos/" . $idnumber->staffid . "/";
+            $target_file = $target_dir  . $slug . "-" .  basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+
+
             // Check if image file is a actual image or fake image
             if(isset($_POST["fileToUpload"])) {
+
+
+
                 $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
                 if($check !== false) {
                     echo "File is an image - " . $check["mime"] . ".";
@@ -554,18 +564,40 @@ class OrdersController extends Controller
                 echo "Sorry, your file was not uploaded.";
             // if everything is ok, try to upload file
             } else {
+
                 if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
-                            Order::where('slug', '=', $slug)->update([
+
+
+                echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                Order::where('slug', '=', $slug)->update([
                 'attachedpo' => basename( $_FILES["fileToUpload"]["name"]),
             ]);
-            return redirect()->back()->with('success', 'Your PO has been attached to this order => You can submit now.');
+
+
+            $idnumber = Order::where('slug', '=', $slug)->first();
+            $zip = new ZipArchive();
+            $filename = "attachments/zip/" . $idnumber->staffid . '-' . now()->format('dmy')  . ".zip";
+            $zippedfolder = $idnumber->staffid . '-' . now()->format('dmy') . '/attachments/pos/'  . $slug . "-" .  basename($_FILES["fileToUpload"]["name"]);
+            $zip->open($filename, ZipArchive::CREATE);
+            
+            $zip->addFile($target_file,$zippedfolder);
+
+
+            $zip->close();
+
+
+            
+            
+
+            return 
+            redirect()->back()->with('success', 'Your PO has been attached to this order => You can submit now.');
                     
                 } else {
                     echo "Sorry, there was an error uploading your file.";
                 }
             }
         }
+
 
 
         public function promoOrder(Request $request)
@@ -677,13 +709,169 @@ class OrdersController extends Controller
                 'totalprice' => 'max:255',
                 'totalqtyprice' => 'max:255',
                 'totaloriginal' => 'max:255'
-            ]);
-            Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'],  'totalfree' => $request['totalfree'],  'discount' => $request['discount'], 'totalprice' => $request['totalqtyprice'],  'totaloriginal' => $request['totaloriginal'], 'updated_at' => now(), 'status' => 'Submitted']);
-            OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'totalprice' => $request['totalqtyprice'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
+                ]);
+                
+                
+                Order::where('slug', $slug)->update(['orderid' => $request['orderid'], 'totalitems' => $request['totalitems'], 'totalqty' => $request['totalqty'],  'totalfree' => $request['totalfree'],  'discount' => $request['discount'], 'totalprice' => $request['totalqtyprice'],  'totaloriginal' => $request['totaloriginal'], 'updated_at' => now(), 'status' => 'Submitted']);
+                OrderItems::where('slug', $slug)->update(['orderid' => $request['orderid'], 'ponumber' => $request['ponumber'], 'branchname' => $request['branchname'], 'totalprice' => $request['totalqtyprice'], 'totalqtyprice' => $request['totalqtyprice'], 'updated_at' => now(), 'orderstatus' => 'Submitted']);
+
+            /** Create CSV REPORT */
+
+            $idnumber = Order::where('slug', '=', $slug)->first();
+
+            $today = date("Y-m-d", strtotime( '0 days' ) );	
+            $date = \Carbon\Carbon::today()->subDays(0);
+            $thisdayorders = OrderItems::where('created_at', '>=', $date)->where('staffid', '=', $idnumber->staffid)->get();
+            $todaysorders = Order::where('created_at', '>=', $date )->where('staffid', '=', $idnumber->staffid)->get();
+            $totalurgent = $todaysorders->where('urgent', '=', 'on')->count();
+            $totalregular = $todaysorders->where('urgent', '=', NULL)->count();
+            $totalitems = $todaysorders->sum('totalitems');
+            $totalqtys = $todaysorders->sum('totalqty');
+            $totalpos = $todaysorders->count('ponumber');
+            $allorders = Order::where('staffid', '=', $idnumber->staffid)->get();
+            $sumalltodaysorders = $todaysorders->sum('totalprice');
+            $sumallusergrand = $allorders->sum('totalprice');
+            $target_dir = "orders/" . $idnumber->staffid . "/";
+            
+            $filename = $target_dir . '/' . now()->format('dmy')  .  "-orders.csv";
+
+            $handle = fopen($filename, 'w+');
+            fputcsv($handle, array(
+                'Orders of', 
+                'Date',
+                'Total PO`s',
+                'Urgent # Regular',
+                'Total Items',
+                'Total Qtys',
+                'Total Sales',
+                'Total Grand'
+            ));
+            fputcsv($handle, array(
+                \Auth::user()->name . '#' .\Auth::user()->idnumber,
+                $today,
+                $totalpos,
+                $totalurgent . ' # ' . $totalregular,
+                $totalitems,
+                $totalqtys,
+                number_format($sumalltodaysorders),
+                number_format($sumallusergrand)
+            ));
+            /** Empty Cells */ 
+            fputcsv($handle, array(
+                '',
+                '',
+                '',
+                '',
+            ));    
+            fputcsv($handle, array(
+                '',
+                '',
+                '',
+                '',
+            ));
+            /** End Empte Cells */
+
+            fputcsv($handle, array(
+                'PO#',
+                'Customer#',
+                'Total Items',
+                'Total Qtys',
+                'Total Sales',
+                'Currency',
+                'Completed',
+            ));
+            foreach($todaysorders as $row) {
+                fputcsv($handle,array(
+                    $row['ponumber'],
+                    $row['branchname'],
+                    $row['totalitems'],
+                    $row['totalqty'],
+                    number_format($row['totalprice']),
+                    ' SAR',
+                    $row['updated_at']->format("d/m/y g:iA"),
+            ));
+            }
+                /** Empty Cells */ 
+                fputcsv($handle, array(
+                    '',
+                    '',
+                    '',
+                    '',
+                ));
+                fputcsv($handle, array(
+                    '',
+                    '',
+                    '',
+                    '',
+                ));
+                /** End Empte Cells */
+
+            fputcsv($handle, array(
+                'By',
+                'PO#',
+                'Customer',
+                'Items',
+                'Item Number',
+                'Total Cases',
+                'Free Cases',
+                'Asked Price',
+                'Item Price',
+                'Original Total Price',
+                'Total Discount',
+                'Total Price',
+                'SUM',
+                'SUM' => number_format($sumalltodaysorders) . ' SAR',
+            ));
+            foreach($thisdayorders as $row) {
+                fputcsv($handle,array(
+                    $row['staffname'],
+                    $row['ponumber'],
+                    $row['branchname'],
+                    $row['orderitems'],
+                    
+                    $row['itemnumber'],
+                    $row['itemqty'],
+                    $row['freeitem'],
+                    number_format($row['askedprice']) . '.00',
+                    number_format($row['itemnewprice']). '.00',
+                    number_format($row['itemnewprice'] * $row['itemqty']) . '.00',
+                    number_format(-($row['itemnewprice'] - $row['askedprice']) * $row['itemqty']) . '.00',
+                    number_format($row['askedprice']) * $row['itemqty'] . '.00',
+            ));
+
+
+
+            }
+            fclose($handle);
+            $headers = array(
+                'Content-Type' => 'text/csv',
+            );
+
+
+
+            /** Create ZIPPED ARCHIVE */
+
+            $idnumber = Order::where('slug', '=', $slug)->first();
+            $zipordertargetpath = "orders/";
+
+            $zip = new ZipArchive();
+            $zipfilename = "attachments/zip/" . $idnumber->staffid . '-' . now()->format('dmy')  . ".zip";
+            $orderspath = $idnumber->staffid . '-' . now()->format('dmy') . '/orders';
+            $reportspath = $idnumber->staffid . '-' . now()->format('dmy') . '/reports';
+            $zip->open($zipfilename, ZipArchive::CREATE);
+            
+            $zip->addFile($filename,$idnumber->staffid . '-' . now()->format('dmy')  . '/' . $zipordertargetpath . now()->format('dmy')  . "-orders.csv");
+            $zip->addFile($filename,$idnumber->staffid . '-' . now()->format('dmy')  . '/' . $zipordertargetpath . now()->format('dmy')  . "-orders.csv");
+
+            $zip->close();
+
+
+
             $currentuser = \Auth::user();
             $allorders = Order::where('staffid', '=', $currentuser->idnumber)->where('status', '=', 'Completed')->get();
             $sumallorders = $allorders->sum('totalprice');
             User::where('idnumber', '=', $currentuser->idnumber)->update(['updated_at' => now(), 'totalgrand' => $sumallorders]);
+            
             return redirect()->route('orders.add', '#Success!')->with('alert', 'Congratulations! Your order have been submitted successfully.');
         }
         public function removeOrderItem($slug, $itemnumber)

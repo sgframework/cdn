@@ -321,143 +321,143 @@ ROLLBACK;
 
 
 
-DELETE FROM orders WHERE ponumber="test";
-DELETE FROM orderitems WHERE ponumber="test";
+  DELETE FROM orders WHERE ponumber="test";
+  DELETE FROM orderitems WHERE ponumber="test";
 
-DELETE FROM orders WHERE ponumber="test0";
-DELETE FROM orderitems WHERE ponumber="test0";
+  DELETE FROM orders WHERE ponumber="test0";
+  DELETE FROM orderitems WHERE ponumber="test0";
 
-DELETE FROM orders WHERE ponumber="test1";
-DELETE FROM orderitems WHERE ponumber="test1";
+  DELETE FROM orders WHERE ponumber="test1";
+  DELETE FROM orderitems WHERE ponumber="test1";
 
-DELETE FROM orders WHERE ponumber="test2";
-DELETE FROM orderitems WHERE ponumber="test2";
+  DELETE FROM orders WHERE ponumber="test2";
+  DELETE FROM orderitems WHERE ponumber="test2";
 
-DELETE FROM orders WHERE ponumber="test3";
-DELETE FROM orderitems WHERE ponumber="test3";
+  DELETE FROM orders WHERE ponumber="test3";
+  DELETE FROM orderitems WHERE ponumber="test3";
 
-DELETE FROM orders WHERE ponumber="test4";
-DELETE FROM orderitems WHERE ponumber="test4";
+  DELETE FROM orders WHERE ponumber="test4";
+  DELETE FROM orderitems WHERE ponumber="test4";
 
-DELETE FROM orders WHERE ponumber="test5";
-DELETE FROM orderitems WHERE ponumber="test5";
+  DELETE FROM orders WHERE ponumber="test5";
+  DELETE FROM orderitems WHERE ponumber="test5";
 
-DELETE FROM orders WHERE ponumber="test6";
-DELETE FROM orderitems WHERE ponumber="test6";
+  DELETE FROM orders WHERE ponumber="test6";
+  DELETE FROM orderitems WHERE ponumber="test6";
 
-DELETE FROM orders WHERE ponumber="test7";
-DELETE FROM orderitems WHERE ponumber="test7";
+  DELETE FROM orders WHERE ponumber="test7";
+  DELETE FROM orderitems WHERE ponumber="test7";
 
-DELETE FROM orders WHERE ponumber="test8";
-DELETE FROM orderitems WHERE ponumber="test8";
+  DELETE FROM orders WHERE ponumber="test8";
+  DELETE FROM orderitems WHERE ponumber="test8";
 
-DELETE FROM orders WHERE ponumber="test9";
-DELETE FROM orderitems WHERE ponumber="test9";
+  DELETE FROM orders WHERE ponumber="test9";
+  DELETE FROM orderitems WHERE ponumber="test9";
 
-DELETE FROM orders WHERE ponumber="test10";
-DELETE FROM orderitems WHERE ponumber="test10";
+  DELETE FROM orders WHERE ponumber="test10";
+  DELETE FROM orderitems WHERE ponumber="test10";
 
-DELETE FROM orders WHERE ponumber="test11";
-DELETE FROM orderitems WHERE ponumber="test11";
+  DELETE FROM orders WHERE ponumber="test11";
+  DELETE FROM orderitems WHERE ponumber="test11";
 
-DELETE FROM orders WHERE ponumber="test12";
-DELETE FROM orderitems WHERE ponumber="test12";
+  DELETE FROM orders WHERE ponumber="test12";
+  DELETE FROM orderitems WHERE ponumber="test12";
 
-DELETE FROM orders WHERE ponumber="test13";
-DELETE FROM orderitems WHERE ponumber="test13";
+  DELETE FROM orders WHERE ponumber="test13";
+  DELETE FROM orderitems WHERE ponumber="test13";
 
-DELETE FROM orders WHERE ponumber="test14";
-DELETE FROM orderitems WHERE ponumber="test14";
+  DELETE FROM orders WHERE ponumber="test14";
+  DELETE FROM orderitems WHERE ponumber="test14";
 
-DELETE FROM orders WHERE ponumber="test15";
-DELETE FROM orderitems WHERE ponumber="test15";
+  DELETE FROM orders WHERE ponumber="test15";
+  DELETE FROM orderitems WHERE ponumber="test15";
 
-DELETE FROM orders WHERE ponumber="test16";
-DELETE FROM orderitems WHERE ponumber="test16";
+  DELETE FROM orders WHERE ponumber="test16";
+  DELETE FROM orderitems WHERE ponumber="test16";
 
-DELETE FROM orders WHERE ponumber="test17";
-DELETE FROM orderitems WHERE ponumber="test17";
+  DELETE FROM orders WHERE ponumber="test17";
+  DELETE FROM orderitems WHERE ponumber="test17";
 
-DELETE FROM orders WHERE ponumber="test18";
-DELETE FROM orderitems WHERE ponumber="test18";
+  DELETE FROM orders WHERE ponumber="test18";
+  DELETE FROM orderitems WHERE ponumber="test18";
 
-DELETE FROM orders WHERE ponumber="test19";
-DELETE FROM orderitems WHERE ponumber="test19";
+  DELETE FROM orders WHERE ponumber="test19";
+  DELETE FROM orderitems WHERE ponumber="test19";
 
-DELETE FROM orders WHERE ponumber="test20";
-DELETE FROM orderitems WHERE ponumber="test20";
+  DELETE FROM orders WHERE ponumber="test20";
+  DELETE FROM orderitems WHERE ponumber="test20";
 
-DELETE FROM orders WHERE ponumber="test21";
-DELETE FROM orderitems WHERE ponumber="test21";
+  DELETE FROM orders WHERE ponumber="test21";
+  DELETE FROM orderitems WHERE ponumber="test21";
 
-DELETE FROM orders WHERE ponumber="test22";
-DELETE FROM orderitems WHERE ponumber="test22";
+  DELETE FROM orders WHERE ponumber="test22";
+  DELETE FROM orderitems WHERE ponumber="test22";
 
-DELETE FROM orders WHERE ponumber="test23";
-DELETE FROM orderitems WHERE ponumber="test23";
+  DELETE FROM orders WHERE ponumber="test23";
+  DELETE FROM orderitems WHERE ponumber="test23";
 
-DELETE FROM orders WHERE ponumber="test24";
-DELETE FROM orderitems WHERE ponumber="test24";
+  DELETE FROM orders WHERE ponumber="test24";
+  DELETE FROM orderitems WHERE ponumber="test24";
 
-DELETE FROM orders WHERE ponumber="test25";
-DELETE FROM orderitems WHERE ponumber="test25";
+  DELETE FROM orders WHERE ponumber="test25";
+  DELETE FROM orderitems WHERE ponumber="test25";
 
-DELETE FROM orders WHERE ponumber="test26";
-DELETE FROM orderitems WHERE ponumber="test26";
+  DELETE FROM orders WHERE ponumber="test26";
+  DELETE FROM orderitems WHERE ponumber="test26";
 
-DELETE FROM orders WHERE ponumber="test27";
-DELETE FROM orderitems WHERE ponumber="test27";
+  DELETE FROM orders WHERE ponumber="test27";
+  DELETE FROM orderitems WHERE ponumber="test27";
 
-DELETE FROM orders WHERE ponumber="test28";
-DELETE FROM orderitems WHERE ponumber="test28";
+  DELETE FROM orders WHERE ponumber="test28";
+  DELETE FROM orderitems WHERE ponumber="test28";
 
-DELETE FROM orders WHERE ponumber="test29";
-DELETE FROM orderitems WHERE ponumber="test29";
+  DELETE FROM orders WHERE ponumber="test29";
+  DELETE FROM orderitems WHERE ponumber="test29";
 
-DELETE FROM orders WHERE ponumber="test30";
-DELETE FROM orderitems WHERE ponumber="test30";
+  DELETE FROM orders WHERE ponumber="test30";
+  DELETE FROM orderitems WHERE ponumber="test30";
 
-DELETE FROM orders WHERE ponumber="test31";
-DELETE FROM orderitems WHERE ponumber="test31";
+  DELETE FROM orders WHERE ponumber="test31";
+  DELETE FROM orderitems WHERE ponumber="test31";
 
-DELETE FROM orders WHERE ponumber="test32";
-DELETE FROM orderitems WHERE ponumber="test32";
+  DELETE FROM orders WHERE ponumber="test32";
+  DELETE FROM orderitems WHERE ponumber="test32";
 
-DELETE FROM orders WHERE ponumber="test33";
-DELETE FROM orderitems WHERE ponumber="test33";
+  DELETE FROM orders WHERE ponumber="test33";
+  DELETE FROM orderitems WHERE ponumber="test33";
 
-DELETE FROM orders WHERE ponumber="test34";
-DELETE FROM orderitems WHERE ponumber="test34";
+  DELETE FROM orders WHERE ponumber="test34";
+  DELETE FROM orderitems WHERE ponumber="test34";
 
-DELETE FROM orders WHERE ponumber="test35";
-DELETE FROM orderitems WHERE ponumber="test35";
+  DELETE FROM orders WHERE ponumber="test35";
+  DELETE FROM orderitems WHERE ponumber="test35";
 
-DELETE FROM orders WHERE ponumber="test36";
-DELETE FROM orderitems WHERE ponumber="test36";
+  DELETE FROM orders WHERE ponumber="test36";
+  DELETE FROM orderitems WHERE ponumber="test36";
 
-DELETE FROM orders WHERE ponumber="test37";
-DELETE FROM orderitems WHERE ponumber="test37";
+  DELETE FROM orders WHERE ponumber="test37";
+  DELETE FROM orderitems WHERE ponumber="test37";
 
-DELETE FROM orders WHERE ponumber="test38";
-DELETE FROM orderitems WHERE ponumber="test38";
+  DELETE FROM orders WHERE ponumber="test38";
+  DELETE FROM orderitems WHERE ponumber="test38";
 
-DELETE FROM orders WHERE ponumber="test39";
-DELETE FROM orderitems WHERE ponumber="test39";
+  DELETE FROM orders WHERE ponumber="test39";
+  DELETE FROM orderitems WHERE ponumber="test39";
 
-DELETE FROM orders WHERE ponumber="test40";
-DELETE FROM orderitems WHERE ponumber="test40";
-
-
-DELETE FROM orders WHERE status="JustCreated";
-DELETE FROM orderitems WHERE orderstatus="JustCreated";
+  DELETE FROM orders WHERE ponumber="test40";
+  DELETE FROM orderitems WHERE ponumber="test40";
 
 
-DELETE FROM orders WHERE status="Editing";
-DELETE FROM orderitems WHERE orderstatus="Editing";
+  DELETE FROM orders WHERE status="JustCreated";
+  DELETE FROM orderitems WHERE orderstatus="JustCreated";
 
 
-DELETE FROM orders WHERE status="Reviewing";
-DELETE FROM orderitems WHERE orderstatus="Reviewing";
+  DELETE FROM orders WHERE status="Editing";
+  DELETE FROM orderitems WHERE orderstatus="Editing";
+
+
+  DELETE FROM orders WHERE status="Reviewing";
+  DELETE FROM orderitems WHERE orderstatus="Reviewing";
 
 
 
@@ -628,9 +628,20 @@ DELETE FROM orderitems WHERE ponumber="050519 0020";
 
 
 
+select * from itemsv2 where itemnumber="59030324";
+
+59030324	HAMWI COFFEE CLASSIC W CRDMN P (10X500G)	291
 
 
 
+59003112 
+
+UPDATE itemsv2 set newitemprice = "880.00" where itemnumber="59003112";
+
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55100015", "	SUMI HAPPY MIX KIDS (20X200G)", "150");
 
 INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
  ("55100015", "	SUMI HAPPY MIX KIDS (20X200G)", "150", "150");
@@ -664,6 +675,44 @@ INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
 
 INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
  ("55101618", "SUMI MEGA TATTOO (28x74g", "128", "128");
+
+
+
+
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55100015", "	SUMI HAPPY MIX KIDS (20X200G)", "150");
+
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55100115", "SUMI FRUIT JELLY DOUBLE TASTE (32X175G)", "213");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55100818", "SUMI MIX BON PARTY MIX KIDS (16X300G)", "182");
+
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55101015", "SUMI MONSTER (22X90G)", "83");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55101115", "SUMI COLA (22X90G", "83");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55101315", "SUMI SOUR WORMS (22X90G)", "83");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55101515", "SUMI FRUIT JELLY (32X175G)", "195");
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("55101618", "SUMI MEGA TATTOO (28x74g", "128");
 
 
 

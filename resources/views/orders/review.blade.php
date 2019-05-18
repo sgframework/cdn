@@ -114,8 +114,8 @@
             <input hidden name="discount" value="{{ $totaldiscount }}">
             @endif
             <input hidden name="totaloriginal" value="{{ $totaloriginal }}">
-            <div style="float:right;padding-right:20px">
-                <button accesskey="a" style="width:200px;font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit">  <kbd style="font-size:10px">⌘  Alt + a</kbd> <br /> Submit </button>
+            <div style="float:right;padding-right:20px"><br />
+                <button accesskey="a" style="width:80px;font-size:16px;padding-right:6px;padding-left:6px;padding-bottom:6px;padding-top:6px;" class="btn btn-primary" type="submit">  <kbd style="font-size:10px">⌘  Alt + a</kbd> <br /> Submit </button>
             </div>
             <main class="py-4 hljs">
             <div class="row">
@@ -146,11 +146,11 @@
             @endif
                 </div>
             </div>
-            <p style="width: 240px;">Allowed Formats:</p> <span><pre style="width: 240px;">JPG, JPEG, PNG, GIF and PDF</pre> </span>
+            <p style="width: 260px;">Allowed Formats:</p> <span><pre style="width: 240px;">JPG, JPEG, PNG, GIF and PDF</pre> </span>
         </div>
         </form>
     </div>
-        <form enctype="multipart/form-data" action="{{ route('orders.attachpo', ['orderId' => $order->slug]) }}" method="POST">
+        <form enctype="multipart/form-data" action="{{ route('orders.attachpo', ['orderId' => $order->slug], ['idNumber' => $order->staffid]) }}" method="POST">
             <div style="float:left;padding-left:20px">
             @if (Session::has('success'))
             <br />
