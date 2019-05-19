@@ -145,6 +145,9 @@
                 <div class="collapse navbar-collapse"  id="navbar-right">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
+            <a class="nav-link" href="/"><i class="fas fa-home"></i> Home </a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="/root/users/orders/all"><i class="fas fa-random"></i> WorkFlow </a>
           </li>
           <li class="nav-item">

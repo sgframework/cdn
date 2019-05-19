@@ -188,7 +188,7 @@
 @markdown
 `You can see full documentation` [here][docs].
 
-[docs]: http://ipool.remotewebaccess.com/root/readme#manual
+[docs]: {{ url('/root/readme#manual') }}
 @endmarkdown
             <pre style="float:right">{{ now() }}</pre>
             @else

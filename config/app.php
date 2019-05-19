@@ -66,7 +66,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC +3',
+    'timezone' => 'Asia/Riyadh',
 
     /*
     |--------------------------------------------------------------------------
@@ -161,11 +161,11 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Unicodeveloper\Emoji\EmojiServiceProvider::class,
-        ChristofferOK\LaravelEmojiOne\LaravelEmojiOneServiceProvider::class,
-        Yoeunes\Toastr\ToastrServiceProvider::class,
-        Grimthorr\LaravelToast\ServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        //Unicodeveloper\Emoji\EmojiServiceProvider::class,
+        //ChristofferOK\LaravelEmojiOne\LaravelEmojiOneServiceProvider::class,
+        //Yoeunes\Toastr\ToastrServiceProvider::class,
+        //Grimthorr\LaravelToast\ServiceProvider::class,
+        //Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
 
 
 
@@ -233,11 +233,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Item' => cdn\Models\Item::class,
-        'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
-        'LaravelEmojiOne' => ChristofferOK\LaravelEmojiOne\LaravelEmojiOneFacade::class,
-        'Toast' => Grimthorr\LaravelToast\Facade::class,
-        'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
+        //'Item' => cdn\Models\Item::class,
+        //'Emoji' => Unicodeveloper\Emoji\Facades\Emoji::class,
+        //'LaravelEmojiOne' => ChristofferOK\LaravelEmojiOne\LaravelEmojiOneFacade::class,
+        //'Toast' => Grimthorr\LaravelToast\Facade::class,
+        //'Lava' => Khill\Lavacharts\Laravel\LavachartsFacade::class,
 
     ],
 

@@ -132,9 +132,15 @@
                             <span class="nav-item">
                                 <a class="nav-link" href="{{ route('dashboard.manager', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
                             </span>
+                            <span class="nav-item">
+                                <a class="nav-link" href="/root"><i class="fas fa-user-cog"></i> Admin</a>
+                            </span>
                             @elseif ( Auth::user()->is_permission == '2')
                             <span class="nav-item">
-                                <a class="nav-link" href="{{ route('dashboard.admin', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                                <a class="nav-link" href="{{ route('dashboard.admin', ['id' => Auth::user()->idnumber]) }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>     
+                            </span>
+                            <span class="nav-item">
+                                <a class="nav-link" href="/root"><i class="fas fa-user-cog"></i> Admin</a>
                             </span>
                             @endif    
                         </span>  
@@ -145,31 +151,19 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fas fa-user"></i> {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
-                                </a></a>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-user"></i> {{ Auth::user()->name }} ID# {{ Auth::user()->idnumber }}<span class="caret"></span>
+                                </a>
                                 <div class="dropdown dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-menu dropdown-menu-right" href="{{ route('logout') }}" 
+                                    <a class="dropdown-menu dropdown-menu-right" href="{{ route('logout') }}" 
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }} <i class="fas fa-sign-out-alt"></i>
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="">
                                         @csrf
-                                    </form>                                </div>
-
-                                    <!--<div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Dashboard</a>
+                                    </form>                                
                                 </div>
-                                    <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Dashboard</a>
-                                </div>
-                                    <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Queries</a>
-                                </div>
-                                    <div class="nav-item dropdown" aria-labelledby="navbarDropdown">
-                                    <a href=""><i class="fas fa-cogs"></i> Settings</a>
-                                </div>-->
                             </li>
                         @endguest
                     </ul>

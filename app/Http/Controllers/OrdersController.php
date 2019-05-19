@@ -19,6 +19,8 @@ use Maatwebsite\Excel\Facades\Excel;
 use Exportable;
 use Paginate;
 use Session;
+use Illuminate\Support\Facades\Cache;
+
 
 class OrdersController extends Controller
 {
@@ -381,6 +383,10 @@ class OrdersController extends Controller
                 'orderstatus' => 'max:255',
                 'askedprice' => 'max:20',
             ]);
+
+            $remeberitems = Cache::rememberForever('itemsv2', function () {
+                return DB::table('itemsv2')->get();
+            });
             //$inputData = $request->all();
             //$orderitems = OrderItems::find($slug); 
             //$orderitems->update($inputData);
@@ -444,6 +450,9 @@ class OrdersController extends Controller
             'askedprice' =>  $askedprice
 
             ]);
+            $remeberitems = Cache::rememberForever('orderitems', function () {
+                return DB::table('orderitems')->get();
+            });
             Order::where('slug', $slug)->update(['updated_at' => now(), 'status' => 'Editing']);
             //Response::json( $order );
             $orders = Order::all();

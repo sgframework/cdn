@@ -1,6 +1,6 @@
 {
   "name": "sgcdn",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "SunbulahGroupCDN",
   "main": "index.js",
   "scripts": {

@@ -130,6 +130,7 @@
                 <div id="management" class="w3-container w3-hide">
                     <div style="padding-top:15px; text-align:center">
                         <a href="/mail"><i class="fas fa-envelope"></i> <span>Mail</span></a>&nbsp;&nbsp;
+                        <a href="/pma"><img src="{{ asset('image/pma.ico') }}" target="_blank" width="20px" height="20px" /> <span>phpMyAdmin</span></a>&nbsp;&nbsp;
                         <a href="{{route('root.mysql')}}"><i class="fas fa-database"></i> <span>Manage DB</span></a>&nbsp;&nbsp;
                         <a href="{{ route('root.stats.totals') }}"><i class="far fa-chart-bar"></i> <span>Comprehensive Statistics</span></a>&nbsp;&nbsp;
                         <a href=""><i class="fas fa-user-cog"></i> <span>Manage Users</span></a>&nbsp;&nbsp;
