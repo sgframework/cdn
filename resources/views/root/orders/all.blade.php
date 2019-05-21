@@ -52,8 +52,12 @@
                 margin-bottom: 30px;
             }
         </style>
+
     </head>
-<!--<header class="header">
+
+
+      
+      <!--<header class="header">
 <form class="navbar-form navbar-left" role="search" action="{{ route('search.items') }}">
             <div class="form-group">
                 <input type="text" name="query" class="form-control" placeholder="Find People">
@@ -1306,6 +1310,76 @@ $sec = "90000";
         <span class="badge badge-dark">Total Of All Cases %Discounts%</span> <span class="badge badge-danger">{{ number_format( $sumomapof + $sumoasapod) }}.00 SAR</span>
         <span class="badge badge-dark">All Orders Total Grand</span> <span class="badge badge-danger">{{ number_format( $sumomapof + $sumoasapop) }}.00 SAR</span>  </p>
     </center>
+
+    - Average Price Per PO:<span class="Count"> 500 </span>
+
+    
+
+
+<script>
+
+$('.Count').each(function () {
+    $(this).prop('Counter',0).animate({
+        Counter: $(this).text()
+    }, {
+        duration: 8000,
+        easing: 'swing',
+        step: function (now) {
+            $(this).text(Math.ceil(now));
+        }
+    });
+});
+
+</script>
+    
+    <link href="{{ asset('css/assets/css/github-markdown.css') }}" rel="stylesheet">
+<article class="markdown-body">
+
+<h5 id="order-items"><a class="header-link" href="#order-items"></a>Order Items By Status in DB</h5>
+<pre style=""><code class="language-php">
+
+### Averages Per PO
+
+Today 
+
+     - Average Processed Items:<span class="Count"> {{ $asaveragetoi }} </span>
+     
+    - Average Processed Cases: {{ $asaveragetoq }}
+    - Average Processed Free Cases: {{ $asaveragetof }}
+    - Average Processed Discount: {{ number_format($asaveragetod) }}.00 SAR
+    - Average Processed Price: {{ number_format($asaveragetop) }}.00 SAR
+
+
+
+All 
+
+    - Average Ordered Items Per PO:<span class="Count"> {{ $asaverageaoi }}</span>
+    - Average Ordered Casess Per PO:<span class="Count"> {{ $asaverageaoq }}</span>
+    - Average Free Cases Per PO:<span class="Count"> {{ $asaverageaof }}</span>
+    - Average Discount Per PO:<span class="Count"> {{ $asaverageaod }}</span>
+    - Average Price Per PO:<span class="Count"> 500 </span>
+{{ $asaverageaop }}
+</code></pre>
+
+
+</article>
+
+
+
+
+
+    <!--
+        asaveragetoi
+        asaveragetoq
+        asaveragetof
+        asaveragetod
+        asaveragetop
+        asaverageaoi
+        asaverageaoq
+        asaverageaof
+        asaverageaod
+        asaverageaop
+    -->
             
         </div>
     </div>
@@ -1318,18 +1392,44 @@ $sec = "90000";
         </small>-->
 
 
+        <p>
+  Signatures gathered: <span id="signatures">000000</span>
+  <br>
+  <button id="start-campaign">Start campaign</button>
+</p>
 
+<script type="text/javascript">
+  var max_number = 100000;
 
+  var padding_zeros = '';
+  for(var i = 0, l = max_number.toString().length; i < l; i++) {
+    padding_zeros += '0';
+  }
+
+  var padded_now, numberStep = function(now, tween) {
+    var target = $(tween.elem),
+        rounded_now = Math.round(now);
+
+    var rounded_now_string = rounded_now.toString()
+    padded_now = padding_zeros + rounded_now_string;
+    padded_now = padded_now.substring(rounded_now_string.length);
+
+    target.prop('number', rounded_now).text(padded_now);
+  };
+
+  var use_max_power = $('#checkbox');
+  $('#start-campaign').click(function(){
+    $('#signatures').animateNumber({
+      number: max_number,
+      numberStep: numberStep
+    }, 5000);
+  });
+</script>
 
 
 
 
 <br /><hr />                                     
-@markdown
-
-#### 
-
-@endmarkdown
 
 <span style="font-size:18px"> <i class="fas fa-list"></i> ALL Completed Orders</span>
                 <?php $totalitems = 0; ?>
@@ -1337,8 +1437,8 @@ $sec = "90000";
                 <?php $totalfree = 0; ?>
                 <?php $totaldiscount = 0; ?>     
                 <?php $totalprice = 0; ?>     
-                    @if (!$completedorders->count())
-                        <p>You haven't created any order recently.</p>
+                    @if (!$todayscompletedorders->count())
+                        <p>There are no completed orders today.</p>
                     @else
                             <table class="table-responsive-sm processed" id="myTable">
                                 <div class="media">
@@ -1355,10 +1455,11 @@ $sec = "90000";
                                         <th>Total Free</th>
                                         <th>Total Discount</th>
                                         <th>Total Price</th>
+                                        <th>PrcessedBy</th>
                                         <th>Completed@</th>
                                     </tr>
                                 </thead>
-                                @foreach ($completedorders as $completedorder)
+                                @foreach ($todayscompletedorders as $completedorder)
 
                                 <tbody style="font-size:12px">
                                     <tr>
@@ -1379,6 +1480,7 @@ $sec = "90000";
                                         <td style="color:green;;text-align:center">{{ number_format($completedorder->discount) }}.00 SAR</td>
                                         @endif    
                                         <td style="text-align:center">{{ number_format($completedorder->totalprice) }}.00 SAR</td>
+                                        <td style="text-align:center"><span class="{{ strtolower($completedorder->status) }}">{{ $completedorder->processedby }}</span></td>
                                         <td style="text-align:center"><span class="{{ strtolower($completedorder->status) }}">{{ $completedorder->updated_at->format('d/m/y g:iA') }}</span></td>
                                     </tr>
                                 </tbody> 
@@ -1408,7 +1510,7 @@ $sec = "90000";
 
 @markdown
 
-Total Completed Orders: <strong>{{ $completedorders->count() }}</strong>
+Total Completed Orders: <strong>{{ $todayscompletedorders->count() }} Orders</strong>
 
 @endmarkdown
        <br /><br />

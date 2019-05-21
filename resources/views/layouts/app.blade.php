@@ -9,13 +9,12 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}" defer></script>
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/prism.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
     <!--JUST ENABLED-->
-    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/toastr.js') }}" defer></script>
+
 
     
     <!--JUST ENABLED-->
@@ -24,9 +23,18 @@
     <!--JUST DISABLED-->
         <!--
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-        -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+
+    <link href="{{ asset('css/toastr.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/toastr.js') }}" defer></script>
+    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
+    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
+    <script src="{{ asset('js/jush.js') }}" defer></script>
+        <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
+
+-->
     <!--JUST DISABLED-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
@@ -36,10 +44,7 @@
     <link href="{{ asset('css/chosen.css') }}" rel="stylesheet">
     <link href="{{ asset('css/styles.css') }}" rel="stylesheet">
     <!--<link href="{{ asset('css/stylesheet.css') }}" rel="stylesheet">-->
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
-    <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
-    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
-    <script src="{{ asset('js/jush.js') }}" defer></script>
+
     <!--<link href="{{ asset('css/bootstrap-theme.css') }}" rel="stylesheet">-->
     <link rel="manifest" href="{{ asset('js/manifest.json') }}">
     <meta name="apple-mobile-web-app-capable" content="yes">

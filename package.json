@@ -26,6 +26,7 @@
         "chart.js": "^2.8.0",
         "git": "^0.1.5",
         "github-markdown-css": "^3.0.1",
-        "sgcdn": "^1.0.2"
+        "sgcdn": "^1.0.2",
+        "xterm": "^3.13.1"
     }
 }

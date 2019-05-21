@@ -271,12 +271,26 @@ class RootController extends Controller
 
         /** GET Averages */
 
-        $avragepersecond = 
-        $avrageperminute = 
-        $avrageperhour = 
-        $avrageperday = 
-        $avragepermonth = 
-        $avrageperyear = 
+
+        /* A M S Today's Orders Averages */
+
+
+        $asaveragetoi = $sumttaspo == 0 ? 0.1 :  $sumttaspoi / $sumttaspo;
+        $asaveragetoq = $sumttaspo == 0 ? 0.1 :  $sumttaspoq / $sumttaspo;
+        $asaveragetof = $sumttaspo == 0 ? 0.1 :  $sumttaspof / $sumttaspo;
+        $asaveragetod = $sumttaspo == 0 ? 0.1 :  $sumttaspod / $sumttaspo;
+        $asaveragetop = $sumttaspo == 0 ? 0.1 :  $sumttaspop / $sumttaspo;
+
+        /* A M S All Orders Averages */
+
+        $asaverageaoi = $sumoasapo == 0 ? 0.1 : $sumoasapoi / $sumoasapo;
+        $asaverageaoq = $sumoasapo == 0 ? 0.1 : $sumoasapoq / $sumoasapo;
+        $asaverageaof = $sumoasapo == 0 ? 0.1 : $sumoasapof / $sumoasapo;
+        $asaverageaod = $sumoasapo == 0 ? 0.1 : $sumoasapod / $sumoasapo;
+        $asaverageaop = $sumoasapo == 0 ? 0.1 : $sumoasapop / $sumoasapo;
+
+
+
 
         /** Ahmed Sulaimani's Controller END */
 
@@ -400,7 +414,7 @@ class RootController extends Controller
         $completedorders = Order::select()->where('status', '=', 'Completed')->whereNotNull('ponumber')->groupBy('slug')->orderBy('updated_at', 'asc')->get();
         /* Todays Orders*/
         $date = \Carbon\Carbon::today()->subDays(0);
-        $thisdayorders = Order::where('created_at', '>=', $date)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->groupBy('staffid')->get();
+        $thisdayorders = Order::where('created_at', '>=', $date)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
         $thisdaycompletedorders = Order::where('created_at', '>=', $date)->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->groupBy('staffid')->get();
         $todaysjustcreatedorders = $thisdayorders
 		->where('status', '=', 'JustCreated');
@@ -574,6 +588,28 @@ class RootController extends Controller
                 ->with('sumoasapof', $sumoasapof)
                 ->with('sumoasapod', $sumoasapod)
                 ->with('sumoasapop', $sumoasapop)
+
+
+                ->with('asaveragetoi', $asaveragetoi)
+                ->with('asaveragetoq', $asaveragetoq)
+                ->with('asaveragetof', $asaveragetof)
+                ->with('asaveragetod', $asaveragetod)
+                ->with('asaveragetop', $asaveragetop)
+                ->with('asaverageaoi', $asaverageaoi)
+                ->with('asaverageaoq', $asaverageaoq)
+                ->with('asaverageaof', $asaverageaof)
+                ->with('asaverageaod', $asaverageaod)
+                ->with('asaverageaop', $asaverageaop)
+
+                
+                
+                
+                
+                
+
+
+
+
                                 
                 
                 ->with('makki', $makki)
@@ -2344,7 +2380,16 @@ class RootController extends Controller
 
 
 
+        /* Most Sold Items */
 
+        $mostsolditem = OrderItems::select()->groupBy('itemnumber')->get();
+
+
+        //dump($mostsolditem->sum('totalprice'));
+
+/*
+ * All 
+ */
 
 /** Saleman of the month START */
 
@@ -3826,6 +3871,7 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
                 ->withId($id)
 
 
+                ->with('mostsolditem', $mostsolditem)
                 ->with('customers', $customers)
                 ->with('michaelcustomers', $michaelcustomers)
                 ->with('michaelcustomerstats', $michaelcustomerstats)
@@ -5290,6 +5336,11 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         $branches = Branch::select('branchname', 'branchnumber')->get();
         $orders = Order::select('ordernumber', 'staffname', 'staffid', 'ponumber', 'branchnumber', 'branchname', 'urgent', 'created_at', 'updated_at')->orderBy('updated_at', 'asc')->paginate(10);
         return view('tests.markdown')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
+    }
+
+    public function getCmd()
+    {
+        return view('root.cmd');
     }
     public function getMail()
     {

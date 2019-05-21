@@ -149,8 +149,13 @@ Route::get('root/tree', [
     'as' => 'root.tree']);    
 
 
+Route::get('root/cmd', [
+    'uses' => '\cdn\Http\Controllers\RootController@getCmd',
+    'as' => 'root.cmd']);    
 
-
+    
+    
+    
 
 /*
 http://ipool.remotewebaccess.com/root/orders/5303/00007230991-42002222

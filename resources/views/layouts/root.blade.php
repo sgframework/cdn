@@ -9,7 +9,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/bootstrap.js') }}" defer></script>
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
+    <script src="{{ asset('js/jquery-3.4.1.min.js') }}" defer></script>
     <script src="{{ asset('js/chosen.jquery.js') }}" defer></script>
     <script src="{{ asset('js/init.js') }}" defer></script>
     
@@ -19,7 +19,20 @@
     <!--JUST ENABLED-->
     
     <script src="https://code.jquery.com/jquery-1.7.2.js"></script>
-    <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
+    <script src="{{ asset('js/jquery.animateNumber.min.js') }}" defer></script>
+
+    <!--JUST ENABLED-->
+    
+    <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
+
+    <!--JUST DISABLED-->
+    <!--
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/github-markdown.css') }}">
+            <script src="{{ asset('js/jush.js') }}" defer></script>
+    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+            <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/pilcrow.css') }}">
     <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/hljs-github.min.css') }}"/>
     <link rel="stylesheet" href="/vendor/emojione/sprites/emojione-sprite-{{ config('emojione.spriteSize') }}.min.css"/>
@@ -28,20 +41,10 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
     
+    <link rel="stylesheet" href="{{asset('css/xterm.css')}}" />
+    <script src="{{asset('js/xterm.js')}}"></script>
+        <script src="{{ asset('js/jquery-3.3.1.min.js') }}" defer></script>
 
-    
-    <!--JUST ENABLED-->
-    
-    <link rel="stylesheet" href="{{ asset('css/prism.css') }}">
-    
-    <!--JUST DISABLED-->
-    <!--
-        <link type="text/css" rel="stylesheet" href="{{ asset('css/assets/css/github-markdown.css') }}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-            <script src="{{ asset('js/jush.js') }}" defer></script>
-    <link href="{{ asset('css/jush.css') }}" rel="stylesheet">
-
-        
         -->
     <!--JUST DISABLED-->
 
@@ -219,8 +222,8 @@ function scrollFunction() {
             @yield('content')
         </main>
     </div>
+    @if(Session::has('message'))
 <script>
-  @if(Session::has('message'))
     var type = "{{ Session::get('alert-type', 'info') }}";
     switch(type){
         case 'info':
@@ -238,9 +241,9 @@ function scrollFunction() {
         case 'error':
             toastr.error("{{ Session::get('message') }}");
             break;
-    }
-  @endif
-</script>
+    } 
+    </script>
+    @endif
 </body>
 <hr>
 <footer class="footer">

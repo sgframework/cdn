@@ -3136,6 +3136,26 @@ function between(x, min, max) {
                     </div>
                 </div>
             </div>
+
+
+
+<h5 id="msi"><a class="header-link" href="#msi"></a>Most $old Item</h5>
+<pre style=""><code class="language-markdown">
+
+
+@foreach ($mostsolditem as $mostsold)
+
+{{ $mostsold->orderitems }}
+{{ $mostsold->itemqty }}
+{{ number_format($mostsold->itemprice * $mostsold->itemqty) }}.00 SAR
+
+
+
+@endforeach
+
+</code></pre>
+
+
         </div>
 
                         <div class="row">
