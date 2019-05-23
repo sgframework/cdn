@@ -2824,7 +2824,7 @@ class ProfileController extends Controller
 		->with('id', $id)
 		->with('users', $users);
 		}
-		public function getAdmin($idnumber)
+		public function getAdmin()
     {
 			$currentuser = \Auth::user();
 			$items = Item::select('itemnumber', 'itemname', 'itemprice', 'itemsku', 'plant', 'instock', 'link', 'type')->orderBy('created_at', 'desc')->paginate(2);

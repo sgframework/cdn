@@ -102,7 +102,13 @@ Route::get('/root/readme', [
 
 Route::get('/root/readme-v0.02', [
     'uses' => '\cdn\Http\Controllers\RootController@getRM',
-'as' => 'root.md',
+'as' => 'root.md.index',
+]);
+
+
+Route::get('/root/dev-v0.03', [
+    'uses' => '\cdn\Http\Controllers\RootController@getDevPortal',
+'as' => 'root.md.dev',
 ]);
 
 Route::get('/root/readme-v0.03', [

@@ -141,7 +141,7 @@
         <nav class="navbar navbar-expand-md navbar-light">
             <div class="container">
                 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-                    <a style="font-size:12px" class="navbar-brand" href="{{ url('/root') }}" id="logo">
+                    <a style="font-size:12px" class="navbar-brand" href="{{ route('root.index') }}" id="logo">
                     <img width="22px" height="22px" src="{{ asset('image/sgimg.png') }}" />
                     {{ config('app.name', 'SunbulahGroup') }} Admins Portal
                 </a>

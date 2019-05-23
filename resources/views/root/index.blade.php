@@ -133,13 +133,14 @@
                         <a href="/pma"><img src="{{ asset('image/pma.ico') }}" target="_blank" width="20px" height="20px" /> <span>phpMyAdmin</span></a>&nbsp;&nbsp;
                         <a href="{{route('root.mysql')}}"><i class="fas fa-database"></i> <span>Manage DB</span></a>&nbsp;&nbsp;
                         <a href="{{ route('root.stats.totals') }}"><i class="far fa-chart-bar"></i> <span>Comprehensive Statistics</span></a>&nbsp;&nbsp;
-                        <a href=""><i class="fas fa-user-cog"></i> <span>Manage Users</span></a>&nbsp;&nbsp;
+                        <a href=""><i class="fas fa-user-cog"></i> <span>Manage Users</span></a><br />
                         <a href=""><i class="fas fa-lock"></i> <span>Manage Access Level</span></a>&nbsp;&nbsp;
                         <a href=""><i class="fas fa-random"></i> <span>Manage Routes</span></a>&nbsp;&nbsp;
                         <a href=""><i class="fas fa-exclamation-triangle"></i> <span>Manage Notifications</span></a>&nbsp;&nbsp;
-                        <a href="{{ route('root.tree') }}"><i class="fas fa-info fa-fw"></i> <span>Tree</span></a>&nbsp;&nbsp;
+                        <a href="{{ route('root.tree') }}"><i class="fas fa-info fa-fw"></i> <span>Tree</span></a><br />
                         <a href="/root/readme#manual"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.01</a></span>
                         <a href="/root/readme-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.02</a></span>
+                        <a href="/root/dev-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Developers Manual V0.03</a></span>
                     </div>
                 </div>
                 <script>
