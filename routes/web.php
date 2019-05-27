@@ -133,6 +133,12 @@ Route::post('/root/mysql/sgdb0/post', [
 'as' => 'root.mysql.post',
 ]);
 
+/** /upload curl command -> curl -i -X POST -H "Content-Type: multipart/form-data" -F "data=@dump.txt" http://cdn.ies.com/upload */
+Route::post('/upload', [
+    'uses' => '\cdn\Http\Controllers\RootController@postUploads',
+    'as' => 'root.upload',
+    'middleware' => ['guest'],
+]);
 
 
 /** Orders Routes */

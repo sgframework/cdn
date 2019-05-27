@@ -130,7 +130,15 @@ Route::get('/echo/xml/{ordernumber}', function ($ordernumber) {
 
 
 Route::get('test', function(){
-    return "<pre>" . print_r(User::all(), true) . "</pre>";
+    $pos = Order::select('ponumber')->get();
+    return json_decode($pos);
+});
+
+
+
+Route::get('total-sales', function(){
+    $pos = Order::sum('totalprice');
+    return array("YTD Total Sales" => number_format($pos) . '.00 SAR');
 });
 
 

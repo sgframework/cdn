@@ -5,8 +5,11 @@
 
 <link href="{{ asset('css/assets/css/github-markdown.css') }}" rel="stylesheet">
 <article class="markdown-body">
+
         <img src="{{ asset('images/assests/sgimg.png') }}" align="right" style="height: 64px"/>
         <h1 id="welcome-to-sunbulah-group-framework"><a class="header-link" href="#welcome-to-sunbulah-group-framework"></a> SunbulahGroup Developers Portal</h1>
+        <p><a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a> <a href="https://saythanks.io/to/sgframework"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!" /></a></p>
+
 <pre style="background-color:black;text-align: center;"><code style="color:red;" class="language-cmd">
 
 
@@ -780,10 +783,15 @@ mysql&gt; select * from itemsv2;
 </code></pre>
 
 
+<h2 id="setup-dev-env"><a class="header-link" href="#setup-dev-env"></a> Setup Development Environment</h2>
+
+
+
+
 <h3 id="github"><a class="header-link" href="#github"></a><i class="fab fa-github" aria-hidden="true"></i> Github</h3>
 
-Get started by cloning into project's repository after installing <a href="https://desktop.github.com/"><i class="fab fa-github" aria-hidden="true"></i> GitHub Desktop</a>
-<br /><em>run CMD or terminal and enter the follwing commands.</em>
+Get started by cloning into project's repository after installing <a href="https://desktop.github.com/"><img src="{{ asset('images/assests/github-desktop.png') }}" width="25px" height="25px" /> GitHub Desktop</a>
+<br /><em style="font-size:12px">run CMD or terminal and enter the following commands.</em>
 <pre><code class="language-shell">   
 
 root@0x01:~# git clone https://github.com/sgframework/cdn.git
@@ -830,6 +838,958 @@ git pull
 
 
 
+<h3 id="vsc"><a class="header-link" href="#vsc"></a><img src="{{ asset('images/assests/vsc.png') }}" width="80px" height="35px" />  Visual Studio Code</h3>
+
+First install <strong><a href="https://code.visualstudio.com/download">VSC</a></strong>
+
+<br />
+
+Then install <strong>GitHub</strong> extension for VSC
+<pre><code class="language-markdown">   
+
+Name: GitHub
+Id: knisterpeter.vscode-github
+Description: Integrates github and its workflows into vscode
+Version: 0.30.2
+Publisher: KnisterPeter
+VS Marketplace Link: <a href="https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github">Install</a>
+
+</code></pre>
+
+Then clone into prject's repository by following <a class="header-link" href="#github">github</a> instructions above.
+
+<div style="padding: 30px 30px 10px 30px;margin: 0px 40px 00px 40px;">
+<img src="{{ asset('images/assests/vs1.png') }}" width="720px" height="420px" />
+
+</div>
+<div style="padding: 0px 30px 30px 30px; margin: 0px 40px 40px 40px;">
+
+<img src="{{ asset('images/assests/vs2.png') }}" width="460px" height="320px" />
+
+</div>
+
+
+The main concept of the framework's functionality is a route passed as an array into a controller to be rendered by a view.
+<br />
+<h4>Repository Structre:</h4>
+
+<pre style="background-color:black;"><code style="color:#ddd;" class="language-cmd">
+Microsoft Windows [Version 10.0.17763.503]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+F:\BACKUPS\SG\prod-v2.00\cdn>tree
+Folder PATH listing for volume 3TB
+Volume serial number is D8D9-4ABE
+F:.
+├───<span style="font-size:16px"><b>app</b></span>
+│   ├───Charts
+│   ├───Console
+│   │   └───Commands
+│   ├───Exceptions
+│   ├───Http
+│   │   ├───<strong>Controllers</strong>
+│   ├───Mail
+│   ├───<strong>Models</strong>
+│   ├───Notifications
+│   └───Providers
+├───<span style="font-size:16px"><b>database</b></span>
+│   ├───factories
+│   ├───<strong>migrations</strong>
+│   └───seeds
+├───<span style="font-size:16px"><b>resources</b> </span><em style="font-size:9px">Where views are rendered from</em>
+│   ├───js
+│   ├───lang
+│   ├───sass
+│   └───<strong>views</strong>
+│       ├───auth
+│       ├───branches
+│       ├───dashboard
+│       ├───errors
+│       ├───global
+│       ├───items
+│       ├───layouts
+│       ├───orders
+│       ├───process
+│       ├───profile
+│       ├───root
+│       │   ├───md 
+│       │   │   └───dev.blade.php <-- You Are Here 
+│       │   ├───orders
+│       │   ├───partials
+│       │   └───stats
+│       ├───rtv
+│       ├───search
+├───<span style="font-size:16px"><b>routes</b> </span><em style="font-size:9px">Where views are defined</em>
+├───<span style="font-size:16px"><b>public</b> </span><em style="font-size:9px">Where all public resources are stored.</em>
+│   ├───attachments
+│   │   ├───pos
+│   │   │   ├───1141
+│   │   │   ├───1171
+│   │   │   ├───1275
+│   │   │   ├───1555
+│   │   │   ├───1621
+│   │   │   ├───1869
+│   │   │   ├───2409
+│   │   │   ├───2508
+│   │   │   ├───2745
+│   │   │   ├───3761
+│   │   │   ├───4241
+│   │   │   ├───4401
+│   │   │   ├───4417
+│   │   │   ├───466
+│   │   │   ├───4688
+│   │   │   └───5275
+│   │   └───zip
+│   ├───cmd
+│   ├───orders
+│   │   ├───1141
+│   │   ├───1171
+│   │   ├───1275
+│   │   ├───1555
+│   │   ├───1621
+│   │   ├───1869
+│   │   ├───2409
+│   │   ├───2508
+│   │   ├───2745
+│   │   ├───3761
+│   │   ├───4241
+│   │   ├───4401
+│   │   ├───4417
+│   │   ├───466
+│   │   ├───4688
+│   │   └───5275
+│   ├───reports
+│   │   ├───1141
+│   │   ├───1171
+│   │   ├───1275
+│   │   ├───1555
+│   │   ├───1621
+│   │   ├───1869
+│   │   ├───2409
+│   │   ├───2508
+│   │   ├───2745
+│   │   ├───3761
+│   │   ├───4241
+│   │   ├───4401
+│   │   ├───4417
+│   │   ├───466
+│   │   ├───4688
+│   │   └───5275
+├───<span style="font-size:16px"><b>sgcdn</b></span> NPM<span style="color:#0099cc"> (master) </span>repository
+│   ├───bin
+│   └───sgnode
+├───<span style="font-size:16px"><b>sgpy</b></span> Python<span style="color:#0099cc"> (master) </span>repository
+└───<span style="font-size:16px"><b>x_SGDC</b></span> Ruby<span style="color:#0099cc"> (master) </span>repository
+    ├───bin
+    └───lib
+
+
+
+</code></pre>
+
+<div style="padding:30px;margin:40px">
+
+
+<img src="{{ asset('images/assests/vs3.png') }}" />
+
+</div>
+<div style="padding:30px;margin:40px">
+
+
+<img src="{{ asset('images/assests/vs4.png') }}" />
+
+</div>
+<div style="padding:30px;margin:40px">
+
+
+<img src="{{ asset('images/assests/vs5.png') }}" />
+
+</div>
+<div style="padding:30px;margin:40px">
+
+
+<img src="{{ asset('images/assests/push.png') }}" />
+</div>
+
+
+<h2>SERVER SIDE</h2>
+<h3 id="php"><a class="header-link" href="#php"></a><img src="{{ asset('images/assests/php.png') }}" width="80px" height="35px" /> Composer, Artisan</h3>
+<h4>Composer</h4>
+<p>To include a package using composer</p>
+<p><b>manually</b> including composer packages</p>
+<ul>
+    <li>Add declaration manually into <code>composer.json</code> (in "require" section)</li>
+Add the ServiceProvider in <code>config/app.php</code>
+<pre style="font-size:10px"><code class="language-php">
+
+'providers' => [
+    /*
+     * Package Service Providers...
+     */
+    Maatwebsite\Excel\ExcelServiceProvider::class,
+]
+</code></pre>
+    <li>Add Class Aliases in <code>config/app.php</code></li>
+
+    <pre style="font-size:10px"><code class="language-php">
+
+'aliases' => [
+
+    'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+]
+</code></pre>
+</ul>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan vendor:publish --provider="Maatwebsite\Excel\ExcelServiceProvider"
+</code></pre>
+
+
+<p><b>via composer</b></p>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>composer require <span style="color:green"><</span><span style="color:green">backage name></span>
+</code></pre>
+
+<p>Then run</p>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>composer update
+</code></pre>
+
+<p>To remove a package using composer</p>
+<ul>
+    <li>Remove declaration from composer.json (in "require" section)</li>
+    <li>Remove any Class Aliases from app.php.</li>
+    <li>Remove any references to the package from my code :-)</li>
+</ul>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd"> 
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>composer update
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>composer dump-autoload
+</code></pre>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>composer --help
+Usage:
+  help [options] [--] [<command_name>]
+
+Arguments:
+  command                        The command to execute
+  command_name                   The command name [default: "help"]
+
+Options:
+      --xml                      To output help as XML
+      --format=FORMAT            The output format (txt, xml, json, or md) [default: "txt"]
+      --raw                      To output raw command help
+  -h, --help                     Display this help message
+  -q, --quiet                    Do not output any message
+  -V, --version                  Display this application version
+      --ansi                     Force ANSI output
+      --no-ansi                  Disable ANSI output
+  -n, --no-interaction           Do not ask any interactive question
+      --profile                  Display timing and memory usage information
+      --no-plugins               Whether to disable plugins.
+  -d, --working-dir=WORKING-DIR  If specified, use the given directory as working directory.
+  -v|vv|vvv, --verbose           Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Help:
+  The help command displays help for a given command:
+
+    php C:\composer\composer.phar help list
+
+  You can also output the help in other formats by using the --format option:
+
+    php C:\composer\composer.phar help --format=xml list
+
+  To display the list of available commands, please use the list command.
+
+
+
+
+</code></pre>
+
+<h4>Artisan</h4>
+Most Important Artisan Commands
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan --help
+Usage:
+  command [options] [arguments]
+
+Options:
+  -h, --help            Display this help message
+  -q, --quiet           Do not output any message
+  -V, --version         Display this application version
+      --ansi            Force ANSI output
+      --no-ansi         Disable ANSI output
+  -n, --no-interaction  Do not ask any interactive question
+      --env[=ENV]       The environment the command should run under
+  -v|vv|vvv, --verbose  Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+
+Available commands:
+  clear-compiled       Remove the compiled class file
+  down                 Put the application into maintenance mode
+  dump-server          Start the dump server to collect dump information.
+  env                  Display the current framework environment
+  help                 Displays help for a command
+  inspire              Display an inspiring quote
+  list                 Lists commands
+  migrate              Run the database migrations
+  optimize             Cache the framework bootstrap files
+  preset               Swap the front-end scaffolding for the application
+  serve                Serve the application on the PHP development server
+  tinker               Interact with your application
+  up                   Bring the application out of maintenance mode
+ app
+  app:name             Set the application namespace
+ auth
+  auth:clear-resets    Flush expired password reset tokens
+ cache
+  cache:clear          Flush the application cache
+  cache:forget         Remove an item from the cache
+  cache:table          Create a migration for the cache database table
+ command
+  command:orders       Get All Orders...
+ config
+  config:cache         Create a cache file for faster configuration loading
+  config:clear         Remove the configuration cache file
+ db
+  db:seed              Seed the database with records
+ event
+  event:cache          Discover and cache the application's events and listeners
+  event:clear          Clear all cached events and listeners
+  event:generate       Generate the missing events and listeners based on registration
+  event:list           List the application's events and listeners
+ get
+  get:stats            Command description
+ key
+  key:generate         Set the application key
+ make
+  make:auth            Scaffold basic login and registration views and routes
+  make:channel         Create a new channel class
+  make:chart           Creates a new chart
+  make:command         Create a new Artisan command
+  make:controller      Create a new controller class
+  make:event           Create a new event class
+  make:exception       Create a new custom exception class
+  make:export          Create a new export class
+  make:factory         Create a new model factory
+  make:import          Create a new import class
+  make:job             Create a new job class
+  make:listener        Create a new event listener class
+  make:mail            Create a new email class
+  make:middleware      Create a new middleware class
+  make:migration       Create a new migration file
+  make:model           Create a new Eloquent model class
+  make:notification    Create a new notification class
+  make:observer        Create a new observer class
+  make:policy          Create a new policy class
+  make:provider        Create a new service provider class
+  make:request         Create a new form request class
+  make:resource        Create a new resource
+  make:rule            Create a new validation rule
+  make:seeder          Create a new seeder class
+  make:test            Create a new test class
+ migrate
+  migrate:fresh        Drop all tables and re-run all migrations
+  migrate:install      Create the migration repository
+  migrate:refresh      Reset and re-run all migrations
+  migrate:reset        Rollback all database migrations
+  migrate:rollback     Rollback the last database migration
+  migrate:status       Show the status of each migration
+ notifications
+  notifications:table  Create a migration for the notifications table
+ optimize
+  optimize:clear       Remove the cached bootstrap files
+ package
+  package:discover     Rebuild the cached package manifest
+ queue
+  queue:failed         List all of the failed queue jobs
+  queue:failed-table   Create a migration for the failed queue jobs database table
+  queue:flush          Flush all of the failed queue jobs
+  queue:forget         Delete a failed queue job
+  queue:listen         Listen to a given queue
+  queue:restart        Restart queue worker daemons after their current job
+  queue:retry          Retry a failed queue job
+  queue:table          Create a migration for the queue jobs database table
+  queue:work           Start processing jobs on the queue as a daemon
+ route
+  route:cache          Create a route cache file for faster route registration
+  route:clear          Remove the route cache file
+  route:list           List all registered routes
+ schedule
+  schedule:run         Run the scheduled commands
+ session
+  session:table        Create a migration for the session database table
+ storage
+  storage:link         Create a symbolic link from "public/storage" to "storage/app/public"
+ vendor
+  vendor:publish       Publish any publishable assets from vendor packages
+ view
+  view:cache           Compile all of the application's Blade templates
+  view:clear           Clear all compiled view files
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan cache:clear
+Application cache cleared!
+
+  </code></pre>
+
+<p>To create a new table in database, run the following command.</p>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan make:migration create_foo_table
+Created Migration: 2019_05_24_132649_create_foo_table
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>cd database/migrations
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\database\migrations>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 7276-2F1C
+
+ Directory of C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\database\migrations
+
+05/24/2019  01:26 PM     DIR           .
+05/24/2019  01:26 PM     DIR           ..
+04/22/2019  09:54 PM             1,156 2019_03_26_204242_create_users_table.php
+03/27/2019  10:38 PM               683 2019_03_27_193702_create_password_resets_table.php
+04/11/2019  12:32 PM             1,170 2019_03_27_193737_create_items_table.php
+03/27/2019  11:32 PM               966 2019_03_27_194709_create_staff_table.php
+05/05/2019  10:29 PM             1,585 2019_03_29_140749_create_orders_table.php
+04/06/2019  02:40 PM               890 2019_03_29_142125_create_branches_table.php
+03/31/2019  03:58 PM               713 2019_03_31_125820_create_statuses_table.php
+05/05/2019  10:34 PM             2,044 2019_04_01_202640_create_orderitems_table.php
+04/19/2019  04:10 PM             1,060 2019_04_19_155504_create_submitted_table.php
+05/04/2019  08:26 PM             1,266 2019_05_04_193254_create_itemsv2_table.php
+05/04/2019  07:42 PM               595 2019_05_04_194222_create_itemsv3_table.php
+05/10/2019  02:21 AM               781 2019_05_10_022125_create_notifications_table.php
+<b>05/24/2019  01:26 PM               583 2019_05_24_132649_create_foo_table.php</b>
+05/16/2019  10:35 PM            33,364 cmd.sql
+              14 File(s)         46,856 bytes
+               2 Dir(s)  78,427,213,824 bytes free
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\database\migrations>
+</code></pre>
+
+
+<p>Create a new <b>Controller</b> by running the following command.</p>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan make:controller FooController
+Controller created successfully.
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>cd app/Http/Controllers
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\app\Http\Controllers>
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\app\Http\Controllers>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 7276-2F1C
+
+ Directory of C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\app\Http\Controllers
+
+05/24/2019  01:33 PM     DIR           .
+05/24/2019  01:33 PM     DIR           ..
+03/27/2019  05:59 PM     DIR           Auth
+05/11/2019  12:51 AM             2,519 BranchesController.php
+03/27/2019  07:05 PM               361 Controller.php
+03/28/2019  02:16 AM               511 DashboardController.php
+<b>05/24/2019  01:33 PM               120 FooController.php</b>
+05/12/2019  12:18 AM           153,920 GlobalController.php
+05/04/2019  06:39 PM               475 HomeController.php
+05/11/2019  12:56 AM             2,981 ItemsController.php
+04/02/2019  08:12 PM               601 MailController.php
+05/18/2019  02:29 PM            43,848 OrdersController.php
+03/28/2019  03:56 AM               507 ProcessController.php
+05/24/2019  01:24 AM           157,090 ProfileController.php
+05/24/2019  12:40 PM           263,651 RootController.php
+03/29/2019  02:26 AM               510 RtvController.php
+05/04/2019  08:39 PM             2,830 SearchController.php
+05/14/2019  11:43 PM             1,970 UploadController.php
+              15 File(s)        631,894 bytes
+               3 Dir(s)  78,428,176,384 bytes free
+
+</code></pre>
+
+
+<p>Create a new <b>Model</b> by running the following command.</p>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>php artisan make:model Foo
+Model created successfully.
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn>cd app/Models
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\app\Models>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 7276-2F1C
+
+ Directory of C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\app\Models
+
+05/04/2019  08:36 PM     DIR           .
+05/04/2019  08:36 PM     DIR           ..
+05/08/2019  11:03 PM             1,297 Branch.php
+<b>05/24/2019  01:36 PM                99 Foo.php</b>
+04/12/2019  07:58 PM             2,686 Item.php
+05/11/2019  12:57 AM             2,742 Itemv2.php
+03/27/2019  11:55 PM               289 Like.php
+03/27/2019  11:55 PM               148 Link.php
+05/08/2019  11:02 PM             6,422 Order.php
+05/04/2019  09:47 PM             2,496 OrderItems.php
+04/12/2019  06:18 PM             1,210 Root.php
+03/27/2019  11:55 PM             1,040 Status.php
+03/27/2019  11:55 PM               408 Upload.php
+03/31/2019  04:20 PM             3,974 User.php
+              11 File(s)         22,712 bytes
+               2 Dir(s)  78,427,693,056 bytes free
+</code></pre>
+
+<h2>ANYWHERE ACCESS</h2>
+
+
+
+
+<h3 id="vsc"><a class="header-link" href="#vsc"></a><img src="{{ asset('images/assests/npm.png') }}" width="80px" height="35px" />   <img src="{{ asset('images/assests/nodejs.png') }}" width="80px" height="35px" /> </h3>
+
+First <a href="https://nodejs.org/en/" target="_blank">download</a> & install <strong>NPM & NodeJS</strong> for windows.
+<br />
+on Linux Terminal
+
+<pre><code class="language-bash">   
+
+root@0x01:~# apt-get install npm nodejs 
+root@0x01:~# npm -v
+    5.8.0
+root@0x01:~# node -v
+    v10.15.2
+root@0x01:~# npm i sgcdn
+root@0x01:~# cd node_modules/sgcdn
+root@0x01:~/node_modules/sgcdn# ls
+    bin  index.js  obj  package.json  sgcdn-1.0.2.tgz  sgcdn.njsproj  sgcdn.sln
+root@0x01:~/node_modules/sgcdn# cd bin
+root@0x01:~/node_modules/sgcdn/bin# ls
+    Microsoft.NodejsTools.WebRole.dll  cmd.js
+root@0x01:~/node_modules/sgcdn/bin# node cmd.js
+    This is a message from the sgcdn package HELLLOO
+root@0x01:~/node_modules/sgcdn/bin#
+</code></pre>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\.npm\sgnode>npm pack
+npm notice
+npm notice package: sgcdn@1.0.6
+npm notice === Tarball Contents ===
+npm notice 491B   package.json
+npm notice 106B   index.js
+npm notice 1.1kB  LICENSE
+npm notice 606B   sgcdn-1.0.2.tgz
+npm notice 3.7kB  sgcdn.njsproj
+npm notice 1.1kB  sgcdn.sln
+npm notice 49B    bin/cmd.js
+npm notice 32.8kB bin/Microsoft.NodejsTools.WebRole.dll
+npm notice 42B    obj/Debug/sgcdn.njsproj.CoreCompileInputs.cache
+npm notice 349B   obj/Debug/sgcdn.njsproj.FileListAbsolute.txt
+npm notice 4.0kB  obj/Debug/sgcdn.njsprojAssemblyReference.cache
+npm notice 42B    obj/Release/sgcdn.njsproj.CoreCompileInputs.cache
+npm notice === Tarball Details ===
+npm notice name:          sgcdn
+npm notice version:       1.0.6
+npm notice filename:      sgcdn-1.0.6.tgz
+npm notice package size:  22.5 kB
+npm notice unpacked size: 44.4 kB
+npm notice shasum:        018be498508a68b1c8764b3e330aecf256f22393
+npm notice integrity:     sha512-W8fKH4nL3hZ3S[...]4OvgHPKNtzrTw==
+npm notice total files:   12
+npm notice
+sgcdn-1.0.6.tgz
+</code></pre>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+                              :,                            
+                              :,                            
+                            :.:,:,                          
+                            :.:,:,                          
+                          ` :.:,:,``                        
+                          :`:.:,:,.:                        
+                          :`:.:,:,.:                        
+                          :`:.:,:,.:                        
+                          ::;.:,::::                        
+                          :`.::::.`:                        
+                          :`  :;  `:                        
+       :  :  :.           :`  ::  `:            :  :  `     
+       ,:`.;. ;:          ::  :: `;:          `:, ;; :;`    
+        `:, :: :;         :`::::::.:         ::` :: ;:      
+       ,, :: :::,;        :` `::` `:        :::,:. ::       
+        :: :; :: `;.      :`  ::  `:      `:: :; .:. ;:     
+         :; :;`:  .::     ::  ::  ::     .:,  : :: .:,      
+        ; ,;`.;:  , :;    :.:`::`;.:    ::`,  ::; ::        
+        ::`.:;::: :  ,;   :` ,::, `:   ;;  : `;:,:; ,:      
+         `::`   :;:   ::` :`  ::  `: `;;   :.:. .:;;;       
+           :,    :;   , ;,;.  ::  .:::.,   ::     ;:        
+            ::`::..:.``  : ;: :: :: :  ,  :;::  `:,         
+             :;    `::`  :  .::::.  :  `.;,   ,;:`          
+              .:`   :::  :    ;:    :  ,;`    ;:            
+                ::::  :; :    :,    : :; ::: ::             
+                 ::    ,::    :,    :;:    .:.              
+                  :;  .:::,   :,   ,::.   :;                
+                   .:::   ::  :,  :;  ::;;:                 
+                  `::      ;; :, ::      :                  
+             `.:;;:.::      ,::::,      ,:::.               
+         .::::, :`   ::     `::;.      ::  .::;:`           
+    `:::::  :`   :`   :::::::::;;:::  ::    :  ,;:::        
+    .,` :`   :`   :,:::;:.   :,;   ,:::,   :    :``::::.    
+    `,::::`   ::::::, `:     : ::    `::::;.   :    ::,::   
+  `:::`   ::::::  ,`  :`    :,  :     :   :::::`   ::::     
+     ,:::;:`  :   :   ;     ;   :,    :   ;  `:::::: `::::, 
+ :::;:.   :   :   : .::    ;,    :    `,  ,   :  `::::,  `: 
+ ,   `:::;,  .``:;:::`::::;:     ::::,`:::`:  .`  :` `::::. 
+   .::,  : :::::`     :   ;,:   :;: `::` `:;:: :  `;::.  .;:
+      ,::;:.`        ;`  `: :.  ; :`  .:     .:;:, : .::::  
+      ,`            `:   :.  ; ;` ,:   :         ,::::`  .  
+                    ;::::;   :::   :::,,:            ::     
+                   `:   ;.:  ; ;  :::  .:                   
+                   ;   `; ,`:. ,,`: :   ::                  
+                  `; ``;.  ;;   ;:  ::   :                  
+                  ;::`.;.  :.   :.  `;::::.                 
+                 `:   :.:  :     ;  :;.  `;                 
+                 :   .: `::.     : :``;   :`                
+                .:.::;`  :;      `::  ;`  `:                
+                ;:;:.;:  :.       ;   :::::;                
+               .: : ;`:  :        `: `:: :.,:               
+               ;`::.: :::`         : ;,,: ; :               
+                 : ;`::::          ,;,: : :`::              
+                ::.: : :`           ; ;.::.:                
+                : :`::.:            ::`; : :                
+                 .: : :`             : : :.,:               
+                 :`:,                  ,: ;                 
+                .:                      , ;`                
+                                          .:                
+                                          </code></pre>
+
+
+<h3 id="python"><a class="header-link" href="#python"></a><img src="{{ asset('images/assests/python.png') }}" width="70px" height="80px" /></h3>
+
+First <a href="https://www.python.org/downloads/" target="_blank">download</a> & install <strong>Python</strong> for windows.
+<br />
+on Linux Terminal
+
+<pre><code class="language-bash">   
+root@0x01:~# apt-get install python
+root@0x01:~# git clone https://github.com/sgframework/sgpy.git
+    Cloning into 'sgpy'...
+    remote: Enumerating objects: 9, done.
+    remote: Counting objects: 100% (9/9), done.
+    remote: Compressing objects: 100% (8/8), done.
+    remote: Total 9 (delta 1), reused 0 (delta 0), pack-reused 0
+    Unpacking objects: 100% (9/9), done.
+root@0x01:~# cd sgpy/
+root@0x01:~/sgpy# ls
+    LICENSE  README.md  x.py
+root@0x01:~/sgpy# python x.py
+    What do you want to search for ? >>
+</code></pre>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy>python setup.py --help-commands
+Standard commands:
+  build             build everything needed to install
+  build_py          "build" pure Python modules (copy to build directory)
+  build_ext         build C/C++ extensions (compile/link to build directory)
+  build_clib        build C/C++ libraries used by Python extensions
+  build_scripts     "build" scripts (copy and fixup #! line)
+  clean             clean up temporary files from 'build' command
+  install           install everything from build directory
+  install_lib       install all Python modules (extensions and pure Python)
+  install_headers   install C/C++ header files
+  install_scripts   install scripts (Python or otherwise)
+  install_data      install data files
+  sdist             create a source distribution (tarball, zip file, etc.)
+  register          register the distribution with the Python package index
+  bdist             create a built (binary) distribution
+  bdist_dumb        create a "dumb" built distribution
+  bdist_rpm         create an RPM distribution
+  bdist_wininst     create an executable installer for MS Windows
+  check             perform some checks on the package
+  upload            upload binary package to PyPI
+
+Extra commands:
+  alias             define a shortcut to invoke one or more commands
+  bdist_egg         create an "egg" distribution
+  develop           install package in 'development mode'
+  dist_info         create a .dist-info directory
+  easy_install      Find/get/install Python packages
+  egg_info          create a distribution's .egg-info directory
+  install_egg_info  Install an .egg-info directory for the package
+  rotate            delete older distributions, keeping N newest files
+  saveopts          save supplied options to setup.cfg or other config file
+  setopt            set an option in setup.cfg or another config file
+  test              run unit tests after in-place build
+  upload_docs       Upload documentation to PyPI
+
+usage: setup.py [global_opts] cmd1 [cmd1_opts] [cmd2 [cmd2_opts] ...]
+   or: setup.py --help [cmd1 cmd2 ...]
+   or: setup.py --help-commands
+   or: setup.py cmd --help
+
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy>
+</code></pre>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy>python setup.py sdist
+running sdist
+running egg_info
+writing sgpy.egg-info\PKG-INFO
+writing dependency_links to sgpy.egg-info\dependency_links.txt
+writing entry points to sgpy.egg-info\entry_points.txt
+writing requirements to sgpy.egg-info\requires.txt
+writing top-level names to sgpy.egg-info\top_level.txt
+reading manifest file 'sgpy.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*' under directory 'data'
+writing manifest file 'sgpy.egg-info\SOURCES.txt'
+running check
+creating sgpy-1.0.3
+creating sgpy-1.0.3\sgpy.egg-info
+creating sgpy-1.0.3\src
+creating sgpy-1.0.3\src\sgapi
+creating sgpy-1.0.3\src\sgapi\data
+copying files to sgpy-1.0.3...
+copying LICENSE.txt -> sgpy-1.0.3
+copying MANIFEST.in -> sgpy-1.0.3
+copying README.md -> sgpy-1.0.3
+copying setup.cfg -> sgpy-1.0.3
+copying setup.py -> sgpy-1.0.3
+copying sgpy.egg-info\PKG-INFO -> sgpy-1.0.3\sgpy.egg-info
+copying sgpy.egg-info\SOURCES.txt -> sgpy-1.0.3\sgpy.egg-info
+copying sgpy.egg-info\dependency_links.txt -> sgpy-1.0.3\sgpy.egg-info
+copying sgpy.egg-info\entry_points.txt -> sgpy-1.0.3\sgpy.egg-info
+copying sgpy.egg-info\requires.txt -> sgpy-1.0.3\sgpy.egg-info
+copying sgpy.egg-info\top_level.txt -> sgpy-1.0.3\sgpy.egg-info
+copying src\sgapi\__init__.py -> sgpy-1.0.3\src\sgapi
+copying src\sgapi\main.py -> sgpy-1.0.3\src\sgapi
+copying src\sgapi\x.py -> sgpy-1.0.3\src\sgapi
+copying src\sgapi\data\flash.dat -> sgpy-1.0.3\src\sgapi\data
+Writing sgpy-1.0.3\setup.cfg
+Creating tar archive
+removing 'sgpy-1.0.3' (and everything under it)
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy>pip install -e .
+Obtaining file:///C:/Program%20Files/Windows%20Server/Bin/WebApps/Site/cdn/sgpy
+Requirement already satisfied: peppercorn in c:\program files\python37\lib\site-packages (from sgpy==1.0.3) (0.6)
+Installing collected packages: sgpy
+  Found existing installation: sgpy 1.0.3
+    Uninstalling sgpy-1.0.3:
+      Successfully uninstalled sgpy-1.0.3
+  Running setup.py develop for sgpy
+Successfully installed sgpy
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy>twine upload --skip-existing dist/*
+Enter your username: sgpy
+Enter your password:
+Uploading distributions to https://upload.pypi.org/legacy/
+  Skipping sgpy-1.0.1-py2.py3-none-any.whl because it appears to already exist
+  Skipping sgpy-1.0.1-py3.7.egg because it appears to already exist
+  Skipping sgpy-1.0.1.tar.gz because it appears to already exist
+  Skipping sgpy-1.0.2.tar.gz because it appears to already exist
+Uploading sgpy-1.0.3.tar.gz
+100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20.5k/20.5k [00:02<span><</span>00:00, 8.81kB/s]
+
+</code></pre>
+
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 7276-2F1C
+
+ Directory of C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src
+
+05/24/2019  10:45 PM     DIR           .
+05/24/2019  10:45 PM     DIR           ..
+05/24/2019  10:45 PM     DIR           sgapi
+               0 File(s)              0 bytes
+               3 Dir(s)  77,068,972,032 bytes free
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src>cd sgapi
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src\sgapi>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 7276-2F1C
+
+ Directory of C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src\sgapi
+
+05/24/2019  10:45 PM     DIR           .
+05/24/2019  10:45 PM     DIR           ..
+05/24/2019  10:15 PM     DIR           data
+05/24/2019  06:02 PM               129 main.py
+05/24/2019  06:33 PM               190 pip-delete-this-directory.txt
+05/24/2019  06:05 PM                41 x.py
+05/24/2019  10:03 PM               112 __init__.py
+               4 File(s)            472 bytes
+               3 Dir(s)  77,068,972,032 bytes free
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src\sgapi>python main.py
+Your IP is 5.132.219.28, 5.132.219.28
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src\sgapi>python x.py
+Hello, World!
+
+</code></pre>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Users\a7med\Desktop\development>pip install sgpy==1.0.1
+Collecting sgpy==1.0.1
+  Using cached https://files.pythonhosted.org/packages/b3/b5/6e148a8eaae37241cb931f59568392461db694197082d5e018bffc9ce2f3/sgpy-1.0.1-py2.py3-none-any.whl
+Requirement already satisfied: peppercorn in c:\program files\python37\lib\site-packages (from sgpy==1.0.1) (0.6)
+Installing collected packages: sgpy
+Successfully installed sgpy-1.0.1
+</code></pre>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src\sgapi>python -m http.server 8000
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+127.0.0.1 - - [25/May/2019 00:42:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:12] code 404, message File not found
+127.0.0.1 - - [25/May/2019 00:42:12] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [25/May/2019 00:42:15] "GET /server.py HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:19] "GET /x.py HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:21] "GET /__init__.py HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:23] "GET /data/ HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:24] "GET /data/flash.csv HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:26] "GET /data/flash.dat HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:29] "GET /main.py HTTP/1.1" 200 -
+127.0.0.1 - - [25/May/2019 00:42:34] "GET /pip-delete-this-directory.txt HTTP/1.1" 200 -
+
+</code></pre>
+
+<h3 id="ruby"><a class="header-link" href="#ruby"></a><img src="{{ asset('images/assests/ruby.jpg') }}" width="50px" height="50px" /> Ruby</h3>
+
+First <a href="https://rubyinstaller.org/downloads/" target="_blank">download</a> & install <strong>Ruby</strong> for windows.
+<br />
+on Linux Terminal
+
+<pre><code class="language-bash">   
+
+root@0x01:~# apt-get install ruby
+root@0x01:~# gem install xss
+    Fetching xss-0.0.0.gem
+    Successfully installed xss-0.0.0
+    Parsing documentation for xss-0.0.0
+    Installing ri documentation for xss-0.0.0
+    Done installing documentation for xss after 0 seconds
+    1 gem installed
+root@0x01:~# irb
+    irb(main):001:0> require 'xss'
+        => true
+    irb(main):002:0> Xss.hi
+        Hello world!
+        => nil
+    irb(main):003:0> quit()
+root@0x01:~#
+</code></pre>
+
+<h3 id="curl"><a class="header-link" href="#curl"></a><img src="{{ asset('images/assests/curl.svg') }}" width="100px" height="80px" /></h3>
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Users\a7med>curl http://cdn.ies.com/api/total-sales
+{"YTD Total Sales:":"3,240,505.00 SAR"}
+</code></pre>
+
+<pre><code class="language-bash">  
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/banner.sh --dump-header dump.txt)
+███████╗██╗   ██╗███╗   ██╗██████╗ ██╗   ██╗██╗      █████╗ ██╗  ██╗     ██████╗ ██████╗  ██████╗ ██╗   ██╗██████╗
+██╔════╝██║   ██║████╗  ██║██╔══██╗██║   ██║██║     ██╔══██╗██║  ██║    ██╔════╝ ██╔══██╗██╔═══██╗██║   ██║██╔══██╗
+███████╗██║   ██║██╔██╗ ██║██████╔╝██║   ██║██║     ███████║███████║    ██║  ███╗██████╔╝██║   ██║██║   ██║██████╔╝
+╚════██║██║   ██║██║╚██╗██║██╔══██╗██║   ██║██║     ██╔══██║██╔══██║    ██║   ██║██╔══██╗██║   ██║██║   ██║██╔═══╝
+███████║╚██████╔╝██║ ╚████║██████╔╝╚██████╔╝███████╗██║  ██║██║  ██║    ╚██████╔╝██║  ██║╚██████╔╝╚██████╔╝██║
+╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝
+root@0x01:~# cat dump.txt
+HTTP/1.1 200 OK
+Content-Type: application/x-sh
+Last-Modified: Fri, 24 May 2019 02:29:06 GMT
+Accept-Ranges: bytes
+ETag: "223fa75d811d51:0"
+Server: Microsoft-IIS/8.5
+X-Powered-By: ASP.NET
+Date: Fri, 24 May 2019 02:29:09 GMT
+Content-Length: 1839
+
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/banner.sh) 
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/install.sh) #install npm node python ruby
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/cmatrix.sh)
+root@0x01:~# node <(curl -s http://cdn.ies.com/cmd/cmd.js)
+root@0x01:~# python <(curl -s http://cdn.ies.com/cmd/echo.py)
+hello
+
+<h5>Upload anything anywhere.</h5>
+root@0x01:~# curl --upload-file dump.txt https://keep.sh/dump.txt
+
+<h5>Download anything anywhere.</h5>
+root@0x01:~# curl -L https://keep.sh/3d1fd43a21/dump.txt > dump.txt
+
+<h5>Get all orders</h5>
+root@0x01:~# curl -i -H "Accept: application/xml" http://cdn.ies.com/api/test
+
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/install.sh)
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/install.sh)
+root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/install.sh)
+</code></pre>
+
+
+<pre><code class="language-markdown">   
+
+
+
+</code></pre>
+
+<script src="https://embed.runkit.com" data-element-id="my-element"></script>
+
+<!-- anywhere else on your page -->
+<div id="my-element">
+const getJSON = require("async-get-json");
+const getGitHubAPIStatus = getJSON("https://status.github.com/api/status.json");
+
+module.exports.endpoint = async function (request, response)
+{
+    response.end(JSON.stringify(await getGitHubAPIStatus));
+}
+
+</div>
+
+
+
+
+
+
+
+<pre><code class="language-bash"> 
+root@0x01:~/ssh-keys# ssh-keygen -t rsa -b 4096 -C root@ipool.remotewebaccess.com
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): keys
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in keys.
+Your public key has been saved in keys.pub.
+The key fingerprint is:
+SHA256:IYq7v6miom7COSEqXmPYbVoI6WeQTEA+a1Oe2bvr3WA root@ipool.remotewebaccess.com
+The key's randomart image is:
++---[RSA 4096]----+
+|o.               |
+|o                |
+| + .  . .        |
+|o B.+. . .       |
+| X.+..  S        |
+|+.*.o .          |
+|+o+O = E         |
+|*==.=.+ o        |
+|%+++==.. .       |
++----[SHA256]-----+
+root@0x01:~/ssh-keys#
+
+</code></pre>
+
+
 <h5 id="you-are-here"><a class="header-link" href="#you-are-here"></a>Working Directory</h5>
 
 <pre style="background-color:black;"><code style="color:#ddd;" class="language-cmd">
@@ -856,7 +1816,8 @@ C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\public\cmd>
 
 <div style="text-align:center;margin: 30px;padding: 20px;border: dotted black 2px;">
     <img src="{{ asset('images/assests/php.jpg') }}" style="padding:20px" width="40px" height="25px" /> php <img src="{{ asset('images/assests/mysql.png') }}" style="padding:20px" width="40px" height="25px" /> MySql <img src="{{ asset('images/assests/js.png') }}" style="padding:20px" width="40px" height="30px" /> JavaScript  <img src="{{ asset('images/assests/npm.png') }}" style="padding:20px" width="45px" height="22px" /> npm <a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a>
- <br /> <img src="{{ asset('images/assests/nodejs.png') }}" style="padding:20px" width="40px" height="25px" /> NodeJS  <img src="{{ asset('images/assests/jquery.gif') }}" style="padding:20px" width="40px" height="25px" /> jQuery  <img src="{{ asset('images/assests/python.png') }}" style="padding:20px" width="60px" height="40px" /> Python  <img src="{{ asset('images/assests/ruby.jpg') }}" style="padding:20px" width="35px" height="25px" /> Ruby 
+ <br /> <img src="{{ asset('images/assests/nodejs.png') }}" style="padding:20px" width="40px" height="25px" /> NodeJS  <img src="{{ asset('images/assests/jquery.gif') }}" style="padding:20px" width="40px" height="25px" /> jQuery  <img src="{{ asset('images/assests/python.png') }}" style="padding:20px" width="50px" height="60px" /> Python  <img src="{{ asset('images/assests/ruby.jpg') }}" style="padding:20px" width="30px" height="30px" /> Ruby <img src="{{ asset('images/assests/curl.svg') }}" style="padding:20px" width="40px" height="25px" /> curl
+
 </div>
 
 <div style="text-align:center;margin: 30px;padding: 20px">

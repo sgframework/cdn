@@ -5329,6 +5329,8 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         $routes = Artisan::call('route:list');
         $routeslist = Artisan::output();
 
+
+
             return view('root.md.dev')
             ->with('exitCode', $exitCode)
             ->with('outputt', $outputt)
@@ -5361,7 +5363,45 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
         return view('tests.markdown')->with('orders', $orders)->with('items', $items)->with('branches', $branches);
     }
 
-    
+    public function postUploads()
+    {
+
+
+        $file_url = "test.txt";  //here is the file route, in this case is on same directory but you can set URL too like "http://examplewebsite.com/test.txt"
+        $eol = "\r\n"; //default line-break for mime type
+        $BOUNDARY = md5(time()); //random boundaryid, is a separator for each param on my post curl function
+        $BODY=""; //init my curl body
+        $BODY.= '--'.$BOUNDARY. $eol; //start param header
+        $BODY .= 'Content-Disposition: form-data; name="sometext"' . $eol . $eol; // last Content with 2 $eol, in this case is only 1 content.
+        $BODY .= "Some Data" . $eol;//param data in this case is a simple post data and 1 $eol for the end of the data
+        $BODY.= '--'.$BOUNDARY. $eol; // start 2nd param,
+        $BODY.= 'Content-Disposition: form-data; name="somefile"; filename="test.txt"'. $eol ; //first Content data for post file, remember you only put 1 when you are going to add more Contents, and 2 on the last, to close the Content Instance
+        $BODY.= 'Content-Type: application/octet-stream' . $eol; //Same before row
+        $BODY.= 'Content-Transfer-Encoding: base64' . $eol . $eol; // we put the last Content and 2 $eol,
+        $BODY.= chunk_split(base64_encode(file_get_contents($file_url))) . $eol; // we write the Base64 File Content and the $eol to finish the data,
+        $BODY.= '--'.$BOUNDARY .'--' . $eol. $eol; // we close the param and the post width "--" and 2 $eol at the end of our boundary header.
+
+
+
+        $ch = curl_init(); //init curl
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                         'X_PARAM_TOKEN : 71e2cb8b-42b7-4bf0-b2e8-53fbd2f578f9' //custom header for my api validation you can get it from $_SERVER["HTTP_X_PARAM_TOKEN"] variable
+                         ,"Content-Type: multipart/form-data; boundary=".$BOUNDARY) //setting our mime type for make it work on $_FILE variable
+                    );
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/1.0 (Windows NT 6.1; WOW64; rv:28.0) Gecko/20100101 Firefox/28.0'); //setting our user agent
+        curl_setopt($ch, CURLOPT_URL, "api.endpoint.post"); //setting our api post url
+        curl_setopt($ch, CURLOPT_COOKIEJAR, $BOUNDARY.'.txt'); //saving cookies just in case we want
+        curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1); // call return content
+        curl_setopt ($ch, CURLOPT_FOLLOWLOCATION, 1); 
+        curl_setopt($ch, CURLOPT_POST, true); //set as post
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $BODY); // set our $BODY 
+
+
+        $response = curl_exec($ch); // start curl navigation
+
+     print_r($response); //print response
+
+    }
 
     public function getCmd()
     {
