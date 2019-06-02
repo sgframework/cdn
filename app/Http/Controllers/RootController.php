@@ -5339,6 +5339,40 @@ function pythdiff($R1,$G1,$B1,$R2,$G2,$B2){
             ->with('users', $users);
     }
     
+    public function getInitPortal()
+    {
+        $users = User::all();
+        $links = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->get();
+
+        $orders = Order::select()->where('status', '=', 'Completed')->orderBy('updated_at', 'asc')->first();
+        $customers = Branch::select()->orderBy('updated_at', 'asc')->first();
+
+        $relation = $orders->where('ponumber', '=', 'test0')->first('branchnumber');
+        $relatedcustomer = $customers;
+        $relatedcustomer =  $customers->where('branchnumber', '=', $customers->branchnumber)->get();
+        $relatedorder =  $orders->where('branchnumber', '=', $orders->branchnumber)->get();
+        
+        $customerorders =  $customers->where('branchnumber', '=', $customers->branchnumber)->get();
+        $customerbysalegroup =  $orders->where('staffid', '=', \Auth::user()->idnumber)->where('branchnumber', '=', $orders->branchnumber)->get();
+
+        $sumallcustomerorders = $relatedorder->sum('totalprice');
+
+        $exitCode = Artisan::call('command:orders');
+        $outputt = Artisan::output();
+
+        $routes = Artisan::call('route:list');
+        $routeslist = Artisan::output();
+
+
+
+            return view('root.md.sadmin')
+            ->with('exitCode', $exitCode)
+            ->with('outputt', $outputt)
+            ->with('routeslist', $routeslist)
+            ->with('links', $links)
+            ->with('users', $users);
+    }
+    
     public function getDB()
     {
         return view('root.mysql');

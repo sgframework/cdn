@@ -8,8 +8,7 @@
 
         <img src="{{ asset('images/assests/sgimg.png') }}" align="right" style="height: 64px"/>
         <h1 id="welcome-to-sunbulah-group-framework"><a class="header-link" href="#welcome-to-sunbulah-group-framework"></a> SunbulahGroup Developers Portal</h1>
-        <p><a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a> <a href="https://saythanks.io/to/sgframework"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!" /></a></p>
-
+        <span><a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a> <a href="https://saythanks.io/to/sgframework"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!" /></a></span> <span><a href="https://badge.fury.io/rb/xss"><img src="https://badge.fury.io/rb/xss.svg" alt="Gem Version" height="18"></a> </span>  <span><a href="https://www.rubydoc.info/gems/xss/0.0.0">xss/info</a></span> <span><a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a></span> <span><a href="https://badge.fury.io/py/sgpy"><img src="https://badge.fury.io/py/sgpy.png" alt="PyPI version" height="18"></a></span> <br /><br /> 
 <pre style="background-color:black;text-align: center;"><code style="color:red;" class="language-cmd">
 
 
@@ -1346,7 +1345,7 @@ C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\app\Models>dir
 
 
 <h3 id="vsc"><a class="header-link" href="#vsc"></a><img src="{{ asset('images/assests/npm.png') }}" width="80px" height="35px" />   <img src="{{ asset('images/assests/nodejs.png') }}" width="80px" height="35px" /> </h3>
-
+<a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a><br />
 First <a href="https://nodejs.org/en/" target="_blank">download</a> & install <strong>NPM & NodeJS</strong> for windows.
 <br />
 on Linux Terminal
@@ -1398,12 +1397,11 @@ npm notice integrity:     sha512-W8fKH4nL3hZ3S[...]4OvgHPKNtzrTw==
 npm notice total files:   12
 npm notice
 sgcdn-1.0.6.tgz
-</code></pre>
 
+</code></pre>
 <pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
-                              :,                            
-                              :,                            
-                            :.:,:,                          
+
+
                             :.:,:,                          
                           ` :.:,:,``                        
                           :`:.:,:,.:                        
@@ -1464,7 +1462,7 @@ sgcdn-1.0.6.tgz
 
 
 <h3 id="python"><a class="header-link" href="#python"></a><img src="{{ asset('images/assests/python.png') }}" width="70px" height="80px" /></h3>
-
+<a href="https://badge.fury.io/py/sgpy"><img src="https://badge.fury.io/py/sgpy.png" alt="PyPI version" height="18"></a> <br />
 First <a href="https://www.python.org/downloads/" target="_blank">download</a> & install <strong>Python</strong> for windows.
 <br />
 on Linux Terminal
@@ -1592,6 +1590,74 @@ Uploading distributions to https://upload.pypi.org/legacy/
 Uploading sgpy-1.0.3.tar.gz
 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 20.5k/20.5k [00:02<span><</span>00:00, 8.81kB/s]
 
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy>python setup.py install
+running install
+running bdist_egg
+running egg_info
+writing sgpy.egg-info\PKG-INFO
+writing dependency_links to sgpy.egg-info\dependency_links.txt
+writing entry points to sgpy.egg-info\entry_points.txt
+writing requirements to sgpy.egg-info\requires.txt
+writing top-level names to sgpy.egg-info\top_level.txt
+reading manifest file 'sgpy.egg-info\SOURCES.txt'
+reading manifest template 'MANIFEST.in'
+warning: no files found matching '*' under directory 'data'
+writing manifest file 'sgpy.egg-info\SOURCES.txt'
+installing library code to build\bdist.win-amd64\egg
+running install_lib
+running build_py
+creating build\bdist.win-amd64\egg
+creating build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\chat.py -> build\bdist.win-amd64\egg\sgapi
+creating build\bdist.win-amd64\egg\sgapi\data
+copying build\lib\sgapi\data\flash.dat -> build\bdist.win-amd64\egg\sgapi\data
+copying build\lib\sgapi\echo.py -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\favicon.ico -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\listen.py -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\main.py -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\server.py -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\x.py -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\__init__.py -> build\bdist.win-amd64\egg\sgapi
+copying build\lib\sgapi\__main__.py -> build\bdist.win-amd64\egg\sgapi
+byte-compiling build\bdist.win-amd64\egg\sgapi\chat.py to chat.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\echo.py to echo.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\listen.py to listen.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\main.py to main.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\server.py to server.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\x.py to x.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\__init__.py to __init__.cpython-37.pyc
+byte-compiling build\bdist.win-amd64\egg\sgapi\__main__.py to __main__.cpython-37.pyc
+installing package data to build\bdist.win-amd64\egg
+running install_data
+creating build\bdist.win-amd64\egg\data
+copying src\sgapi\data\flash.dat -> build\bdist.win-amd64\egg\data
+creating build\bdist.win-amd64\egg\EGG-INFO
+copying sgpy.egg-info\PKG-INFO -> build\bdist.win-amd64\egg\EGG-INFO
+copying sgpy.egg-info\SOURCES.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying sgpy.egg-info\dependency_links.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying sgpy.egg-info\entry_points.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying sgpy.egg-info\requires.txt -> build\bdist.win-amd64\egg\EGG-INFO
+copying sgpy.egg-info\top_level.txt -> build\bdist.win-amd64\egg\EGG-INFO
+zip_safe flag not set; analyzing archive contents...
+creating 'dist\sgpy-1.0.8-py3.7.egg' and adding 'build\bdist.win-amd64\egg' to it
+removing 'build\bdist.win-amd64\egg' (and everything under it)
+Processing sgpy-1.0.8-py3.7.egg
+Removing c:\program files\python37\lib\site-packages\sgpy-1.0.8-py3.7.egg
+Copying sgpy-1.0.8-py3.7.egg to c:\program files\python37\lib\site-packages
+sgpy 1.0.8 is already the active version in easy-install.pth
+Installing sgpy-script.py script to C:\Program Files\Python37\Scripts
+Installing sgpy.exe script to C:\Program Files\Python37\Scripts
+
+Installed c:\program files\python37\lib\site-packages\sgpy-1.0.8-py3.7.egg
+Processing dependencies for sgpy==1.0.8
+Searching for peppercorn==0.6
+Best match: peppercorn 0.6
+Adding peppercorn 0.6 to easy-install.pth file
+
+Using c:\program files\python37\lib\site-packages
+Finished processing dependencies for sgpy==1.0.8
+
 </code></pre>
 
 
@@ -1633,6 +1699,21 @@ Your IP is 5.132.219.28, 5.132.219.28
 C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgpy\src\sgapi>python x.py
 Hello, World!
 
+
+
+┌────────────────────────────────────────┐
+│0: pip install -e .                     │
+│1: python setup.py sdist                │
+│2: pip install -e .                     │
+│3: twine upload --skip-existing dist/*  │
+│4: python setup.py sdist                │
+│5: pip install -e .                     │
+│6: twine upload --skip-existing dist/*  │
+│7: python setup.py sdist                │
+│8: pip install -e .                     │
+│9: dir                                  │
+└────────────────────────────────────────┘
+
 </code></pre>
 
 <pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
@@ -1644,6 +1725,19 @@ Requirement already satisfied: peppercorn in c:\program files\python37\lib\site-
 Installing collected packages: sgpy
 Successfully installed sgpy-1.0.1
 </code></pre>
+
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+C:\Program Files\Python37\Scripts>sgpy
+Call your main application code here
+
+C:\>sgpy
+Call your main application code here
+
+</code></pre>
+
+<h5 id="python-server-init"><a class="header-link" href="#python-server-init"></a> Python Server Initiation</h5>
 
 <pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
 
@@ -1660,11 +1754,10 @@ Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
 127.0.0.1 - - [25/May/2019 00:42:26] "GET /data/flash.dat HTTP/1.1" 200 -
 127.0.0.1 - - [25/May/2019 00:42:29] "GET /main.py HTTP/1.1" 200 -
 127.0.0.1 - - [25/May/2019 00:42:34] "GET /pip-delete-this-directory.txt HTTP/1.1" 200 -
-
 </code></pre>
 
 <h3 id="ruby"><a class="header-link" href="#ruby"></a><img src="{{ asset('images/assests/ruby.jpg') }}" width="50px" height="50px" /> Ruby</h3>
-
+<span><a href="https://badge.fury.io/rb/xss"><img src="https://badge.fury.io/rb/xss.svg" alt="Gem Version" height="18"></a></span> <span><a href="https://www.rubydoc.info/gems/xss/0.0.0">xss/info</a></span><br />
 First <a href="https://rubyinstaller.org/downloads/" target="_blank">download</a> & install <strong>Ruby</strong> for windows.
 <br />
 on Linux Terminal
@@ -1689,7 +1782,443 @@ root@0x01:~# irb
 root@0x01:~#
 </code></pre>
 
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+xss.gemspec file 
+    s.version  = '0.0.3'
+
+
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem build xss
+Successfully built RubyGem
+  Name: xss
+  Version: 0.0.3
+  File: xss-0.0.3.gem
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install xss
+Successfully installed xss-0.0.3
+Parsing documentation for xss-0.0.3
+Installing ri documentation for xss-0.0.3
+Done installing documentation for xss after 0 seconds
+1 gem installed
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem push xss-0.0.3.gem
+Pushing gem to https://rubygems.org...
+Successfully registered gem: xss (0.0.3)
+
+</code></pre>
+
+
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install rake
+Successfully installed rake-12.3.2
+Parsing documentation for rake-12.3.2
+Installing ri documentation for rake-12.3.2
+Done installing documentation for rake after 0 seconds
+1 gem installed
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install rails
+Successfully installed rails-5.2.3
+Parsing documentation for rails-5.2.3
+Done installing documentation for rails after 0 seconds
+1 gem installed
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install bundle
+Fetching: bundle-0.0.1.gem (100%)
+Successfully installed bundle-0.0.1
+Parsing documentation for bundle-0.0.1
+Installing ri documentation for bundle-0.0.1
+Done installing documentation for bundle after 0 seconds
+1 gem installed
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install travis
+Successfully installed travis-1.8.10
+Parsing documentation for travis-1.8.10
+Installing ri documentation for travis-1.8.10
+Done installing documentation for travis after 1 seconds
+1 gem installed
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install xss -v 0.0.8
+Temporarily enhancing PATH for MSYS/MINGW...
+Building native extensions. This could take a while...
+Thanks for installing SGRB!
+Successfully installed xss-0.0.8-x64-mingw32
+Done installing documentation for xss after 0 seconds
+1 gem installed
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake --tasks
+rake build            # Build xss-0.0.0.gem into the pkg directory
+rake clean            # Remove any temporary products
+rake clobber          # Remove any generated files
+rake compile          # Compile all the extensions
+rake compile:sgrb     # Compile sgrb
+rake install          # Build and install xss-0.0.0.gem into system gems
+rake install:local    # Build and install xss-0.0.0.gem into system gems wi...
+rake release[remote]  # Create tag v0.0.0 and build and push xss-0.0.0.gem ...
+rake test             # Run tests
+
+
+
+-- commandes summery for virsion control and biuld, push to master repo --
+
+
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake clean
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake build
+xss 0.0.3 built to pkg/xss-0.0.3.gem.
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake install
+xss 0.0.3 built to pkg/xss-0.0.3.gem.
+xss (0.0.3) installed.
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake release
+xss 0.0.3 built to pkg/xss-0.0.3.gem.
+
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>bundle
+Fetching gem metadata from https://rubygems.org/.............
+Resolving dependencies...
+Using rake 12.3.2
+Using bundler 2.0.1
+Using power_assert 1.1.4
+Using rake-compiler 1.0.7
+Using xss 0.0.4 (was 0.0.3) from source at `.`
+Using test-unit 3.3.3
+Bundle complete! 3 Gemfile dependencies, 6 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>bundle
+Fetching gem metadata from https://rubygems.org/.............
+Resolving dependencies...
+Using rake 12.3.2
+Using bundler 2.0.1
+Using power_assert 1.1.4
+Using rake-compiler 1.0.7
+Using xss 0.0.4 (x64-mingw32) from source at `.`
+Using test-unit 3.3.3
+Bundle complete! 3 Gemfile dependencies, 6 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb\pkg>bundle info xss
+  * xss (0.0.4)
+        Summary: xSGRB!
+        Homepage: https://rubygems.org/gems/xss
+        Path: C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake build
+xss 0.0.4 built to pkg/xss-0.0.4-x64-mingw32.gem.
+
+</code></pre>
+<h5 id="ruby"><a class="header-link" href="#ruby"></a><img src="{{ asset('images/assests/ruby.jpg') }}" width="50px" height="50px" /> Ruby Advanced.</h5>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>gem install pry
+Fetching: coderay-1.1.2.gem (100%)
+Successfully installed coderay-1.1.2
+Fetching: pry-0.12.2.gem (100%)
+Successfully installed pry-0.12.2
+invalid options: -SNw2
+(invalid options are ignored)
+Parsing documentation for coderay-1.1.2
+Installing ri documentation for coderay-1.1.2
+Parsing documentation for pry-0.12.2
+Installing ri documentation for pry-0.12.2
+Done installing documentation for coderay, pry after 6 seconds
+2 gems installed
+
+[5] pry(main)> require 'xss'
+=> true
+[6] pry(main)> Xss.hi
+Hello world!
+=> nil
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>pry
+[1] pry(main)> @
+At the top level.
+[3] pry(main)> ls
+self.methods: inspect  to_s
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[4] pry(main)> cd _ex_
+[5] pry(nil):1> ls
+JSON::Ext::Generator::GeneratorMethods::NilClass#methods: to_json
+NilClass#methods: &  ===  ^  __pry__  inspect  nil?  pretty_print_cycle  rationalize  to_a  to_c  to_f  to_h  to_i  to_r  to_s  |
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[6] pry(nil):1> @
+Inside nil.
+[7] pry(nil):1> cd ..
+[8] pry(main)> ls
+self.methods: inspect  to_s
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[9] pry(main)> cd _file_
+[10] pry(nil):1> ls
+JSON::Ext::Generator::GeneratorMethods::NilClass#methods: to_json
+NilClass#methods: &  ===  ^  __pry__  inspect  nil?  pretty_print_cycle  rationalize  to_a  to_c  to_f  to_h  to_i  to_r  to_s  |
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[11] pry(nil):1> cd ..
+[12] pry(main)> ls
+self.methods: inspect  to_s
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[13] pry(main)> cd _in_
+[14] pry(#<Pry::Ring>):1> ls
+Pry::Ring#methods: <<  []  clear  count  max_size  size  to_a
+self.methods: __pry__
+instance variables: @buffer  @count  @max_size  @mutex
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[15] pry(#<Pry::Ring>):1> count
+=> 15
+[16] pry(#<Pry::Ring>):1> count
+=> 16
+[17] pry(#<Pry::Ring>):1> @
+Inside #<Pry::Ring>.
+
+[18] pry(#<Pry::Ring>):1> max_size
+=> 100
+[19] pry(#<Pry::Ring>):1> clear
+=> 0
+[1] pry(#<Pry::Ring>):1> []
+=> []
+[2] pry(#<Pry::Ring>):1> ['hello']
+=> ["hello"]
+[3] pry(#<Pry::Ring>):1> print "hola"
+hola=> nil
+[10] pry(#<Pry::Ring>):1> .sgpy
+Call your main application code here
+[4] pry(#<Pry::Ring>):1> help
+Help
+  help               Show a list of commands or information about a specific command.
+
+Context
+  cd                 Move into a new context (object or scope).
+  find-method        Recursively search for a method within a class/module or the current namespace.
+  ls                 Show the list of vars and methods in the current scope.
+  pry-backtrace      Show the backtrace for the pry session.
+  raise-up           Raise an exception out of the current pry instance.
+  reset              Reset the repl to a clean state.
+  watch              Watch the value of an expression and print a notification whenever it changes.
+  whereami           Show code surrounding the current context.
+  wtf?               Show the backtrace of the most recent exception.
+
+Editing
+  /^\s*!\s*$/        Clear the input buffer.
+  amend-line         Amend a line of input in multi-line mode.
+  edit               Invoke the default editor on a file.
+  hist               Show and replay readline history.
+  play               Playback a string variable, method, line, or file as input.
+  show-input         Show the contents of the input buffer for the current multi-line expression.
+
+Introspection
+  ri                 View ri documentation.
+  show-doc           Show the documentation for a method or class.
+  show-source        Show the source for a method or class.
+  stat               View method information and set _file_ and _dir_ locals.
+
+Gems
+  gem-cd             Change working directory to specified gem's directory.
+  gem-install        Install a gem and refresh the gem cache.
+  gem-list           List and search installed gems.
+  gem-open           Opens the working directory of the gem in your editor.
+  gem-readme         Show the readme bundled with a rubygem
+  gem-search         Search for a gem with the rubygems.org json api
+  gem-stat           Show the statistics of a gem (requires internet connection)
+
+Commands
+  import-set         Import a pry command set.
+  install-command    Install a disabled command.
+
+Aliases
+  !!!                Alias for `exit-program`
+  !!@                Alias for `exit-all`
+  $                  Alias for `show-source`
+  (?-mix:whereami[!?]+) Alias for `whereami`
+  ?                  Alias for `show-doc`
+  @                  Alias for `whereami`
+  clipit             Alias for `gist --clip`
+  file-mode          Alias for `shell-mode`
+  history            Alias for `hist`
+  quit               Alias for `exit`
+  quit-program       Alias for `exit-program`
+  reload-method      Alias for `reload-code`
+
+<span><</span>page break> --- Press enter to continue ( q<span><</span>enter> to break ) --- <span><</span>page break>
+
+  show-method        Alias for `show-source`
+
+Input and output
+  .<span><</span>shell command>   All text following a '.' is forwarded to the shell.
+  cat                Show code from a file, pry's input buffer, or the last exception.
+  change-inspector   Change the current inspector proc.
+  change-prompt      Change the current prompt.
+  clear-screen       Clear the contents of the screen/window pry is running in.
+  fix-indent         Correct the indentation for contents of the input buffer
+  list-inspectors    List the inspector procs available for use.
+  save-file          Export to a file using content from the repl.
+  shell-mode         Toggle shell mode. bring in pwd prompt and file completion.
+
+Misc
+  gist               Upload code, docs, history to https://gist.github.com/.
+  pry-version        Show pry version.
+  reload-code        Reload the source file that contains the specified code object.
+  toggle-color       Toggle syntax highlighting.
+
+Navigating pry
+  !pry               Start a pry session on current self.
+  disable-pry        Stops all future calls to pry and exits the current session.
+  exit               Pop the previous binding.
+  exit-all           End the current pry session.
+  exit-program       End the current program.
+  jump-to            Jump to a binding further up the stack.
+  nesting            Show nesting information.
+
+
+[38] pry(#<Pry::Ring>)> shell-mode
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ .gem install nano
+Successfully installed nano-0.8.2
+Done installing documentation for nano after 0 seconds
+1 gem installed
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ .gem install cat
+Fetching: cat-0.2.1.gem (100%)
+Successfully installed cat-0.2.1
+Building YARD (yri) index for cat-0.2.1...
+Done installing documentation for cat after 0 seconds
+1 gem installed
+
+
+
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ .cat .pryrc
+def sgrb
+  puts "hello world!"
+end
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ load ".pryrc"
+=> true
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ sgrb
+hello world!
+=> nil
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ cd Pry
+pry Pry:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ .bundle
+Using rake 12.3.2
+Using bundler 2.0.1
+Using power_assert 1.1.4
+Using rake-compiler 1.0.7
+Using test-unit 3.3.3
+Using xss 0.0.3 from source at `.`
+Bundle complete! 3 Gemfile dependencies, 6 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.
+pry Pry:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb * .bundle info xss
+  * xss (0.0.3)
+        Summary: xSGDC!
+        Homepage: https://rubygems.org/gems/xss
+        Path: C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb
+pry Pry:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb *
+
+pry #<Pry::Ring>:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ cd Gem
+pry Gem:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ sgrb
+hello world!
+=> nil
+pry Gem:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ .sgpy
+Call your main application code here
+pry Gem:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $
+</code></pre>
+
+
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+
+
+
+┌────────────────────────────────────────┐
+│0: gem install bundle                   │
+│1: bundle install --jobs=3 --retry=3    │
+│2: bundle info sgrb                     │
+│3: bundle info                          │
+│4: bundle info gem sgrb                 │
+│5: bundle info rake                     │
+│6: cd .bundle                           │
+│7: dir                                  │
+│8: config                               │
+│9: gem install xss                      │
+│10: dir                                 │
+│11: cd ..                               │
+│12: dir                                 │
+│13: rake                                │
+│14: rake --tasks                        │
+│15: rake build                          │
+│16: dir                                 │
+│17: cd pkg                              │
+│18: dir                                 │
+│19: cd ..                               │
+│20: die                                 │
+│21: dir                                 │
+│22: rake test                           │
+│23: rake release                        │
+│24: gem push                            │
+│25: gem push xss-0.0.0.gem              │
+│29: gem build xss                       │
+│30: gem push xss                        │
+│31: xss-0.0.0.gem                       │
+│34: rake compile:sgrb                   │
+└────────────────────────────────────────┘
+
+
+┌────────────────────────────────────────┐
+│    gem install travis                  │
+│0: travis                               │
+│1: travis init                          │
+│2: travis init --force to override      │
+│3: travis enable                        │
+│4: dir                                  │
+│5: travis setup anynines                │
+│6: travis report --org                  │
+│7: travis setup anynines                │
+│8: dir                                  │
+│9: git push                             │
+│10: gem push                            │
+│12: gem                                 │
+│13: rake build                          │
+│14: rak                                 │
+│15: rake                                │
+│16: rake --trace                        │
+│17: gem install bundler                 │
+│18: dir                                 │
+│19: bundle install                      │
+│20: bundle update --bundler             │
+│22: gem install bundler:2.0.1           │
+│23: bundle install                      │
+│24: dir                                 │
+│25: cd .bundle                          │
+│26: dir                                 │
+│27: config                              │
+│28: cd ..                               │
+│29: dir                                 │
+│30: rake                                │
+│31: rake --tasks                        │
+│32: rake build                          │
+│33: rake compile:sgrb                   │
+│34: rake --tasks                        │
+│35: rake install:local                  │
+│36: rake release                        │
+│37: rake release --trace                │
+│38: gem push xss-0.0.2.gem              │
+│39: rake --tasks                        │
+│40: rake build                          │
+│41: gem push xss-0.0.2.gem              │
+│42: cd pkg                              │
+│43: gem push xss-0.0.2.gem              │
+│45: cd..                                │
+│47: gem install xss                     │
+└────────────────────────────────────────┘
+</code></pre>
+
 <h3 id="curl"><a class="header-link" href="#curl"></a><img src="{{ asset('images/assests/curl.svg') }}" width="100px" height="80px" /></h3>
+
+Windows 10 comes with a built in curl. Manually installing on older windows versions.
+
+First download & install <strong>curl</strong> for <a href="{{ url('/mirror/x86/curl.zip') }}">windows 7, 8 x86.</a> | <a href="{{ url('/mirror/x64/curl.zip') }}">windows 7, 8 x64.</a>
+
+unzip archived <code>curl.zip</code>, then copy & paste its content into a directory e.g. %S%
+
 <pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
 
 C:\Users\a7med>curl http://cdn.ies.com/api/total-sales
@@ -1737,6 +2266,161 @@ root@0x01:~# bash <(curl -s http://cdn.ies.com/cmd/install.sh)
 </code></pre>
 
 
+
+
+
+<h3 id="perl"><a class="header-link" href="#perl"></a> Perl</h3>
+
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+
+root@0x01:/var/www/html/sgpl# perl -h
+
+Usage: perl [switches] [--] [programfile] [arguments]
+  -0[octal]         specify record separator (\0, if no argument)
+  -a                autosplit mode with -n or -p (splits $_ into @F)
+  -C[number/list]   enables the listed Unicode features
+  -c                check syntax only (runs BEGIN and CHECK blocks)
+  -d[:debugger]     run program under debugger
+  -D[number/list]   set debugging flags (argument is a bit mask or alphabets)
+  -e program        one line of program (several -e's allowed, omit programfile)
+  -E program        like -e, but enables all optional features
+  -f                don't do $sitelib/sitecustomize.pl at startup
+  -F/pattern/       split() pattern for -a switch (//'s are optional)
+  -i[extension]     edit <> files in place (makes backup if extension supplied)
+  -Idirectory       specify @INC/#include directory (several -I's allowed)
+  -l[octal]         enable line ending processing, specifies line terminator
+  -[mM][-]module    execute "use/no module..." before executing program
+  -n                assume "while (<>) { ... }" loop around program
+  -p                assume loop like -n but print line also, like sed
+  -s                enable rudimentary parsing for switches after programfile
+  -S                look for programfile using PATH environment variable
+  -t                enable tainting warnings
+  -T                enable tainting checks
+  -u                dump core after parsing program
+  -U                allow unsafe operations
+  -v                print version, patchlevel and license
+  -V[:variable]     print configuration summary (or a single Config.pm variable)
+  -w                enable many useful warnings
+  -W                enable all warnings
+  -x[directory]     ignore text before #!perl line (optionally cd to directory)
+  -X                disable all warnings
+
+Run 'perldoc perl' for more help with Perl.
+
+phsycho@x000001:~$ quilt
+Usage: quilt [--trace[=verbose]] [--quiltrc=XX] command [-h] ...
+       quilt --version
+Commands are:
+        add       fold    mail      refresh  snapshot
+        annotate  fork    new       remove   top
+        applied   graph   next      rename   unapplied
+        delete    grep    patches   revert   upgrade
+        diff      header  pop       series
+        edit      import  previous  setup
+        files     init    push      shell
+
+Global options:
+
+--trace
+        Runs the command in bash trace mode (-x). For internal debugging.
+
+--quiltrc file
+        Use the specified configuration file instead of ~/.quiltrc (or
+        /etc/quilt.quiltrc if ~/.quiltrc does not exist).  See the pdf
+        documentation for details about its possible contents.  The
+        special value "-" causes quilt not to read any configuration
+        file.
+
+--version
+        Print the version number and exit immediately.
+        
+
+        EXAMPLE OF WORKING TREE
+              work/
+              ├── patches/
+              │    ├── series         (list of patches to apply)
+              │    ├── patch1.diff    (one particular patch)
+              │    ├── patch2.diff
+              │    └── ...
+              ├── .pc/
+              │    ├── .quilt_patches (content of QUILT_PATCHES)
+              │    ├── .quilt_series  (content of QUILT_SERIES)
+              │    ├── patch1.diff/   (copy of patched files)
+              │    │    └── ...
+              │    ├── patch2.diff/
+              │    │    └── ...
+              │    └── ...
+              └── ...
+              
+┌────────────────────────────────────────┐
+│0: perl call-mod.pl                     │
+│1: perl getItem.pl                      │
+│2: rpm -ql curl                         │
+│3: perl getItem.pl                      │
+│4: perl call-mod.pl                     │
+│5: dir                                  │
+│6: perl Makefile.pl                     │
+│7: cpan                                 │
+│8: perl                                 │
+│9: perl getItem.pl                      │
+└────────────────────────────────────────┘
+
+ppm profile save my-modules.xml
+
+</code></pre>
+
+
+
+
+<h3 id="cpan"><a class="header-link" href="#cpan"></a><img src="{{ asset('images/assests/cpan.png') }}" width="100px" height="80px" /> CPAN</h3>
+
+
+<pre><code class="language-bash">  
+
+root@0x01:/var/www/html/sgpl# cpan
+Loading internal logger. Log::Log4perl recommended for better logging
+
+cpan shell -- CPAN exploration and modules installation (v2.20)
+Enter 'h' for help.
+
+cpan[1]> h
+
+Display Information                                                  (ver 2.20)
+ command  argument          description
+ a,b,d,m  WORD or /REGEXP/  about authors, bundles, distributions, modules
+ i        WORD or /REGEXP/  about any of the above
+ ls       AUTHOR or GLOB    about files in the author's directory
+    (with WORD being a module, bundle or author name or a distribution
+    name of the form AUTHOR/DISTRIBUTION)
+
+Download, Test, Make, Install...
+ get      download                     clean    make clean
+ make     make (implies get)           look     open subshell in dist directory
+ test     make test (implies make)     readme   display these README files
+ install  make install (implies test)  perldoc  display POD documentation
+
+Upgrade installed modules
+ r        WORDs or /REGEXP/ or NONE    report updates for some/matching/all
+ upgrade  WORDs or /REGEXP/ or NONE    upgrade some/matching/all modules
+
+Pragmas
+ force  CMD    try hard to do command  fforce CMD    try harder
+ notest CMD    skip testing
+
+Other
+ h,?           display this menu       ! perl-code   eval a perl command
+ o conf [opt]  set and query options   q             quit the cpan shell
+ reload cpan   load CPAN.pm again      reload index  load newer indices
+ autobundle    Snapshot                recent        latest CPAN uploads
+cpan[2]>
+</code></pre>
+
+
+
+
+
+
 <pre><code class="language-markdown">   
 
 
@@ -1754,6 +2438,8 @@ module.exports.endpoint = async function (request, response)
 {
     response.end(JSON.stringify(await getGitHubAPIStatus));
 }
+
+
 
 </div>
 

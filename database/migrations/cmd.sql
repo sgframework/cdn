@@ -640,11 +640,30 @@ UPDATE itemsv2 set newitemprice = "880.00" where itemnumber="59003112";
 
 
 
+
+
+59003012	FRICO SLICES GOUDA CUMIN 12X150G	115	115
+
+
+
+
+
+INSERT INTO items (itemnumber, itemname, itemprice) Values
+ ("59003012", "FRICO SLICES GOUDA CUMIN 12X150G", "115");
+
+INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
+ ("59003012", "FRICO SLICES GOUDA CUMIN 12X150G", "115", "115");
+
+
+
+
+
 INSERT INTO items (itemnumber, itemname, itemprice) Values
  ("55100015", "	SUMI HAPPY MIX KIDS (20X200G)", "150");
 
 INSERT INTO itemsv2 (itemnumber, itemname, itemoldprice, itemnewprice) Values
  ("55100015", "	SUMI HAPPY MIX KIDS (20X200G)", "150", "150");
+
 
 
 

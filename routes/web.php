@@ -105,11 +105,16 @@ Route::get('/root/readme-v0.02', [
 'as' => 'root.md.index',
 ]);
 
+Route::get('/root/init-v0.01', [
+    'uses' => '\cdn\Http\Controllers\RootController@getInitPortal',
+'as' => 'root.md.sadmin',
+]);
 
 Route::get('/root/dev-v0.03', [
     'uses' => '\cdn\Http\Controllers\RootController@getDevPortal',
 'as' => 'root.md.dev',
 ]);
+
 
 Route::get('/root/readme-v0.03', [
     'uses' => '\cdn\Http\Controllers\RootController@getRMindex',

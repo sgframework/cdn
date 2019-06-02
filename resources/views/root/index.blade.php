@@ -139,8 +139,10 @@
                         <a href=""><i class="fas fa-exclamation-triangle"></i> <span>Manage Notifications</span></a>&nbsp;&nbsp;
                         <a href="{{ route('root.tree') }}"><i class="fas fa-info fa-fw"></i> <span>Tree</span></a><br />
                         <a href="/root/readme#manual"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.01</a></span>
-                        <a href="/root/readme-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.02</a></span>
+                        <a href="/root/readme-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.02</a></span><br />
                         <a href="/root/dev-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Developers Manual V0.03</a></span>
+                        <a href="/docs"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Documentation Server</a></span>
+                        
                     </div>
                 </div>
                 <script>

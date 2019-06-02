@@ -26,6 +26,7 @@
         "chart.js": "^2.8.0",
         "git": "^0.1.5",
         "github-markdown-css": "^3.0.1",
+        "phpdoc": "^0.3.0",
         "sgcdn": "file:.npm/sgcdn",
         "xterm": "^3.13.2"
     }
