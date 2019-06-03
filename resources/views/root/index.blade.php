@@ -141,7 +141,10 @@
                         <a href="/root/readme#manual"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.01</a></span>
                         <a href="/root/readme-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Framework Manual V0.02</a></span><br />
                         <a href="/root/dev-v0.03"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Developers Manual V0.03</a></span>
-                        <a href="/docs"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Documentation Server</a></span>
+                        <a href="/root/init-v0.01"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Server Admin Manual V0.02</a></span><br />
+                        
+                        <a href="/docs"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Documentation Server</a></span><br />
+                        <a href="/ruby"><i class="fa fa-book"></i><span id="manual"> SunbulahGroup Ruby Documentation Server</a></span>
                         
                     </div>
                 </div>

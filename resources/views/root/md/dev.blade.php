@@ -8,8 +8,7 @@
 
         <img src="{{ asset('images/assests/sgimg.png') }}" align="right" style="height: 64px"/>
         <h1 id="welcome-to-sunbulah-group-framework"><a class="header-link" href="#welcome-to-sunbulah-group-framework"></a> SunbulahGroup Developers Portal</h1>
-        <span><a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a> <a href="https://saythanks.io/to/sgframework"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!" /></a></span> <span><a href="https://badge.fury.io/rb/xss"><img src="https://badge.fury.io/rb/xss.svg" alt="Gem Version" height="18"></a> </span>  <span><a href="https://www.rubydoc.info/gems/xss/0.0.0">xss/info</a></span> <span><a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a></span> <span><a href="https://badge.fury.io/py/sgpy"><img src="https://badge.fury.io/py/sgpy.png" alt="PyPI version" height="18"></a></span> <br /><br /> 
-<pre style="background-color:black;text-align: center;"><code style="color:red;" class="language-cmd">
+        <span><a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a></span> <span><a href="https://badge.fury.io/py/sgpy"><img src="https://badge.fury.io/py/sgpy.png" alt="PyPI version" height="18"></a></span> <span><a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a> <a href="https://saythanks.io/to/sgframework"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!" /></a></span> <span><a href="https://badge.fury.io/rb/xss"><img src="https://badge.fury.io/rb/xss.svg" alt="Gem Version" height="18"></a> </span>  <span><a href="https://www.rubydoc.info/gems/xss/0.0.0">xss/info</a></span><pre style="background-color:black;text-align: center;"><code style="color:red;" class="language-cmd">
 
 
 {{ shell_exec('cd ./cmd && banner.bat') }}
@@ -780,6 +779,97 @@ mysql&gt; select * from itemsv2;
 
 
 </code></pre>
+<h2 id="server-environemt--requirments">Server Environemt &amp; Requirments.</h2>
+<h4 id="framework--api-required-packeges">Framework &amp; API Required Packeges:</h4>
+<ul>
+<li><strong>Git</strong> 2.21.0</li>
+<li><strong>PHP</strong> 7.2.7^</li>
+<li><strong>MySQL Server</strong> 5.5</li>
+<li><strong>Composer</strong> 1.8.4</li>
+<li><strong>Redis server</strong> 3.2.100</li>
+</ul>
+<h4 id="mail-server">Mail Server</h4>
+<ul>
+<li><strong>Default Mailing Server</strong></li>
+</ul>
+<h4 id="clis--commandline-tools-recommended-packeges">CLIs &amp; Commandline Tools Recommended Packeges:</h4>
+<ul>
+<li><strong>NPM</strong> 6.4.1</li>
+<li><strong>NodeJS</strong> 10.15.3</li>
+<li><strong>Python</strong> 3.6^</li>
+<li><strong>pip</strong> 9.0.1</li>
+<li><strong>Ruby</strong> 3.6^</li>
+<li><strong>Perl</strong> 5.8.8</li>
+</ul>
+<h3 id="trees">Trees</h3>
+<ul>
+<li><p><strong>PHP</strong> 7.2.7^</p>
+<pre><code>  |
+  |____ Web Server &amp; Platform.
+  |   |
+  |   |__________ Laravel Framework 5.8.18 (MVC) &quot;https://localhost/&quot;
+  |   |__________ Mail Server &quot;https://localhost/mail&quot;
+  |
+  |____ Databases
+  |   |
+  |   |_________ MySql 
+  |             |______phpMyAdmin &quot;https://localhost/pma&quot;
+  |
+  |
+  |____ CLIs &amp; CMD Tools.
+      |
+      |__________ composer 1.8.4
+      |
+      |__________ artisan
+</code></pre>
+</li>
+<li><p><strong>NPM</strong> 6.4.1</p>
+</li>
+<li><p><strong>Python</strong></p>
+<pre><code>  |
+  |____ Compilers &amp; Package Builders.
+  |   |
+  |   |__________ pip 19.1.1
+  |   |
+  |   |__________ wheel 0.33.4
+</code></pre>
+</li>
+<li><p><strong>Ruby</strong> 3.6^</p>
+<pre><code>  |
+  |____ Compilers &amp; Package Builders.
+  |   |
+  |   |__________ Rake 12.3.2
+  |   |
+  |   |__________ Gem 2.5.5.157
+  |   |
+  |   |__________ Bundle 2.0.1
+  |
+  |____ CLIs
+  |   |__________ irb
+  |   |
+  |   |__________ pry
+  |
+  |____ Web Server &amp; Platform
+  |   |
+  |   |__________ Rails (MVC)
+  |
+  |___ Documentation Server &amp; Generator.
+      |
+      |__________ Gem Server
+      |
+      |__________ yard
+      |
+      |__________ rdoc
+</code></pre>
+</li>
+<li><p><strong>Perl</strong> 5.8.8</p>
+<pre><code>  |
+  |____ Archives
+      |
+      |__________ CPAN 0.33.4 ==archive of perl resources==
+</code></pre>
+</li>
+</ul>
 
 
 <h2 id="setup-dev-env"><a class="header-link" href="#setup-dev-env"></a> Setup Development Environment</h2>
@@ -1782,6 +1872,8 @@ root@0x01:~# irb
 root@0x01:~#
 </code></pre>
 
+<h5 id="bisc"><a class="header-link" href="#bisc"></a>Package build, install and push commands.</h5>
+
 
 <pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
 
@@ -1810,6 +1902,7 @@ Successfully registered gem: xss (0.0.3)
 </code></pre>
 
 
+<h5 id="gem"><a class="header-link" href="#gem"></a>Gem</h5>
 
 <pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
 
@@ -1847,6 +1940,121 @@ Thanks for installing SGRB!
 Successfully installed xss-0.0.8-x64-mingw32
 Done installing documentation for xss after 0 seconds
 1 gem installed
+
+</code></pre>
+
+
+
+
+
+
+<h5 id="rails"><a class="header-link" href="#rails"></a>Rails.</h5>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rails server -b cdn.ies.com -p 810
+=> Booting Puma
+=> Rails 5.2.3 application starting in development
+=> Run `rails server -h` for more startup options
+*** SIGUSR2 not implemented, signal based restart unavailable!
+*** SIGUSR1 not implemented, signal based restart unavailable!
+*** SIGHUP not implemented, signal based logs reopening unavailable!
+Puma starting in single mode...
+* Version 3.12.1 (ruby 2.5.5-p157), codename: Llamas in Pajamas
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://cdn.ies.com:810
+Use Ctrl-C to stop
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rails about
+About your application's environment
+Rails version             5.2.3
+Ruby version              2.5.5-p157 (x64-mingw32)
+RubyGems version          2.7.6.2
+Rack version              2.0.7
+JavaScript Runtime        Duktape
+Middleware                Rack::Sendfile, ActionDispatch::Static, ActionDispatch::Executor, ActiveSupport::Cache::Strategy::LocalCache::Middleware, Rack::Runtime, Rack::MethodOverride, ActionDispatch::RequestId, ActionDispatch::RemoteIp, Sprockets::Rails::QuietAssets, Rails::Rack::Logger, ActionDispatch::ShowExceptions, WebConsole::Middleware, ActionDispatch::DebugExceptions, ActionDispatch::Reloader, ActionDispatch::Callbacks, ActiveRecord::Migration::CheckPending, ActionDispatch::Cookies, ActionDispatch::Session::CookieStore, ActionDispatch::Flash, ActionDispatch::ContentSecurityPolicy::Middleware, Rack::Head, Rack::ConditionalGet, Rack::ETag, Rack::TempfileReaper
+Application root          C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb
+Environment               development
+Database adapter          mysql2
+Database schema version   0
+
+$ rails -v
+Rails 5.2.3
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rails stats
++----------------------+--------+--------+---------+---------+-----+-------+
+| Name                 |  Lines |    LOC | Classes | Methods | M/C | LOC/M |
++----------------------+--------+--------+---------+---------+-----+-------+
+| Controllers          |      2 |      2 |       1 |       0 |   0 |     0 |
+| Helpers              |      2 |      2 |       0 |       0 |   0 |     0 |
+| Jobs                 |      2 |      2 |       1 |       0 |   0 |     0 |
+| Models               |      3 |      3 |       1 |       0 |   0 |     0 |
+| Mailers              |      4 |      4 |       1 |       0 |   0 |     0 |
+| Channels             |      8 |      8 |       2 |       0 |   0 |     0 |
+| JavaScripts          |     29 |      4 |       0 |       1 |   0 |     2 |
+| Libraries            |    661 |    454 |       1 |      70 |  70 |     4 |
+| Controller tests     |      0 |      0 |       0 |       0 |   0 |     0 |
+| Helper tests         |      0 |      0 |       0 |       0 |   0 |     0 |
+| Model tests          |      0 |      0 |       0 |       0 |   0 |     0 |
+| Mailer tests         |      0 |      0 |       0 |       0 |   0 |     0 |
+| Integration tests    |      0 |      0 |       0 |       0 |   0 |     0 |
+| System tests         |      0 |      0 |       0 |       0 |   0 |     0 |
++----------------------+--------+--------+---------+---------+-----+-------+
+| Total                |    711 |    479 |       7 |      71 |  10 |     4 |
++----------------------+--------+--------+---------+---------+-----+-------+
+  Code LOC: 479     Test LOC: 0     Code to Test Ratio: 1:0.0
+
+C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rails generate
+Usage: rails generate GENERATOR [args] [options]
+
+General options:
+  -h, [--help]     # Print generator's options and usage
+  -p, [--pretend]  # Run but do not make any changes
+  -f, [--force]    # Overwrite files that already exist
+  -s, [--skip]     # Skip files that already exist
+  -q, [--quiet]    # Suppress status output
+
+Please choose a generator below.
+
+Rails:
+  application_record
+  assets
+  channel
+  controller
+  generator
+  helper
+  integration_test
+  jbuilder
+  job
+  mailer
+  migration
+  model
+  resource
+  scaffold
+  scaffold_controller
+  system_test
+  task
+
+ActiveRecord:
+  active_record:application_record
+
+Coffee:
+  coffee:assets
+
+Js:
+  js:assets
+
+TestUnit:
+  test_unit:generator
+  test_unit:plugin
+
+
+
+</code></pre>
+
+<h5 id="rake"><a class="header-link" href="#rake"></a>Rake.</h5>
+
+<pre style="font-size:10px;background-color:black;"><code style="color:#ddd;" class="language-cmd">  
 
 C:\Program Files\Windows Server\Bin\WebApps\Site\cdn\sgrb>rake --tasks
 rake build            # Build xss-0.0.0.gem into the pkg directory
@@ -2119,6 +2327,23 @@ hello world!
 pry Gem:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $ .sgpy
 Call your main application code here
 pry Gem:C:/Program Files/Windows Server/Bin/WebApps/Site/cdn/sgrb $
+
+
+[209] pry(main)> cd JSON
+[210] pry(JSON):1> ls
+constants:
+  CircularDatastructure  FAST_STATE_PROTOTYPE  GenericObject  JSON_LOADED  MinusInfinity          NaN           Parser       PRETTY_STATE_PROTOTYPE  State          VERSION        VERSION_BUILD  VERSION_MINOR
+  Ext                    GeneratorError        Infinity       JSONError    MissingUnicodeSupport  NestingError  ParserError  SAFE_STATE_PROTOTYPE    UnparserError  VERSION_ARRAY  VERSION_MAJOR
+JSON.methods:
+  []         create_id=      dump                  dump_default_options=  fast_unparse  generator   iconv  load_default_options   parse   parser   pretty_generate  recurse_proc  state   unparse
+  create_id  deep_const_get  dump_default_options  fast_generate          generate      generator=  load   load_default_options=  parse!  parser=  pretty_unparse   restore       state=
+instance variables: @create_id  @dump_default_options  @generator  @load_default_options  @parser  @state
+locals: _  __  _dir_  _ex_  _file_  _in_  _out_  _pry_
+[211] pry(JSON):1> ['222']
+=> ["222"]
+[212] pry(JSON):1> dump('hi')
+=> "\"hi\""
+
 </code></pre>
 
 
