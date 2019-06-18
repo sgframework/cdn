@@ -67,28 +67,123 @@
 
 ## First STEP
 
-<h3 id="github"><a class="header-link" href="#github"></a><i class="fa fa-github" aria-hidden="true"></i> Github</h3>
 
-Get started by cloning into project's repository after installing <a href="https://desktop.github.com/"><img src="http://ipool.remotewebaccess.com/images/
-/assests/github-desktop.png" width="25px" height="25px" /> GitHub Desktop</a>
+
+@endmarkdown
+
+
+<h3 id="vsc"><a class="header-link" href="#vsc"></a><img src="{{ asset('images/assests/vsc.png') }}" width="80px" height="35px" />  Visual Studio Code</h3> 
+
+First install <strong><a href="https://code.visualstudio.com/download">VSC</a></strong>
+
+<br />
+
+Then install <strong>GitHub</strong> extension for VSC
+<pre><code class="language-markdown">   
+
+Name: GitHub
+Id: knisterpeter.vscode-github
+Description: Integrates github and its workflows into vscode
+Version: 0.30.2
+Publisher: KnisterPeter
+VS Marketplace Link: <a href="https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github">Install</a>
+
+</code></pre>
+
+
+<h3 id="github"><a class="header-link" href="#github"></a><i class="fab fa-github" aria-hidden="true"></i> Github</h3>
+
+Get started by cloning into project's repository after installing <a href="https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-32-bit.exe"><img src="http://ipool.remotewebaccess.com/images/
+/assests/git.png" width="25px" height="25px" /> Git x86</a> |  <a href="https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-64-bit.exe"><img src="http://ipool.remotewebaccess.com/images/
+/assests/git.png" width="25px" height="25px" /> Git x64</a>
 <br /><em style="font-size:12px">run CMD or terminal and enter the following commands.</em>
 
+@markdown
 
 ### IIS Manager Setup
 
-- Install <a href="http://ipool.remotewebaccess.com/mirror/x64/WebPlatformInstaller_x64_en-US.msi" target="_blank">Web Platform Installer x64</a> 
 
-![admin+path-setup](http://ipool.remotewebaccess.com/images/assests/wpi1.png)
+After setting up server by enabling Internet Information Services (IIS) Manager, you should be able to visit <a href="http://localhost/">http://localhost/</a>
+
+![localhost](http://ipool.remotewebaccess.com/images/assests/localhost.png)
+
+- Install [Web Platform Installer x64](http://ipool.remotewebaccess.com/mirror/x64/WebPlatformInstaller_x64_en-US.msi) 
+
+  
+![install-wpi](http://ipool.remotewebaccess.com/images/assests/install-wpi.png)
+
+![wpi1](http://ipool.remotewebaccess.com/images/assests/wpi1.png)
 
 - PHP, MySql installation
 
-![admin+path-setup](http://ipool.remotewebaccess.com/images/assests/installed-pkgs.png)
+Create a new MySql administrator password for user 'root'
 
-> @ this point you should've already installed & configured GitHub and cloned into cdn to point the server to ``` cdn/public ``` directory.
+![mysql-pass](http://ipool.remotewebaccess.com/images/assests/mysql-pass.png)
 
-- Path & Administrator Credintials Setup
 
-![admin+path-setup](http://ipool.remotewebaccess.com/images/assests/admin-path-setup2.png)
+Password must match in ```cdn/.env``` file.
+
+```
+APP_NAME=SunbulahGroup
+APP_ENV=local
+APP_KEY=base64:oyFpcnaAE8pzuJ6iTsQb2qwQFLAPd38hpVkLxRiv+sQ=
+APP_DEBUG=true
+APP_URL=http://ipool.remotewebaccess.com
+
+LOG_CHANNEL=stack
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=sgdb0
+DB_USERNAME=root
+DB_PASSWORD=********
+
+```
+
+
+
+![installing](http://ipool.remotewebaccess.com/images/assests/installing.png)
+
+![done](http://ipool.remotewebaccess.com/images/assests/done.png)
+
+![installed-pkgs](http://ipool.remotewebaccess.com/images/assests/installed-pkgs.png)
+
+#### Testing PHP with Git Bash
+
+you can skip this step 
+
+```
+
+Administrator@sgcdn MINGW64 /
+$ cd /c/inetpub/wwwroot/
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ ls
+iis-85.png  iisstart.htm
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ nano
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ nano index.php
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ ls
+iis-85.png  ~~iisstart.htm~~  **index.php**
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ rm iisstart.htm
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ ls
+iis-85.png  **index.php**
+
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+
+```
+
+![php-test](http://ipool.remotewebaccess.com/images/assests/php-test.png)
 
 
 > @ this point, you should have already installed and configured the following:
@@ -103,55 +198,55 @@ Get started by cloning into project's repository after installing <a href="https
 
 After setting up IIS Server Manager and installing GitHub
 
-Run <kbd> ``` ⌘ Start + R ``` </kbd>  and paste the following  ==[1]==
+Run <kbd> ``` ⌘ Start + R ``` </kbd>  and paste the following  
 
-    runas /user:Administrator "C:\Program Files\Git\git-bash.exe"
+    "C:\Program Files\Git\git-bash.exe"
 
 then press Enter ↵
 
-    [1] Note that Without Administrator's prevlidges you won`t be able to create, edit or delete directory.
 
 ```bash
 
-X000001+Administrator@x000001 MINGW64 ~
+Administrator@sgcdn MINGW64 /
 $ cd /c/inetpub/wwwroot/
 
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot
-$ mkdir test
-
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot
-$ ls
-proXject/ test/  web.config
-
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot
-$ rmdir test/
-
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot
-$ ls
-proXject/ web.config
-
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
 $ git clone https://github.com/sgframework/cdn.git
 Cloning into 'cdn'...
-remote: Enumerating objects: 624, done.
-remote: Counting objects: 100% (624/624), done.
-remote: Compressing objects: 100% (359/359), done.
-remote: Total 2368 (delta 335), reused 463 (delta 236), pack-reused 1744
-Receiving objects: 100% (2368/2368), 105.61 MiB | 10.42 MiB/s, done.
-Resolving deltas: 100% (1254/1254), done.
+remote: Enumerating objects: 772, done.
+remote: Counting objects: 100% (772/772), done.
+remote: Compressing objects: 100% (452/452), done.
+remote: Total 2516 (delta 425), reused 569 (delta 282), pack-reused 1744
+Receiving objects: 100% (2516/2516), 106.13 MiB | 10.30 MiB/s, done.
+Resolving deltas: 100% (1344/1344), done.
 
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot
-$ cd cdn
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot
+$ cd cdn/
 
-X000001+Administrator@x000001 MINGW64 /c/inetpub/wwwroot/cdn
+Administrator@sgcdn MINGW64 /c/inetpub/wwwroot/cdn (master)
 $ ls
- CODE_OF_CONDUCT.md   app         composer.json   config.json         package.json   readme.md   server.php 
- CONTRIBUTING.md      artisan     composer.lock   database            phpunit.xml    resources   storage      web.config
- LICENSE    
+app/                CONTRIBUTING.md    public/     sgpl/
+artisan*            database/          readme.md   sgpy/
+bootstrap/          doc/               resources/  sgrb/
+CODE_OF_CONDUCT.md  index.xml          routes/     storage/
+composer.json       LICENSE            server.php  tests/
+composer.lock       package.json       sgapi/      web.config
+config/             package-lock.json  sgc/        webpack.mix.js
+config.json         phpunit.xml        sgcdn/
+
 
 ```
 
-By this point nothing is working yet due to one missing ``` .env ``` file, which contain sensitive data. You can get this archived <a href="http://ipool.remotewebaccess.com/mirror/secret/dev-pack.zip" target="_blank">dev-pack.zip</a> file and unzip it into the top level directory ``` /cdn ``` 
+By this point nothing is working yet due to one missing ``` .env ``` file, which contain sensitive data. You can get this archived 
+
+
+@endmarkdown
+
+<a href="http://ipool.remotewebaccess.com/mirror/secret/dev-pack.zip" target="_blank">dev-pack.zip</a> 
+
+@markdown
+
+file and unzip it into the top level directory ``` /cdn ``` 
 
 ``` dev-pack.zip ``` contains the following files
 
@@ -160,6 +255,8 @@ By this point nothing is working yet due to one missing ``` .env ``` file, which
 $ zip -r dev-pack.zip .env vendors/ node_modules/ .git/ public/assets/
 
 ```
+
+![unzip](http://ipool.remotewebaccess.com/images/assests/unzip.png)
 
 ```cmd
 
@@ -173,8 +270,92 @@ Archive:  dev-pack.zip
 
 ```
 
+> @ this point you should've already installed & configured GitHub and cloned into cdn to point the server to ``` cdn/public ``` directory.
+
+- Path & Administrator Credintials Setup
+
+![admin+path-setup2](http://ipool.remotewebaccess.com/images/assests/admin-path-setup2.png)
+
+#### Now you can visit [http://localhost/](http://localhost/) again after pointing to correct folder.
+
+![success](http://ipool.remotewebaccess.com/images/assests/success.png)
+
+## SUCCESS
+
+#### Last STEP
+
+### MySql Integration.
+
+Easiest way via MySQL 8.0 Command Line Client
+
+First create sgdb0 database
+
+Run <kbd> ``` ⌘ Start + R ``` </kbd>  and paste the following  
+
+    cmd
+
+then press Enter ↵
+
+```
+Microsoft Windows [Version 6.3.9600]
+(c) 2013 Microsoft Corporation. All rights reserved.
+
+C:\Users\Administrator>C:\"Program Files"\MySQL\"MySQL Server 5.5"\bin\mysqladmin.exe -u root -p create sgdb0
+Enter password: ********
+
+```
+
+Then download latest backed-up version of database [sgdb0.170619.sql](http://ipool.remotewebaccess.com/mirror/secret/sgdb0.170619.sql)
+
+Create a new directory on Desktop called db where all database files will be stored.
+
+```cmd
+C:\Users\Administrator>cd Desktop
+
+C:\Users\Administrator\Desktop>mkdir db
+
+C:\Users\Administrator\Desktop>cd db
+
+C:\Users\Administrator\Desktop\db>copy ..\..\Downloads\sgdb0.170619.sql .
+        1 file(s) copied.
+
+C:\Users\Administrator\Desktop\db>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 1082-2AB3
+
+ Directory of C:\Users\Administrator\Desktop\db
+
+06/17/2019  10:48 PM    <DIR>          .
+06/17/2019  10:48 PM    <DIR>          ..
+06/17/2019  10:46 PM         4,544,206 sgdb0.170619.sql
+               1 File(s)      4,544,206 bytes
+               2 Dir(s)  124,304,355,328 bytes free
+
+C:\Users\Administrator\Desktop\db>
+
+```
+
+#### After creating sgdb0 and downloading ```sgdb0.170619.sql```
+
+```
+
+C:\Users\Administrator\Desktop\db>C:\"Program Files"\MySQL\"MySQL Server 5.5"\bin\mysql.exe -u root -p sgdb0 < C:\Users\Administrator\Desktop\db\sgdb0.170619.sql
+Enter password: ********
+
+C:\Users\Administrator\Desktop\db>
+
+```
+
+![success](http://ipool.remotewebaccess.com/images/assests/done-success.png)
+
+# Installation & First Initialization SUCCEEDED.
+----------------------
+
+@endmarkdown
+
 <h3 id="php"><a class="header-link" href="#php"></a><img src="http://ipool.remotewebaccess.com/images/assests/php.png" width="80px" height="35px" /> Composer, Artisan</h3>
 
+@markdown
 
 
 #### Installing Composer
@@ -191,7 +372,15 @@ Archive:  dev-pack.zip
 - MySql 5.1^ + Connector
 
 
-To install composer simply run <a href="http://ipool.remotewebaccess.com/mirror/Composer-Setup.exe" target="_blank">Composer-Setup.exe</a> installer and walk through the steps.
+To install composer simply run 
+
+@endmarkdown
+
+<a href="http://ipool.remotewebaccess.com/mirror/Composer-Setup.exe" target="_blank">Composer-Setup.exe</a> 
+
+@markdown
+
+installer and walk through the steps.
 
 ##### Test composer by running the following commands in command line prompt
 
@@ -410,10 +599,14 @@ It's recommended that you continue to install optional packages.
 
 
 
+@endmarkdown
+
 <h3 id="vsc"><a class="header-link" href="#vsc"></a><img src="http://ipool.remotewebaccess.com/images/assests/npm.png" width="80px" height="35px" />   <img src="http://ipool.remotewebaccess.com/images/assests/nodejs.png" width="80px" height="35px" /> </h3>
 <a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a>
 
 First <i class="fa fa-download"></i> download <a href="http://ipool.remotewebaccess.com/mirror/x86/node-v10.15.3-x86.msi">x86</a> | <a href="http://ipool.remotewebaccess.com/mirror/x64/node-v10.15.3-x64.msi" target="_blank">x64</a> & install <strong>NPM & NodeJS</strong> for windows. 
+
+@markdown
 
 on Linux Terminal
 
@@ -438,10 +631,17 @@ root@0x01:~/node_modules/sgcdn/bin#
 ```
 
 
+
+@endmarkdown
+
+
 <h3 id="python"><a class="header-link" href="#python"></a><img src="http://ipool.remotewebaccess.com/images/assests/python.png" width="70px" height="80px" /></h3>
 <a href="https://badge.fury.io/py/sgpy"><img src="https://badge.fury.io/py/sgpy.png" alt="PyPI version" height="18"></a> <br />
 First  <i class="fa fa-download"></i> download <a href="http://ipool.remotewebaccess.com/mirror/x86/python-3.7.3-x86.exe" target="_blank">x86</a> | <a href="http://ipool.remotewebaccess.com/mirror/x64/python-3.7.3-x64.exe" target="_blank">x64</a> & install <strong>Python</strong> for windows.
 <br />
+
+@markdown
+
 on Linux Terminal
 
 ```bash
@@ -463,10 +663,13 @@ root@0x01:~/sgpy# python x.py
 ```
 
 
+@endmarkdown
+
 <h3 id="ruby"><a class="header-link" href="#ruby"></a><img src="http://ipool.remotewebaccess.com/images/assests/ruby.jpg" width="50px" height="50px" /> Ruby</h3>
 <span><a href="https://badge.fury.io/rb/xss"><img src="https://badge.fury.io/rb/xss.svg" alt="Gem Version" height="18"></a></span> <span><a href="https://www.rubydoc.info/gems/xss/0.0.0">xss/info</a></span><br />
 First <i class="fa fa-download"></i> download <a href="http://ipool.remotewebaccess.com/mirror/x86/rubyinstaller-devkit-2.5.5-1-x86.exe" target="_blank">x86</a> | <a href="http://ipool.remotewebaccess.com/mirror/x64/rubyinstaller-devkit-2.5.5-1-x64.exe" target="_blank">x64</a> & install <strong>Ruby</strong> for windows.
 
+@markdown
 
 on Linux Terminal
 
@@ -491,13 +694,17 @@ root@0x01:~#
 
 ```
 
+@endmarkdown
+
 <h3 id="curl"><a class="header-link" href="#curl"></a><img src="http://ipool.remotewebaccess.com/images/assests/curl.svg" width="100px" height="80px" /></h3>
 
 Windows 10 comes with a built in curl. Manually installing on older windows versions.
 
 First download & install <strong>curl</strong> for <a href="http://ipool.remotewebaccess.com/mirror/x86/curl.zip">windows 7, 8 x86.</a> | <a href="http://ipool.remotewebaccess.com/mirror/x64/curl.zip">windows 7, 8 x64.</a>
-
-unzip archived <code>curl.zip</code>, then copy & paste its content into a directory e.g. %S%
+  
+  unzip archived <code>curl.zip</code>, then copy & paste its content into a directory e.g. %S%
+  
+@markdown
 
 ```cmd
 
@@ -551,7 +758,7 @@ curl 7.64.0 (x86_64-w64-mingw32) libcurl/7.64.0 OpenSSL/1.1.1a (Schannel) zlib/1
 This is it... :sunglasses:
 
 
-> Some other packages are required for development purposes, can be found in         developers installation guide, it includes the following:
+> Some other packages are required for development purposes, can be found in        <a href="http://ipool.remotewebaccess.com/root/dev-v0.03#inc-pkgs"> developers installation guide</a>, it includes the following:
 
 - PiPy  ``` pip ``` => _Python package bundler_
 
@@ -677,7 +884,6 @@ What you expect is exactly what you will get :)
                                           .:      
     
 ```
-
 
 
 @endmarkdown

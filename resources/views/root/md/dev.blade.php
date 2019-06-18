@@ -16,6 +16,18 @@
 
 </code></pre>
 
+<div style="padding-top:40px"></div>
+<h3 id="inc-pkgs"><a class="header-link" href="#inc-pkgs"></a>Included Packages.</h5>
+
+<h5>Developers Tools & Kits</h5>
+<i class="far fa-file-archive"></i> <a href="/mirror/dev/dev-tools.zip">dev-tool.zip <i class="fa fa-download"></i></a><br /> 
+<i class="far fa-file-archive"></i> <a href="/mirror/dev/FileZilla_PuTTY_Python_Visua-Studio-Code_Installer.exe">FileZilla_PuTTY_Python_Visua-Studio-Code_Installer.exe <i class="fa fa-download"></i></a> 
+<h5>Developers Packs</h5>
+
+<i class="far fa-file-archive"></i> <a href="/mirror/packs/sg-dev-pack.zip">sg-dev-pack.zip <i class="fa fa-download"></i></a> 
+
+
+
 <h3 id="dev-timeline"><a class="header-link" href="#dev-timeline"></a><i class="fa fa-tasks" aria-hidden="true"></i> Development Timeline</h3>
 
 <h5 id="new-features"><a class="header-link" href="#new-features"></a>Newly integrated features and services.</h5>
@@ -23,6 +35,7 @@
 
 <ul>
 <li><p>Create  <strong><i class="fa fa-plus-circle"></i> New Order</strong></p>
+
 <p class="language-markdown">
     - Create a new order. <span style="color:green">+++++++++</span><span style="color:red">----</span>
 </p>
