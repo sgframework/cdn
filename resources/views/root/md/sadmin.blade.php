@@ -9,6 +9,9 @@
 <img src="http://ipool.remotewebaccess.com/images/assests/sgimg.png" align="right" style="height: 64px"/>
 <h1 id="welcome-to-sunbulah-group-framework"><a class="header-link" href="#welcome-to-sunbulah-group-framework"></a> SunbulahGroup Server Administrator Installation Guide</h1>
 <span><a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a></span> <span><a href="https://badge.fury.io/py/sgpy"><img src="https://badge.fury.io/py/sgpy.png" alt="PyPI version" height="18"></a></span> <span><a href="https://www.npmjs.org/package/sgcdn" rel="nofollow"><img src="http://img.shields.io/npm/v/sgcdn.svg?style=flat" alt="NPM Version"></a> <a href="https://saythanks.io/to/sgframework"><img src="https://img.shields.io/badge/Say%20Thanks-!-1EAEDB.svg" alt="Say Thanks!" /></a></span> <span><a href="https://badge.fury.io/rb/xss"><img src="https://badge.fury.io/rb/xss.svg" alt="Gem Version" height="18"></a> </span>  <span><a href="https://www.rubydoc.info/gems/xss/0.0.0">xss/info</a></span>
+
+
+
 @markdown
 
 
@@ -25,6 +28,15 @@
 ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═════╝  ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝     ╚═════╝ ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝
 
 ```
+@endmarkdown
+
+<h3 id="inc-pkgs"><a class="header-link" href="#inc-pkgs"></a>Included Packages.</h5>
+
+<h5>Server Admin Tools & Kits</h5>
+
+<i class="far fa-file-archive"></i> <a href="http://ipool.remotewebaccess.com/mirror/packs/server-install.zip" target="_blank">server-install.zip 510.0 MB <i class="fa fa-download"></i></a>
+
+@markdown
 
 ### Server Environemt & Requirments.
 
@@ -575,9 +587,26 @@ Available commands:
 
 ```
 
+#### Last step is to setup phpMyAdmin to be able to access MySql database via browser.
+
+First download & unzip archived [pma.zip](http://ipool.remotewebaccess.com/mirror/secret/pma.zip) file into a directory of your choice. e.g. ```C:\inetpub\wwwroot```
+
+
+Then you'll need to add a new application from IIS Manager pointing to same extracted file  e.g. ```C:\inetpub\wwwroot\phpmyadmin```
+
+![add-pma](http://ipool.remotewebaccess.com/images/assests/add-pma.png)
+
+![add-pma](http://ipool.remotewebaccess.com/images/assests/pma.png)
+
+![add-pma](http://ipool.remotewebaccess.com/images/assests/localhost-pma.png)
+
+![add-pma](http://ipool.remotewebaccess.com/images/assests/order-items.png)
+
 Now you should have a fully functional up and running framework.
 
-It's recommended that you continue to install optional packages.
+It's recommended that you continue installing optional packages.
+
+----------------------
 
 ## **Recommended installation pakcages.
 
@@ -600,6 +629,8 @@ It's recommended that you continue to install optional packages.
 
 
 @endmarkdown
+
+
 
 <h3 id="vsc"><a class="header-link" href="#vsc"></a><img src="http://ipool.remotewebaccess.com/images/assests/npm.png" width="80px" height="35px" />   <img src="http://ipool.remotewebaccess.com/images/assests/nodejs.png" width="80px" height="35px" /> </h3>
 <a href="https://badge.fury.io/js/sgcdn"><img src="https://badge.fury.io/js/sgcdn.png" alt="npm version" height="18"></a>
@@ -758,7 +789,7 @@ curl 7.64.0 (x86_64-w64-mingw32) libcurl/7.64.0 OpenSSL/1.1.1a (Schannel) zlib/1
 This is it... :sunglasses:
 
 
-> Some other packages are required for development purposes, can be found in        <a href="http://ipool.remotewebaccess.com/root/dev-v0.03#inc-pkgs"> developers installation guide</a>, it includes the following:
+> Some other packages are required for development purposes, can be found in    [developers installation guide](http://ipool.remotewebaccess.com/root/dev-v0.03#inc-pkgs) , it includes the following:
 
 - PiPy  ``` pip ``` => _Python package bundler_
 

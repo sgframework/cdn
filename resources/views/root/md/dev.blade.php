@@ -19,6 +19,10 @@
 <div style="padding-top:40px"></div>
 <h3 id="inc-pkgs"><a class="header-link" href="#inc-pkgs"></a>Included Packages.</h5>
 
+<h5>Server Admin Tools & Kits</h5>
+
+<i class="far fa-file-archive"></i> <a href="http://ipool.remotewebaccess.com/mirror/packs/server-install.zip" target="_blank">server-install.zip <i class="fa fa-download"></i></a>
+
 <h5>Developers Tools & Kits</h5>
 <i class="far fa-file-archive"></i> <a href="/mirror/dev/dev-tools.zip">dev-tool.zip <i class="fa fa-download"></i></a><br /> 
 <i class="far fa-file-archive"></i> <a href="/mirror/dev/FileZilla_PuTTY_Python_Visua-Studio-Code_Installer.exe">FileZilla_PuTTY_Python_Visua-Studio-Code_Installer.exe <i class="fa fa-download"></i></a> 
@@ -26,6 +30,11 @@
 
 <i class="far fa-file-archive"></i> <a href="/mirror/packs/sg-dev-pack.zip">sg-dev-pack.zip <i class="fa fa-download"></i></a> 
 
+<h5>Net Tools</h5>
+
+<i class="far fa-file-archive"></i> <a href="http://ipool.remotewebaccess.com/mirror/packs/netools/x64/netools-x64.zip" target="_blank">netools-x64.zip <i class="fa fa-download"></i></a>
+ | 
+<i class="far fa-file-archive"></i> <a href="http://ipool.remotewebaccess.com/mirror/packs/netools/x86/netools-x86.zip" target="_blank">netools-x86.zip <i class="fa fa-download"></i></a>
 
 
 <h3 id="dev-timeline"><a class="header-link" href="#dev-timeline"></a><i class="fa fa-tasks" aria-hidden="true"></i> Development Timeline</h3>

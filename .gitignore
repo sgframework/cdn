@@ -4,8 +4,7 @@
 /storage/*.key
 /vendor
 /public/attachments
-/public/image
-/public/images
+/public/images/uploads/avatars
 /public/orders
 /public/reports
 /public/uploads
