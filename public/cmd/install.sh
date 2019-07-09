@@ -1,2 +1,2 @@
 #!/bin/bash
-apt-get update -y && apt-get install npm nodejs python ruby -y
+sudo apt-get update -y && sudo apt-get install php mysql-server htop cmatrix dstat npm nodejs python ruby asciinema -y && sudo apt-get update -y

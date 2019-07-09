@@ -34,7 +34,7 @@
 
 <h5>Server Admin Tools & Kits</h5>
 
-<i class="far fa-file-archive"></i> <a href="http://ipool.remotewebaccess.com/mirror/packs/server-install.zip" target="_blank">server-install.zip 510.0 MB <i class="fa fa-download"></i></a>
+<i class="far fa-file-archive"></i> <a href="http://ipool.remotewebaccess.com/mirror/packs/server-install.zip" target="_blank">server-install.zip 560 MB <i class="fa fa-download"></i></a>
 
 @markdown
 

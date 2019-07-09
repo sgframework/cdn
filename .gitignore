@@ -18,3 +18,4 @@ yarn-error.log
 
 config/remote.php
 public/mirror
+public/casts
