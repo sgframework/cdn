@@ -5779,6 +5779,19 @@ F:.
 
 </code></pre>
 
+---------------------------
+
+### SKU's Implementation & First Init
+
+- New branch skus-integration created from prod-v1.16/master branch.
+
+- Create new table for material number and possible corresponding sku.
+
+- Create new Route, View and Model. To handle matching material numbers with skus.
+
+- Test & Deploy.
+
+---------------------------
 
 <h5 id="poweredby"><a class="header-link" href="#poweredby"></a>Powered By</h5>
 
