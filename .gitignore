@@ -19,3 +19,5 @@ yarn-error.log
 config/remote.php
 public/mirror
 public/casts
+Thumbs.db
+/public/Thumbs.db
