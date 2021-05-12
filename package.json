@@ -23,7 +23,7 @@
         "vue": "^2.5.17"
     },
     "dependencies": {
-        "chart.js": "^2.8.0",
+        "chart.js": "^2.9.4",
         "git": "^0.1.5",
         "github-markdown-css": "^3.0.1",
         "phpdoc": "^0.3.0",
